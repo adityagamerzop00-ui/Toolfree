@@ -1,0 +1,1020 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Toolora – Free Online Image, PDF & Video Tools</title>
+    <meta name="description" content="Free online tools that run right in your browser. Resize, compress, convert, rotate and flip images — fast, private, no sign-up, nothing uploaded." />
+    <meta name="theme-color" content="#2563FF" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Toolora" />
+    <meta property="og:title" content="Toolora – Free Online Image, PDF & Video Tools" />
+    <meta property="og:description" content="Free online tools that run right in your browser. Fast, private, no sign-up, nothing uploaded." />
+    <link rel="stylesheet" href="hark.css" />
+    <style>
+      body { background: #fff; }
+      .x-app {
+        --navy: #0B1B3F; --blue: #2563FF; --blue-d: #1A4FE0; --muted: #55607A; --line: #E3E8F2; --soft: #F4F7FD;
+        --sh: 0 1px 2px rgba(11,27,63,.06), 0 8px 24px rgba(11,27,63,.07);
+        --sh-h: 0 2px 4px rgba(11,27,63,.08), 0 14px 32px rgba(37,99,255,.14);
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        color: var(--navy); background: #fff; font-size: 16px; line-height: 1.55; min-height: 100vh;
+        display: flex; flex-direction: column;
+      }
+      .x-app h1, .x-app h2, .x-app h3 { color: var(--navy); letter-spacing: -.02em; line-height: 1.15; }
+      .x-app h2 { font-size: clamp(22px, 3vw, 28px); font-weight: 700; }
+      .x-app h3 { font-size: 17px; font-weight: 650; }
+      .x-app p { color: var(--muted); }
+      .x-app a { text-decoration: none; }
+      .x-app button, .x-app input, .x-app select { font: inherit; color: inherit; }
+      .x-wrap { width: 100%; max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+      .x-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+      /* header */
+      .x-top { position: sticky; top: 0; z-index: 30; background: rgba(255,255,255,.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+      .x-bar { display: flex; align-items: center; gap: 16px; min-height: 64px; flex-wrap: wrap; }
+      .x-logo { display: inline-flex; align-items: center; gap: 10px; font-weight: 800; font-size: 21px; color: var(--navy); letter-spacing: -.03em; min-height: 44px; }
+      .x-nav { display: flex; gap: 4px; margin-left: auto; overflow-x: auto; scrollbar-width: none; }
+      .x-nav a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px; border-radius: 999px; color: var(--navy); font-weight: 550; font-size: 15px; white-space: nowrap; transition: background .2s, color .2s; }
+      .x-nav a:hover { background: var(--soft); }
+      .x-nav a.is-on { background: #E8EEFF; color: #1A47C9; }
+      .x-sbtn { display: none; width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 12px; background: #fff; place-items: center; cursor: pointer; margin-left: auto; color: var(--navy); }
+      @media (max-width: 720px) {
+        .x-bar { gap: 0 8px; padding-top: 6px; }
+        .x-sbtn { display: grid; }
+        .x-nav { order: 3; width: 100%; margin: 0 -14px; padding: 0 0 8px; }
+      }
+
+      /* views */
+      .x-view { flex: 1; }
+      .x-view > * { animation: x-in .35s ease both; }
+      @keyframes x-in { from { opacity: 0; transform: translateY(6px); } }
+      @media (prefers-reduced-motion: reduce) { .x-view > * { animation: none; } .x-app * { transition: none !important; } }
+      .x-sec { padding: 40px 0 8px; }
+      .x-sec > .x-wrap > h2 { margin-bottom: 6px; }
+      .x-sec .x-lead { margin-bottom: 20px; }
+      .x-hero { background: radial-gradient(1000px 400px at 80% -10%, #DCE6FF 0, transparent 60%), linear-gradient(180deg, #F4F7FF, #fff); padding: 48px 0 32px; }
+      .x-hero h1 { font-size: clamp(32px, 6vw, 56px); font-weight: 800; max-width: 16ch; letter-spacing: -.035em; }
+      .x-hero .x-lead { font-size: clamp(17px, 2vw, 20px); margin: 14px 0 26px; max-width: 46ch; }
+      .x-search { position: relative; max-width: 680px; }
+      .x-search svg { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--blue); pointer-events: none; }
+      .x-search input { width: 100%; height: 60px; border: 1.5px solid var(--line); border-radius: 18px; padding: 0 20px 0 52px; font-size: 17px; background: #fff; box-shadow: var(--sh); outline: none; transition: border-color .2s, box-shadow .2s; }
+      .x-search.is-flash input { animation: x-flash .9s ease; border-color: var(--blue); }
+      @keyframes x-flash { 30% { box-shadow: 0 0 0 8px rgba(37,99,255,.25), var(--sh); } }
+      .x-search input:focus { border-color: var(--blue); box-shadow: 0 0 0 4px rgba(37,99,255,.15), var(--sh); }
+      .x-results { margin-top: 20px; }
+      .x-results:empty { display: none; }
+      .x-empty { padding: 16px; border-radius: 14px; background: var(--soft); }
+
+      /* cards */
+      .x-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; }
+      .x-card { position: relative; display: flex; gap: 14px; align-items: flex-start; padding: 18px; border-radius: 18px; background: #fff; border: 1px solid var(--line); box-shadow: var(--sh); color: var(--navy); transition: transform .2s, box-shadow .2s, border-color .2s; }
+      a.x-card:hover { transform: translateY(-2px); box-shadow: var(--sh-h); border-color: #C9D7FF; }
+      .x-card strong { display: block; font-size: 16px; margin-bottom: 2px; }
+      .x-card .x-cb > span { display: block; font-size: 14px; color: var(--muted); line-height: 1.45; }
+      .x-card.is-soon { background: #FAFBFD; box-shadow: none; cursor: default; }
+      .x-card.is-soon .x-ic { background: #EEF1F6; color: #8590A6; }
+      .x-card.is-soon strong { color: #4A5571; }
+      .x-ic { flex: none; width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: linear-gradient(135deg, #E8EEFF, #D6E1FF); color: var(--blue); }
+      .x-pill { display: inline-block; margin-top: 8px; padding: 2px 10px; border-radius: 999px; background: #EEF1F6; color: #4A5571; font-size: 12px; font-weight: 600; }
+      .x-cat-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 14px; }
+      .x-cat-head a { display: inline-flex; align-items: center; min-height: 44px; color: var(--blue); font-weight: 600; font-size: 15px; }
+
+      /* how it works, faq */
+      .x-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; counter-reset: s; list-style: none; padding: 0; margin: 16px 0 0; }
+      .x-steps li { counter-increment: s; padding: 20px; border-radius: 18px; background: var(--soft); }
+      .x-steps li::before { content: counter(s); display: grid; place-items: center; width: 34px; height: 34px; border-radius: 10px; background: var(--blue); color: #fff; font-weight: 700; margin-bottom: 12px; }
+      .x-steps strong { display: block; margin-bottom: 2px; }
+      .x-steps span { color: var(--muted); font-size: 15px; }
+      .x-faq { display: grid; gap: 10px; margin-top: 16px; max-width: 820px; }
+      .x-faq details { border: 1px solid var(--line); border-radius: 14px; background: #fff; padding: 0 18px; }
+      .x-faq summary { cursor: pointer; font-weight: 600; padding: 14px 0; min-height: 44px; list-style: none; display: flex; justify-content: space-between; gap: 12px; }
+      .x-faq summary::after { content: "+"; color: var(--blue); font-size: 20px; line-height: 1; transition: transform .2s; }
+      .x-faq details[open] summary::after { transform: rotate(45deg); }
+      .x-faq details p { padding-bottom: 14px; }
+
+      /* ads */
+      .ad-slot { display: grid; place-items: center; min-height: 100px; margin: 32px auto 0; max-width: 1080px; width: calc(100% - 40px); border: 1.5px dashed #C7CFDE; border-radius: 14px; color: #5F6B82; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+
+      /* tool page */
+      .x-crumb { display: flex; flex-wrap: wrap; gap: 6px; font-size: 14px; color: var(--muted); padding: 22px 0 10px; list-style: none; margin: 0; }
+      .x-crumb li + li::before { content: "/"; margin-right: 6px; color: #A9B2C5; }
+      .x-crumb a { color: var(--blue); }
+      .x-page h1 { font-size: clamp(28px, 4.5vw, 42px); font-weight: 800; }
+      .x-page > .x-wrap > .x-lead { margin: 8px 0 22px; font-size: 17px; }
+      .x-ws { border-radius: 22px; background: #fff; border: 1px solid var(--line); box-shadow: var(--sh); padding: 18px; }
+      .x-drop { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; min-height: 220px; border: 2px dashed #B9C8EE; border-radius: 16px; background: #F7F9FF; cursor: pointer; padding: 24px; transition: background .2s, border-color .2s; }
+      .x-drop:hover, .x-drop.is-over { background: #EDF2FF; border-color: var(--blue); }
+      .x-drop .x-ic { width: 56px; height: 56px; border-radius: 16px; margin-bottom: 6px; }
+      .x-drop strong { font-size: 17px; }
+      .x-drop u { color: var(--blue); text-underline-offset: 3px; }
+      .x-drop .x-note { color: var(--muted); font-size: 14px; }
+      .x-app [hidden] { display: none !important; }
+      .x-chip svg { vertical-align: -4px; margin-right: 4px; }
+      .x-state { font-size: 14px; }
+      .x-err { margin-top: 12px; padding: 12px 14px; border-radius: 12px; background: #FFF1F1; color: #B42318 !important; border: 1px solid #FBD0CC; font-weight: 550; }
+      .x-src { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; font-size: 14px; color: var(--muted); padding: 2px 2px 14px; border-bottom: 1px solid var(--line); margin-bottom: 16px; }
+      .x-src b { color: var(--navy); word-break: break-all; }
+      .x-grid { display: grid; gap: 20px; }
+      @media (min-width: 860px) { .x-grid { grid-template-columns: 320px minmax(0, 1fr); } }
+      .x-ctrls { display: grid; gap: 14px; align-content: start; }
+      .x-ctrls label { display: grid; gap: 6px; font-size: 14px; font-weight: 600; }
+      .x-ctrls input[type=number], .x-ctrls select { height: 44px; border: 1.5px solid var(--line); border-radius: 12px; padding: 0 12px; background: #fff; width: 100%; outline: none; }
+      .x-ctrls input:focus, .x-ctrls select:focus { border-color: var(--blue); }
+      .x-ctrls input[type=range] { width: 100%; accent-color: var(--blue); height: 28px; }
+      .x-ctrls .x-check { display: flex; align-items: center; gap: 10px; min-height: 44px; font-weight: 550; cursor: pointer; }
+      .x-check input { width: 20px; height: 20px; accent-color: var(--blue); }
+      .x-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+      .x-lbl { font-size: 14px; font-weight: 600; color: var(--navy) !important; margin-bottom: -6px !important; }
+      .x-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+      .x-chip { min-height: 44px; padding: 6px 14px; border-radius: 12px; border: 1.5px solid var(--line); background: #fff; cursor: pointer; font-size: 14px; font-weight: 600; text-align: left; line-height: 1.2; transition: border-color .2s, background .2s; }
+      .x-chip small { display: block; font-weight: 450; color: var(--muted); font-size: 12px; }
+      .x-chip:hover { border-color: var(--blue); background: #F4F7FF; }
+      .x-chip.is-on { border-color: var(--blue); background: #E8EEFF; color: var(--blue); }
+      .x-prev { position: relative; display: grid; place-items: center; min-height: 240px; border-radius: 16px; padding: 12px; background: #fff conic-gradient(#EEF1F6 25%, #fff 0 50%, #EEF1F6 0 75%, #fff 0) 0 0 / 20px 20px; border: 1px solid var(--line); }
+      .x-prev img { max-width: 100%; max-height: 60vh; object-fit: contain; border-radius: 6px; box-shadow: 0 2px 12px rgba(11,27,63,.12); }
+      .x-spin { position: absolute; inset: 0; display: grid; place-items: center; background: rgba(255,255,255,.7); border-radius: 16px; }
+      .x-spin::after { content: ""; width: 38px; height: 38px; border-radius: 50%; border: 4px solid #D6E1FF; border-top-color: var(--blue); animation: x-rot .8s linear infinite; }
+      @keyframes x-rot { to { transform: rotate(360deg); } }
+      .x-info { margin-top: 12px; font-weight: 600; color: var(--navy) !important; }
+      .x-extra:empty { display: none; }
+      .x-extra { margin-top: 8px; padding: 10px 14px; border-radius: 12px; background: var(--soft); font-size: 15px; }
+      .x-extra.is-warn { background: #FFF7E6; color: #8A5300 !important; }
+      .x-extra a { color: var(--blue); font-weight: 600; text-decoration: underline; }
+      .x-good { color: #12805C; font-weight: 700; }
+      .x-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+      .x-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 22px; border-radius: 14px; font-weight: 650; font-size: 16px; cursor: pointer; border: 1.5px solid var(--line); background: #fff; color: var(--navy); transition: background .2s, transform .15s, opacity .2s; }
+      .x-btn:active { transform: scale(.98); }
+      .x-primary { background: var(--blue); border-color: var(--blue); color: #fff !important; }
+      .x-primary:hover { background: var(--blue-d); }
+      .x-btn.is-busy { opacity: .5; pointer-events: none; }
+      .x-hint { font-size: 13px; margin-top: 10px; }
+      .x-body { max-width: 820px; }
+      .x-body ol.x-how { padding-left: 22px; margin: 12px 0 0; display: grid; gap: 8px; color: var(--muted); }
+      .x-body ol.x-how li::marker { color: var(--blue); font-weight: 700; }
+      .x-body p + p { margin-top: 12px; }
+      .x-ctrls input[type=text], .x-ctrls input[type=color] { height: 44px; border: 1.5px solid var(--line); border-radius: 12px; padding: 0 12px; background: #fff; width: 100%; outline: none; }
+      .x-ctrls input[type=color] { padding: 4px; cursor: pointer; }
+      .x-crop { display: grid; place-items: center; margin-bottom: 18px; padding: 12px; border-radius: 16px; background: var(--soft); border: 1px solid var(--line); }
+      .x-crop canvas { touch-action: none; cursor: move; max-width: 100%; border-radius: 4px; outline: none; }
+      .x-crop canvas:focus-visible { box-shadow: 0 0 0 3px var(--blue); }
+      .x-plist { place-items: stretch; align-content: start; background: var(--soft); }
+      .x-thumbs { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; align-content: start; }
+      .x-thumbs li { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; padding: 6px; border-radius: 12px; background: #fff; border: 1px solid var(--line); }
+      .x-prev .x-thumbs img { width: 56px; height: 56px; object-fit: cover; border-radius: 8px; flex: none; box-shadow: none; }
+      .x-tn { flex: 1 1 120px; min-width: 0; font-size: 13px; color: var(--muted); }
+      .x-tn b { display: block; font-size: 14px; color: var(--navy); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .x-tb { display: flex; gap: 6px; margin-left: auto; }
+      .x-ib { width: 44px; height: 44px; border-radius: 10px; border: 1.5px solid var(--line); background: #fff; cursor: pointer; display: grid; place-items: center; font-size: 18px; color: var(--navy); }
+      .x-ib:hover:not(:disabled) { border-color: var(--blue); }
+      .x-ib:disabled { opacity: .35; cursor: default; }
+      .x-prose h2 { margin: 28px 0 8px; font-size: 21px; }
+      .x-prose a { color: var(--blue); text-decoration: underline; }
+
+      /* footer */
+      .x-foot { margin-top: 32px; background: var(--navy); color: #C9D2E6; padding: 40px 0 28px; }
+      .x-foot .x-logo { color: #fff; }
+      .x-foot p { color: #9AA6C2; font-size: 14px; }
+      .x-fgrid { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+      .x-foot h3 { color: #fff; font-size: 14px; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px; }
+      .x-foot ul { list-style: none; margin: 0; padding: 0; }
+      .x-foot li a { display: inline-flex; align-items: center; min-height: 44px; min-width: 44px; color: #C9D2E6; font-size: 15px; }
+      .x-foot li a:hover { color: #fff; }
+      .x-copy { margin-top: 24px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.12); }
+    </style>
+    <style>
+      /* ui-fx: button motion, ripple, pop, card stagger */
+      button, .btn { transition: transform 150ms var(--ease-out, ease-out), box-shadow 150ms var(--ease-out, ease-out), background-color 150ms, border-color 150ms; }
+      @media (hover: hover) and (pointer: fine) {
+        button:not(:disabled):hover, .btn:hover { transform: translateY(-2px); box-shadow: var(--sh-h, 0 6px 16px rgba(16, 24, 40, .12)); }
+        a.x-card:hover .x-ic { animation: x-fx-wiggle 420ms var(--ease-out, ease-out); }
+      }
+      button:not(:disabled):active, .btn:active, a.x-card:active { transform: scale(.96); }
+      .x-fx-ripple { position: absolute; border-radius: 50%; background: currentColor; opacity: .18; transform: scale(0); pointer-events: none; animation: x-fx-ripple 450ms ease-out forwards; }
+      .x-fx-pop { animation: x-fx-pop 280ms var(--ease-out, ease-out); }
+      .x-fx-up { opacity: 0; }
+      .x-fx-up.x-fx-in { animation: x-fx-up 420ms var(--ease-out, ease-out) both; }
+      .x-fx-mute { position: fixed; right: 16px; bottom: 16px; z-index: 60; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--stroke-secondary); background: var(--fill-primary-on); box-shadow: var(--hark-shadow, 0 4px 14px rgba(0, 0, 0, .12)); font-size: 18px; line-height: 1; cursor: pointer; display: grid; place-items: center; }
+      @keyframes x-fx-ripple { to { transform: scale(1); opacity: 0; } }
+      @keyframes x-fx-pop { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+      @keyframes x-fx-up { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+      @keyframes x-fx-wiggle { 25% { transform: rotate(-8deg); } 50% { transform: rotate(6deg); } 75% { transform: rotate(-3deg); } }
+      @media (prefers-reduced-motion: reduce) {
+        button, .btn, a.x-card { transition: none !important; }
+        button:hover, .btn:hover, button:active, .btn:active, a.x-card:hover, a.x-card:active { transform: none !important; }
+        .x-fx-ripple, .x-fx-pop, .x-fx-up, .x-fx-up.x-fx-in, a.x-card:hover .x-ic { animation: none !important; opacity: 1 !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="x-app">
+      <header class="x-top">
+        <div class="x-wrap x-bar">
+          <a class="x-logo" href="#/" aria-label="Toolora home"><span data-logo></span>Toolora</a>
+          <button class="x-sbtn" type="button" aria-label="Search tools" id="x-sbtn"></button>
+          <nav class="x-nav" aria-label="Tool categories" id="x-nav"></nav>
+        </div>
+      </header>
+      <main class="x-view" id="x-view"></main>
+      <div class="ad-slot" data-slot="above-footer">Advertisement</div>
+      <footer class="x-foot">
+        <div class="x-wrap">
+          <div class="x-fgrid">
+            <div>
+              <a class="x-logo" href="#/" aria-label="Toolora home"><span data-logo></span>Toolora</a>
+              <p>Free tools that run in your browser. Your files never leave your device.</p>
+            </div>
+            <div><h3>Tools</h3><ul id="x-fcats"></ul></div>
+            <div>
+              <h3>Toolora</h3>
+              <ul>
+                <li><a href="#/about">About Us</a></li>
+                <li><a href="#/contact">Contact</a></li>
+                <li><a href="#/privacy">Privacy Policy</a></li>
+                <li><a href="#/terms">Terms</a></li>
+                <li><a href="#/disclaimer">Disclaimer</a></li>
+              </ul>
+            </div>
+          </div>
+          <p class="x-copy">© Toolora</p>
+        </div>
+      </footer>
+    </div>
+    <script src="hark.js"></script>
+    <script>
+      /* ===== Data ===== */
+      const ICONS = {
+        resize: "M4 9V4h5M20 15v5h-5M4 4l7 7M20 20l-7-7",
+        compress: "M4 14h6v6M20 10h-6V4M14 10l7-7M3 21l7-7",
+        convert: "M4 7h13l-3-3M20 17H7l3 3",
+        rotate: "M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5",
+        crop: "M6 2v14a2 2 0 0 0 2 2h14M18 22V8a2 2 0 0 0-2-2H2",
+        image: "M3 5h18v14H3zM3 16l5-5 4 4 3-3 6 6M15.5 9h.01",
+        edit: "M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z",
+        video: "M3 6h12v12H3zM15 10l6-4v12l-6-4",
+        trim: "M6 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM6 21a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM20 4 8.1 15.9M14.5 14.5 20 20M8.1 8.1 12 12",
+        download: "M12 3v12M7 10l5 5 5-5M4 21h16",
+        upload: "M12 16V4M7 9l5-5 5 5M4 20h16",
+        file: "M14 3H6v18h12V7zM14 3v4h4M9 13h6M9 17h6",
+        merge: "M8 3v6l4 4 4-4V3M12 13v8",
+        split: "M12 3v8l-4 4v6M12 11l4 4v6",
+        layers: "M12 3l9 5-9 5-9-5zM3 13l9 5 9-5",
+        chat: "M4 5h16v11H8l-4 4z",
+        hash: "M5 9h14M5 15h14M10 3 8 21M16 3l-2 18",
+        type: "M4 7V4h16v3M9 20h6M12 4v16",
+        count: "M4 6h16M4 12h10M4 18h7",
+        user: "M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0",
+        play: "M2 7a3 3 0 0 1 3-3h14a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3zM10 9l5 3-5 3z",
+        search: "M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM21 21l-5-5",
+        flip: "M12 3v18M8 7l-5 5 5 5zM16 7l5 5-5 5z",
+        text: "M4 6h16M4 10h16M4 14h10M4 18h7",
+      };
+      const ic = (n, s = 22) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${ICONS[n] || ICONS.image}"/></svg>`;
+      const LOGO = `<svg width="36" height="36" viewBox="0 0 36 36" aria-hidden="true"><defs><linearGradient id="xg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4F86FF"/><stop offset="1" stop-color="#1D4FE6"/></linearGradient></defs><rect width="36" height="36" rx="10" fill="url(#xg)"/><path d="M12.5 11.5h12M18 11.5v15" stroke="#fff" stroke-width="3.6" stroke-linecap="round"/><circle cx="10.5" cy="11.5" r="4.6" fill="#fff"/><path d="M6.5 11.5h4.6" stroke="url(#xg)" stroke-width="2.6" stroke-linecap="round"/><path d="M27.5 5.5l1 2.6 2.6 1-2.6 1-1 2.6-1-2.6-2.6-1 2.6-1z" fill="#fff"/></svg>`;
+
+      const CATS = {
+        image: { name: "Image", title: "Image tools", desc: "Resize, compress, convert, crop, edit and rotate photos, or turn them into a PDF, in your browser." },
+        video: { name: "Video", title: "Video tools", desc: "Resize, crop, trim, compress and convert videos — coming soon." },
+        pdf: { name: "PDF", title: "PDF tools", desc: "Merge and split PDFs, turn pages into images, or images into a PDF, in your browser." },
+        creator: { name: "Creator", title: "Creator tools", desc: "Captions, titles, hashtags and bios for social media — coming soon." },
+        text: { name: "Text", title: "Text tools", desc: "Fancy text and word counting — coming soon." },
+      };
+
+      const FMT = "JPG, PNG or WEBP, up to 20 MB";
+      /* Tool registry: add a tool by adding an entry. Live tools need render(mount) and info. */
+      const TOOLS = [
+        { id: "image-resizer", name: "Image Resizer", category: "image", icon: "resize", status: "live", popular: 1, added: 1,
+          description: "Resize any image to exact pixels, a percentage or a social media preset.",
+          keywords: "resize scale dimensions width height instagram story youtube thumbnail facebook cover passport hd shrink enlarge",
+          render: (m) => toolResizer(m),
+          info: { steps: ["Add a JPG, PNG or WEBP image.", "Type a width and height, pick a preset, or scale by a percentage.", "Check the preview and the new size.", "Tap Download to save the resized image."],
+            about: "Toolora's Image Resizer changes the pixel dimensions of a photo without sending it anywhere. Keep the aspect ratio locked to avoid stretching, or pick a preset such as an Instagram post or YouTube thumbnail and the image is cropped from the centre to fill the new shape. PNG files stay PNG so transparency is kept; other images are saved as high-quality JPEG.",
+            faq: [["Will resizing reduce quality?", "Making an image smaller keeps it sharp. Making it much larger than the original can look soft, because new pixels have to be invented."], ["What happens when I pick a preset with a different shape?", "By default the image is cropped from the centre to fill the preset exactly. Choose Stretch if you would rather keep everything in frame."], ["Is there a size limit?", "Files up to 20 MB, and output up to 10,000 pixels on each side."]] } },
+        { id: "image-compressor", name: "Image Compressor", category: "image", icon: "compress", status: "live", popular: 1, added: 2,
+          description: "Shrink image file size with a quality slider and see how much you saved.",
+          keywords: "compress reduce file size kb mb optimize smaller jpeg webp quality",
+          render: (m) => toolCompressor(m),
+          info: { steps: ["Add a JPG, PNG or WEBP image.", "Move the quality slider; lower means a smaller file.", "Optionally set a maximum width and choose JPEG or WEBP.", "Compare the before and after size, then download."],
+            about: "The Image Compressor re-encodes your photo at the quality you choose, and can scale it down to a maximum width for an even smaller file. Everything runs on a canvas inside your browser, so it works offline once the page has loaded and nothing is uploaded. If the compressed file comes out bigger than your original, Toolora tells you and lets you keep the original instead.",
+            faq: [["What quality should I choose?", "70 is a good balance for photos on the web. Go to 80–90 for printing, or 40–60 when file size matters most."], ["JPEG or WEBP?", "WEBP is usually 25–35% smaller at the same quality and works in all modern browsers. JPEG opens everywhere."], ["Why is my file bigger after compressing?", "Already-optimised images, or PNGs with few colours, can grow when re-encoded. In that case, download the original."]] } },
+        { id: "image-converter", name: "Image Converter", category: "image", icon: "convert", status: "live", popular: 1, added: 3,
+          description: "Convert images between JPG, PNG and WEBP in one tap.",
+          keywords: "convert format change jpg jpeg png webp transparent",
+          render: (m) => toolConverter(m),
+          info: { steps: ["Add a JPG, PNG or WEBP image.", "Choose JPG, PNG or WEBP as the output format.", "For JPG or WEBP, set the quality.", "Download the converted file with the right extension."],
+            about: "Use the Image Converter to switch a picture to the format a website, app or printer expects. PNG keeps transparency and sharp edges, JPG is the most compatible for photos, and WEBP gives small files for the web. JPG has no transparency, so transparent areas are filled with white rather than turning black.",
+            faq: [["Does converting to PNG improve quality?", "No. PNG is lossless, so it keeps what is there, but it cannot restore detail lost in an earlier JPG."], ["Why did my transparent background turn white?", "JPG cannot store transparency. Choose PNG or WEBP to keep it."], ["My browser can't make WEBP. What now?", "Some older browsers cannot create WEBP files. Toolora will tell you and you can choose PNG or JPG instead."]] } },
+        { id: "rotate-flip", name: "Rotate & Flip", category: "image", icon: "rotate", status: "live", popular: 1, added: 4,
+          description: "Rotate images 90° left or right and flip them horizontally or vertically.",
+          keywords: "rotate flip mirror turn sideways upside down orientation 90 degrees",
+          render: (m) => toolRotate(m),
+          info: { steps: ["Add a JPG, PNG or WEBP image.", "Tap rotate left or right to turn it 90°.", "Tap flip to mirror it horizontally or vertically.", "Download it in its original format."],
+            about: "Rotate & Flip fixes sideways phone photos and mirrored selfies in a couple of taps. The preview updates as you go, and the result is saved in the same format you started with, with the width and height swapped when you rotate a quarter turn.",
+            faq: [["Does rotating lose quality?", "PNG stays lossless. JPG and WEBP are saved again at high quality, so the difference is very hard to see."], ["Can I rotate by any angle?", "This tool turns in 90° steps, which covers sideways and upside-down photos."], ["Why does my photo look rotated already?", "Your browser applies the orientation your camera recorded, so what you see in the preview is what you will download."]] } },
+        { id: "image-cropper", name: "Image Cropper", category: "image", icon: "crop", status: "live", added: 5,
+          description: "Crop images freely or to a fixed aspect ratio like 1:1, 4:5 or 16:9.",
+          keywords: "crop cut trim aspect ratio square portrait landscape instagram 1:1 4:5 3:4 16:9 4:3",
+          render: (m) => toolCropper(m),
+          info: { steps: ["Add a JPG, PNG or WEBP image.", "Pick Free or a fixed aspect ratio such as Square 1:1 or Landscape 16:9.", "Drag inside the box to move it, or drag a corner to resize it.", "Tap Crop, check the preview, then Download."],
+            about: "The Image Cropper cuts your photo down to the part that matters. Drag the crop box with a mouse or your finger, lock it to a common shape for Instagram, YouTube or print, and see the exact crop size in pixels as you go. The result keeps the original resolution of the area you chose and is saved in the same format as your original.",
+            faq: [["Does cropping reduce quality?", "No. Cropping only removes pixels; the area you keep stays at its original resolution. JPG and WEBP are saved again at high quality."], ["Which aspect ratio should I use?", "Square 1:1 or Portrait 4:5 for Instagram posts, Landscape 16:9 for YouTube and screens, and 4:3 or 3:4 for prints and most phone photos."], ["Can I move the box with a keyboard?", "Yes. Click or tab to the image and use the arrow keys to move the crop box; hold Shift for bigger steps."]] } },
+        { id: "images-to-pdf", name: "Images to PDF", category: "image", also: "pdf", icon: "file", status: "live", added: 6,
+          description: "Turn up to 20 images into one PDF, in the order you choose.",
+          keywords: "jpg to pdf png to pdf webp to pdf combine images photos document scan merge",
+          render: (m) => toolPdf(m),
+          info: { steps: ["Add up to 20 JPG, PNG or WEBP images.", "Use the arrows to put them in order, or × to remove one.", "Choose the page size, orientation and margin.", "Tap Create PDF, then download toolora.pdf."],
+            about: "Images to PDF puts each picture on its own page of a single PDF, ready to email, print or upload as one document. Choose A4 or Letter pages, or let each page match its image. Auto orientation turns pages sideways for landscape photos. The PDF is built entirely in your browser, so your images are never uploaded.",
+            faq: [["Is there a limit?", "Up to 20 images per PDF, each up to 20 MB. Very large photos are scaled to at most 4,000 pixels on the long side to keep the PDF a sensible size."], ["Why is my PNG's transparent background white?", "Pages are saved as JPEG inside the PDF, which has no transparency, so transparent areas become white like paper."], ["What does Auto orientation do?", "It uses a landscape page for wide images and a portrait page for tall ones. Fit to image makes each page exactly the shape of its image."]] } },
+        { id: "photo-editor", name: "Photo Editor", category: "image", icon: "edit", status: "live", added: 7,
+          description: "Adjust brightness, contrast and colour, add filters, borders and a watermark.",
+          keywords: "edit filter brightness contrast saturation sepia grayscale black white vintage warm cool vivid border frame polaroid watermark text",
+          render: (m) => toolEditor(m),
+          info: { steps: ["Add a JPG, PNG or WEBP image.", "Adjust brightness, contrast and saturation, or tap a filter.", "Add a border or frame and an optional text watermark.", "Choose JPG or PNG and download."],
+            about: "The Photo Editor covers the quick fixes most photos need: lighten a dark shot, add punch with contrast and saturation, or give it a look with one-tap filters such as Vintage, Warm or Vivid. Add a solid, rounded or Polaroid-style frame and a text watermark in any corner. The preview updates as you go and everything happens in your browser.",
+            faq: [["Can it remove the background?", "Background removal isn't included yet — free browser-only options are too heavy for phones. It's planned for a later version."], ["Why choose PNG instead of JPG?", "PNG keeps transparency, including the corners of a Rounded frame, and is lossless. JPG files are much smaller for photos."], ["Will the watermark cover my photo?", "It sits inside the photo at the position you choose. Lower the opacity to make it subtle, or pick a corner to keep it out of the way."]] } },
+        { id: "video-resizer", name: "Video Resizer", category: "video", icon: "resize", status: "soon", description: "Change video dimensions for any platform.", keywords: "video resize reels tiktok" },
+        { id: "video-cropper", name: "Video Cropper", category: "video", icon: "crop", status: "soon", description: "Crop the frame of a video.", keywords: "video crop" },
+        { id: "video-trimmer", name: "Video Trimmer", category: "video", icon: "trim", status: "soon", description: "Cut the start and end off a clip.", keywords: "video trim cut clip" },
+        { id: "video-compressor", name: "Video Compressor", category: "video", icon: "compress", status: "soon", description: "Make video files smaller.", keywords: "video compress reduce size mp4" },
+        { id: "video-converter", name: "Video Converter", category: "video", icon: "convert", status: "soon", description: "Convert between video formats.", keywords: "video convert mp4 webm mov" },
+        { id: "youtube-thumbnail-downloader", name: "YouTube Thumbnail Downloader", category: "video", icon: "play", status: "soon", description: "Save the thumbnail of a YouTube video.", keywords: "youtube thumbnail download" },
+        { id: "merge-pdf", name: "Merge PDF", category: "pdf", icon: "merge", status: "soon", description: "Combine several PDFs into one.", keywords: "pdf merge combine join" },
+        { id: "split-pdf", name: "Split PDF", category: "pdf", icon: "split", status: "soon", description: "Split a PDF into separate files.", keywords: "pdf split extract pages" },
+        { id: "compress-pdf", name: "Compress PDF", category: "pdf", icon: "compress", status: "soon", description: "Reduce the size of a PDF file.", keywords: "pdf compress reduce size" },
+        { id: "pdf-page-organizer", name: "PDF Page Organizer", category: "pdf", icon: "layers", status: "soon", description: "Reorder, rotate and delete PDF pages.", keywords: "pdf organize reorder delete pages" },
+        { id: "pdf-to-images", name: "PDF to Images", category: "pdf", icon: "image", status: "soon", description: "Turn PDF pages into JPG or PNG images.", keywords: "pdf to jpg png images" },
+        { id: "instagram-caption-generator", name: "Instagram Caption Generator", category: "creator", icon: "chat", status: "soon", description: "Caption ideas for your posts.", keywords: "instagram caption" },
+        { id: "youtube-title-generator", name: "YouTube Title Generator", category: "creator", icon: "play", status: "soon", description: "Catchy titles for your videos.", keywords: "youtube title" },
+        { id: "video-description-templates", name: "Video Description Templates", category: "creator", icon: "text", status: "soon", description: "Ready-to-fill video descriptions.", keywords: "youtube description template" },
+        { id: "hashtag-suggestions", name: "Hashtag Suggestions", category: "creator", icon: "hash", status: "soon", description: "Relevant hashtags for your topic.", keywords: "hashtags tags instagram tiktok" },
+        { id: "bio-generator", name: "Bio Generator", category: "creator", icon: "user", status: "soon", description: "Short bios for your social profiles.", keywords: "bio profile instagram tiktok" },
+        { id: "fancy-text-generator", name: "Fancy Text Generator", category: "text", icon: "type", status: "soon", description: "Stylish Unicode text for bios and posts.", keywords: "fancy text fonts unicode" },
+        { id: "word-character-counter", name: "Word & Character Counter", category: "text", icon: "count", status: "soon", description: "Count words, characters and sentences.", keywords: "word count character counter" },
+      ];
+
+      const PAGES = {
+        about: { title: "About Us", desc: "About Toolora: free, private online tools that run entirely in your browser.",
+          html: `<p>Toolora is a small collection of free online tools for everyday jobs: resizing a photo for Instagram, shrinking a file to fit an email, or turning a WEBP into a JPG.</p><p>Every tool runs in your own browser. Your files are never uploaded to a server, there is no sign-up, and the tools keep working on slow connections once the page has loaded.</p><p>We are adding new tools regularly, starting with video, PDF, creator and text tools.</p>` },
+        contact: { title: "Contact", desc: "Contact the Toolora team with questions, bug reports or tool ideas.",
+          html: `<p>Questions, bug reports or ideas for a new tool are welcome.</p><p>Email: <a href="mailto:contact@toolora.example">contact@toolora.example</a></p><p><small>This address is a placeholder and will be replaced with the real contact address.</small></p><p>Please do not email files you want processed: every tool works in your browser, so we never need your files.</p>` },
+        privacy: { title: "Privacy Policy", desc: "Toolora's privacy policy: files are processed locally in your browser and never uploaded.",
+          html: `<h2>Your files</h2><p>Files you open in Toolora are processed locally in your browser and are never uploaded to our servers or anyone else's. When you close or reload the page, they are gone.</p><h2>Data we collect</h2><p>Toolora has no accounts and does not ask for personal information. Toolora itself does not set cookies.</p><h2>Advertising</h2><p>In future, this site may use Google AdSense to show ads. Google AdSense uses cookies to serve ads. Third-party vendors, including Google, use cookies to serve ads based on your prior visits to this website or other websites. You can opt out of personalised advertising by visiting <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener">Google Ads Settings</a>.</p><h2>Changes</h2><p>If this policy changes, the updated version will be posted on this page.</p><h2>Contact</h2><p>Questions about privacy: <a href="mailto:contact@toolora.example">contact@toolora.example</a>.</p>` },
+        terms: { title: "Terms of Use", desc: "The terms for using Toolora's free online tools.",
+          html: `<p>By using Toolora you agree to these terms.</p><h2>Use of the tools</h2><p>The tools are free for personal and commercial use. You are responsible for the files you process and for having the right to use them.</p><h2>No warranty</h2><p>The tools are provided as they are, without guarantees of accuracy or availability. Keep a copy of your original files.</p><h2>Limitation of liability</h2><p>Toolora is not liable for any loss or damage arising from use of the site or its tools.</p><h2>Changes</h2><p>These terms may be updated from time to time; continued use means you accept the current version.</p>` },
+        disclaimer: { title: "Disclaimer", desc: "Toolora's tools are provided as-is, without warranty.",
+          html: `<p>Toolora's tools are provided as-is and as available, without warranty of any kind. We work to make them accurate and reliable, but results can vary between browsers and devices.</p><p>Always keep a copy of your original files. Toolora is not responsible for any loss of data or for how processed files are used.</p><p>Brand names such as Instagram, YouTube and Facebook are mentioned only to describe image sizes; Toolora is not affiliated with them.</p>` },
+      };
+
+      /* ===== Helpers ===== */
+      const $ = (s, r = document) => r.querySelector(s);
+      const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+      const fmtSize = (b) => (b < 1024 ? b + " B" : b < 1048576 ? (b / 1024).toFixed(1) + " KB" : (b / 1048576).toFixed(2) + " MB");
+      const dataSize = (u) => { const b = u.slice(u.indexOf(",") + 1); return Math.floor((b.length * 3) / 4) - (b.endsWith("==") ? 2 : b.endsWith("=") ? 1 : 0); };
+      const byId = Object.fromEntries(TOOLS.map((t) => [t.id, t]));
+      const live = () => TOOLS.filter((t) => t.status === "live");
+      const ad = (slot) => `<div class="ad-slot" data-slot="${slot}">Advertisement</div>`;
+      const faqHtml = (list) => `<div class="x-faq">${list.map(([q, a]) => `<details><summary>${esc(q)}</summary><p>${a}</p></details>`).join("")}</div>`;
+      function card(t) {
+        const soon = t.status !== "live";
+        const inner = `<span class="x-ic">${ic(t.icon)}</span><span class="x-cb"><strong>${esc(t.name)}</strong><span>${esc(t.description)}</span>${soon ? '<span class="x-pill">Coming soon</span>' : ""}</span>`;
+        return soon ? `<div class="x-card is-soon" aria-disabled="true">${inner}</div>` : `<a class="x-card" href="#/${t.id}">${inner}</a>`;
+      }
+      const cards = (list) => `<div class="x-cards">${list.map(card).join("")}</div>`;
+      function search(q) {
+        const words = q.toLowerCase().split(/\s+/).filter(Boolean);
+        if (!words.length) return [];
+        return TOOLS.filter((t) => { const hay = `${t.name} ${t.description} ${t.keywords || ""} ${CATS[t.category].name}`.toLowerCase(); return words.every((w) => hay.includes(w)); })
+          .sort((a, b) => (a.status === "live" ? 0 : 1) - (b.status === "live" ? 0 : 1));
+      }
+      function setMeta(title, desc) {
+        document.title = title;
+        $('meta[name="description"]').content = desc;
+        $('meta[property="og:title"]').content = title;
+        $('meta[property="og:description"]').content = desc;
+      }
+
+      /* ===== Views ===== */
+      const view = $("#x-view");
+      const HOME_FAQ = [
+        ["Is Toolora really free?", "Yes. Every tool is free to use with no sign-up, no watermark and no daily limit."],
+        ["Are my files uploaded?", "No. Your files are processed on your own device, inside your browser. Nothing is sent to a server."],
+        ["Is there a file size limit?", "Image tools accept files up to 20 MB. Very large images can be slow on older phones."],
+        ["Does it work on my phone?", "Yes. Toolora works in modern browsers on iPhone, Android, tablets and computers."],
+        ["Which formats are supported?", "Image tools open and save JPG, PNG and WEBP, and Images to PDF turns them into a PDF. More video and creator tools are coming next."],
+      ];
+      function home() {
+        setMeta("Toolora – Free Online Image, PDF & Video Tools", "Free online tools that run right in your browser. Resize, compress, convert, rotate and flip images — fast, private, no sign-up, nothing uploaded.");
+        const recent = [...live()].sort((a, b) => b.added - a.added).slice(0, 3);
+        view.innerHTML = `
+          <section class="x-hero"><div class="x-wrap">
+            <h1>Free online tools that work right in your browser</h1>
+            <p class="x-lead">Edit images, make PDFs and more — fast, private, no sign-up.</p>
+            <div class="x-search" role="search">${ic("search")}<input id="x-q" type="search" aria-label="Search tools" placeholder="What do you want to do today?" autocomplete="off"></div>
+            <div class="x-results" id="x-res" aria-live="polite"></div>
+          </div></section>
+          <section class="x-sec"><div class="x-wrap"><h2>Popular tools</h2><p class="x-lead">The tools people use most.</p>${cards(live().filter((t) => t.popular))}</div></section>
+          <section class="x-sec"><div class="x-wrap"><h2>Recently added</h2><p class="x-lead">The newest tools on Toolora.</p>${cards(recent)}</div></section>
+          ${ad("home-1")}
+          ${Object.entries(CATS).map(([k, c]) => `<section class="x-sec" id="cat-${k}"><div class="x-wrap"><div class="x-cat-head"><h2>${c.title}</h2><a href="#/category/${k}">All ${c.name.toLowerCase()} tools →</a></div>${cards(TOOLS.filter((t) => t.category === k))}</div></section>`).join("")}
+          ${ad("home-2")}
+          <section class="x-sec"><div class="x-wrap"><h2>How Toolora works</h2>
+            <ol class="x-steps"><li><strong>Pick a tool</strong><span>Search or browse by category.</span></li><li><strong>Add your file</strong><span>Drop it in or tap to choose.</span></li><li><strong>Adjust and preview</strong><span>See the result before you save.</span></li><li><strong>Download</strong><span>Your files never leave your device.</span></li></ol>
+          </div></section>
+          <section class="x-sec"><div class="x-wrap"><h2>Frequently asked questions</h2>${faqHtml(HOME_FAQ)}</div></section>`;
+        const q = $("#x-q"), res = $("#x-res");
+        q.addEventListener("input", () => {
+          const v = q.value.trim(), r = search(v);
+          res.innerHTML = !v ? "" : r.length ? cards(r) : `<p class="x-empty">No tools match “${esc(v)}” yet. Try “resize”, “compress” or “jpg”.</p>`;
+        });
+      }
+      function catView(k) {
+        const c = CATS[k];
+        setMeta(`${c.title} – Free Online ${c.name} Tools | Toolora`, `${c.desc} Free and private on Toolora.`);
+        view.innerHTML = `<div class="x-page"><div class="x-wrap">
+          <ol class="x-crumb"><li><a href="#/">Home</a></li><li aria-current="page">${c.name}</li></ol>
+          <h1>${c.title}</h1><p class="x-lead">${c.desc}</p>${cards(TOOLS.filter((t) => t.category === k || t.also === k))}</div></div>`;
+      }
+      function pageView(k) {
+        const p = PAGES[k];
+        setMeta(`${p.title} | Toolora`, p.desc);
+        view.innerHTML = `<div class="x-page"><div class="x-wrap x-body x-prose">
+          <ol class="x-crumb"><li><a href="#/">Home</a></li><li aria-current="page">${p.title}</li></ol>
+          <h1>${p.title}</h1><div style="margin-top:16px">${p.html}</div></div></div>`;
+      }
+      function simple(title, text) {
+        setMeta(`${title} | Toolora`, text);
+        view.innerHTML = `<div class="x-page"><div class="x-wrap x-body"><ol class="x-crumb"><li><a href="#/">Home</a></li></ol><h1>${esc(title)}</h1><p class="x-lead">${esc(text)}</p><a class="x-btn x-primary" href="#/">Browse all tools</a></div></div>`;
+      }
+      function toolView(t) {
+        const c = CATS[t.category], i = t.info;
+        setMeta(`${t.name} – Free Online, No Upload | Toolora`, `${t.description} Free, private and works in your browser — nothing is uploaded.`);
+        const related = live().filter((x) => x.id !== t.id).sort((a, b) => (b.category === t.category) - (a.category === t.category)).slice(0, 4);
+        view.innerHTML = `<div class="x-page"><div class="x-wrap">
+          <ol class="x-crumb"><li><a href="#/">Home</a></li><li><a href="#/category/${t.category}">${c.name}</a></li><li aria-current="page">${esc(t.name)}</li></ol>
+          <h1>${esc(t.name)}</h1><p class="x-lead">${esc(t.description)}</p>
+          <div id="x-tool"></div>
+          <div class="x-body">
+            <section class="x-sec"><h2>How to use the ${esc(t.name)}</h2><ol class="x-how">${i.steps.map((s) => `<li>${s}</li>`).join("")}</ol></section>
+            <section class="x-sec"><h2>About this tool</h2><p>${i.about}</p></section>
+            <section class="x-sec"><h2>${esc(t.name)} FAQ</h2>${faqHtml(i.faq)}</section>
+          </div></div>
+          ${ad("tool-below-instructions")}
+          <div class="x-wrap"><section class="x-sec"><h2>Related tools</h2>${cards(related)}</section></div></div>`;
+        t.render($("#x-tool"));
+      }
+
+      /* ===== Router ===== */
+      let focusSearch = false;
+      function route() {
+        const [a, b] = location.hash.replace(/^#\/?/, "").split("/");
+        const t = byId[a];
+        if (!a) home();
+        else if (a === "category" && CATS[b]) catView(b);
+        else if (PAGES[a]) pageView(a);
+        else if (t && t.status === "live") toolView(t);
+        else if (t) simple(`${t.name} is coming soon`, `${t.description} This tool is not ready yet — it's coming soon to Toolora.`);
+        else simple("Page not found", "That page doesn't exist. Try one of our free tools instead.");
+        document.querySelectorAll("#x-nav a").forEach((l) => l.classList.toggle("is-on", (a === "category" && l.dataset.cat === b) || (t && l.dataset.cat === t.category)));
+        window.scrollTo({ top: 0, behavior: "instant" });
+        if (focusSearch && $("#x-q")) { focusSearch = false; $("#x-q").focus(); }
+      }
+      document.querySelectorAll("[data-logo]").forEach((s, i) => (s.outerHTML = LOGO.replace(/xg/g, "xg" + i)));
+      $("#x-nav").innerHTML = Object.entries(CATS).map(([k, c]) => `<a href="#/category/${k}" data-cat="${k}">${c.name}</a>`).join("");
+      $("#x-fcats").innerHTML = Object.entries(CATS).map(([k, c]) => `<li><a href="#/category/${k}">${c.title}</a></li>`).join("");
+      $("#x-sbtn").innerHTML = ic("search");
+      $("#x-sbtn").addEventListener("click", () => { if (location.hash.replace(/^#\/?/, "")) { focusSearch = true; location.hash = "#/"; } else { window.scrollTo({ top: 0, behavior: "instant" }); const s = $(".x-search"); s.classList.remove("is-flash"); void s.offsetWidth; s.classList.add("is-flash"); $("#x-q").focus(); } });
+      window.addEventListener("hashchange", route);
+
+      /* ===== Shared image workspace ===== */
+      const TYPES = ["image/jpeg", "image/png", "image/webp"], MAXB = 20 * 1024 * 1024, EXT = { "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp" };
+      ["dragover", "drop"].forEach((ev) => window.addEventListener(ev, (e) => e.preventDefault()));
+      function canvasOf(w, h, white) {
+        if (w * h > 50e6) throw new Error("That's too many pixels for your browser to handle. Try smaller dimensions.");
+        const c = document.createElement("canvas"); c.width = w; c.height = h;
+        const x = c.getContext("2d");
+        if (!x) throw new Error("Your browser couldn't create an image canvas.");
+        if (white) { x.fillStyle = "#fff"; x.fillRect(0, 0, w, h); }
+        x.imageSmoothingQuality = "high";
+        return [c, x];
+      }
+      function checkFile(file) {
+        const byName = /\.(jpe?g|png|webp)$/i.test(file.name);
+        if (!TYPES.includes(file.type) && !(byName && !file.type)) return `“${file.name}” isn't a supported image. Please choose a JPG, PNG or WEBP file.`;
+        if (file.size > MAXB) return `“${file.name}” is ${fmtSize(file.size)}. The limit is 20 MB — please choose a smaller image.`;
+        if (!file.size) return `“${file.name}” is empty. Please choose another image.`;
+        return "";
+      }
+      function workspace(mount, cfg) {
+        mount.innerHTML = `<div class="x-ws">
+          <label class="x-drop" tabindex="0"><input type="file" accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp" class="x-sr" tabindex="-1" aria-label="Choose an image">
+            <span class="x-ic">${ic("upload", 28)}</span><strong>Drop an image here or <u>tap to choose</u></strong>
+            <span class="x-note">${FMT} · <b>max 20 MB</b></span><span class="x-note">Processed on your device — nothing is uploaded.</span></label>
+          <p class="x-err" role="alert" hidden></p>
+          <div class="x-edit" hidden>
+            <p class="x-src">Original: <b class="x-fname"></b><span class="x-orig"></span></p>
+            ${cfg.top || ""}<div class="x-grid"><div class="x-ctrls">${cfg.controls}</div>
+              <div><div class="x-prev"><img alt="Preview of the result"><div class="x-spin" hidden role="status" aria-label="Processing"></div></div>
+                <p class="x-info" aria-live="polite"></p><p class="x-extra"></p>
+                <div class="x-actions"><a class="x-btn x-primary x-dl" download>${ic("download", 20)} Download</a><button type="button" class="x-btn x-reset">Reset</button></div>
+                <p class="x-hint">If download doesn't start, long-press the image to save it.</p></div></div></div></div>`;
+        const q = (s) => mount.querySelector(s);
+        const input = q("input[type=file]"), drop = q(".x-drop"), err = q(".x-err"), edit = q(".x-edit"), ctrls = q(".x-ctrls"),
+          img = q(".x-prev img"), spin = q(".x-spin"), info = q(".x-info"), extra = q(".x-extra"), dl = q(".x-dl");
+        const ws = { S: null, q: (s) => ctrls.querySelector(s), val: (n) => ctrls.querySelector(`[name="${n}"]`), run };
+        const fail = (m) => { err.textContent = m; err.hidden = false; };
+        function load(file) {
+          err.hidden = true;
+          if (!file) return;
+          const bad = checkFile(file);
+          if (bad) return fail(bad);
+          const r = new FileReader();
+          r.onerror = () => fail("Couldn't read this file. Please try again.");
+          r.onload = () => {
+            const im = new Image();
+            im.onerror = () => fail("This image couldn't be opened. It may be damaged or in a format your browser can't read.");
+            im.onload = () => {
+              const type = TYPES.includes(file.type) ? file.type : /png$/i.test(file.name) ? "image/png" : /webp$/i.test(file.name) ? "image/webp" : "image/jpeg";
+              ws.S = { img: im, w: im.naturalWidth, h: im.naturalHeight, type, ext: EXT[type], size: file.size, url: r.result, name: file.name.replace(/\.[^.]+$/, "") || "image" };
+              ctrls.innerHTML = cfg.controls;
+              q(".x-fname").textContent = file.name;
+              q(".x-orig").textContent = `${ws.S.w} × ${ws.S.h} px · ${fmtSize(file.size)}`;
+              drop.hidden = true; edit.hidden = false;
+              if (cfg.init) cfg.init(ws);
+              if (!cfg.manual) run(true);
+            };
+            im.src = r.result;
+          };
+          r.readAsDataURL(file);
+        }
+        let timer;
+        function run(now) { clearTimeout(timer); timer = setTimeout(go, now === true ? 0 : 150); }
+        function go() {
+          if (!ws.S) return;
+          spin.hidden = false; dl.classList.add("is-busy"); err.hidden = true;
+          setTimeout(() => {
+            try {
+              const r = cfg.process(ws.S, ws);
+              const url = r.canvas.toDataURL(r.mime, r.q);
+              if (!url || url.length < 30) throw new Error("The image is too large for your browser to process. Try smaller dimensions.");
+              const got = url.slice(5, url.indexOf(";")), want = EXT[r.mime].toUpperCase();
+              let note = "";
+              if (got !== r.mime) {
+                if (r.strict) throw new Error(`Your browser can't create ${want} files. Please choose another format.`);
+                note = `Your browser can't create ${want} files, so this was saved as ${(EXT[got] || "png").toUpperCase()}.`;
+              }
+              const ext = EXT[got] || "png", size = dataSize(url);
+              img.src = url; dl.href = url; dl.download = `${ws.S.name}-${cfg.suffix}.${ext}`;
+              info.textContent = `Result: ${r.canvas.width} × ${r.canvas.height} px · ${fmtSize(size)} · ${ext.toUpperCase()}`;
+              const x = cfg.after ? cfg.after(ws.S, size) : null;
+              extra.className = "x-extra" + (x && x.warn ? " is-warn" : "");
+              extra.innerHTML = [note, x && x.html].filter(Boolean).join(" ");
+              extra.querySelectorAll("a[data-orig]").forEach((a) => { a.href = ws.S.url; a.download = `${ws.S.name}.${ws.S.ext}`; });
+              ws.result = { url, size, ext };
+            } catch (e) {
+              fail((e && e.message) || "Something went wrong while processing this image. Please try again.");
+              img.removeAttribute("src"); dl.removeAttribute("href"); info.textContent = ""; extra.innerHTML = ""; ws.result = null;
+            } finally {
+              spin.hidden = true; dl.classList.remove("is-busy");
+            }
+          }, 30);
+        }
+        input.addEventListener("change", () => load(input.files[0]));
+        drop.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); input.click(); } });
+        ["dragenter", "dragover"].forEach((ev) => drop.addEventListener(ev, (e) => { e.preventDefault(); drop.classList.add("is-over"); }));
+        ["dragleave", "drop"].forEach((ev) => drop.addEventListener(ev, (e) => { e.preventDefault(); drop.classList.remove("is-over"); }));
+        drop.addEventListener("drop", (e) => load(e.dataTransfer.files[0]));
+        dl.addEventListener("click", (e) => { if (!dl.getAttribute("href")) e.preventDefault(); });
+        ctrls.addEventListener("input", (e) => {
+          const o = ctrls.querySelector(`[data-out="${e.target.name}"]`);
+          if (o) o.textContent = e.target.value;
+          if (cfg.onInput) cfg.onInput(e.target, ws);
+          run();
+        });
+        ctrls.addEventListener("click", (e) => { const b = e.target.closest("[data-act]"); if (b && cfg.onAct && cfg.onAct(b.dataset.act, b, ws) !== false) run(); });
+        q(".x-reset").addEventListener("click", () => {
+          clearTimeout(timer); ws.S = ws.result = null; input.value = ""; ctrls.innerHTML = cfg.controls;
+          img.removeAttribute("src"); dl.removeAttribute("href"); info.textContent = ""; extra.innerHTML = "";
+          err.hidden = true; edit.hidden = true; drop.hidden = false; drop.focus();
+        });
+        ws.load = load;
+        mount.ws = ws;
+        return ws;
+      }
+      const lbl = (text, name, val) => `<span>${text}: <b data-out="${name}">${val}</b></span>`;
+      const clearOn = (ws) => { const o = ws.q(".x-chip.is-on"); if (o) o.classList.remove("is-on"); };
+
+      /* ===== Tools ===== */
+      function toolResizer(m) {
+        const P = [["Instagram Post", 1080, 1080], ["Instagram Story", 1080, 1920], ["YouTube Thumbnail", 1280, 720], ["Facebook Cover", 820, 312], ["Passport", 413, 531], ["HD", 1920, 1080]];
+        return workspace(m, {
+          suffix: "resized",
+          controls: `<div class="x-row"><label>Width (px)<input type="number" name="w" min="1" max="10000" inputmode="numeric"></label><label>Height (px)<input type="number" name="h" min="1" max="10000" inputmode="numeric"></label></div>
+            <label class="x-check"><input type="checkbox" name="lock" checked> Keep aspect ratio</label>
+            <p class="x-lbl">Quick scale</p><div class="x-chips">${[25, 50, 75].map((p) => `<button type="button" class="x-chip" data-act="pct" data-v="${p}">${p}%</button>`).join("")}</div>
+            <p class="x-lbl">Presets</p><div class="x-chips">${P.map(([n, w, h]) => `<button type="button" class="x-chip" data-act="preset" data-w="${w}" data-h="${h}">${n}<small>${w} × ${h}</small></button>`).join("")}</div>
+            <label>When the shape changes<select name="fit"><option value="crop">Crop to fill (no stretching)</option><option value="stretch">Stretch to fit</option></select></label>`,
+          init(ws) { ws.val("w").value = ws.S.w; ws.val("h").value = ws.S.h; },
+          onInput(el, ws) {
+            const S = ws.S, w = ws.val("w"), h = ws.val("h"), lock = ws.val("lock").checked;
+            if (lock && (el.name === "w" || el.name === "lock") && +w.value > 0) h.value = Math.max(1, Math.round((w.value * S.h) / S.w));
+            else if (lock && el.name === "h" && +h.value > 0) w.value = Math.max(1, Math.round((h.value * S.w) / S.h));
+            if (el.name !== "fit") clearOn(ws);
+          },
+          onAct(a, b, ws) {
+            const S = ws.S; clearOn(ws); b.classList.add("is-on");
+            if (a === "pct") { ws.val("lock").checked = true; ws.val("w").value = Math.max(1, Math.round((S.w * b.dataset.v) / 100)); ws.val("h").value = Math.max(1, Math.round((S.h * b.dataset.v) / 100)); }
+            else { ws.val("lock").checked = false; ws.val("w").value = b.dataset.w; ws.val("h").value = b.dataset.h; }
+          },
+          process(S, ws) {
+            const w = Math.round(+ws.val("w").value), h = Math.round(+ws.val("h").value);
+            if (!(w >= 1 && h >= 1)) throw new Error("Please enter a width and height of at least 1 pixel.");
+            if (w > 10000 || h > 10000) throw new Error("Width and height can be at most 10,000 pixels.");
+            const png = S.type === "image/png", [c, x] = canvasOf(w, h, !png);
+            let sx = 0, sy = 0, sw = S.w, sh = S.h;
+            if (ws.val("fit").value === "crop") { const r = w / h; if (sw / sh > r) { sw = sh * r; sx = (S.w - sw) / 2; } else { sh = sw / r; sy = (S.h - sh) / 2; } }
+            x.drawImage(S.img, sx, sy, sw, sh, 0, 0, w, h);
+            return { canvas: c, mime: png ? "image/png" : "image/jpeg", q: 0.92 };
+          },
+        });
+      }
+      function toolCompressor(m) {
+        return workspace(m, {
+          suffix: "compressed",
+          controls: `<label>${lbl("Quality", "q", 70)}<input type="range" name="q" min="10" max="100" value="70"></label>
+            <label>Max width (optional, px)<input type="number" name="mw" min="1" max="10000" inputmode="numeric" placeholder="Keep original width"></label>
+            <label>Output format<select name="f"><option value="image/jpeg">JPEG</option><option value="image/webp">WEBP (smaller)</option></select></label>`,
+          process(S, ws) {
+            const mw = Math.round(+ws.val("mw").value), f = ws.val("f").value;
+            let w = S.w, h = S.h;
+            if (mw > 0 && mw < w) { h = Math.max(1, Math.round((h * mw) / w)); w = mw; }
+            const [c, x] = canvasOf(w, h, f === "image/jpeg");
+            x.drawImage(S.img, 0, 0, w, h);
+            return { canvas: c, mime: f, q: ws.val("q").value / 100 };
+          },
+          after(S, size) {
+            const pct = Math.round((Math.abs(S.size - size) / S.size) * 100);
+            return size <= S.size
+              ? { html: `Before <b>${fmtSize(S.size)}</b> → After <b>${fmtSize(size)}</b> · <span class="x-good">${pct}% saved</span>` }
+              : { warn: 1, html: `The compressed file (${fmtSize(size)}) is ${pct}% larger than your original (${fmtSize(S.size)}). Try a lower quality or a max width, or <a data-orig>download the original</a>.` };
+          },
+        });
+      }
+      function toolConverter(m) {
+        const showQ = (ws) => { ws.q(".x-qw").hidden = ws.val("f").value === "image/png"; };
+        return workspace(m, {
+          suffix: "converted",
+          controls: `<label>Convert to<select name="f"><option value="image/jpeg">JPG</option><option value="image/png">PNG</option><option value="image/webp">WEBP</option></select></label>
+            <label class="x-qw">${lbl("Quality", "q", 90)}<input type="range" name="q" min="10" max="100" value="90"></label>
+            <p class="x-hint">JPG has no transparency, so transparent areas become white.</p>`,
+          init(ws) { ws.val("f").value = ws.S.type === "image/jpeg" ? "image/png" : "image/jpeg"; showQ(ws); },
+          onInput(el, ws) { showQ(ws); },
+          process(S, ws) {
+            const f = ws.val("f").value, [c, x] = canvasOf(S.w, S.h, f === "image/jpeg");
+            x.drawImage(S.img, 0, 0);
+            return { canvas: c, mime: f, q: ws.val("q").value / 100, strict: true };
+          },
+        });
+      }
+      function toolRotate(m) {
+        const state = (ws) => { const S = ws.S; ws.q(".x-state").textContent = `Rotation ${S.rot}°${S.fh ? " · flipped horizontally" : ""}${S.fv ? " · flipped vertically" : ""}`; };
+        return workspace(m, {
+          suffix: "rotated",
+          controls: `<div class="x-chips">
+              <button type="button" class="x-chip" data-act="rl">${ic("rotate", 18)} Rotate left 90°</button>
+              <button type="button" class="x-chip" data-act="rr"><span style="display:inline-block;transform:scaleX(-1)">${ic("rotate", 18)}</span> Rotate right 90°</button>
+              <button type="button" class="x-chip" data-act="fh">${ic("flip", 18)} Flip horizontal</button>
+              <button type="button" class="x-chip" data-act="fv"><span style="display:inline-block;transform:rotate(90deg)">${ic("flip", 18)}</span> Flip vertical</button></div>
+            <p class="x-state" aria-live="polite"></p>`,
+          init(ws) { Object.assign(ws.S, { rot: 0, fh: false, fv: false }); state(ws); },
+          onAct(a, b, ws) {
+            const S = ws.S;
+            if (a === "rl") S.rot = (S.rot + 270) % 360; else if (a === "rr") S.rot = (S.rot + 90) % 360;
+            else if (a === "fh") S.fh = !S.fh; else if (a === "fv") S.fv = !S.fv;
+            state(ws);
+          },
+          process(S) {
+            const side = S.rot % 180 !== 0, w = side ? S.h : S.w, h = side ? S.w : S.h;
+            const [c, x] = canvasOf(w, h, S.type === "image/jpeg");
+            x.translate(w / 2, h / 2); x.scale(S.fh ? -1 : 1, S.fv ? -1 : 1); x.rotate((S.rot * Math.PI) / 180);
+            x.drawImage(S.img, -S.w / 2, -S.h / 2);
+            return { canvas: c, mime: S.type, q: 0.92 };
+          },
+        });
+      }
+
+      /* ===== Pure helpers (tested) ===== */
+      const cropMove = (R, x, y, W, H) => ({ ...R, x: Math.min(Math.max(0, x), W - R.w), y: Math.min(Math.max(0, y), H - R.h) });
+      function cropResize(d, x, y, ar, W, H) {
+        const mw = d.sx > 0 ? W - d.ax : d.ax, mh = d.sy > 0 ? H - d.ay : d.ay, min = Math.min(16, mw, mh);
+        let w = Math.min(Math.max(min, (x - d.ax) * d.sx), mw), h = Math.min(Math.max(min, (y - d.ay) * d.sy), mh);
+        if (ar) { if (w / h > ar) w = h * ar; else h = w / ar; }
+        return { x: d.sx > 0 ? d.ax : d.ax - w, y: d.sy > 0 ? d.ay : d.ay - h, w, h };
+      }
+      function cropFit(ar, W, H) {
+        let w = W, h = H;
+        if (ar) { h = W / ar; if (h > H) { h = H; w = H * ar; } }
+        w *= 0.8; h *= 0.8;
+        return { x: (W - w) / 2, y: (H - h) / 2, w, h };
+      }
+      function fxMatrix(ops) {
+        let M = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0];
+        for (const [n, v] of ops) {
+          let A, o = 0, s = n === "saturate" ? v : 1 - v;
+          if (n === "brightness" || n === "contrast") { A = [v, 0, 0, 0, v, 0, 0, 0, v]; if (n === "contrast") o = (0.5 - 0.5 * v) * 255; }
+          else if (n === "sepia") A = [.393 + .607 * s, .769 - .769 * s, .189 - .189 * s, .349 - .349 * s, .686 + .314 * s, .168 - .168 * s, .272 - .272 * s, .534 - .534 * s, .131 + .869 * s];
+          else A = [.213 + .787 * s, .715 - .715 * s, .072 - .072 * s, .213 - .213 * s, .715 + .285 * s, .072 - .072 * s, .213 - .213 * s, .715 - .715 * s, .072 + .928 * s];
+          const N = [];
+          for (let i = 0; i < 3; i++) for (let j = 0; j < 4; j++) { let t = j === 3 ? o : 0; for (let k = 0; k < 3; k++) t += A[i * 3 + k] * M[k * 4 + j]; N.push(t); }
+          M = N;
+        }
+        return M;
+      }
+      function applyMatrix(p, M) {
+        for (let i = 0; i < p.length; i += 4) {
+          const r = p[i], g = p[i + 1], b = p[i + 2];
+          p[i] = M[0] * r + M[1] * g + M[2] * b + M[3]; p[i + 1] = M[4] * r + M[5] * g + M[6] * b + M[7]; p[i + 2] = M[8] * r + M[9] * g + M[10] * b + M[11];
+        }
+      }
+      function frameBox(w, h, bw, fr) {
+        const m = Math.min(w, h);
+        let l = bw, t = bw, b = bw;
+        if (fr === "polaroid") { l = t = Math.max(bw, Math.round(m * 0.05)); b = l + Math.round(m * 0.2); }
+        return { l, t, W: w + 2 * l, H: h + t + b, rad: fr === "round" ? Math.round(m * 0.06) : 0 };
+      }
+      const PAGE = { a4: [595.28, 841.89], letter: [612, 792] };
+      function pdfLayout(w, h, ps, or, mg) {
+        let pw, ph;
+        if (ps === "fit") { const k = Math.min(0.75, 14000 / Math.max(w, h)); pw = w * k + 2 * mg; ph = h * k + 2 * mg; }
+        else { [pw, ph] = PAGE[ps]; if (or === "landscape" || (or === "auto" && w > h)) [pw, ph] = [ph, pw]; }
+        const s = Math.min((pw - 2 * mg) / w, (ph - 2 * mg) / h), dw = w * s, dh = h * s;
+        return { pw, ph, dw, dh, x: (pw - dw) / 2, y: (ph - dh) / 2 };
+      }
+      function buildPdf(pages) {
+        const enc = (s) => Uint8Array.from(s, (c) => c.charCodeAt(0) & 255), f = (v) => +v.toFixed(2), parts = [], offs = [];
+        let len = 0;
+        const put = (p) => { const b = typeof p === "string" ? enc(p) : p; parts.push(b); len += b.length; };
+        const obj = (n, body, stream) => { offs[n] = len; put(`${n} 0 obj\n${body}\n`); if (stream) { put("stream\n"); put(stream); put("\nendstream\n"); } put("endobj\n"); };
+        put("%PDF-1.4\n"); put(new Uint8Array([37, 226, 227, 207, 211, 10]));
+        obj(1, "<< /Type /Catalog /Pages 2 0 R >>");
+        obj(2, `<< /Type /Pages /Kids [${pages.map((_, i) => `${3 + i * 3} 0 R`).join(" ")}] /Count ${pages.length} >>`);
+        pages.forEach((p, i) => {
+          const o = 3 + i * 3, cs = `q ${f(p.dw)} 0 0 ${f(p.dh)} ${f(p.x)} ${f(p.y)} cm /Im0 Do Q`;
+          obj(o, `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${f(p.pw)} ${f(p.ph)}] /Resources << /XObject << /Im0 ${o + 1} 0 R >> /ProcSet [/PDF /ImageC] >> /Contents ${o + 2} 0 R >>`);
+          obj(o + 1, `<< /Type /XObject /Subtype /Image /Width ${p.iw} /Height ${p.ih} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${p.jpg.length} >>`, p.jpg);
+          obj(o + 2, `<< /Length ${cs.length} >>`, enc(cs));
+        });
+        const xref = len, size = offs.length;
+        put(`xref\n0 ${size}\n0000000000 65535 f \n${offs.slice(1).map((o) => `${String(o).padStart(10, "0")} 00000 n \n`).join("")}trailer\n<< /Size ${size} /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF\n`);
+        const out = new Uint8Array(len);
+        let at = 0;
+        parts.forEach((b) => { out.set(b, at); at += b.length; });
+        return out;
+      }
+      const fromB64 = (u) => { const s = atob(u.slice(u.indexOf(",") + 1)), b = new Uint8Array(s.length); for (let i = 0; i < s.length; i++) b[i] = s.charCodeAt(i); return b; };
+      const toB64 = (b) => { let s = ""; for (let i = 0; i < b.length; i += 32768) s += String.fromCharCode.apply(null, b.subarray(i, i + 32768)); return btoa(s); };
+      /* ===== end pure ===== */
+
+      function toolCropper(m) {
+        const AR = [["Free", 0], ["Square", 1, "1:1"], ["Portrait", 4 / 5, "4:5"], ["Portrait", 3 / 4, "3:4"], ["Landscape", 16 / 9, "16:9"], ["Landscape", 4 / 3, "4:3"]];
+        let R = null, ar = 0, drag = null;
+        const ws = workspace(m, {
+          suffix: "cropped", manual: true,
+          top: `<div class="x-crop"><canvas tabindex="0" role="img" aria-label="Crop area. Drag to move, drag a corner to resize, or use the arrow keys."></canvas></div>`,
+          controls: `<p class="x-lbl">Aspect ratio</p><div class="x-chips">${AR.map(([n, v, l], i) => `<button type="button" class="x-chip${i ? "" : " is-on"}" data-act="ar" data-v="${v}">${n}${l ? `<small>${l}</small>` : ""}</button>`).join("")}</div>
+            <p class="x-state x-csize" aria-live="polite"></p>
+            <button type="button" class="x-btn x-primary" data-act="crop">${ic("crop", 20)} Crop</button>
+            <p class="x-hint">Drag inside the box to move it, or drag a corner to resize.</p>`,
+          init(ws) { ar = 0; R = cropFit(0, ws.S.w, ws.S.h); draw(); m.querySelector(".x-info").textContent = "Tap Crop to see the result here."; },
+          onAct(a, b, ws) {
+            if (a === "crop") return;
+            clearOn(ws); b.classList.add("is-on"); ar = +b.dataset.v;
+            if (ar) R = cropFit(ar, ws.S.w, ws.S.h);
+            draw(); return false;
+          },
+          process(S) {
+            const x0 = Math.round(R.x), y0 = Math.round(R.y), w = Math.max(1, Math.min(S.w - x0, Math.round(R.w))), h = Math.max(1, Math.min(S.h - y0, Math.round(R.h)));
+            const [c, x] = canvasOf(w, h, S.type === "image/jpeg");
+            x.drawImage(S.img, x0, y0, w, h, 0, 0, w, h);
+            return { canvas: c, mime: S.type, q: 0.92 };
+          },
+        });
+        const cv = m.querySelector(".x-crop canvas"), cx = cv.getContext("2d");
+        function draw() {
+          const S = ws.S;
+          if (!S || !R || !cv.isConnected) return;
+          const box = cv.parentNode, k = Math.min((box.clientWidth - 24 || 600) / S.w, Math.max(240, innerHeight * 0.6) / S.h, 1), d = devicePixelRatio || 1;
+          const w = Math.max(1, Math.round(S.w * k)), h = Math.max(1, Math.round(S.h * k));
+          if (cv.width !== Math.round(w * d) || cv.height !== Math.round(h * d)) { cv.width = Math.round(w * d); cv.height = Math.round(h * d); cv.style.width = w + "px"; cv.style.height = h + "px"; }
+          cx.setTransform(d * k, 0, 0, d * k, 0, 0);
+          cx.clearRect(0, 0, S.w, S.h); cx.drawImage(S.img, 0, 0);
+          cx.fillStyle = "rgba(11,27,63,.55)"; cx.beginPath(); cx.rect(0, 0, S.w, S.h); cx.rect(R.x, R.y, R.w, R.h); cx.fill("evenodd");
+          cx.lineWidth = 2 / k; cx.strokeStyle = "#fff"; cx.strokeRect(R.x, R.y, R.w, R.h);
+          const hs = 14 / k;
+          cx.fillStyle = "#fff"; cx.strokeStyle = "#2563FF";
+          [[R.x, R.y], [R.x + R.w, R.y], [R.x, R.y + R.h], [R.x + R.w, R.y + R.h]].forEach(([a, b]) => { cx.fillRect(a - hs / 2, b - hs / 2, hs, hs); cx.strokeRect(a - hs / 2, b - hs / 2, hs, hs); });
+          m.querySelector(".x-csize").textContent = `Crop size: ${Math.round(R.w)} × ${Math.round(R.h)} px`;
+        }
+        const pt = (e) => { const b = cv.getBoundingClientRect(); return [((e.clientX - b.left) / b.width) * ws.S.w, ((e.clientY - b.top) / b.height) * ws.S.h]; };
+        cv.addEventListener("pointerdown", (e) => {
+          if (!ws.S || !R) return;
+          const [x, y] = pt(e), tol = (24 * ws.S.w) / cv.getBoundingClientRect().width;
+          const cs = [[R.x, R.y], [R.x + R.w, R.y], [R.x, R.y + R.h], [R.x + R.w, R.y + R.h]];
+          const i = cs.findIndex(([a, b]) => Math.abs(a - x) < tol && Math.abs(b - y) < tol);
+          if (i >= 0) drag = { ax: cs[3 - i][0], ay: cs[3 - i][1], sx: i % 2 ? 1 : -1, sy: i > 1 ? 1 : -1 };
+          else if (x > R.x && x < R.x + R.w && y > R.y && y < R.y + R.h) drag = { mx: x - R.x, my: y - R.y };
+          else return;
+          cv.setPointerCapture(e.pointerId); e.preventDefault();
+        });
+        cv.addEventListener("pointermove", (e) => {
+          if (!drag) return;
+          const [x, y] = pt(e), S = ws.S;
+          R = "mx" in drag ? cropMove(R, x - drag.mx, y - drag.my, S.w, S.h) : cropResize(drag, x, y, ar, S.w, S.h);
+          draw();
+        });
+        ["pointerup", "pointercancel"].forEach((ev) => cv.addEventListener(ev, () => (drag = null)));
+        cv.addEventListener("keydown", (e) => {
+          const v = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] }[e.key];
+          if (!v || !R) return;
+          e.preventDefault();
+          const st = Math.max(1, Math.round(ws.S.w / (e.shiftKey ? 20 : 100)));
+          R = cropMove(R, R.x + v[0] * st, R.y + v[1] * st, ws.S.w, ws.S.h); draw();
+        });
+        addEventListener("resize", draw);
+        return ws;
+      }
+
+      function toolEditor(m) {
+        const FX = { none: ["None", []], grayscale: ["Grayscale", [["grayscale", 1]]], sepia: ["Sepia", [["sepia", 1]]],
+          vintage: ["Vintage", [["sepia", 0.45], ["contrast", 0.9], ["brightness", 1.05], ["saturate", 0.85]], "rgba(255,190,110,.18)"],
+          warm: ["Warm", [["sepia", 0.15], ["saturate", 1.15]], "rgba(255,140,40,.2)"], cool: ["Cool", [["saturate", 0.9]], "rgba(40,120,255,.2)"],
+          vivid: ["Vivid", [["saturate", 1.6], ["contrast", 1.15]]] };
+        const POS = [["br", "Bottom right"], ["bl", "Bottom left"], ["tr", "Top right"], ["tl", "Top left"], ["c", "Center"]];
+        let FOK;
+        const filterOK = () => {
+          if (FOK === undefined) try { const [, x] = canvasOf(1, 1); x.filter = "grayscale(1)"; x.fillStyle = "#f00"; x.fillRect(0, 0, 1, 1); const p = x.getImageData(0, 0, 1, 1).data; FOK = p[0] === p[1]; } catch (e) { FOK = false; }
+          return FOK;
+        };
+        const range = (t, n, min, max, v) => `<label>${lbl(t, n, v)}<input type="range" name="${n}" min="${min}" max="${max}" value="${v}"></label>`;
+        return workspace(m, {
+          suffix: "edited",
+          controls: `${range("Brightness (%)", "b", 0, 200, 100)}${range("Contrast (%)", "c", 0, 200, 100)}${range("Saturation (%)", "s", 0, 200, 100)}
+            <p class="x-lbl">Filter</p><div class="x-chips">${Object.entries(FX).map(([k, v]) => `<button type="button" class="x-chip${k === "none" ? " is-on" : ""}" data-act="fx" data-v="${k}">${v[0]}</button>`).join("")}</div>
+            <p class="x-lbl">Border</p>${range("Width (px)", "bw", 0, 60, 0)}
+            <div class="x-row"><label>Colour<input type="color" name="bc" value="#ffffff"></label><label>Frame<select name="fr"><option value="solid">Solid</option><option value="round">Rounded</option><option value="polaroid">Polaroid</option></select></label></div>
+            <p class="x-lbl">Watermark</p><label>Text<input type="text" name="wt" maxlength="60" placeholder="e.g. © Your name"></label>
+            <div class="x-row">${range("Size (%)", "wz", 2, 20, 6)}${range("Opacity (%)", "wo", 10, 100, 60)}</div>
+            <div class="x-row"><label>Colour<input type="color" name="wc" value="#ffffff"></label><label>Position<select name="wp">${POS.map(([v, t]) => `<option value="${v}">${t}</option>`).join("")}</select></label></div>
+            <label>Save as<select name="f"><option value="image/jpeg">JPG</option><option value="image/png">PNG</option></select></label>`,
+          init(ws) { ws.S.fx = "none"; ws.val("f").value = ws.S.type === "image/png" ? "image/png" : "image/jpeg"; },
+          onAct(a, b, ws) { clearOn(ws); b.classList.add("is-on"); ws.S.fx = b.dataset.v; },
+          process(S, ws) {
+            const v = (n) => ws.val(n).value, png = v("f") === "image/png", P = FX[S.fx];
+            const ops = [["brightness", v("b") / 100], ["contrast", v("c") / 100], ["saturate", v("s") / 100], ...P[1]];
+            const [f, fx] = canvasOf(S.w, S.h);
+            if (filterOK()) { fx.filter = ops.map(([n, x]) => `${n}(${x})`).join(" "); fx.drawImage(S.img, 0, 0); fx.filter = "none"; }
+            else {
+              fx.drawImage(S.img, 0, 0);
+              if (ops.some(([n, x]) => (n === "grayscale" || n === "sepia" ? x : x !== 1))) { const d = fx.getImageData(0, 0, S.w, S.h); applyMatrix(d.data, fxMatrix(ops)); fx.putImageData(d, 0, 0); }
+            }
+            if (P[2]) {
+              fx.globalCompositeOperation = "overlay"; fx.fillStyle = P[2]; fx.fillRect(0, 0, S.w, S.h);
+              fx.globalCompositeOperation = "destination-in"; fx.drawImage(S.img, 0, 0); fx.globalCompositeOperation = "source-over";
+            }
+            const bw = +v("bw"), fr = v("fr"), B = frameBox(S.w, S.h, bw, fr), [c, x] = canvasOf(B.W, B.H, !png);
+            const rr = (a, b, w, h, r) => { r = Math.min(r, w / 2, h / 2); x.beginPath(); x.moveTo(a + r, b); x.arcTo(a + w, b, a + w, b + h, r); x.arcTo(a + w, b + h, a, b + h, r); x.arcTo(a, b + h, a, b, r); x.arcTo(a, b, a + w, b, r); x.closePath(); };
+            x.fillStyle = v("bc");
+            if (B.rad) {
+              if (bw) { rr(0, 0, B.W, B.H, B.rad + B.l); x.fill(); }
+              x.save(); rr(B.l, B.t, S.w, S.h, B.rad); x.clip(); x.drawImage(f, B.l, B.t); x.restore();
+            } else {
+              if (bw || fr === "polaroid") x.fillRect(0, 0, B.W, B.H);
+              x.drawImage(f, B.l, B.t);
+            }
+            f.width = f.height = 0;
+            const wt = v("wt").trim();
+            if (wt) {
+              const px = Math.max(8, Math.round((Math.min(S.w, S.h) * v("wz")) / 100)), pad = Math.round(px * 0.6), p = v("wp"), C = p === "c", Rt = p[1] === "r", Bt = p[0] === "b";
+              x.font = `600 ${px}px system-ui, -apple-system, "Segoe UI", Roboto, sans-serif`;
+              x.globalAlpha = v("wo") / 100; x.fillStyle = v("wc"); x.shadowColor = "rgba(0,0,0,.35)"; x.shadowBlur = px * 0.15;
+              x.textAlign = C ? "center" : Rt ? "right" : "left"; x.textBaseline = C ? "middle" : Bt ? "bottom" : "top";
+              x.fillText(wt, C ? B.l + S.w / 2 : Rt ? B.l + S.w - pad : B.l + pad, C ? B.t + S.h / 2 : Bt ? B.t + S.h - pad : B.t + pad, S.w - 2 * pad);
+              x.globalAlpha = 1; x.shadowBlur = 0;
+            }
+            return { canvas: c, mime: v("f"), q: 0.92, strict: true };
+          },
+        });
+      }
+
+      function toolPdf(m) {
+        m.innerHTML = `<div class="x-ws">
+          <label class="x-drop" tabindex="0"><input type="file" multiple accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp" class="x-sr" tabindex="-1" aria-label="Choose images">
+            <span class="x-ic">${ic("upload", 28)}</span><strong>Drop images here or <u>tap to choose</u></strong>
+            <span class="x-note">JPG, PNG or WEBP · <b>up to 20 images, max 20 MB each</b></span><span class="x-note">Processed on your device — nothing is uploaded.</span></label>
+          <p class="x-err" role="alert" hidden></p>
+          <div class="x-edit" hidden>
+            <p class="x-src"><b class="x-fname"></b><span class="x-orig"></span></p>
+            <div class="x-grid"><div class="x-ctrls">
+              <label>Page size<select name="ps"><option value="a4">A4</option><option value="letter">Letter</option><option value="fit">Fit to image</option></select></label>
+              <label>Orientation<select name="or"><option value="portrait">Portrait</option><option value="landscape">Landscape</option><option value="auto" selected>Auto</option></select></label>
+              <label>Margin<select name="mg"><option value="0">None</option><option value="18" selected>Small</option><option value="36">Medium</option></select></label>
+              <button type="button" class="x-btn x-add">+ Add more images</button>
+              <button type="button" class="x-btn x-primary x-make">${ic("file", 20)} Create PDF</button></div>
+              <div><div class="x-prev x-plist"><ol class="x-thumbs" aria-label="Pages in order"></ol><div class="x-spin" hidden role="status" aria-label="Processing"></div></div>
+                <p class="x-state" aria-live="polite"></p><p class="x-info" aria-live="polite"></p>
+                <div class="x-actions"><a class="x-btn x-primary x-dl is-busy" download="toolora.pdf">${ic("download", 20)} Download PDF</a><a class="x-btn x-dl2" download="toolora.pdf" hidden>Backup download</a><button type="button" class="x-btn x-reset">Reset</button></div>
+                <p class="x-hint">If the download doesn't start, tap Backup download, or long-press it and choose to save the file.</p></div></div></div></div>`;
+        const q = (s) => m.querySelector(s), input = q("input[type=file]"), drop = q(".x-drop"), err = q(".x-err"), edit = q(".x-edit"), list = q(".x-thumbs"),
+          spin = q(".x-spin"), prog = q(".x-state"), info = q(".x-info"), dl = q(".x-dl"), dl2 = q(".x-dl2"), make = q(".x-make"), addB = q(".x-add");
+        let items = [], url = "";
+        const fail = (msg) => { err.textContent = msg; err.hidden = false; };
+        const busy = (on) => { spin.hidden = !on; make.classList.toggle("is-busy", on); addB.classList.toggle("is-busy", on); };
+        function clearOut() {
+          if (url) URL.revokeObjectURL(url);
+          url = ""; dl.removeAttribute("href"); dl2.removeAttribute("href"); dl.classList.add("is-busy"); dl2.hidden = true; info.textContent = "";
+        }
+        function render() {
+          clearOut();
+          if (!items.length) { edit.hidden = true; drop.hidden = false; return; }
+          drop.hidden = true; edit.hidden = false; addB.disabled = items.length >= 20;
+          q(".x-fname").textContent = `${items.length} image${items.length > 1 ? "s" : ""}`;
+          q(".x-orig").textContent = `${fmtSize(items.reduce((a, b) => a + b.size, 0))} in total · up to 20`;
+          list.innerHTML = items.map((it, i) => `<li><img src="${it.url}" alt=""><span class="x-tn"><b>${esc(it.name)}</b>Page ${i + 1} · ${it.w} × ${it.h} px · ${fmtSize(it.size)}</span>
+            <span class="x-tb"><button type="button" class="x-ib" data-act="up" data-i="${i}" aria-label="Move ${esc(it.name)} up"${i ? "" : " disabled"}>↑</button><button type="button" class="x-ib" data-act="down" data-i="${i}" aria-label="Move ${esc(it.name)} down"${i < items.length - 1 ? "" : " disabled"}>↓</button><button type="button" class="x-ib" data-act="rm" data-i="${i}" aria-label="Remove ${esc(it.name)}">×</button></span></li>`).join("");
+        }
+        const readImg = (file) => new Promise((ok, no) => {
+          const r = new FileReader();
+          r.onerror = () => no();
+          r.onload = () => { const im = new Image(); im.onerror = () => no(); im.onload = () => ok({ img: im, url: r.result, name: file.name, size: file.size, w: im.naturalWidth, h: im.naturalHeight }); im.src = r.result; };
+          r.readAsDataURL(file);
+        });
+        async function add(files) {
+          err.hidden = true;
+          let fl = [...files];
+          const bad = [], room = 20 - items.length;
+          if (fl.length > room) { bad.push(`A PDF can hold up to 20 images, so ${fl.length - room} ${fl.length - room > 1 ? "were" : "was"} skipped.`); fl = fl.slice(0, Math.max(0, room)); }
+          busy(true);
+          try {
+            for (const f of fl) {
+              const msg = checkFile(f);
+              if (msg) { bad.push(msg); continue; }
+              try { items.push(await readImg(f)); } catch (e) { bad.push(`“${f.name}” couldn't be opened. It may be damaged.`); }
+            }
+          } finally { busy(false); render(); input.value = ""; if (bad.length) fail(bad.join(" ")); }
+        }
+        async function build() {
+          if (!items.length) return fail("Add at least one image first.");
+          err.hidden = true; clearOut(); busy(true);
+          try {
+            const sel = (n) => q(`[name="${n}"]`).value, pages = [];
+            for (let i = 0; i < items.length; i++) {
+              prog.textContent = `Processing image ${i + 1} of ${items.length}`;
+              await new Promise((r) => setTimeout(r, 30));
+              const it = items[i], k = Math.min(1, 4000 / Math.max(it.w, it.h)), w = Math.max(1, Math.round(it.w * k)), h = Math.max(1, Math.round(it.h * k));
+              const [c, x] = canvasOf(w, h, true);
+              x.drawImage(it.img, 0, 0, w, h);
+              const u = c.toDataURL("image/jpeg", 0.85);
+              c.width = c.height = 0;
+              if (!u.startsWith("data:image/jpeg")) throw new Error(`Your browser couldn't turn “${it.name}” into a JPEG for the PDF.`);
+              pages.push({ jpg: fromB64(u), iw: w, ih: h, ...pdfLayout(it.w, it.h, sel("ps"), sel("or"), +sel("mg")) });
+            }
+            prog.textContent = "Writing PDF…";
+            await new Promise((r) => setTimeout(r, 30));
+            const bytes = buildPdf(pages);
+            url = URL.createObjectURL(new Blob([bytes], { type: "application/pdf" }));
+            dl.href = url; dl2.href = "data:application/pdf;base64," + toB64(bytes); dl2.hidden = false; dl.classList.remove("is-busy");
+            info.textContent = `PDF ready: ${pages.length} page${pages.length > 1 ? "s" : ""} · ${fmtSize(bytes.length)}`;
+          } catch (e) {
+            clearOut(); fail((e && e.message) || "Something went wrong while making the PDF. Try fewer or smaller images.");
+          } finally { busy(false); prog.textContent = ""; }
+        }
+        input.addEventListener("change", () => add(input.files));
+        drop.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); input.click(); } });
+        [["dragenter", 1], ["dragover", 1], ["dragleave", 0], ["drop", 0]].forEach(([ev, on]) => m.addEventListener(ev, (e) => { e.preventDefault(); drop.classList.toggle("is-over", !!on); }));
+        m.addEventListener("drop", (e) => add(e.dataTransfer.files));
+        addB.addEventListener("click", () => input.click());
+        make.addEventListener("click", build);
+        m.querySelectorAll("select").forEach((s) => s.addEventListener("change", clearOut));
+        [dl, dl2].forEach((a) => a.addEventListener("click", (e) => { if (!a.getAttribute("href")) e.preventDefault(); }));
+        list.addEventListener("click", (e) => {
+          const b = e.target.closest("[data-act]");
+          if (!b) return;
+          const i = +b.dataset.i, j = b.dataset.act === "up" ? i - 1 : i + 1;
+          if (b.dataset.act === "rm") items.splice(i, 1); else [items[i], items[j]] = [items[j], items[i]];
+          render();
+          const nb = list.querySelector(`[data-act="${b.dataset.act}"][data-i="${b.dataset.act === "rm" ? Math.min(i, items.length - 1) : j}"]`);
+          if (nb && !nb.disabled) nb.focus();
+        });
+        q(".x-reset").addEventListener("click", () => { items = []; input.value = ""; err.hidden = true; render(); drop.focus(); });
+      }
+
+      window.Toolora = { tools: TOOLS, byId, cats: CATS, ic, esc, fmtSize, toB64, route };
+      route();
+    </script>
+    <script src="pdf-tools.js"></script>
+    <script src="video-tools.js"></script>
+    <script src="text-tools.js"></script>
+    <script src="creator-tools.js"></script>
+    <script src="creator-tools-2.js"></script>
+    <script src="ui-fx.js"></script>
+  </body>
+</html>
