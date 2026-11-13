@@ -37,6 +37,7 @@
       tone(200, 190, 0, 0.12, 0.06, "square");
     }
   };
+  FX.tone = tone;
   window.ToolFX = FX;
 
   function pop(el) {

@@ -397,7 +397,7 @@
     "compress-pdf": { render: toolCompress, added: 12, description: "Make a PDF smaller by turning its pages into compressed images.",
       info: { steps: ["Add one PDF, up to 50 MB.", "Choose Low, Medium or Strong compression.", "Tap Compress PDF and watch each page being compressed.", "Check the size saved, then download."],
         about: `Compress PDF redraws each page as a JPEG image at a lower resolution: Low at 150 DPI, Medium at 110 DPI and Strong at 80 DPI. That shrinks heavy scanned documents a lot, but text won't be selectable afterwards, so it's best for scans. ${PRIV}`,
-        faq: [["Which level should I choose?", "Low for documents you'll print, Medium for email, Strong for the smallest file when quality matters less."], ["Why did my file get bigger?", "PDFs made of plain text are already tiny, and images of their pages can be larger. When that happens Toolora tells you and offers your original file."], ["Will links and text still work?", "No. Each page becomes an image, so text, links and form fields are flattened."]] } },
+        faq: [["Which level should I choose?", "Low for documents you'll print, Medium for email, Strong for the smallest file when quality matters less."], ["Why did my file get bigger?", "PDFs made of plain text are already tiny, and images of their pages can be larger. When that happens SugoiTools tells you and offers your original file."], ["Will links and text still work?", "No. Each page becomes an image, so text, links and form fields are flattened."]] } },
   };
   /* The organizer lives at #/organize-pdf; the old id still resolves to it. */
   if (byId["pdf-page-organizer"]) { byId["organize-pdf"] = byId["pdf-page-organizer"]; byId["organize-pdf"].id = "organize-pdf"; }
