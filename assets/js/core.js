@@ -73,7 +73,7 @@
         text: { name: "Text", title: "Text tools", icon: "type", desc: "Count words and characters, change text case and make fancy Unicode text, in your browser." },
         creator: { name: "Creator", title: "Creator tools", icon: "chat", desc: "Captions, titles, hashtags, descriptions and bios for social media, in your browser." },
       };
-      const POPULAR = ["image-compressor", "image-resizer", "merge-pdf", "age-calculator", "loan-calculator", "qr-code-generator", "word-character-counter", "typing-speed-test"];
+      const POPULAR = ["long-to-shorts", "image-compressor", "image-resizer", "merge-pdf", "age-calculator", "loan-calculator", "qr-code-generator", "word-character-counter", "typing-speed-test"];
 
       const FMT = "JPG, PNG or WEBP, up to 20 MB";
       /* Tool registry: add a tool by adding an entry. Live tools need render(mount) and info. */
@@ -127,6 +127,7 @@
           info: { steps: ["Add a JPG, PNG or WEBP image.", "Adjust brightness, contrast and saturation, or tap a filter.", "Add a border or frame and an optional text watermark.", "Choose JPG or PNG and download."],
             about: "The Photo Editor covers the quick fixes most photos need: lighten a dark shot, add punch with contrast and saturation, or give it a look with one-tap filters such as Vintage, Warm or Vivid. Add a solid, rounded or Polaroid-style frame and a text watermark in any corner. The preview updates as you go and everything happens in your browser.",
             faq: [["Can it remove the background?", "Background removal isn't included yet — free browser-only options are too heavy for phones. It's planned for a later version."], ["Why choose PNG instead of JPG?", "PNG keeps transparency, including the corners of a Rounded frame, and is lossless. JPG files are much smaller for photos."], ["Will the watermark cover my photo?", "It sits inside the photo at the position you choose. Lower the opacity to make it subtle, or pick a corner to keep it out of the way."]] } },
+        { id: "long-to-shorts", name: "Long Video to Shorts", category: "video", icon: "play", status: "live", added: 43, description: "Turn one long video into vertical 30–60 second Shorts and Reels with captions, hook titles and music.", keywords: "long video to shorts reels clipper clip maker youtube shorts instagram reels captions vertical 9:16" },
         { id: "video-resizer", name: "Video Resizer", category: "video", icon: "resize", status: "live", description: "Change a video's resolution or reshape it for Reels, Shorts and TikTok.", keywords: "video resize reels tiktok" },
         { id: "video-cropper", name: "Video Cropper", category: "video", icon: "crop", status: "live", description: "Crop the frame of a video to any shape, right in your browser.", keywords: "video crop" },
         { id: "video-trimmer", name: "Video Trimmer", category: "video", icon: "trim", status: "live", description: "Cut the start and end off a video, right in your browser.", keywords: "video trim cut clip" },

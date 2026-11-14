@@ -37,6 +37,7 @@ e = lambda s: html.escape(str(s), quote=True)
 # Which tool script(s) each tool needs, in load order (core, i18n and ui-fx load on every page).
 def tool_scripts(t):
     i, c = t["id"], t["category"]
+    if t.get("embed") == "clipper": return ["clipper.js"]
     if c == "image": return ["image-tools.js"]
     if c == "pdf": return ["pdf-tools.js"]
     if c == "video": return ["video-tools.js"]
@@ -52,6 +53,7 @@ PRIVACY = {
     "file-cdn": "Your files are processed on your device and never uploaded. Only the open-source processing engine is downloaded when the tool opens.",
     "text": "Everything runs in your browser; nothing you type is sent anywhere or saved.",
     "calc": "Everything is worked out in your browser; nothing is sent anywhere or saved.",
+    "clipper": "Your video is cut and rendered on your device and never uploaded. Only the open-source caption model and render engine are downloaded when you use them.",
     "yt": "Thumbnails load straight from YouTube's public image server (img.youtube.com). SugoiTools stores nothing.",
 }
 
@@ -115,7 +117,7 @@ def head(title, desc, canonical, root, extra="", robots=None, base_script=""):
   </head>"""
 
 
-TICKER = ["tick.tools|42 free tools", "tick.nosign|No sign-up", "tick.local|Files never leave your device", "tick.phone|Works on phone",
+TICKER = ["tick.tools|43 free tools", "tick.nosign|No sign-up", "tick.local|Files never leave your device", "tick.phone|Works on phone",
           "tick.langs|8 languages", "tick.qr|New: QR Code Generator", "tick.typing|New: Typing Speed Test", "tick.emi|New: EMI &amp; SIP Calculators"]
 
 
@@ -187,6 +189,12 @@ def crumbs_ld(items):
             "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": n, "item": u} for i, (n, u) in enumerate(items)]}
 
 
+def embed_html(t):
+    """A tool with "embed" ships its own markup (tools/<embed>/app.html, made by tools/clipper/make_clipper.py)."""
+    if not t.get("embed"): return ""
+    return open(os.path.join(HERE, t["embed"], "app.html"), encoding="utf-8").read()
+
+
 # ---- Tool pages -----------------------------------------------------------------------
 def tool_page(t):
     root, c = "../", CATS[t["category"]]
@@ -206,7 +214,7 @@ def tool_page(t):
           <div class="x-thead">{tile(t["category"], t["icon"], 28)}<h1>{e(t["name"])}</h1></div>
           <p class="x-lead" data-tdesc>{e(t["description"])}</p>
           <p class="x-privacy"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11h14v10H5zM8 11V7a4 4 0 0 1 8 0v4"/></svg>{e(PRIVACY[t["privacy"]])}</p>
-          <div id="x-tool"><noscript><p class="x-lead">This tool runs in your browser and needs JavaScript turned on.</p></noscript></div>
+          <div id="x-tool">{embed_html(t)}<noscript><p class="x-lead">This tool runs in your browser and needs JavaScript turned on.</p></noscript></div>
           <div class="x-about">
             <section class="x-box" aria-labelledby="x-h-how"><h2 id="x-h-how">{tile(t["category"], "list", 18)}<span data-i18n="tool.how">How to use</span></h2><ol class="x-how">{steps}</ol></section>
             <section class="x-box" aria-labelledby="x-h-about"><h2 id="x-h-about">{tile(t["category"], "info", 18)}About {e(t["name"])}</h2><p>{e(t["about"])}</p></section>
@@ -216,6 +224,7 @@ def tool_page(t):
           <div class="x-wrap"><section class="x-sec"><h2 data-i18n="tool.related">Related tools</h2><div class="x-cards">{related}</div></section></div>
         </div>
       """
+    if t.get("embed"): ld = f'<link rel="stylesheet" href="{root}assets/css/{t["embed"]}.css" />\n    ' + ld
     return (head(title, t["meta_description"], canonical, root, ld) +
             f'\n  <body data-page="tool" data-tool="{t["id"]}" data-root="{root}">' + shell_top(root) + body + shell_bottom(root, tool_scripts(t)))
 

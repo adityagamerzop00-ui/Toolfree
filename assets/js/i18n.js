@@ -110,14 +110,14 @@
   /* Ticker bar: tools, nosign, local, phone, langs, qr, typing, emi */
   var TK = ["tools", "nosign", "local", "phone", "langs", "qr", "typing", "emi"];
   var TL = {
-    en: ["42 free tools", "No sign-up", "Files never leave your device", "Works on phone", "8 languages", "New: QR Code Generator", "New: Typing Speed Test", "New: EMI & SIP Calculators"],
-    hi: ["42 मुफ़्त टूल", "साइन-अप की ज़रूरत नहीं", "फ़ाइलें आपके डिवाइस से बाहर नहीं जातीं", "फ़ोन पर चलता है", "8 भाषाएँ", "नया: QR कोड जनरेटर", "नया: टाइपिंग स्पीड टेस्ट", "नया: EMI और SIP कैलकुलेटर"],
-    es: ["42 herramientas gratis", "Sin registro", "Tus archivos nunca salen de tu dispositivo", "Funciona en el móvil", "8 idiomas", "Nuevo: generador de códigos QR", "Nuevo: test de velocidad de escritura", "Nuevo: calculadoras EMI y SIP"],
-    pt: ["42 ferramentas grátis", "Sem cadastro", "Seus arquivos nunca saem do seu dispositivo", "Funciona no celular", "8 idiomas", "Novo: gerador de QR Code", "Novo: teste de velocidade de digitação", "Novo: calculadoras EMI e SIP"],
-    fr: ["42 outils gratuits", "Sans inscription", "Vos fichiers ne quittent jamais votre appareil", "Fonctionne sur mobile", "8 langues", "Nouveau : générateur de QR code", "Nouveau : test de vitesse de frappe", "Nouveau : calculateurs EMI et SIP"],
-    ar: ["42 أداة مجانية", "بدون تسجيل", "ملفاتك لا تغادر جهازك أبدًا", "يعمل على الهاتف", "8 لغات", "جديد: مولّد رموز QR", "جديد: اختبار سرعة الكتابة", "جديد: حاسبات EMI و SIP"],
+    en: ["43 free tools", "No sign-up", "Files never leave your device", "Works on phone", "8 languages", "New: QR Code Generator", "New: Typing Speed Test", "New: EMI & SIP Calculators"],
+    hi: ["43 मुफ़्त टूल", "साइन-अप की ज़रूरत नहीं", "फ़ाइलें आपके डिवाइस से बाहर नहीं जातीं", "फ़ोन पर चलता है", "8 भाषाएँ", "नया: QR कोड जनरेटर", "नया: टाइपिंग स्पीड टेस्ट", "नया: EMI और SIP कैलकुलेटर"],
+    es: ["43 herramientas gratis", "Sin registro", "Tus archivos nunca salen de tu dispositivo", "Funciona en el móvil", "8 idiomas", "Nuevo: generador de códigos QR", "Nuevo: test de velocidad de escritura", "Nuevo: calculadoras EMI y SIP"],
+    pt: ["43 ferramentas grátis", "Sem cadastro", "Seus arquivos nunca saem do seu dispositivo", "Funciona no celular", "8 idiomas", "Novo: gerador de QR Code", "Novo: teste de velocidade de digitação", "Novo: calculadoras EMI e SIP"],
+    fr: ["43 outils gratuits", "Sans inscription", "Vos fichiers ne quittent jamais votre appareil", "Fonctionne sur mobile", "8 langues", "Nouveau : générateur de QR code", "Nouveau : test de vitesse de frappe", "Nouveau : calculateurs EMI et SIP"],
+    ar: ["43 أداة مجانية", "بدون تسجيل", "ملفاتك لا تغادر جهازك أبدًا", "يعمل على الهاتف", "8 لغات", "جديد: مولّد رموز QR", "جديد: اختبار سرعة الكتابة", "جديد: حاسبات EMI و SIP"],
     bn: ["৪২টি ফ্রি টুল", "সাইন-আপ লাগে না", "ফাইল আপনার ডিভাইসের বাইরে যায় না", "ফোনে চলে", "৮টি ভাষা", "নতুন: QR কোড জেনারেটর", "নতুন: টাইপিং স্পিড টেস্ট", "নতুন: EMI ও SIP ক্যালকুলেটর"],
-    id: ["42 alat gratis", "Tanpa daftar", "File tidak pernah keluar dari perangkat Anda", "Berfungsi di ponsel", "8 bahasa", "Baru: Pembuat Kode QR", "Baru: Tes Kecepatan Mengetik", "Baru: Kalkulator EMI & SIP"],
+    id: ["43 alat gratis", "Tanpa daftar", "File tidak pernah keluar dari perangkat Anda", "Berfungsi di ponsel", "8 bahasa", "Baru: Pembuat Kode QR", "Baru: Tes Kecepatan Mengetik", "Baru: Kalkulator EMI & SIP"],
   };
   Object.keys(TL).forEach(function (code) { TK.forEach(function (k, i) { S[code]["tick." + k] = TL[code][i]; }); });
   S.ar["tools.zero"] = "لا أدوات"; S.ar["tools.two"] = "أداتان"; S.ar["tools.few"] = "{n} أدوات"; S.ar["tools.many"] = "{n} أداة";

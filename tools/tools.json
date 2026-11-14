@@ -259,6 +259,44 @@
   "privacy": "file"
  },
  {
+  "id": "long-to-shorts",
+  "slug": "long-video-to-shorts",
+  "name": "Long Video to Shorts",
+  "title_name": "Long Video to Shorts Maker",
+  "category": "video",
+  "icon": "play",
+  "embed": "clipper",
+  "privacy": "clipper",
+  "description": "Turn one long video into vertical 30–60 second Shorts and Reels with captions, hook titles and music.",
+  "meta_description": "Cut a long video into vertical YouTube Shorts and Instagram Reels: auto captions in Hindi and English, hook titles, background music and a post kit. Free, no watermark, no upload.",
+  "steps": [
+   "Add a long video (MP4, MOV or WEBM) or tap a preset such as Gaming or Podcast.",
+   "Pick the clip length, how many clips and the 9:16 crop, then choose caption and title styles.",
+   "Tap Make clips, keep the tab open, then download or share each Short."
+  ],
+  "about": "SugoiTools' Long Video to Shorts maker finds good moments in a long video and turns them into vertical 9:16 clips for YouTube Shorts, Instagram Reels and Moj. It can add auto captions (Whisper, running in your browser), a hook title, effects and background music, and builds a post kit with titles, a description and hashtags. Everything is rendered on your device, so your video is never uploaded and there is no watermark.",
+  "faq": [
+   [
+    "Is my video uploaded anywhere?",
+    "No. The clips are cut and rendered in your browser. Only the open-source caption model and render engine are downloaded the first time you use them."
+   ],
+   [
+    "Which browsers work?",
+    "The latest Chrome or Edge on a computer or Android phone works best. Keep the tab open while clips are being made."
+   ],
+   [
+    "Can it make captions in Hindi?",
+    "Yes. Captions can be in Hindi, English or Hinglish, and the tool's own buttons switch to Hindi too."
+   ]
+  ],
+  "related": [
+   "video-trimmer",
+   "video-resizer",
+   "video-cropper",
+   "video-compressor"
+  ]
+ },
+ {
   "id": "video-resizer",
   "slug": "resize-video",
   "name": "Video Resizer",

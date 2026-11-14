@@ -7,6 +7,7 @@ window.SUGOI_SLUGS = {
  "image-cropper": "crop-image",
  "images-to-pdf": "image-to-pdf",
  "photo-editor": "photo-editor",
+ "long-to-shorts": "long-video-to-shorts",
  "video-resizer": "resize-video",
  "video-cropper": "crop-video",
  "video-trimmer": "trim-video",

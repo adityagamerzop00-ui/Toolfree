@@ -21,6 +21,8 @@
     "tool.video-resizer.desc": "किसी भी प्लेटफ़ॉर्म के लिए वीडियो का आकार बदलें।",
     "tool.video-cropper.name": "वीडियो क्रॉपर",
     "tool.video-cropper.desc": "वीडियो का फ़्रेम क्रॉप करें।",
+    "tool.long-to-shorts.name": "लंबे वीडियो से शॉर्ट्स",
+    "tool.long-to-shorts.desc": "एक लंबे वीडियो से कैप्शन, हुक टाइटल और म्यूज़िक वाले 30–60 सेकंड के शॉर्ट्स और रील्स बनाएँ।",
     "tool.video-trimmer.name": "वीडियो ट्रिमर",
     "tool.video-trimmer.desc": "क्लिप की शुरुआत और अंत काटें।",
     "tool.video-compressor.name": "वीडियो कंप्रेसर",

@@ -1,0 +1,533 @@
+<div class="lts-app" id="tool">
+          <div class="lts-top">
+            <div class="lts-top__row"><h1 data-li18n="title">Long to Shorts</h1><div class="lts-top__acts"><div class="lts-seg lts-lang" role="radiogroup" aria-label="Language / भाषा"><input type="radio" name="uilang" id="langEn" value="en" checked /><label for="langEn" lang="en">EN</label><input type="radio" name="uilang" id="langHi" value="hi" /><label for="langHi" lang="hi">हिंदी</label></div><button class="lts-btn lts-snd" type="button" id="uisnd" aria-pressed="true" aria-label="UI sounds on" title="UI sounds">🔊</button></div></div>
+            <p data-li18n="tagline">Turn one long video into short vertical clips of 30 to 60 seconds, right in your browser.</p>
+            <ul class="lts-badges" aria-label="Features"><li class="pill" data-li18n="b1">No signup</li><li class="pill" data-li18n="b2">No watermark</li><li class="pill" data-li18n="b3">100% free</li><li class="pill" data-li18n="b4">Runs on your device</li></ul>
+          </div>
+
+          <div class="lts-presets" role="group" aria-labelledby="presetsh">
+            <p class="lts-label" id="presetsh" data-li18n="presets">One-tap presets</p>
+            <div class="lts-presets__row" id="presets">
+              <button class="lts-preset" type="button" data-preset="gaming" aria-pressed="false"><span aria-hidden="true">🎮</span><b data-li18n="pGaming">Gaming</b></button>
+              <button class="lts-preset" type="button" data-preset="podcast" aria-pressed="false"><span aria-hidden="true">🎙️</span><b data-li18n="pPodcast">Podcast</b></button>
+              <button class="lts-preset" type="button" data-preset="motivation" aria-pressed="false"><span aria-hidden="true">🔥</span><b data-li18n="pMotivation">Motivation</b></button>
+              <button class="lts-preset" type="button" data-preset="story" aria-pressed="false"><span aria-hidden="true">📖</span><b data-li18n="pStory">Hindi Story</b></button>
+              <button class="lts-preset" type="button" data-preset="custom" aria-pressed="true"><span aria-hidden="true">⚙️</span><b data-li18n="pCustom">Custom</b></button>
+            </div>
+          </div>
+
+          <div class="lts-alert lts-hidden" id="unsupported" role="alert">
+            <strong>This browser can't make clips</strong>
+            <p>It is missing video recording (MediaRecorder or canvas capture). Open this page in the latest Chrome or Edge on a desktop computer or an Android phone.</p>
+          </div>
+
+          <nav aria-label="Steps">
+            <ol class="lts-stepper">
+              <li><button type="button" data-go="1" aria-current="step" data-li18n="sUpload"><span class="lts-n">1</span>Upload</button></li>
+              <li><button type="button" data-go="2" disabled data-li18n="sSettings"><span class="lts-n">2</span>Settings</button></li>
+              <li><button type="button" data-go="3" disabled data-li18n="sStyle"><span class="lts-n">3</span>Style</button></li>
+              <li><button type="button" data-go="4" disabled data-li18n="sClips"><span class="lts-n">4</span>Clips</button></li>
+            </ol>
+          </nav>
+
+          <!-- Step 1 -->
+          <section class="lts-panel" id="step1" aria-labelledby="h1s">
+            <h2 id="h1s" data-li18n="sUpload">Upload</h2>
+            <label class="lts-drop" id="drop" for="file">
+              <span class="lts-drop__icon" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg>
+              </span>
+              <span class="lts-drop__title" data-li18n="dropT">Drop a long video here</span>
+              <span class="lts-btn lts-btn--primary" data-li18n="choose">Choose video</span>
+              <span class="lts-hint" data-li18n="dropH">MP4, MOV or WebM from your device. It never leaves it.</span>
+              <input class="lts-sr" type="file" id="file" accept="video/*" />
+            </label>
+            <div class="lts-alert lts-hidden" id="err1" role="alert"></div>
+
+            <div class="lts-hidden" id="loaded">
+              <div class="lts-panel">
+                <video class="lts-video" id="preview" controls playsinline preload="auto"></video>
+                <div class="lts-card">
+                  <p class="lts-name" id="fname"></p>
+                  <section class="stats">
+                    <div class="stat"><span class="stat__fig" id="fdur">00:00:00</span><span class="stat__label" data-li18n="durL">Duration</span></div>
+                    <div class="stat"><span class="stat__fig" id="fclips">0</span><span class="stat__label" data-li18n="clipsAbout">Clips, about</span></div>
+                  </section>
+                  <p class="lts-note" id="fsum"></p>
+                </div>
+                <button class="lts-btn lts-btn--primary lts-btn--block" type="button" data-go="2" data-li18n="nextSettings">Next: settings</button>
+                <button class="lts-btn lts-btn--block" type="button" id="another" data-li18n="another">Choose another video</button>
+              </div>
+            </div>
+          </section>
+
+          <!-- Step 2 -->
+          <section class="lts-panel lts-hidden" id="step2" aria-labelledby="h2s">
+            <h2 id="h2s" data-li18n="sSettings">Settings</h2>
+
+            <fieldset class="lts-field">
+              <legend data-li18n="clipLen">Clip length</legend>
+              <div class="lts-seg">
+                <input type="radio" name="len" id="len30" value="30" /><label for="len30">30s</label>
+                <input type="radio" name="len" id="len45" value="45" /><label for="len45">45s</label>
+                <input type="radio" name="len" id="len60" value="60" checked /><label for="len60">60s</label>
+                <input class="lts-hidden" type="radio" name="len" id="lenR" value="range" data-min="20" data-max="45" /><label class="lts-hidden" for="lenR" id="lenRl">20–45s</label>
+              </div>
+              <p class="lts-hint lts-hidden" id="lenRh" data-li18n="lenRh">Preset range: each clip lands between the two lengths, split evenly.</p>
+            </fieldset>
+
+            <fieldset class="lts-field">
+              <legend data-li18n="format">Format</legend>
+              <div class="lts-seg lts-seg--tall lts-seg--grid">
+                <input type="radio" name="fmt" id="fmtV" value="vertical" checked /><label for="fmtV"><span data-li18n="fV">Vertical 9:16<small data-li18n="fVs">Shorts, Reels</small></span></label>
+                <input type="radio" name="fmt" id="fmtO" value="original" /><label for="fmtO"><span data-li18n="fO">Keep original<small id="origdim">Same shape</small></span></label>
+                <input type="radio" name="fmt" id="fmtC" value="custom" /><label for="fmtC"><span data-li18n="fC">Custom frame<small data-li18n="fCs">Pick the 9:16 area</small></span></label>
+                <input type="radio" name="fmt" id="fmtS" value="split" /><label for="fmtS"><span data-li18n="fS">Split: Webcam + Screen<small data-li18n="fSs">Two frames, 9:16</small></span></label>
+                <input type="radio" name="fmt" id="fmtF" value="face" /><label for="fmtF"><span data-li18n="fF">Auto face follow<small data-li18n="fFs">9:16, tracks the speaker</small></span></label>
+              </div>
+              <p class="lts-hint lts-hidden" id="ffmsg" aria-live="polite"></p>
+            </fieldset>
+
+            <div class="lts-picker lts-hidden" id="picker">
+              <p class="lts-label" id="pickh">Drag the boxes over the video</p>
+              <div class="lts-stage" id="stage">
+                <canvas id="srccanvas" width="640" height="360" role="img" aria-label="Source video frame"></canvas>
+                <div class="lts-box lts-box--a" id="boxA" data-box="A" aria-label="Webcam box"><span class="lts-box__tag">A · Webcam</span><span class="lts-h lts-h--nw" data-h="nw"></span><span class="lts-h lts-h--ne" data-h="ne"></span><span class="lts-h lts-h--sw" data-h="sw"></span><span class="lts-h lts-h--se" data-h="se"></span></div>
+                <div class="lts-box lts-box--b" id="boxB" data-box="B" aria-label="Main screen box"><span class="lts-box__tag">B · Main screen</span><span class="lts-h lts-h--nw" data-h="nw"></span><span class="lts-h lts-h--ne" data-h="ne"></span><span class="lts-h lts-h--sw" data-h="sw"></span><span class="lts-h lts-h--se" data-h="se"></span></div>
+                <div class="lts-box" id="boxC" data-box="C" aria-label="Frame box"><span class="lts-box__tag">9:16 frame</span><span class="lts-h lts-h--nw" data-h="nw"></span><span class="lts-h lts-h--ne" data-h="ne"></span><span class="lts-h lts-h--sw" data-h="sw"></span><span class="lts-h lts-h--se" data-h="se"></span></div>
+              </div>
+              <div class="lts-legend" id="splitlegend"><span style="--lts-c: #ff8a00"><i></i>A · Webcam (top)</span><span style="--lts-c: #2f80ff"><i></i>B · Main screen (bottom)</span></div>
+              <div class="lts-field">
+                <label class="lts-label" for="scrub">Show frame at <span id="scrubt">00:00</span></label>
+                <input class="lts-range" type="range" id="scrub" min="0" max="1000" step="1" value="0" />
+              </div>
+              <p class="lts-hint" id="pickhint" data-li18n="pickhint">Drag a box to move it; drag a corner to resize. Works with touch and mouse.</p>
+            </div>
+
+            <div class="lts-cropbox">
+              <canvas class="lts-preview-canvas" id="cropcanvas" width="180" height="320" aria-label="Live preview of the clip frame" role="img"></canvas>
+              <div class="lts-field lts-hidden" id="splitfield">
+                <label class="lts-label" for="ratio">Split: <span id="ratiot">35% top / 65% bottom</span></label>
+                <input class="lts-range" type="range" id="ratio" min="20" max="50" step="1" value="35" />
+                <div class="lts-ticks" aria-hidden="true"><span>20%</span><span>35%</span><span>50%</span></div>
+                <label class="lts-switch">
+                  <span class="lts-label">Swap top/bottom</span>
+                  <input type="checkbox" role="switch" id="swap" />
+                </label>
+                <p class="lts-hint">Live 9:16 preview. Each box is cover-cropped into its part, never stretched.</p>
+              </div>
+              <p class="lts-hint lts-hidden" id="customhint">Live 9:16 preview of your custom frame.</p>
+              <div class="lts-field" id="cropfield">
+                <label class="lts-label" for="crop" data-li18n="cropPos">Crop position</label>
+                <input class="lts-range" type="range" id="crop" min="0" max="100" step="1" value="50" aria-describedby="croph" />
+                <div class="lts-ticks" aria-hidden="true"><span>Left</span><span>Center</span><span>Right</span></div>
+                <p class="lts-hint" id="croph">Choose which part of the wide frame stays in the 1080×1920 clip.</p>
+              </div>
+            </div>
+
+            <fieldset class="lts-field">
+              <legend data-li18n="partOnly">Only clip part of the video <span class="lts-hint" data-li18n="optional">(optional)</span></legend>
+              <div class="lts-times">
+                <div class="lts-field">
+                  <label class="lts-hint" for="tstart" data-li18n="startT">Start time</label>
+                  <input class="lts-input" id="tstart" type="text" inputmode="decimal" placeholder="00:00:00" autocomplete="off" />
+                </div>
+                <div class="lts-field">
+                  <label class="lts-hint" for="tend" data-li18n="endT">End time</label>
+                  <input class="lts-input" id="tend" type="text" inputmode="decimal" placeholder="00:00:00" autocomplete="off" />
+                </div>
+              </div>
+              <p class="lts-hint" id="timeh" data-li18n="timeh">Use hh:mm:ss or mm:ss. Leave empty for the whole video.</p>
+            </fieldset>
+
+            <div class="lts-field">
+              <label class="lts-label" for="maxclips" data-li18n="maxClips">Max clips</label>
+              <input class="lts-input lts-number" id="maxclips" type="number" min="1" max="200" step="1" value="200" inputmode="numeric" />
+              <p class="lts-hint" data-li18n="maxClipsH">1 to 200 clips per run. A 100-minute video at 30s makes 200.</p>
+            </div>
+
+            <label class="lts-switch">
+              <span><span class="lts-label" data-li18n="numLabel">Add clip number label</span><br /><span class="lts-hint" data-li18n="numLabelH">Shows “Part 1”, “Part 2” at the top</span></span>
+              <input type="checkbox" role="switch" id="label" />
+            </label>
+
+            <div class="lts-field">
+              <label class="lts-label" for="series" data-li18n="seriesL">Series name</label>
+              <input class="lts-input" id="series" type="text" maxlength="60" placeholder="My Series" data-li18n-ph="seriesPh" autocomplete="off" />
+              <p class="lts-hint" data-li18n="seriesH">Files save as “My Series - Part 1.mp4”, in clip order. Post kit titles add “| Part 1”.</p>
+            </div>
+            <label class="lts-switch">
+              <span><span class="lts-label" data-li18n="badgeL">Part badge</span><br /><span class="lts-hint" data-li18n="badgeH">A “Part 1” pill at the top right of each clip</span></span>
+              <input type="checkbox" role="switch" id="badge" />
+            </label>
+
+            <div class="lts-card">
+              <p class="lts-name" id="ssum"></p>
+              <p class="lts-note" id="stime"></p>
+            </div>
+            <button class="lts-btn lts-btn--primary lts-btn--block" type="button" data-go="3" id="toClips" data-li18n="nextStyle">Next: style</button>
+          </section>
+
+          <!-- Step 3: Style -->
+          <section class="lts-panel lts-hidden" id="step3" aria-labelledby="hstyle">
+            <h2 id="hstyle" data-li18n="sStyle">Style</h2>
+
+            <fieldset class="lts-field">
+              <legend data-li18n="captions">Captions</legend>
+              <div class="lts-seg">
+                <input type="radio" name="capsrc" id="srcType" value="type" checked /><label for="srcType" data-li18n="cType">Type</label>
+                <input type="radio" name="capsrc" id="srcFile" value="file" /><label for="srcFile" data-li18n="cFile">Load SRT/VTT</label>
+                <input type="radio" name="capsrc" id="srcAuto" value="auto" /><label for="srcAuto" data-li18n="cAuto">Auto</label>
+              </div>
+              <div class="lts-field lts-hidden" id="autoPane">
+                <div class="lts-times">
+                  <div class="lts-field">
+                    <label class="lts-hint" for="amodel" data-li18n="model">Model</label>
+                    <select class="lts-input" id="amodel">
+                      <option value="onnx-community/whisper-tiny">Tiny (fastest)</option>
+                      <option value="onnx-community/whisper-base" selected>Base (better)</option>
+                    </select>
+                  </div>
+                  <div class="lts-field">
+                    <label class="lts-hint" for="alang" data-li18n="language">Language</label>
+                    <select class="lts-input" id="alang">
+                      <option value="">Auto-detect</option>
+                      <option value="english">English</option>
+                      <option value="hindi">Hindi</option>
+                    </select>
+                  </div>
+                </div>
+                <p class="lts-hint">Hinglish: choose English for Roman-script output.</p>
+                <fieldset class="lts-field">
+                  <legend class="lts-hint" data-li18n="wpc">Words per caption</legend>
+                  <div class="lts-seg">
+                    <input type="radio" name="wpc" id="wpc1" value="1" /><label for="wpc1">1</label>
+                    <input type="radio" name="wpc" id="wpc3" value="3" checked /><label for="wpc3">2–3</label>
+                    <input type="radio" name="wpc" id="wpcL" value="line" /><label for="wpcL">Full line</label>
+                  </div>
+                </fieldset>
+                <div class="lts-times">
+                  <div class="lts-field">
+                    <label class="lts-hint" for="afrom" data-li18n="from">From</label>
+                    <input class="lts-input" id="afrom" type="text" inputmode="decimal" placeholder="00:00" autocomplete="off" />
+                  </div>
+                  <div class="lts-field">
+                    <label class="lts-hint" for="ato" data-li18n="to">To</label>
+                    <input class="lts-input" id="ato" type="text" inputmode="decimal" placeholder="00:00" autocomplete="off" />
+                  </div>
+                </div>
+                <p class="lts-hint" data-li18n="rangeH">Leave empty to use the range from Settings.</p>
+                <button class="lts-btn lts-btn--primary lts-btn--block" type="button" id="agen" data-li18n="agen">Generate captions</button>
+                <div class="lts-card lts-hidden" id="aprog" aria-live="polite">
+                  <div class="lts-progress__line"><span id="aptext">Reading audio…</span><span id="apct"></span></div>
+                  <div class="lts-bar" role="progressbar" aria-label="Caption progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="abar"><span></span></div>
+                  <button class="lts-btn lts-btn--block" type="button" id="acancel" data-li18n="cancel">Cancel</button>
+                </div>
+                <p class="lts-hint">Runs on your device. First run downloads the model (about 80 to 150 MB). Works best in Chrome.</p>
+              </div>
+              <div class="lts-field lts-hidden" id="filePane">
+                <label class="lts-hint" for="subfile">Choose an .srt or .vtt file. Its lines fill the caption list.</label>
+                <input class="lts-input" type="file" id="subfile" accept=".srt,.vtt,text/vtt,application/x-subrip" />
+              </div>
+              <p class="lts-note" id="capmsg" aria-live="polite"></p>
+              <ul class="lts-caps" id="caps"></ul>
+              <div class="lts-row">
+                <button class="lts-btn" type="button" id="addCap" data-li18n="addCap">Add caption</button>
+              </div>
+              <p class="lts-hint" data-li18n="capTimesH">Times are in the source video, as mm:ss or hh:mm:ss, decimals allowed.</p>
+            </fieldset>
+
+            <fieldset class="lts-field">
+              <legend data-li18n="sStyle">Style</legend>
+              <div class="lts-tpls" id="tpls"></div>
+              <p class="lts-hint" data-li18n="tplH">Each tile plays its style live. Font, colours and sliders below fine-tune the pick.</p>
+            </fieldset>
+
+            <div class="lts-stylebox">
+              <canvas id="stylecanvas" width="360" height="640" role="img" aria-label="Preview of the captions on the first frame"></canvas>
+              <div class="lts-controls">
+                <div class="lts-field">
+                  <label class="lts-label" for="cfont" data-li18n="font">Font</label>
+                  <select class="lts-input" id="cfont">
+                    <option>Arial Black</option><option>Impact</option><option>Verdana</option><option>Georgia</option><option>Trebuchet MS</option><option>Courier New</option><option>system-ui</option><option value="Noto Sans Devanagari">Noto Sans Devanagari (Hindi)</option>
+                  </select>
+                </div>
+                <div class="lts-field">
+                  <label class="lts-label" for="csize" data-li18n="size">Size</label>
+                  <input class="lts-range" type="range" id="csize" min="32" max="120" step="1" value="72" />
+                </div>
+                <div class="lts-colors">
+                  <label data-li18n="cText">Text<input type="color" id="ccolor" value="#ffffff" /></label>
+                  <label data-li18n="cHi">Highlight<input type="color" id="chi" value="#ffd400" /></label>
+                  <label data-li18n="cOut">Outline<input type="color" id="cout" value="#000000" /></label>
+                </div>
+                <label class="lts-switch">
+                  <span class="lts-label" data-li18n="upper">UPPERCASE</span>
+                  <input type="checkbox" role="switch" id="cupper" />
+                </label>
+                <div class="lts-field">
+                  <label class="lts-label" for="cpos" data-li18n="ypos">Y position</label>
+                  <input class="lts-range" type="range" id="cpos" min="8" max="92" step="1" value="70" />
+                  <div class="lts-ticks" aria-hidden="true"><span data-li18n="top">Top</span><span data-li18n="middle">Middle</span><span data-li18n="bottom">Bottom</span></div>
+                </div>
+                <div class="lts-field">
+                  <label class="lts-label" for="cmaxw" data-li18n="maxw">Max words per line: <span id="cmaxwv">3</span></label>
+                  <input class="lts-range" type="range" id="cmaxw" min="2" max="6" step="1" value="3" />
+                </div>
+              </div>
+            </div>
+
+            <details class="lts-boost lts-studio" id="boost" open>
+              <summary class="lts-studio__head"><span class="lts-studio__titles"><span class="lts-studio__title" data-li18n="studio">🎬 Clip Studio</span><span class="lts-studio__subt" data-li18n="studioSub">Make every clip catchy: hook, style, music &amp; export</span></span></summary>
+              <div class="lts-boost__body lts-studio__body">
+                <div class="lts-tabs" role="tablist" id="studioTabs" aria-label="Clip Studio">
+                  <button class="lts-tab" type="button" role="tab" id="stab-hook" aria-controls="studio-hook" aria-selected="true" tabindex="0" data-li18n="tabHook">🪝 Hook Title</button>
+                  <button class="lts-tab" type="button" role="tab" id="stab-look" aria-controls="studio-look" aria-selected="false" tabindex="-1" data-li18n="tabLook">✨ Look &amp; Effects</button>
+                  <button class="lts-tab" type="button" role="tab" id="stab-loop" aria-controls="studio-loop" aria-selected="false" tabindex="-1" data-li18n="tabLoop">🔁 Seamless Loop</button>
+                  <button class="lts-tab" type="button" role="tab" id="stab-music" aria-controls="studio-music" aria-selected="false" tabindex="-1" data-li18n="tabMusic">🎵 Music</button>
+                  <button class="lts-tab" type="button" role="tab" id="stab-export" aria-controls="studio-export" aria-selected="false" tabindex="-1" data-li18n="tabExport">📦 Export</button>
+                </div>
+                <div class="lts-studio__panel" id="studio-hook" role="tabpanel" aria-labelledby="stab-hook">
+                  <p class="lts-studio__hint" data-li18n="gHookH">A short line on screen in the first seconds that makes people stay.</p>
+                <div class="lts-field">
+                  <label class="lts-label" for="bhook" data-li18n="hook">Hook title</label>
+                  <div class="lts-boost__row">
+                    <input class="lts-input" id="bhook" type="text" maxlength="80" placeholder="Wait for it 😳" autocomplete="off" />
+                    <button class="lts-btn" type="button" id="bhookAuto" data-li18n="cAuto">Auto</button>
+                  </div>
+                </div>
+                <div class="lts-field">
+                  <label class="lts-label" for="hdur" data-li18n="showFor">Show for: <span id="hdurv">3</span> s</label>
+                  <input class="lts-range" type="range" id="hdur" min="1" max="10" step="0.5" value="3" />
+                </div>
+                <div class="lts-field">
+                  <label class="lts-label" for="hstart" data-li18n="startAt">Start at: <span id="hstartv">0</span> s</label>
+                  <input class="lts-range" type="range" id="hstart" min="0" max="5" step="0.5" value="0" />
+                </div>
+                <fieldset class="lts-field">
+                  <legend class="lts-label" data-li18n="hookPos">Hook position</legend>
+                  <div class="lts-seg">
+                    <input type="radio" name="hpos" id="hposT" value="18" /><label for="hposT" data-li18n="top">Top</label>
+                    <input type="radio" name="hpos" id="hposM" value="50" /><label for="hposM" data-li18n="middle">Middle</label>
+                    <input type="radio" name="hpos" id="hposB" value="80" /><label for="hposB" data-li18n="bottom">Bottom</label>
+                  </div>
+                </fieldset>
+                <div class="lts-field">
+                  <label class="lts-label" for="hy" data-li18n="yoff">Y offset: <span id="hyv">33</span>%</label>
+                  <input class="lts-range" type="range" id="hy" min="0" max="100" step="1" value="33" />
+                  <p class="lts-hint" data-li18n="dragHook">Or drag the hook text up and down in the preview.</p>
+                </div>
+                <div class="lts-field">
+                  <label class="lts-label" for="hcol" data-li18n="textCol">Text colour</label>
+                  <div class="lts-boost__row"><span class="lts-hint" data-li18n="hookText">Hook text</span><input type="color" id="hcol" value="#ffffff" /></div>
+                </div>
+                <div class="lts-field">
+                  <label class="lts-label" for="hbg" data-li18n="bgBox">Background box: <span id="hbgav">60</span>% opacity</label>
+                  <div class="lts-boost__row">
+                    <input class="lts-range" type="range" id="hbga" min="0" max="100" step="5" value="60" aria-label="Background box opacity" />
+                    <input type="color" id="hbg" value="#000000" />
+                  </div>
+                </div>
+                <label class="lts-switch"><span class="lts-label" data-li18n="hout">Outline (black stroke)</span><input type="checkbox" role="switch" id="hout" checked /></label>
+                <div class="lts-field">
+                  <label class="lts-label" for="hsize" data-li18n="hsize">Size: <span id="hsizev">80</span> px</label>
+                  <input class="lts-range" type="range" id="hsize" min="40" max="140" step="2" value="80" />
+                  <p class="lts-hint" data-li18n="hsizeH">Measured on a 1080 px wide frame.</p>
+                </div>
+                <div class="lts-field">
+                  <label class="lts-label" for="hfont" data-li18n="font">Font</label>
+                  <select class="lts-input" id="hfont"><option value="sans">Bold Sans</option><option value="impact">Impact-style</option><option value="round">Rounded</option></select>
+                </div>
+                <div class="lts-field">
+                  <label class="lts-label" for="hanim" data-li18n="anim">Animation</label>
+                  <select class="lts-input" id="hanim"><option value="pop" data-li18n="aPop">Pop</option><option value="fade" data-li18n="aFade">Fade</option><option value="slide" data-li18n="aSlide">Slide down</option><option value="none" data-li18n="aNone">None</option></select>
+                </div>
+                </div>
+                <div class="lts-studio__panel" id="studio-look" role="tabpanel" aria-labelledby="stab-look" hidden>
+                  <p class="lts-studio__hint" data-li18n="gLookH">Extra polish drawn into every clip.</p>
+                  <h3 class="lts-studio__sub" data-li18n="shLook">Look</h3>
+                <label class="lts-switch"><span class="lts-label" data-li18n="pbar">Progress bar</span><input type="checkbox" role="switch" id="bpb" checked /></label>
+                <div class="lts-boost__row">
+                  <select class="lts-input" id="bpbpos" aria-label="Progress bar position"><option value="bottom" data-li18n="bottom">Bottom</option><option value="top" data-li18n="top">Top</option></select>
+                  <input type="color" id="bpbcol" value="#ffd400" aria-label="Progress bar colour" />
+                </div>
+                <label class="lts-switch"><span class="lts-label" data-li18n="blur">Blur background fill</span><input type="checkbox" role="switch" id="bblur" /></label>
+                <p class="lts-hint" data-li18n="blurH">Blur fills the 9:16 frame around a video kept in its original shape.</p>
+                <label class="lts-switch"><span class="lts-label" data-li18n="emoji">Emoji + keyword captions</span><input type="checkbox" role="switch" id="bemoji" /></label>
+                  <h3 class="lts-studio__sub" data-li18n="shMotion">Motion &amp; sound</h3>
+                <label class="lts-switch"><span class="lts-label" data-li18n="zoom">Auto zoom punch-ins</span><input type="checkbox" role="switch" id="bzoom" /></label>
+                <div class="lts-field">
+                  <label class="lts-label" for="bzs" data-li18n="zoomS">Zoom strength: <span id="bzsv">1.15</span>×</label>
+                  <input class="lts-range" type="range" id="bzs" min="1.05" max="1.3" step="0.01" value="1.15" />
+                </div>
+                <p class="lts-hint" data-li18n="zoomH">Zooms on loud spikes from Analyze video, or on ALL CAPS and “!” words from auto captions.</p>
+                <label class="lts-switch"><span class="lts-label" data-li18n="sfx">Sound effects</span><input type="checkbox" role="switch" id="bsfx" /></label>
+                <div class="lts-boost__row">
+                  <input class="lts-range" type="range" id="bsfxv" min="0" max="1" step="0.05" value="0.6" aria-label="Sound effects volume" />
+                  <button class="lts-btn" type="button" id="bsfxt" data-li18n="test">Test</button>
+                </div>
+                <p class="lts-hint" data-li18n="sfxH">Whoosh on the hook, boom or pop on each zoom. Recorded into the clip.</p>
+                  <h3 class="lts-studio__sub" data-li18n="shSmart">Smart edit</h3>
+                <div class="lts-field">
+                  <label class="lts-label" for="mtop" data-li18n="mtop">Best moments to find (10-30)</label>
+                  <div class="lts-boost__row">
+                    <input class="lts-input" id="mtop" type="number" min="10" max="30" value="15" />
+                    <button class="lts-btn" type="button" id="manalyze" data-li18n="analyze">Analyze video</button>
+                  </div>
+                </div>
+                <div class="lts-hidden" id="mprog" aria-live="polite">
+                  <p class="lts-hint" id="mmsg"></p>
+                  <div class="lts-bar" role="progressbar" aria-label="Analysis progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="mbar"><span></span></div>
+                </div>
+                <ol class="lts-moments" id="mlist"></ol>
+                <video class="lts-hidden lts-mvid" id="mvid" playsinline controls></video>
+                <button class="lts-btn lts-hidden" type="button" id="mmake" data-li18n="mmake">Make clips from best moments</button>
+                <p class="lts-hint lts-hidden" id="mused"><span data-li18n="mused">The clip list uses your best moments.</span> <button class="lts-btn" type="button" id="mclear" data-li18n="mclear">Use regular parts</button></p>
+                <label class="lts-switch"><span class="lts-label" data-li18n="cut">Cut silences</span><input type="checkbox" role="switch" id="bcut" /></label>
+                <div class="lts-field">
+                  <label class="lts-label" for="bgap" data-li18n="gap">Minimum silence to cut: <span id="bgapv">0.6</span>s</label>
+                  <input class="lts-range" type="range" id="bgap" min="0.4" max="2" step="0.1" value="0.6" />
+                </div>
+                </div>
+                <div class="lts-studio__panel" id="studio-loop" role="tabpanel" aria-labelledby="stab-loop" hidden>
+                  <p class="lts-studio__hint" data-li18n="gLoopH">Loops keep people watching again and again.</p>
+                <label class="lts-switch"><span class="lts-label" data-li18n="loop">Seamless loop</span><input type="checkbox" role="switch" id="bloop" /></label>
+                <div class="lts-field">
+                  <label class="lts-label" for="bloopn" data-li18n="xfade">Crossfade length: <span id="bloopnv">0.6</span>s</label>
+                  <input class="lts-range" type="range" id="bloopn" min="0.3" max="1.5" step="0.1" value="0.6" />
+                  <p class="lts-hint" data-li18n="loopH">The ending fades into the opening frames and sound, so the clip flows straight back to its start on replay.</p>
+                </div>
+                </div>
+                <div class="lts-studio__panel" id="studio-music" role="tabpanel" aria-labelledby="stab-music" hidden>
+                  <p class="lts-studio__hint" data-li18n="gMusicH">Free built-in tracks or your own file, mixed under your voice.</p>
+                <fieldset class="lts-field lts-mus" id="bmus">
+                  <legend class="lts-label" data-li18n="music">Background music</legend>
+                  <div class="lts-mus__row"><label><input type="radio" name="bmus" value="off" checked /><span><span data-li18n="mOff">Off</span></span></label></div>
+                  <div class="lts-mus__row"><label><input type="radio" name="bmus" value="lofi" /><span><span data-li18n="mLofi">Lo-fi Chill</span><small>80 BPM · D minor</small></span></label><button class="lts-btn" type="button" data-mprev="lofi" data-li18n="mPrev">▶ Preview</button></div>
+                  <div class="lts-mus__row"><label><input type="radio" name="bmus" value="hype" /><span><span data-li18n="mHype">Hype Beat</span><small>128 BPM · C♯ minor</small></span></label><button class="lts-btn" type="button" data-mprev="hype" data-li18n="mPrev">▶ Preview</button></div>
+                  <div class="lts-mus__row"><label><input type="radio" name="bmus" value="cine" /><span><span data-li18n="mCine">Cinematic</span><small>90 BPM · A minor</small></span></label><button class="lts-btn" type="button" data-mprev="cine" data-li18n="mPrev">▶ Preview</button></div>
+                  <div class="lts-mus__row"><label><input type="radio" name="bmus" value="pop" /><span><span data-li18n="mPop">Upbeat Pop</span><small>115 BPM · G major</small></span></label><button class="lts-btn" type="button" data-mprev="pop" data-li18n="mPrev">▶ Preview</button></div>
+                  <div class="lts-mus__row"><label><input type="radio" name="bmus" value="susp" /><span><span data-li18n="mSusp">Suspense</span><small>70 BPM · E Phrygian</small></span></label><button class="lts-btn" type="button" data-mprev="susp" data-li18n="mPrev">▶ Preview</button></div>
+                  <div class="lts-mus__row"><label><input type="radio" name="bmus" value="up" /><span><span data-li18n="mUp">Upload your own</span><small id="bmusn" data-li18n="mUpH">MP3, M4A, WAV or OGG</small></span></label><button class="lts-btn" type="button" id="bmusc" data-li18n="mChoose">Choose file</button><button class="lts-btn" type="button" data-mprev="up" id="bmusp" disabled data-li18n="mPrev">▶ Preview</button></div>
+                  <input class="lts-sr" type="file" id="bmusf" accept="audio/*" aria-label="Music file" />
+                </fieldset>
+                <div class="lts-field">
+                  <label class="lts-label" for="bmusv" data-li18n="mvol">Music volume: <span id="bmusvv">25</span>%</label>
+                  <input class="lts-range" type="range" id="bmusv" min="0" max="100" step="5" value="25" />
+                </div>
+                <label class="lts-switch"><span class="lts-label" data-li18n="duck">Auto-duck under speech</span><input type="checkbox" role="switch" id="bduck" checked /></label>
+                <p class="lts-hint" data-li18n="duckH">Music drops to 30% while someone speaks, then comes back. Fades in over 0.5 s and out over 1 s. Previews are never recorded.</p>
+                  <h3 class="lts-studio__sub" data-li18n="shApp">App sounds</h3>
+                <div class="lts-field">
+                  <label class="lts-label" for="uivol" data-li18n="uivol">App sound volume: <span id="uivolv">40</span>%</label>
+                  <input class="lts-range" type="range" id="uivol" min="0" max="100" step="5" value="40" />
+                  <p class="lts-hint" data-li18n="uivolH">Taps and chimes while you work. Never recorded into clips.</p>
+                </div>
+                </div>
+                <div class="lts-studio__panel" id="studio-export" role="tabpanel" aria-labelledby="stab-export" hidden>
+                  <p class="lts-studio__hint" data-li18n="gExportH">How your clips are rendered and saved.</p>
+                <div class="lts-field">
+                  <label class="lts-label" for="bsave" data-li18n="saveAs">Save as</label>
+                  <select class="lts-input" id="bsave"><option value="mp4" data-li18n="mp4o">MP4 (best for phones)</option><option value="webm">WebM</option></select>
+                </div>
+                <div class="lts-field">
+                  <label class="lts-label" for="bengine" data-li18n="engine">Render engine</label>
+                  <select class="lts-input" id="bengine"><option value="fast" data-li18n="eFast">Fast (recommended)</option><option value="rec" data-li18n="eRec">Compatibility (recording)</option></select>
+                  <p class="lts-hint" data-li18n="engineH">Fast renders faster than real time and always saves MP4. Compatibility records in real time.</p>
+                </div>
+                <div class="lts-field">
+                  <label class="lts-label" for="bquality" data-li18n="quality">Quality</label>
+                  <select class="lts-input" id="bquality"><option value="12000000" data-li18n="qHi">High, 12 Mbps</option><option value="8000000" data-li18n="qMed">Medium, 8 Mbps</option><option value="5000000" data-li18n="qLo">Small, 5 Mbps</option></select>
+                </div>
+                <div class="lts-field">
+                  <label class="lts-label" for="bres" data-li18n="res">Resolution</label>
+                  <select class="lts-input" id="bres"><option value="1080" data-li18n="r1080">Full HD (1080p)</option><option value="720" data-li18n="r720">720p, lighter for phones</option></select>
+                  <p class="lts-hint" data-li18n="resH">720p renders faster and uses less memory. It is picked for you on phones with 4 GB of memory or less.</p>
+                </div>
+                </div>
+              </div>
+            </details>
+
+            <button class="lts-btn lts-btn--primary lts-btn--block" type="button" data-go="4" id="toClips2" data-li18n="nextClips">Next: see clips</button>
+          </section>
+
+          <!-- Step 4 -->
+          <section class="lts-panel lts-hidden" id="step4" aria-labelledby="h3s">
+            <div class="lts-row lts-row--split">
+              <h2 id="h3s" data-li18n="sClips">Clips</h2>
+              <button class="lts-btn" type="button" data-go="2" id="backSettings" data-li18n="backSettings">Change settings</button>
+            </div>
+            <p class="lts-note" data-li18n="harkNote">If downloads are blocked inside the Hark app, open this Page in Chrome using its share link.</p>
+            <p class="lts-note" id="csum"></p>
+            <div class="lts-alert lts-alert--info">
+              <strong data-li18n="rtT">Clips record in real time</strong>
+              <p data-li18n="rtP">Export runs in real time: 100 clips of 30s ≈ 50 minutes. Keep this tab open and in front.</p>
+            </div>
+            <div class="lts-alert lts-hidden" id="hiddenwarn" role="alert">
+              <strong data-li18n="hidT">Keep this tab open while rendering</strong>
+              <p data-li18n="hidP">Rendering pauses while this tab is hidden and carries on when you come back. Keep this tab open and in front until the queue finishes.</p>
+            </div>
+
+            <button class="lts-btn lts-btn--primary lts-btn--block" type="button" id="makeAll">Make all clips</button>
+            <div class="lts-card lts-hidden" id="progress" aria-live="polite">
+              <div class="lts-progress__line"><span id="ptext">Clip 1 of 1</span><span id="peta"></span></div>
+              <div class="lts-bar" role="progressbar" aria-label="Progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="pbar"><span></span></div>
+              <div class="lts-qbtns">
+                <button class="lts-btn" type="button" id="pause">Pause</button>
+                <button class="lts-btn" type="button" id="stop" data-li18n="cancel">Cancel</button>
+              </div>
+            </div>
+            <p class="lts-note" id="cstatus" aria-live="polite"></p>
+            <div class="lts-alert lts-hidden" id="err3" role="alert"></div>
+
+            <div class="lts-row lts-row--split">
+              <p class="lts-note" id="donecount">0 ready</p>
+              <button class="lts-btn" type="button" id="dlAll" disabled data-li18n="dlAll">Download all</button>
+            </div>
+            <ul class="lts-clips" id="clips"></ul>
+            <p class="lts-hint" data-li18n="tapClip">Tap a clip to make only that one.</p>
+          </section>
+
+          <section class="lts-tips-wrap" aria-labelledby="tipsh">
+            <h2 id="tipsh" data-li18n="tips">Tips</h2>
+            <ul class="lts-tips">
+              <li data-li18n="tip1">Works best in Chrome or Edge.</li>
+              <li data-li18n="tip2">Keep the tab open while clips are being made.</li>
+              <li data-li18n="tip3">Your video stays on your device. Nothing is uploaded.</li>
+            </ul>
+          </section>
+        </div>
+<video id="rec" class="lts-offscreen" playsinline preload="auto" aria-hidden="true" tabindex="-1"></video>
+    <video id="thumbv" class="lts-offscreen" playsinline muted preload="auto" aria-hidden="true" tabindex="-1"></video>
+    <video id="stylev" class="lts-offscreen" playsinline muted preload="auto" aria-hidden="true" tabindex="-1"></video>
+    <video id="probev" class="lts-offscreen" playsinline muted preload="metadata" aria-hidden="true" tabindex="-1"></video>
+
+    <dialog class="lts-modal lts-intro" id="welcome" aria-labelledby="welcomeh">
+      <div class="lts-modal__in lts-intro__in">
+        <button class="lts-intro__x" type="button" id="introX" aria-label="Close">✕</button>
+        <p class="lts-kicker" data-li18n="iKick">Free · On-device · No watermark</p>
+        <h2 id="welcomeh" data-li18n="iTitle">Long video in, many Shorts out ✂️</h2>
+        <p class="lts-intro__lead" data-li18n="iLead">Drop one long video and get many ready-to-post Shorts and Reels.</p>
+        <ul class="lts-intro__feats">
+          <li data-li18n="iF1">💬 Auto captions in Hindi, English &amp; Hinglish</li>
+          <li data-li18n="iF2">🪝 Hook titles, effects &amp; background music</li>
+          <li data-li18n="iF3">🔒 Runs on your device. Nothing is uploaded</li>
+          <li data-li18n="iF4">🆓 100% free, no signup, no watermark</li>
+        </ul>
+        <div class="lts-intro__trend">
+          <div class="lts-intro__trendhead"><h3 data-li18n="iTrendT">🔥 Trending now on YouTube &amp; Instagram</h3><span class="lts-intro__stamp" data-li18n="iStamp">Trend tips · updated Nov 2026</span></div>
+          <ol class="lts-intro__trends">
+            <li><b data-li18n="tr1">POV hooks</b><span data-li18n="tr1d">Open with on-screen text like “POV: you…” in the first second.</span></li>
+            <li><b data-li18n="tr2">“Wait for it” endings</b><span data-li18n="tr2d">Tease the payoff early and land it in the last seconds, so people rewatch.</span></li>
+            <li><b data-li18n="tr3">Podcast clips, big captions</b><span data-li18n="tr3d">One strong opinion, word-by-word captions, face centred.</span></li>
+            <li><b data-li18n="tr4">Gaming clutch moments</b><span data-li18n="tr4d">Jump straight to the clutch or the fail, with zoom punch-ins and a hype beat.</span></li>
+            <li><b data-li18n="tr5">Hinglish storytime</b><span data-li18n="tr5d">A personal story told in Hinglish with bold captions keeps people watching.</span></li>
+            <li><b data-li18n="tr6">Before / after</b><span data-li18n="tr6d">Show the result first, then how you got there. Great for edits, setups and fitness.</span></li>
+          </ol>
+          <p class="lts-hint" data-li18n="iTrendNote">Hand-picked formats, not live data. Check what's hot in your own niche too.</p>
+        </div>
+        <p class="lts-intro__ig"><span data-li18n="iIg">Tool in testing. Suggestions or problems? DM us on Instagram</span> <a href="https://www.instagram.com/alex_official._0/" target="_blank" rel="noopener">@alex_official._0</a></p>
+        <button class="lts-btn lts-btn--primary lts-btn--block" type="button" id="welcomeDone" data-li18n="iGo">Start clipping</button>
+      </div>
+    </dialog>
+    <div class="lts-toast" id="toast" role="status" aria-live="polite"></div>

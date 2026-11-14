@@ -213,6 +213,7 @@
   ]
  ],
  "popular": [
+  "long-to-shorts",
   "image-compressor",
   "image-resizer",
   "merge-pdf",
@@ -228,7 +229,7 @@
   "hero.h1": "Free online tools that work",
   "hero.em": "right in your browser",
   "hero.lead": "Edit images, make PDFs and more — fast, private, no sign-up.",
-  "hero.kicker": "42 free tools · nothing uploaded",
+  "hero.kicker": "43 free tools · nothing uploaded",
   "search.ph": "What do you want to do today?",
   "search": "Search tools",
   "popular": "Popular",
