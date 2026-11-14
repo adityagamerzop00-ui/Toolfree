@@ -51,7 +51,7 @@
   "help": "M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zM9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01",
   "star": "M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"
  },
- "logo": "<svg width=\"36\" height=\"36\" viewBox=\"0 0 36 36\" aria-hidden=\"true\"><defs><linearGradient id=\"xg\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#2563FF\"/><stop offset=\"1\" stop-color=\"#06B6D4\"/></linearGradient></defs><rect width=\"36\" height=\"36\" rx=\"10\" fill=\"url(#xg)\"/><path d=\"M23 13.2c-1.1-1.6-3-2.5-5.3-2.5-3.1 0-5.2 1.7-5.2 4.1 0 2.6 2.4 3.6 5.3 4.3 3 .7 5.4 1.8 5.4 4.5 0 2.5-2.3 4.2-5.5 4.2-2.5 0-4.6-.9-5.8-2.6\" fill=\"none\" stroke=\"#fff\" stroke-width=\"3.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M27.5 5.5l1 2.6 2.6 1-2.6 1-1 2.6-1-2.6-2.6-1 2.6-1z\" fill=\"#fff\"/></svg>",
+ "logo": "<svg width=\"36\" height=\"36\" viewBox=\"0 0 36 36\" aria-hidden=\"true\"><defs><linearGradient id=\"xg\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#2563FF\"/><stop offset=\"1\" stop-color=\"#06B6D4\"/></linearGradient></defs><rect width=\"36\" height=\"36\" rx=\"10\" fill=\"url(#xg)\"/><path d=\"M11 11.5h14M18 11.5v14\" fill=\"none\" stroke=\"#fff\" stroke-width=\"3.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/><path d=\"M27.5 5.5l1 2.6 2.6 1-2.6 1-1 2.6-1-2.6-2.6-1 2.6-1z\" fill=\"#fff\"/></svg>",
  "cats": {
   "image": {
    "name": "Image",
@@ -192,7 +192,7 @@
  ],
  "home_faq": [
   [
-   "Is SugoiTools really free?",
+   "Is Toolsaku really free?",
    "Yes. Every tool is free to use with no sign-up, no watermark and no daily limit."
   ],
   [
@@ -205,7 +205,7 @@
   ],
   [
    "Does it work on my phone?",
-   "Yes. SugoiTools works in modern browsers on iPhone, Android, tablets and computers."
+   "Yes. Toolsaku works in modern browsers on iPhone, Android, tablets and computers."
   ],
   [
    "Which formats are supported?",
@@ -233,7 +233,7 @@
   "search.ph": "What do you want to do today?",
   "search": "Search tools",
   "popular": "Popular",
-  "how.title": "How SugoiTools works",
+  "how.title": "How Toolsaku works",
   "how.1": "Pick a tool",
   "how.1d": "Search or browse by category.",
   "how.2": "Add your file",
@@ -253,7 +253,7 @@
   "nf.title": "Page not found",
   "nf.text": "That page doesn't exist. Try one of our free tools instead.",
   "browse": "Browse all tools",
-  "meta.home": "SugoiTools – Free Online Image, PDF & Video Tools",
+  "meta.home": "Toolsaku – Free Online Image, PDF & Video Tools",
   "foot.tag": "Free tools that run in your browser. Your files never leave your device.",
   "foot.tools": "Tools",
   "logo.tag": "means amazing"
@@ -261,23 +261,23 @@
  "pages": {
   "about": {
    "title": "About Us",
-   "desc": "About SugoiTools: free online image, PDF, video, text and calculator tools that run entirely in your browser, with no sign-up.",
-   "html": "<p>SugoiTools is a small collection of free online tools for everyday jobs: resizing a photo for Instagram, shrinking a file to fit an email, or turning a WEBP into a JPG.</p><p>Sugoi (すごい) is Japanese for amazing: free tools that just work.</p><p>Every tool runs in your own browser. Your files are never uploaded to a server, there is no sign-up, and the tools keep working on slow connections once the page has loaded.</p><p>There are 42 tools today, across images, PDFs, video, text, social media, calculators and everyday utilities, and we add new ones regularly.</p><section class=\"x-dev\" id=\"developer\" style=\"margin-top:32px;display:flex;gap:18px;align-items:center;flex-wrap:wrap\"><img src=\"../assets/img/aditya.webp\" alt=\"Aditya Kumar, developer of SugoiTools\" width=\"112\" height=\"112\" loading=\"lazy\" style=\"width:112px;height:112px;border-radius:50%;object-fit:cover;flex:none\"><div style=\"flex:1;min-width:220px\"><h2 style=\"margin:0 0 8px\">Meet the developer</h2><p>Hi, I'm Aditya Kumar, the developer behind SugoiTools.</p><p>I built SugoiTools because most free tool sites are slow, full of ads, and want you to upload your files. Every tool here runs right in your browser, so your photos, PDFs and videos never leave your device.</p><p>It's a one-person project, and I add new tools regularly. Have an idea or found a bug? I'd love to hear from you.</p></div></section>"
+   "desc": "About Toolsaku: free online image, PDF, video, text and calculator tools that run entirely in your browser, with no sign-up.",
+   "html": "<p>Toolsaku is a small collection of free online tools for everyday jobs: resizing a photo for Instagram, shrinking a file to fit an email, or turning a WEBP into a JPG.</p><p>Saku (作) is Japanese for create: free tools that help you make things.</p><p>Every tool runs in your own browser. Your files are never uploaded to a server, there is no sign-up, and the tools keep working on slow connections once the page has loaded.</p><p>There are 42 tools today, across images, PDFs, video, text, social media, calculators and everyday utilities, and we add new ones regularly.</p><section class=\"x-dev\" id=\"developer\" style=\"margin-top:32px;display:flex;gap:18px;align-items:center;flex-wrap:wrap\"><img src=\"../assets/img/aditya.webp\" alt=\"Aditya Kumar, developer of Toolsaku\" width=\"112\" height=\"112\" loading=\"lazy\" style=\"width:112px;height:112px;border-radius:50%;object-fit:cover;flex:none\"><div style=\"flex:1;min-width:220px\"><h2 style=\"margin:0 0 8px\">Meet the developer</h2><p>Hi, I'm Aditya Kumar, the developer behind Toolsaku.</p><p>I built Toolsaku because most free tool sites are slow, full of ads, and want you to upload your files. Every tool here runs right in your browser, so your photos, PDFs and videos never leave your device.</p><p>It's a one-person project, and I add new tools regularly. Have an idea or found a bug? I'd love to hear from you.</p></div></section>"
   },
   "privacy": {
    "title": "Privacy Policy",
-   "desc": "SugoiTools privacy policy: files are processed locally in your browser and never uploaded. No accounts, no cookies set by SugoiTools itself.",
-   "html": "<h2>Your files</h2><p>Files you open in SugoiTools (images, PDFs and videos) are processed locally in your browser and are never uploaded to our servers or anyone else's. When you close or reload the page, they are gone.</p><h2>Data we collect</h2><p>SugoiTools has no accounts and does not ask for personal information. SugoiTools itself does not set cookies. Your theme choice (light or dark) is remembered in your browser's local storage, and never leaves your device.</p><h2>Third-party services</h2><p>Some tools load open-source code from public content delivery networks when you open them: the PDF tools load pdf-lib and PDF.js from jsDelivr, the video tools load Mediabunny from jsDelivr or unpkg, and the QR Code Generator loads qrcode-generator from jsDelivr. These requests fetch code only; your files are not sent with them. The YouTube Thumbnail Downloader loads thumbnail images directly from YouTube's image servers (img.youtube.com) for the video you enter. The hosting provider may keep standard server logs, such as IP addresses and pages requested.</p><h2>Advertising</h2><p>In future, this site may use Google AdSense to show ads. Google AdSense uses cookies to serve ads. Third-party vendors, including Google, use cookies to serve ads based on your prior visits to this website or other websites. You can opt out of personalised advertising by visiting <a href=\"https://www.google.com/settings/ads\" target=\"_blank\" rel=\"noopener\">Google Ads Settings</a>.</p><h2>Changes</h2><p>If this policy changes, the updated version will be posted on this page.</p>"
+   "desc": "Toolsaku privacy policy: files are processed locally in your browser and never uploaded. No accounts, no cookies set by Toolsaku itself.",
+   "html": "<h2>Your files</h2><p>Files you open in Toolsaku (images, PDFs and videos) are processed locally in your browser and are never uploaded to our servers or anyone else's. When you close or reload the page, they are gone.</p><h2>Data we collect</h2><p>Toolsaku has no accounts and does not ask for personal information. Toolsaku itself does not set cookies. Your theme choice (light or dark) is remembered in your browser's local storage, and never leaves your device.</p><h2>Third-party services</h2><p>Some tools load open-source code from public content delivery networks when you open them: the PDF tools load pdf-lib and PDF.js from jsDelivr, the video tools load Mediabunny from jsDelivr or unpkg, and the QR Code Generator loads qrcode-generator from jsDelivr. These requests fetch code only; your files are not sent with them. The YouTube Thumbnail Downloader loads thumbnail images directly from YouTube's image servers (img.youtube.com) for the video you enter. The hosting provider may keep standard server logs, such as IP addresses and pages requested.</p><h2>Advertising</h2><p>In future, this site may use Google AdSense to show ads. Google AdSense uses cookies to serve ads. Third-party vendors, including Google, use cookies to serve ads based on your prior visits to this website or other websites. You can opt out of personalised advertising by visiting <a href=\"https://www.google.com/settings/ads\" target=\"_blank\" rel=\"noopener\">Google Ads Settings</a>.</p><h2>Changes</h2><p>If this policy changes, the updated version will be posted on this page.</p>"
   },
   "terms": {
    "title": "Terms of Use",
-   "desc": "The terms for using SugoiTools's free online tools: free for personal and commercial use, provided as-is, and you keep a copy of your originals.",
-   "html": "<p>By using SugoiTools you agree to these terms.</p><h2>Use of the tools</h2><p>The tools are free for personal and commercial use. You are responsible for the files you process and for having the right to use them.</p><h2>No warranty</h2><p>The tools are provided as they are, without guarantees of accuracy or availability. Keep a copy of your original files.</p><h2>Limitation of liability</h2><p>SugoiTools is not liable for any loss or damage arising from use of the site or its tools.</p><h2>Changes</h2><p>These terms may be updated from time to time; continued use means you accept the current version.</p>"
+   "desc": "The terms for using Toolsaku's free online tools: free for personal and commercial use, provided as-is, and you keep a copy of your originals.",
+   "html": "<p>By using Toolsaku you agree to these terms.</p><h2>Use of the tools</h2><p>The tools are free for personal and commercial use. You are responsible for the files you process and for having the right to use them.</p><h2>No warranty</h2><p>The tools are provided as they are, without guarantees of accuracy or availability. Keep a copy of your original files.</p><h2>Limitation of liability</h2><p>Toolsaku is not liable for any loss or damage arising from use of the site or its tools.</p><h2>Changes</h2><p>These terms may be updated from time to time; continued use means you accept the current version.</p>"
   },
   "disclaimer": {
    "title": "Disclaimer",
-   "desc": "SugoiTools's tools are provided as-is, without warranty. Results can vary between browsers. Not affiliated with Instagram, YouTube or Facebook.",
-   "html": "<p>SugoiTools's tools are provided as-is and as available, without warranty of any kind. We work to make them accurate and reliable, but results can vary between browsers and devices.</p><p>Always keep a copy of your original files. SugoiTools is not responsible for any loss of data or for how processed files are used.</p><p>Brand names such as Instagram, YouTube and Facebook are mentioned only to describe sizes, formats and features; SugoiTools is not affiliated with them.</p>"
+   "desc": "Toolsaku's tools are provided as-is, without warranty. Results can vary between browsers. Not affiliated with Instagram, YouTube or Facebook.",
+   "html": "<p>Toolsaku's tools are provided as-is and as available, without warranty of any kind. We work to make them accurate and reliable, but results can vary between browsers and devices.</p><p>Always keep a copy of your original files. Toolsaku is not responsible for any loss of data or for how processed files are used.</p><p>Brand names such as Instagram, YouTube and Facebook are mentioned only to describe sizes, formats and features; Toolsaku is not affiliated with them.</p>"
   }
  }
 }

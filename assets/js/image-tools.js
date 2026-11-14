@@ -1,4 +1,4 @@
-/* SugoiTools image tools: shared image workspace plus Resizer, Compressor, Converter, Rotate & Flip, Cropper, Photo Editor and Images to PDF. Needs core.js. */
+/* Toolsaku image tools: shared image workspace plus Resizer, Compressor, Converter, Rotate & Flip, Cropper, Photo Editor and Images to PDF. Needs core.js. */
       /* ===== Shared image workspace ===== */
       const TYPES = ["image/jpeg", "image/png", "image/webp"], MAXB = 20 * 1024 * 1024, EXT = { "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp" };
       function canvasOf(w, h, white) {
@@ -433,7 +433,7 @@
               <button type="button" class="x-btn x-primary x-make">${ic("file", 20)} Create PDF</button></div>
               <div><div class="x-prev x-plist"><ol class="x-thumbs" aria-label="Pages in order"></ol><div class="x-spin" hidden role="status" aria-label="Processing"></div></div>
                 <p class="x-state" aria-live="polite"></p><p class="x-info" aria-live="polite"></p>
-                <div class="x-actions"><a class="x-btn x-primary x-dl is-busy" download="sugoitools.pdf">${ic("download", 20)} Download PDF</a><a class="x-btn x-dl2" download="sugoitools.pdf" hidden>Backup download</a><button type="button" class="x-btn x-reset">Reset</button></div>
+                <div class="x-actions"><a class="x-btn x-primary x-dl is-busy" download="toolsaku.pdf">${ic("download", 20)} Download PDF</a><a class="x-btn x-dl2" download="toolsaku.pdf" hidden>Backup download</a><button type="button" class="x-btn x-reset">Reset</button></div>
                 <p class="x-hint">If the download doesn't start, tap Backup download, or long-press it and choose to save the file.</p></div></div></div></div>`;
         const q = (s) => m.querySelector(s), input = q("input[type=file]"), drop = q(".x-drop"), err = q(".x-err"), edit = q(".x-edit"), list = q(".x-thumbs"),
           spin = q(".x-spin"), prog = q(".x-state"), info = q(".x-info"), dl = q(".x-dl"), dl2 = q(".x-dl2"), make = q(".x-make"), addB = q(".x-add");

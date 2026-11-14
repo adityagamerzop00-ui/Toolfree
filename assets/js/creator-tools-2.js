@@ -1,4 +1,4 @@
-/* SugoiTools creator tools B: Video Description Templates, Bio Generator. Styles from creator-tools.js. */
+/* Toolsaku creator tools B: Video Description Templates, Bio Generator. Styles from creator-tools.js. */
 (function () {
   "use strict";
   const T = window.Toolora;

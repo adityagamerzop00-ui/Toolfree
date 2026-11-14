@@ -1,4 +1,4 @@
-/* SugoiTools add-on tools: password generator, QR code, JSON formatter, unit converter,
+/* Toolsaku add-on tools: password generator, QR code, JSON formatter, unit converter,
    text case converter, Base64 / URL encoder, typing speed test.
    Uses window.Toolora from core.js. */
 (function () {
@@ -261,7 +261,7 @@
   /* ===== 3. JSON formatter ===== */
   function toolJSON(m) {
     m.innerHTML = `<div class="x-mt">
-      <label>Your JSON<textarea spellcheck="false" placeholder='{"name":"SugoiTools","tools":7}' style="min-height:220px"></textarea></label>
+      <label>Your JSON<textarea spellcheck="false" placeholder='{"name":"Toolsaku","tools":7}' style="min-height:220px"></textarea></label>
       <p class="x-note" style="margin-top:12px">Indent</p>${seg("ind", ["2 spaces", "4 spaces", "Tab"], "2 spaces")}
       <div class="x-row">${btn("fmt", "Format", 1)}${btn("min", "Minify")}${btn("val", "Validate")}${btn("copy", "Copy")}${btn("dl", "Download .json")}</div>
       <p class="x-msg" role="status" hidden></p></div>`;

@@ -1,6 +1,6 @@
-# SugoiTools
+# Toolsaku
 
-**SugoiTools** (すごい, "amazing") is a set of 42 free online tools that run entirely in the browser:
+**Toolsaku** (作 saku, "create") is a set of 42 free online tools that run entirely in the browser:
 image (resize, compress, convert, crop, rotate, edit, image to PDF), PDF (merge, split, compress, organize, PDF to image),
 video (resize, crop, trim, compress, convert, YouTube thumbnails), creator tools (captions, titles, descriptions, hashtags, bios),
 text tools, calculators (percentage, age, SIP, EMI, BMI, GST, scientific) and utilities (timers, stopwatch, passwords, QR codes,
@@ -16,7 +16,7 @@ index.html                 Home (lists every tool; "coming soon" tools are shown
 <slug>/index.html          One page per tool (42 of them)
 about/ privacy/ terms/ disclaimer/
 404.html                   Not-found page (works at any depth, at a domain root or under /Toolfree/)
-assets/css/                base.css (design tokens/components), site.css (SugoiTools styles)
+assets/css/                base.css (design tokens/components), site.css (Toolsaku styles)
 assets/js/                 core.js (registry, chrome, router) + one script per tool family + i18n
 sitemap.xml, robots.txt, favicon.svg
 netlify.toml               Netlify config (publish ".", no build command)

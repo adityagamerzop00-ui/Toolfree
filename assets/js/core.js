@@ -1,4 +1,4 @@
-/* SugoiTools core: tool registry, icons, site chrome, theme, search and the per-page router. Loaded on every page. */
+/* Toolsaku core: tool registry, icons, site chrome, theme, search and the per-page router. Loaded on every page. */
 
       const T_ = (k, fb, v) => I18N.t(k, fb, v);
       const tName = (t) => T_(`tool.${t.key || t.id}.name`, t.name), tDesc = (t) => T_(`tool.${t.key || t.id}.desc`, t.description);
@@ -62,7 +62,7 @@
         star: "M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z",
       };
       const ic = (n, s = 22) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${ICONS[n] || ICONS.image}"/></svg>`;
-      const LOGO = `<svg width="36" height="36" viewBox="0 0 36 36" aria-hidden="true"><defs><linearGradient id="xg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2563FF"/><stop offset="1" stop-color="#06B6D4"/></linearGradient></defs><rect width="36" height="36" rx="10" fill="url(#xg)"/><path d="M23 13.2c-1.1-1.6-3-2.5-5.3-2.5-3.1 0-5.2 1.7-5.2 4.1 0 2.6 2.4 3.6 5.3 4.3 3 .7 5.4 1.8 5.4 4.5 0 2.5-2.3 4.2-5.5 4.2-2.5 0-4.6-.9-5.8-2.6" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M27.5 5.5l1 2.6 2.6 1-2.6 1-1 2.6-1-2.6-2.6-1 2.6-1z" fill="#fff"/></svg>`;
+      const LOGO = `<svg width="36" height="36" viewBox="0 0 36 36" aria-hidden="true"><defs><linearGradient id="xg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2563FF"/><stop offset="1" stop-color="#06B6D4"/></linearGradient></defs><rect width="36" height="36" rx="10" fill="url(#xg)"/><path d="M11 11.5h14M18 11.5v14" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M27.5 5.5l1 2.6 2.6 1-2.6 1-1 2.6-1-2.6-2.6-1 2.6-1z" fill="#fff"/></svg>`;
 
       const CATS = {
         image: { name: "Image", title: "Image tools", icon: "image", desc: "Resize, compress, convert, crop, edit and rotate photos, or turn them into a PDF, in your browser." },
@@ -83,14 +83,14 @@
           keywords: "resize scale dimensions width height instagram story youtube thumbnail facebook cover passport hd shrink enlarge",
           render: (m) => toolResizer(m),
           info: { steps: ["Add a JPG, PNG or WEBP image.", "Type a width and height, pick a preset, or scale by a percentage.", "Check the preview and the new size.", "Tap Download to save the resized image."],
-            about: "SugoiTools's Image Resizer changes the pixel dimensions of a photo without sending it anywhere. Keep the aspect ratio locked to avoid stretching, or pick a preset such as an Instagram post or YouTube thumbnail and the image is cropped from the centre to fill the new shape. PNG files stay PNG so transparency is kept; other images are saved as high-quality JPEG.",
+            about: "Toolsaku's Image Resizer changes the pixel dimensions of a photo without sending it anywhere. Keep the aspect ratio locked to avoid stretching, or pick a preset such as an Instagram post or YouTube thumbnail and the image is cropped from the centre to fill the new shape. PNG files stay PNG so transparency is kept; other images are saved as high-quality JPEG.",
             faq: [["Will resizing reduce quality?", "Making an image smaller keeps it sharp. Making it much larger than the original can look soft, because new pixels have to be invented."], ["What happens when I pick a preset with a different shape?", "By default the image is cropped from the centre to fill the preset exactly. Choose Stretch if you would rather keep everything in frame."], ["Is there a size limit?", "Files up to 20 MB, and output up to 10,000 pixels on each side."]] } },
         { id: "image-compressor", name: "Image Compressor", category: "image", icon: "compress", status: "live", popular: 1, added: 2,
           description: "Shrink image file size with a quality slider and see how much you saved.",
           keywords: "compress reduce file size kb mb optimize smaller jpeg webp quality",
           render: (m) => toolCompressor(m),
           info: { steps: ["Add a JPG, PNG or WEBP image.", "Move the quality slider; lower means a smaller file.", "Optionally set a maximum width and choose JPEG or WEBP.", "Compare the before and after size, then download."],
-            about: "The Image Compressor re-encodes your photo at the quality you choose, and can scale it down to a maximum width for an even smaller file. Everything runs on a canvas inside your browser, so it works offline once the page has loaded and nothing is uploaded. If the compressed file comes out bigger than your original, SugoiTools tells you and lets you keep the original instead.",
+            about: "The Image Compressor re-encodes your photo at the quality you choose, and can scale it down to a maximum width for an even smaller file. Everything runs on a canvas inside your browser, so it works offline once the page has loaded and nothing is uploaded. If the compressed file comes out bigger than your original, Toolsaku tells you and lets you keep the original instead.",
             faq: [["What quality should I choose?", "70 is a good balance for photos on the web. Go to 80–90 for printing, or 40–60 when file size matters most."], ["JPEG or WEBP?", "WEBP is usually 25–35% smaller at the same quality and works in all modern browsers. JPEG opens everywhere."], ["Why is my file bigger after compressing?", "Already-optimised images, or PNGs with few colours, can grow when re-encoded. In that case, download the original."]] } },
         { id: "image-converter", name: "Image Converter", category: "image", icon: "convert", status: "live", popular: 1, added: 3,
           description: "Convert images between JPG, PNG and WEBP in one tap.",
@@ -98,7 +98,7 @@
           render: (m) => toolConverter(m),
           info: { steps: ["Add a JPG, PNG or WEBP image.", "Choose JPG, PNG or WEBP as the output format.", "For JPG or WEBP, set the quality.", "Download the converted file with the right extension."],
             about: "Use the Image Converter to switch a picture to the format a website, app or printer expects. PNG keeps transparency and sharp edges, JPG is the most compatible for photos, and WEBP gives small files for the web. JPG has no transparency, so transparent areas are filled with white rather than turning black.",
-            faq: [["Does converting to PNG improve quality?", "No. PNG is lossless, so it keeps what is there, but it cannot restore detail lost in an earlier JPG."], ["Why did my transparent background turn white?", "JPG cannot store transparency. Choose PNG or WEBP to keep it."], ["My browser can't make WEBP. What now?", "Some older browsers cannot create WEBP files. SugoiTools will tell you and you can choose PNG or JPG instead."]] } },
+            faq: [["Does converting to PNG improve quality?", "No. PNG is lossless, so it keeps what is there, but it cannot restore detail lost in an earlier JPG."], ["Why did my transparent background turn white?", "JPG cannot store transparency. Choose PNG or WEBP to keep it."], ["My browser can't make WEBP. What now?", "Some older browsers cannot create WEBP files. Toolsaku will tell you and you can choose PNG or JPG instead."]] } },
         { id: "rotate-flip", name: "Rotate & Flip", category: "image", icon: "rotate", status: "live", popular: 1, added: 4,
           description: "Rotate images 90° left or right and flip them horizontally or vertically.",
           keywords: "rotate flip mirror turn sideways upside down orientation 90 degrees",
@@ -117,7 +117,7 @@
           description: "Turn up to 20 images into one PDF, in the order you choose.",
           keywords: "jpg to pdf png to pdf webp to pdf combine images photos document scan merge",
           render: (m) => toolPdf(m),
-          info: { steps: ["Add up to 20 JPG, PNG or WEBP images.", "Use the arrows to put them in order, or × to remove one.", "Choose the page size, orientation and margin.", "Tap Create PDF, then download sugoitools.pdf."],
+          info: { steps: ["Add up to 20 JPG, PNG or WEBP images.", "Use the arrows to put them in order, or × to remove one.", "Choose the page size, orientation and margin.", "Tap Create PDF, then download toolsaku.pdf."],
             about: "Images to PDF puts each picture on its own page of a single PDF, ready to email, print or upload as one document. Choose A4 or Letter pages, or let each page match its image. Auto orientation turns pages sideways for landscape photos. The PDF is built entirely in your browser, so your images are never uploaded.",
             faq: [["Is there a limit?", "Up to 20 images per PDF, each up to 20 MB. Very large photos are scaled to at most 4,000 pixels on the long side to keep the PDF a sensible size."], ["Why is my PNG's transparent background white?", "Pages are saved as JPEG inside the PDF, which has no transparency, so transparent areas become white like paper."], ["What does Auto orientation do?", "It uses a landscape page for wide images and a portrait page for tall ones. Fit to image makes each page exactly the shape of its image."]] } },
         { id: "photo-editor", name: "Photo Editor", category: "image", icon: "edit", status: "live", added: 7,
@@ -199,7 +199,7 @@
 
       /* ===== Views ===== */
       const view = $("#x-view");
-      const HOME_FAQ = [["Is SugoiTools really free?", "Yes. Every tool is free to use with no sign-up, no watermark and no daily limit."], ["Are my files uploaded?", "No. Your files are processed on your own device, inside your browser. Nothing is sent to a server."], ["Is there a file size limit?", "Image tools take files up to 20 MB each, PDF tools up to 50 MB and video tools up to 500 MB. Very large files can be slow on older phones."], ["Does it work on my phone?", "Yes. SugoiTools works in modern browsers on iPhone, Android, tablets and computers."], ["Which formats are supported?", "Image tools open and save JPG, PNG and WEBP. Video tools open MP4, MOV, WEBM and MKV and save MP4 (or WebM, MOV and audio in the converter). PDF tools work with standard PDF files."]];
+      const HOME_FAQ = [["Is Toolsaku really free?", "Yes. Every tool is free to use with no sign-up, no watermark and no daily limit."], ["Are my files uploaded?", "No. Your files are processed on your own device, inside your browser. Nothing is sent to a server."], ["Is there a file size limit?", "Image tools take files up to 20 MB each, PDF tools up to 50 MB and video tools up to 500 MB. Very large files can be slow on older phones."], ["Does it work on my phone?", "Yes. Toolsaku works in modern browsers on iPhone, Android, tablets and computers."], ["Which formats are supported?", "Image tools open and save JPG, PNG and WEBP. Video tools open MP4, MOV, WEBM and MKV and save MP4 (or WebM, MOV and audio in the converter). PDF tools work with standard PDF files."]];
       /* Upcoming tools: shown on the homepage only; kept out of TOOLS, search and counts */
       const UPCOMING = [
         ["Currency Converter", "calculators", "convert"], ["Income Tax Calculator", "calculators", "receipt"], ["Markdown Editor", "text", "edit"],

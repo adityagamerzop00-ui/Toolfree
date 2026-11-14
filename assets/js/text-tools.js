@@ -1,4 +1,4 @@
-/* SugoiTools text tools: Word & Character Counter, Fancy Text Generator. Uses window.Toolora from core.js. */
+/* Toolsaku text tools: Word & Character Counter, Fancy Text Generator. Uses window.Toolora from core.js. */
 (function () {
   "use strict";
   const T = window.Toolora;
@@ -80,16 +80,16 @@
   }
 
   function toolFancy(m) {
-    m.innerHTML = `<div class="x-ws"><label for="x-fi">Your text</label><textarea id="x-fi" class="x-ta" style="min-height:96px" placeholder="Type something…">SugoiTools</textarea><ul class="x-fx"></ul></div>`;
+    m.innerHTML = `<div class="x-ws"><label for="x-fi">Your text</label><textarea id="x-fi" class="x-ta" style="min-height:96px" placeholder="Type something…">Toolsaku</textarea><ul class="x-fx"></ul></div>`;
     const ta = m.querySelector("textarea"), out = m.querySelector(".x-fx");
     const upd = () => {
-      const t = ta.value || "SugoiTools";
+      const t = ta.value || "Toolsaku";
       out.innerHTML = S.map(([n, f], i) => `<li><div><span>${n}</span><p>${esc(f(t))}</p></div><button type="button" class="x-btn" data-i="${i}">Copy</button></li>`).join("");
     };
     out.addEventListener("click", (e) => {
       const b = e.target.closest("button[data-i]");
       if (!b) return;
-      copy(S[+b.dataset.i][1](ta.value || "SugoiTools")).then(() => { b.textContent = "Copied!"; setTimeout(() => (b.textContent = "Copy"), 1500); });
+      copy(S[+b.dataset.i][1](ta.value || "Toolsaku")).then(() => { b.textContent = "Copied!"; setTimeout(() => (b.textContent = "Copy"), 1500); });
     });
     ta.addEventListener("input", upd);
     upd();

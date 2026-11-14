@@ -13,7 +13,7 @@
    "Type a width and height, scale by a percentage, or tap a preset such as Instagram Story or Passport.",
    "Check the preview and new size, then tap Download."
   ],
-  "about": "SugoiTools's Image Resizer changes the pixel dimensions of a photo without sending it anywhere. Keep the aspect ratio locked to avoid stretching, or pick a preset such as an Instagram post or YouTube thumbnail and the image is cropped from the centre to fill the new shape. PNG files stay PNG so transparency is kept; other images are saved as high-quality JPEG.",
+  "about": "Toolsaku's Image Resizer changes the pixel dimensions of a photo without sending it anywhere. Keep the aspect ratio locked to avoid stretching, or pick a preset such as an Instagram post or YouTube thumbnail and the image is cropped from the centre to fill the new shape. PNG files stay PNG so transparency is kept; other images are saved as high-quality JPEG.",
   "faq": [
    [
     "Will resizing reduce quality?",
@@ -50,7 +50,7 @@
    "Lower the quality slider, and optionally set a maximum width and pick JPEG or WEBP.",
    "Compare the before and after size, then download the smaller file."
   ],
-  "about": "The Image Compressor re-encodes your photo at the quality you choose, and can scale it down to a maximum width for an even smaller file. Everything runs on a canvas inside your browser, so it works offline once the page has loaded and nothing is uploaded. If the compressed file comes out bigger than your original, SugoiTools tells you and lets you keep the original instead.",
+  "about": "The Image Compressor re-encodes your photo at the quality you choose, and can scale it down to a maximum width for an even smaller file. Everything runs on a canvas inside your browser, so it works offline once the page has loaded and nothing is uploaded. If the compressed file comes out bigger than your original, Toolsaku tells you and lets you keep the original instead.",
   "faq": [
    [
     "What quality should I choose?",
@@ -99,7 +99,7 @@
    ],
    [
     "My browser can't make WEBP. What now?",
-    "Some older browsers cannot create WEBP files. SugoiTools will tell you and you can choose PNG or JPG instead."
+    "Some older browsers cannot create WEBP files. Toolsaku will tell you and you can choose PNG or JPG instead."
    ]
   ],
   "related": [
@@ -274,7 +274,7 @@
    "Pick the clip length, how many clips and the 9:16 crop, then choose caption and title styles.",
    "Tap Make clips, keep the tab open, then download or share each Short."
   ],
-  "about": "SugoiTools' Long Video to Shorts maker finds good moments in a long video and turns them into vertical 9:16 clips for YouTube Shorts, Instagram Reels and Moj. It can add auto captions (Whisper, running in your browser), a hook title, effects and background music, and builds a post kit with titles, a description and hashtags. Everything is rendered on your device, so your video is never uploaded and there is no watermark.",
+  "about": "Toolsaku' Long Video to Shorts maker finds good moments in a long video and turns them into vertical 9:16 clips for YouTube Shorts, Instagram Reels and Moj. It can add auto captions (Whisper, running in your browser), a hook title, effects and background music, and builds a post kit with titles, a description and hashtags. Everything is rendered on your device, so your video is never uploaded and there is no watermark.",
   "faq": [
    [
     "Is my video uploaded anywhere?",
@@ -322,7 +322,7 @@
    ],
    [
     "How long does it take?",
-    "SugoiTools uses your device's hardware encoder, so it's usually faster than real time."
+    "Toolsaku uses your device's hardware encoder, so it's usually faster than real time."
    ]
   ],
   "related": [
@@ -392,7 +392,7 @@
    ],
    [
     "How long does it take?",
-    "SugoiTools uses your device's hardware video encoder, so trimming is usually faster than real time."
+    "Toolsaku uses your device's hardware video encoder, so trimming is usually faster than real time."
    ],
    [
     "Which browsers work?",
@@ -429,7 +429,7 @@
    ],
    [
     "Why didn't my file get smaller?",
-    "Some videos are already well compressed. When the result isn't smaller, SugoiTools tells you and offers your original file."
+    "Some videos are already well compressed. When the result isn't smaller, Toolsaku tells you and offers your original file."
    ],
    [
     "How long does it take?",
@@ -466,11 +466,11 @@
    ],
    [
     "Why was my audio saved as M4A, not MP3?",
-    "Most browsers can't encode MP3 yet, so SugoiTools saves AAC audio in an M4A file, which plays on phones and computers alike."
+    "Most browsers can't encode MP3 yet, so Toolsaku saves AAC audio in an M4A file, which plays on phones and computers alike."
    ],
    [
     "Why did conversion fail?",
-    "Some codecs can't be decoded or encoded in your browser. SugoiTools lists the reason so you can try another format."
+    "Some codecs can't be decoded or encoded in your browser. Toolsaku lists the reason so you can try another format."
    ]
   ],
   "related": [
@@ -499,7 +499,7 @@
   "faq": [
    [
     "Why is the max resolution missing?",
-    "YouTube only makes a 1280 × 720 thumbnail for some videos, mostly HD uploads. SugoiTools hides sizes that don't exist."
+    "YouTube only makes a 1280 × 720 thumbnail for some videos, mostly HD uploads. Toolsaku hides sizes that don't exist."
    ],
    [
     "Why doesn't Download appear?",
@@ -614,7 +614,7 @@
    ],
    [
     "Why did my file get bigger?",
-    "PDFs made of plain text are already tiny, and images of their pages can be larger. When that happens SugoiTools tells you and offers your original file."
+    "PDFs made of plain text are already tiny, and images of their pages can be larger. When that happens Toolsaku tells you and offers your original file."
    ],
    [
     "Will links and text still work?",

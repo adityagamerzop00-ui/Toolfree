@@ -1,4 +1,4 @@
-/* SugoiTools utilities: Pomodoro timer, countdown timer, stopwatch. Uses window.Toolora from core.js and ToolFX from ui-fx.js. */
+/* Toolsaku utilities: Pomodoro timer, countdown timer, stopwatch. Uses window.Toolora from core.js and ToolFX from ui-fx.js. */
 (function () {
   "use strict";
   /* Pure helpers, kept apart from the UI */
@@ -39,7 +39,7 @@
     let id = 0;
     const T0 = document.title;
     const L = {
-      title: (s) => { L.mine = s ? s + " · SugoiTools" : T0; document.title = L.mine; },
+      title: (s) => { L.mine = s ? s + " · Toolsaku" : T0; document.title = L.mine; },
       start: () => { if (!id) { id = setInterval(tick, ms); fn(); } },
       stop: () => { clearInterval(id); id = 0; },
       get on() { return !!id; },

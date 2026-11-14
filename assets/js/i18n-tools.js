@@ -1,4 +1,4 @@
-/* SugoiTools per-tool strings. One I18N.addStrings(code, {...}) per language: tool.<id>.name, tool.<id>.desc, cat.<id>.desc. English lives in the registry. */
+/* Toolsaku per-tool strings. One I18N.addStrings(code, {...}) per language: tool.<id>.name, tool.<id>.desc, cat.<id>.desc. English lives in the registry. */
 (function () {
   if (!window.I18N) return;
 

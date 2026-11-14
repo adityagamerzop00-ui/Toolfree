@@ -1,4 +1,4 @@
-/* SugoiTools UI effects: synthesized sounds, ripple, pop, card stagger. */
+/* Toolsaku UI effects: synthesized sounds, ripple, pop, card stagger. */
 (function () {
   "use strict";
   var ctx = null, on = true, lastErr = 0;

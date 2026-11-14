@@ -1,4 +1,4 @@
-/* SugoiTools calculators: age, percentage, SIP, loan EMI, BMI, GST, scientific. Uses window.Toolora from core.js. */
+/* Toolsaku calculators: age, percentage, SIP, loan EMI, BMI, GST, scientific. Uses window.Toolora from core.js. */
 (function () {
   "use strict";
   const fmt = (n, d = 0) => Number(n).toLocaleString("en-IN", { maximumFractionDigits: d });

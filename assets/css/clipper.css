@@ -369,7 +369,7 @@
       .lts-insthint { position: fixed; left: 12px; right: 12px; bottom: 16px; z-index: 9999; background: #0D1530; color: #fff; border: 1px solid #333; border-radius: 14px; padding: 14px 40px 14px 14px; font-size: 14px; line-height: 1.45; box-shadow: 0 10px 30px rgba(0,0,0,.5); }
       .lts-insthint button { position: absolute; top: 6px; right: 8px; background: none; border: 0; color: #fff; font-size: 20px; }
     
-/* SugoiTools embedding */
+/* Toolsaku embedding */
 #x-tool .lts-app { max-width: 720px; padding-top: 4px; }
 #x-tool .lts-top h1 { font-size: 1.35rem; }
 .lts-head, .lts-bg, .lts-more, .lts-foot { display: none !important; }

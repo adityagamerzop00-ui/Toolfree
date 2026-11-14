@@ -1,4 +1,4 @@
-/* SugoiTools creator tools: Instagram Caption Generator, YouTube Title Generator, Hashtag Suggestions. Uses window.Toolora from core.js. */
+/* Toolsaku creator tools: Instagram Caption Generator, YouTube Title Generator, Hashtag Suggestions. Uses window.Toolora from core.js. */
 (function () {
   "use strict";
   const T = window.Toolora;

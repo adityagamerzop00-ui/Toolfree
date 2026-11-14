@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate the static SugoiTools site: one page per tool, the home page, info pages,
+"""Generate the static Toolsaku site: one page per tool, the home page, info pages,
 404.html, sitemap.xml, robots.txt and assets/js/routes.js.
 
 Usage (from the repository root):  python3 tools/build.py
@@ -20,7 +20,7 @@ import hashlib
 # ---- Settings -------------------------------------------------------------------------
 BASE_URL = "https://sugoitools.netlify.app"  # change to e.g. https://sugoitools.com and re-run
 LASTMOD = "2026-11-14"                         # <lastmod> written to sitemap.xml
-SITE_NAME = "SugoiTools"
+SITE_NAME = "Toolsaku"
 # Subpaths the site may be served under (for 404.html, which can be shown at any depth).
 # A request path starting with one of these resolves 404 assets from that prefix, otherwise "/".
 SUBPATH_PREFIXES = ["/Toolfree/"]
@@ -56,7 +56,7 @@ PRIVACY = {
     "text": "Everything runs in your browser; nothing you type is sent anywhere or saved.",
     "calc": "Everything is worked out in your browser; nothing is sent anywhere or saved.",
     "clipper": "Your video is cut and rendered on your device and never uploaded. Only the open-source caption model and render engine are downloaded when you use them.",
-    "yt": "Thumbnails load straight from YouTube's public image server (img.youtube.com). SugoiTools stores nothing.",
+    "yt": "Thumbnails load straight from YouTube's public image server (img.youtube.com). Toolsaku stores nothing.",
 }
 
 
@@ -137,11 +137,11 @@ TICKER = ["tick.tools|43 free tools", "tick.nosign|No sign-up", "tick.local|File
 def shell_top(root):
     home_link = root or "./"
     items = "".join(f'<li data-i18n="{k}">{v}</li>' for k, v in (x.split("|", 1) for x in TICKER))
-    logo = f'<a class="x-logo" href="{home_link}" aria-label="SugoiTools home"><span data-logo></span><span class="x-wm">SugoiTools<small class="x-tag">すごい · <span data-i18n="logo.tag">means amazing</span></small></span></a>'
+    logo = f'<a class="x-logo" href="{home_link}" aria-label="Toolsaku home"><span data-logo></span><span class="x-wm">Toolsaku<small class="x-tag">作 · <span data-i18n="logo.tag">means create</span></small></span></a>'
     return f"""
     <div class="x-app">
       <div class="x-bg" aria-hidden="true"><i class="x-blob x-b1"></i><i class="x-blob x-b2"></i><i class="x-blob x-b3"></i><span class="x-shine"><i></i></span></div>
-      <div class="x-ticker" role="region" aria-label="SugoiTools highlights">
+      <div class="x-ticker" role="region" aria-label="Toolsaku highlights">
         <div class="x-ticker__track">
           <ul class="x-ticker__group">{items}</ul>
           <ul class="x-ticker__group" aria-hidden="true">{items}</ul>
@@ -161,7 +161,7 @@ def shell_top(root):
 
 def shell_bottom(root, scripts):
     home_link = root or "./"
-    logo = f'<a class="x-logo" href="{home_link}" aria-label="SugoiTools home"><span data-logo></span><span class="x-wm">SugoiTools<small class="x-tag">すごい · <span data-i18n="logo.tag">means amazing</span></small></span></a>'
+    logo = f'<a class="x-logo" href="{home_link}" aria-label="Toolsaku home"><span data-logo></span><span class="x-wm">Toolsaku<small class="x-tag">作 · <span data-i18n="logo.tag">means create</span></small></span></a>'
     js = ["i18n.js", "i18n-tools.js", "routes.js", "core.js"] + scripts + ["ui-fx.js"]
     return f"""</main>
       <div class="ad-slot" data-slot="above-footer">Advertisement</div>
@@ -174,7 +174,7 @@ def shell_bottom(root, scripts):
             </div>
             <div><h3 data-i18n="foot.tools">Tools</h3><ul id="x-fcats">{"".join(f'<li><a href="{home_link}#cat-{k}">{e(c["title"])}</a></li>' for k, c in CATS.items())}</ul></div>
             <div>
-              <h3>SugoiTools</h3>
+              <h3>Toolsaku</h3>
               <ul>
                 <li><a href="{root}about/" data-i18n="page.about">About Us</a></li>
                 <li><a href="{root}privacy/" data-i18n="page.privacy">Privacy Policy</a></li>
@@ -183,7 +183,7 @@ def shell_bottom(root, scripts):
               </ul>
             </div>
           </div>
-          <p class="x-copy">© SugoiTools · Made by <a href="{root}about/#developer">Aditya Kumar</a></p>
+          <p class="x-copy">© Toolsaku · Made by <a href="{root}about/#developer">Aditya Kumar</a></p>
         </div>
       </footer>
     </div>
@@ -275,7 +275,7 @@ def home_page():
       """
     ld = (jsonld({"@context": "https://schema.org", "@type": "WebSite", "name": SITE_NAME, "url": url()}) + "\n    " +
           jsonld(faq_ld(SITE["home_faq"])) + "\n    " +
-          jsonld({"@context": "https://schema.org", "@type": "ItemList", "name": "SugoiTools free online tools",
+          jsonld({"@context": "https://schema.org", "@type": "ItemList", "name": "Toolsaku free online tools",
                   "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": t["name"], "url": url(t["slug"])} for i, t in enumerate(TOOLS)]}))
     # Home renders its interactive version (search, chips) with core.js; the static markup above is the no-JS / crawler copy.
     return head(title, desc, url(), root, ld) + '\n  <body data-page="home" data-root="">' + shell_top(root) + body + shell_bottom(root, [])
@@ -311,7 +311,7 @@ def not_found_page():
           <section class="x-sec"><h2>{e(EN["popular"])}</h2><div class="x-cards">{"".join(card(t, root) for t in pop)}</div></section>
         </div></div>
       """
-    page = (head(f"Page not found | {SITE_NAME}", "This page doesn't exist. Browse SugoiTools' free online tools instead.", "", root,
+    page = (head(f"Page not found | {SITE_NAME}", "This page doesn't exist. Browse Toolsaku' free online tools instead.", "", root,
                  robots="noindex", base_script=base_script) +
             '\n  <body data-page="404" data-root="">' + shell_top(root) + body + shell_bottom(root, []))
     # Emit asset tags from script too, so they are only requested after <base> is set (no stray requests at deep paths).
