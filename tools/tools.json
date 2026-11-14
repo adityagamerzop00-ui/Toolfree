@@ -1,0 +1,1557 @@
+[
+ {
+  "id": "image-resizer",
+  "slug": "resize-image",
+  "name": "Image Resizer",
+  "title_name": "Image Resizer",
+  "category": "image",
+  "icon": "resize",
+  "description": "Resize any image to exact pixels, a percentage or a social media preset.",
+  "meta_description": "Resize JPG, PNG or WEBP images to exact pixels, a percentage or presets like Instagram post and YouTube thumbnail. Free, and your photo never leaves your device.",
+  "steps": [
+   "Add a JPG, PNG or WEBP image (up to 20 MB).",
+   "Type a width and height, scale by a percentage, or tap a preset such as Instagram Story or Passport.",
+   "Check the preview and new size, then tap Download."
+  ],
+  "about": "SugoiTools's Image Resizer changes the pixel dimensions of a photo without sending it anywhere. Keep the aspect ratio locked to avoid stretching, or pick a preset such as an Instagram post or YouTube thumbnail and the image is cropped from the centre to fill the new shape. PNG files stay PNG so transparency is kept; other images are saved as high-quality JPEG.",
+  "faq": [
+   [
+    "Will resizing reduce quality?",
+    "Making an image smaller keeps it sharp. Making it much larger than the original can look soft, because new pixels have to be invented."
+   ],
+   [
+    "What happens when I pick a preset with a different shape?",
+    "By default the image is cropped from the centre to fill the preset exactly. Choose Stretch if you would rather keep everything in frame."
+   ],
+   [
+    "Is there a size limit?",
+    "Files up to 20 MB, and output up to 10,000 pixels on each side."
+   ]
+  ],
+  "related": [
+   "image-cropper",
+   "image-compressor",
+   "image-converter",
+   "video-resizer"
+  ],
+  "privacy": "file"
+ },
+ {
+  "id": "image-compressor",
+  "slug": "compress-image",
+  "name": "Image Compressor",
+  "title_name": "Image Compressor",
+  "category": "image",
+  "icon": "compress",
+  "description": "Shrink image file size with a quality slider and see how much you saved.",
+  "meta_description": "Shrink JPG, PNG and WEBP file size with a quality slider and optional max width, and see exactly how many KB you saved. Runs in your browser, no upload.",
+  "steps": [
+   "Add a JPG, PNG or WEBP image.",
+   "Lower the quality slider, and optionally set a maximum width and pick JPEG or WEBP.",
+   "Compare the before and after size, then download the smaller file."
+  ],
+  "about": "The Image Compressor re-encodes your photo at the quality you choose, and can scale it down to a maximum width for an even smaller file. Everything runs on a canvas inside your browser, so it works offline once the page has loaded and nothing is uploaded. If the compressed file comes out bigger than your original, SugoiTools tells you and lets you keep the original instead.",
+  "faq": [
+   [
+    "What quality should I choose?",
+    "70 is a good balance for photos on the web. Go to 80–90 for printing, or 40–60 when file size matters most."
+   ],
+   [
+    "JPEG or WEBP?",
+    "WEBP is usually 25–35% smaller at the same quality and works in all modern browsers. JPEG opens everywhere."
+   ],
+   [
+    "Why is my file bigger after compressing?",
+    "Already-optimised images, or PNGs with few colours, can grow when re-encoded. In that case, download the original."
+   ]
+  ],
+  "related": [
+   "image-resizer",
+   "image-converter",
+   "compress-pdf",
+   "video-compressor"
+  ],
+  "privacy": "file"
+ },
+ {
+  "id": "image-converter",
+  "slug": "convert-image",
+  "name": "Image Converter",
+  "title_name": "Image Converter",
+  "category": "image",
+  "icon": "convert",
+  "description": "Convert images between JPG, PNG and WEBP in one tap.",
+  "meta_description": "Convert images between JPG, PNG and WEBP in one tap, with a quality setting for JPG and WEBP. Transparent areas turn white in JPG. No upload, no sign-up.",
+  "steps": [
+   "Add a JPG, PNG or WEBP image.",
+   "Choose JPG, PNG or WEBP as the output, and set the quality for JPG or WEBP.",
+   "Download the converted file with the correct extension."
+  ],
+  "about": "Use the Image Converter to switch a picture to the format a website, app or printer expects. PNG keeps transparency and sharp edges, JPG is the most compatible for photos, and WEBP gives small files for the web. JPG has no transparency, so transparent areas are filled with white rather than turning black.",
+  "faq": [
+   [
+    "Does converting to PNG improve quality?",
+    "No. PNG is lossless, so it keeps what is there, but it cannot restore detail lost in an earlier JPG."
+   ],
+   [
+    "Why did my transparent background turn white?",
+    "JPG cannot store transparency. Choose PNG or WEBP to keep it."
+   ],
+   [
+    "My browser can't make WEBP. What now?",
+    "Some older browsers cannot create WEBP files. SugoiTools will tell you and you can choose PNG or JPG instead."
+   ]
+  ],
+  "related": [
+   "image-compressor",
+   "image-resizer",
+   "images-to-pdf",
+   "pdf-to-images"
+  ],
+  "privacy": "file"
+ },
+ {
+  "id": "rotate-flip",
+  "slug": "rotate-image",
+  "name": "Rotate & Flip",
+  "title_name": "Rotate & Flip Image",
+  "category": "image",
+  "icon": "rotate",
+  "description": "Rotate images 90° left or right and flip them horizontally or vertically.",
+  "meta_description": "Rotate a photo 90° left or right, or flip it horizontally or vertically to fix sideways shots and mirrored selfies. Saved in its original format, no upload.",
+  "steps": [
+   "Add a JPG, PNG or WEBP image.",
+   "Tap rotate left or right, or flip horizontally or vertically, until the preview looks right.",
+   "Download it in the same format you started with."
+  ],
+  "about": "Rotate & Flip fixes sideways phone photos and mirrored selfies in a couple of taps. The preview updates as you go, and the result is saved in the same format you started with, with the width and height swapped when you rotate a quarter turn.",
+  "faq": [
+   [
+    "Does rotating lose quality?",
+    "PNG stays lossless. JPG and WEBP are saved again at high quality, so the difference is very hard to see."
+   ],
+   [
+    "Can I rotate by any angle?",
+    "This tool turns in 90° steps, which covers sideways and upside-down photos."
+   ],
+   [
+    "Why does my photo look rotated already?",
+    "Your browser applies the orientation your camera recorded, so what you see in the preview is what you will download."
+   ]
+  ],
+  "related": [
+   "image-cropper",
+   "image-resizer",
+   "photo-editor",
+   "organize-pdf"
+  ],
+  "privacy": "file"
+ },
+ {
+  "id": "image-cropper",
+  "slug": "crop-image",
+  "name": "Image Cropper",
+  "title_name": "Image Cropper",
+  "category": "image",
+  "icon": "crop",
+  "description": "Crop images freely or to a fixed aspect ratio like 1:1, 4:5 or 16:9.",
+  "meta_description": "Crop photos freely or lock to 1:1, 4:5, 3:4, 16:9 or 4:3 for Instagram, YouTube or print, with the crop size shown in pixels. Free and private.",
+  "steps": [
+   "Add a JPG, PNG or WEBP image.",
+   "Pick Free or a fixed ratio, then drag the box or its corners over the part you want.",
+   "Tap Crop, check the preview and download."
+  ],
+  "about": "The Image Cropper cuts your photo down to the part that matters. Drag the crop box with a mouse or your finger, lock it to a common shape for Instagram, YouTube or print, and see the exact crop size in pixels as you go. The result keeps the original resolution of the area you chose and is saved in the same format as your original.",
+  "faq": [
+   [
+    "Does cropping reduce quality?",
+    "No. Cropping only removes pixels; the area you keep stays at its original resolution. JPG and WEBP are saved again at high quality."
+   ],
+   [
+    "Which aspect ratio should I use?",
+    "Square 1:1 or Portrait 4:5 for Instagram posts, Landscape 16:9 for YouTube and screens, and 4:3 or 3:4 for prints and most phone photos."
+   ],
+   [
+    "Can I move the box with a keyboard?",
+    "Yes. Click or tab to the image and use the arrow keys to move the crop box; hold Shift for bigger steps."
+   ]
+  ],
+  "related": [
+   "image-resizer",
+   "rotate-flip",
+   "photo-editor",
+   "video-cropper"
+  ],
+  "privacy": "file"
+ },
+ {
+  "id": "images-to-pdf",
+  "slug": "image-to-pdf",
+  "name": "Images to PDF",
+  "title_name": "Image to PDF Converter",
+  "category": "image",
+  "icon": "file",
+  "description": "Turn up to 20 images into one PDF, in the order you choose.",
+  "meta_description": "Combine up to 20 JPG, PNG or WEBP images into one PDF in the order you choose, on A4, Letter or fit-to-image pages. Built in your browser, never uploaded.",
+  "steps": [
+   "Add up to 20 images and use the arrows to put them in order.",
+   "Choose page size (A4, Letter or Fit), orientation and margin.",
+   "Tap Create PDF, then download your single PDF file."
+  ],
+  "about": "Images to PDF puts each picture on its own page of a single PDF, ready to email, print or upload as one document. Choose A4 or Letter pages, or let each page match its image. Auto orientation turns pages sideways for landscape photos. The PDF is built entirely in your browser, so your images are never uploaded.",
+  "faq": [
+   [
+    "Is there a limit?",
+    "Up to 20 images per PDF, each up to 20 MB. Very large photos are scaled to at most 4,000 pixels on the long side to keep the PDF a sensible size."
+   ],
+   [
+    "Why is my PNG's transparent background white?",
+    "Pages are saved as JPEG inside the PDF, which has no transparency, so transparent areas become white like paper."
+   ],
+   [
+    "What does Auto orientation do?",
+    "It uses a landscape page for wide images and a portrait page for tall ones. Fit to image makes each page exactly the shape of its image."
+   ]
+  ],
+  "related": [
+   "merge-pdf",
+   "pdf-to-images",
+   "image-compressor",
+   "compress-pdf"
+  ],
+  "privacy": "file"
+ },
+ {
+  "id": "photo-editor",
+  "slug": "photo-editor",
+  "name": "Photo Editor",
+  "title_name": "Photo Editor",
+  "category": "image",
+  "icon": "edit",
+  "description": "Adjust brightness, contrast and colour, add filters, borders and a watermark.",
+  "meta_description": "Edit photos in your browser: brightness, contrast, saturation, one-tap filters like Vintage and Vivid, frames and a text watermark. No upload, no account.",
+  "steps": [
+   "Add a JPG, PNG or WEBP image.",
+   "Adjust brightness, contrast and saturation, or tap a filter; add a frame or watermark if you like.",
+   "Choose JPG or PNG and download the edited photo."
+  ],
+  "about": "The Photo Editor covers the quick fixes most photos need: lighten a dark shot, add punch with contrast and saturation, or give it a look with one-tap filters such as Vintage, Warm or Vivid. Add a solid, rounded or Polaroid-style frame and a text watermark in any corner. The preview updates as you go and everything happens in your browser.",
+  "faq": [
+   [
+    "Can it remove the background?",
+    "Background removal isn't included yet — free browser-only options are too heavy for phones. It's planned for a later version."
+   ],
+   [
+    "Why choose PNG instead of JPG?",
+    "PNG keeps transparency, including the corners of a Rounded frame, and is lossless. JPG files are much smaller for photos."
+   ],
+   [
+    "Will the watermark cover my photo?",
+    "It sits inside the photo at the position you choose. Lower the opacity to make it subtle, or pick a corner to keep it out of the way."
+   ]
+  ],
+  "related": [
+   "image-cropper",
+   "rotate-flip",
+   "image-resizer",
+   "image-compressor"
+  ],
+  "privacy": "file"
+ },
+ {
+  "id": "video-resizer",
+  "slug": "resize-video",
+  "name": "Video Resizer",
+  "title_name": "Video Resizer",
+  "category": "video",
+  "icon": "resize",
+  "description": "Change a video's resolution or reshape it for Reels, Shorts and TikTok.",
+  "meta_description": "Resize a video to 1080p, 720p, 480p, square 1:1 or vertical 9:16 for Reels, Shorts and TikTok. MP4, MOV, WEBM or MKV up to 500 MB, processed on your device.",
+  "steps": [
+   "Add one MP4, MOV, WEBM or MKV video, up to 500 MB.",
+   "Pick a size such as 720p, Square or Vertical, and Contain or Cover for new shapes.",
+   "Tap Resize video, then download the MP4."
+  ],
+  "about": "Video Resizer re-encodes your video at a new size as an MP4. The 1080p to 360p presets set the short side, keep the shape of the picture and are greyed out when they'd be larger than your original. Square 1:1 and Vertical 9:16 make clips ready for social feeds. Your video is processed in your browser and is never uploaded.",
+  "faq": [
+   [
+    "Why are some sizes greyed out?",
+    "Making a video larger than its original resolution doesn't add detail, so those presets are turned off."
+   ],
+   [
+    "Contain or Cover?",
+    "Contain shows the whole picture with black bars. Cover fills the frame and trims the edges."
+   ],
+   [
+    "How long does it take?",
+    "SugoiTools uses your device's hardware encoder, so it's usually faster than real time."
+   ]
+  ],
+  "related": [
+   "video-cropper",
+   "video-compressor",
+   "video-trimmer",
+   "image-resizer"
+  ],
+  "privacy": "file-cdn"
+ },
+ {
+  "id": "video-cropper",
+  "slug": "crop-video",
+  "name": "Video Cropper",
+  "title_name": "Video Cropper",
+  "category": "video",
+  "icon": "crop",
+  "description": "Crop the frame of a video to any shape, right in your browser.",
+  "meta_description": "Crop the frame of a video to Free, 1:1, 9:16, 16:9 or 4:5 by dragging a box, at full resolution. Handy for Instagram and TikTok. Your video stays on your device.",
+  "steps": [
+   "Add one MP4, MOV, WEBM or MKV video, up to 500 MB.",
+   "Pick a ratio, then drag the box and its corners over the area to keep.",
+   "Tap Crop video and download the cropped MP4."
+  ],
+  "about": "Video Cropper cuts away the edges of the picture and keeps the area inside the box, at full resolution. It works with a mouse or a finger. Your video is processed in your browser and is never uploaded.",
+  "faq": [
+   [
+    "Does cropping lower the quality?",
+    "The kept area stays at its original resolution. The video is re-encoded, so quality stays close to the original."
+   ],
+   [
+    "Why do the numbers change by 2?",
+    "Video encoders need even sizes, so the crop is rounded to even pixel values."
+   ],
+   [
+    "Can I crop for Instagram or TikTok?",
+    "Yes. Use 1:1 or 4:5 for feed posts and 9:16 for Reels, Stories and TikTok."
+   ]
+  ],
+  "related": [
+   "video-resizer",
+   "video-trimmer",
+   "video-compressor",
+   "image-cropper"
+  ],
+  "privacy": "file-cdn"
+ },
+ {
+  "id": "video-trimmer",
+  "slug": "trim-video",
+  "name": "Video Trimmer",
+  "title_name": "Video Trimmer",
+  "category": "video",
+  "icon": "trim",
+  "description": "Cut the start and end off a video, right in your browser.",
+  "meta_description": "Trim the start and end off a video: set the in and out points while it plays, or type the seconds, then save an MP4. Free, no watermark, no upload.",
+  "steps": [
+   "Add one MP4, MOV, WEBM or MKV video, up to 500 MB.",
+   "Play it and tap Set start and Set end, or drag the sliders.",
+   "Tap Trim video and download the shorter MP4."
+  ],
+  "about": "Video Trimmer keeps just the part of a clip you want and saves it as an MP4. It's handy for cutting dead air from a recording or shortening a clip before sharing it. Your video is processed in your browser and is never uploaded.",
+  "faq": [
+   [
+    "Does trimming lower the quality?",
+    "Trimming re-encodes the clip so it can start at any moment, not just on a keyframe. Quality stays close to the original."
+   ],
+   [
+    "How long does it take?",
+    "SugoiTools uses your device's hardware video encoder, so trimming is usually faster than real time."
+   ],
+   [
+    "Which browsers work?",
+    "The latest Chrome, Edge and Safari. Older browsers without in-browser video encoding show a notice instead."
+   ]
+  ],
+  "related": [
+   "video-cropper",
+   "video-compressor",
+   "video-converter",
+   "video-resizer"
+  ],
+  "privacy": "file-cdn"
+ },
+ {
+  "id": "video-compressor",
+  "slug": "compress-video",
+  "name": "Video Compressor",
+  "title_name": "Video Compressor",
+  "category": "video",
+  "icon": "compress",
+  "description": "Make a video file smaller, right in your browser.",
+  "meta_description": "Make a video file smaller with Light, Medium (720p) or Strong (480p) compression and compare the sizes before you download. Processed in your browser.",
+  "steps": [
+   "Add one MP4, MOV, WEBM or MKV video, up to 500 MB.",
+   "Choose Light, Medium or Strong compression and tap Compress video.",
+   "Compare the size and preview, then download the MP4."
+  ],
+  "about": "Video Compressor re-encodes your video as an MP4 at a lower bitrate. Light keeps the resolution, Medium caps it at 720p and Strong at 480p, keeping the shape of the picture. Your video is processed in your browser and is never uploaded.",
+  "faq": [
+   [
+    "Which level should I choose?",
+    "Light for the best quality, Medium for messaging and email, Strong for the smallest file."
+   ],
+   [
+    "Why didn't my file get smaller?",
+    "Some videos are already well compressed. When the result isn't smaller, SugoiTools tells you and offers your original file."
+   ],
+   [
+    "How long does it take?",
+    "It uses your device's hardware encoder, so it's usually faster than real time. Long or 4K videos take longer, and you can cancel at any point."
+   ]
+  ],
+  "related": [
+   "video-resizer",
+   "video-trimmer",
+   "video-converter",
+   "compress-pdf"
+  ],
+  "privacy": "file-cdn"
+ },
+ {
+  "id": "video-converter",
+  "slug": "convert-video",
+  "name": "Video Converter",
+  "title_name": "Video Converter",
+  "category": "video",
+  "icon": "convert",
+  "description": "Convert videos to MP4, WebM or MOV, or pull out the audio.",
+  "meta_description": "Convert videos to MP4, WebM or MOV, or extract the audio as MP3 or M4A. Streams are copied without loss when the format allows. No upload, no sign-up.",
+  "steps": [
+   "Add one MP4, MOV, WEBM or MKV video, up to 500 MB.",
+   "Choose MP4, WebM, MOV or Extract audio, then tap Convert.",
+   "Preview the result and download it."
+  ],
+  "about": "Video Converter changes the container format of your video. When the new format supports the original video and sound, they're copied straight across, which is fast and lossless; otherwise they're re-encoded. Extract audio saves just the sound, as MP3 when your browser can encode it and as M4A (AAC) otherwise. Your video is processed in your browser and is never uploaded.",
+  "faq": [
+   [
+    "Which format should I choose?",
+    "MP4 plays almost everywhere. WebM suits websites. MOV is for Apple and editing apps."
+   ],
+   [
+    "Why was my audio saved as M4A, not MP3?",
+    "Most browsers can't encode MP3 yet, so SugoiTools saves AAC audio in an M4A file, which plays on phones and computers alike."
+   ],
+   [
+    "Why did conversion fail?",
+    "Some codecs can't be decoded or encoded in your browser. SugoiTools lists the reason so you can try another format."
+   ]
+  ],
+  "related": [
+   "video-compressor",
+   "video-trimmer",
+   "video-resizer",
+   "image-converter"
+  ],
+  "privacy": "file-cdn"
+ },
+ {
+  "id": "youtube-thumbnail-downloader",
+  "slug": "youtube-thumbnail-downloader",
+  "name": "YouTube Thumbnail Downloader",
+  "title_name": "YouTube Thumbnail Downloader",
+  "category": "video",
+  "icon": "play",
+  "description": "Get the thumbnail images of any YouTube video in every size.",
+  "meta_description": "Paste a YouTube, Shorts or live link to get its thumbnail in every size up to 1280×720 HD, then download or open it full size. Free, no sign-up.",
+  "steps": [
+   "Copy the link of a YouTube video, Short or live stream.",
+   "Paste it (or the 11-character video ID) and tap Get thumbnails.",
+   "Tap Download on the size you want, or open it full size and save it."
+  ],
+  "about": "YouTube Thumbnail Downloader shows the thumbnail images YouTube publishes for a video: up to 1280 × 720, plus 640 × 480, 480 × 360 and 320 × 180. Sizes the video doesn't have are hidden. It works with watch, youtu.be, Shorts, embed and live links. Nothing is uploaded, and no sign-up is needed.",
+  "faq": [
+   [
+    "Why is the max resolution missing?",
+    "YouTube only makes a 1280 × 720 thumbnail for some videos, mostly HD uploads. SugoiTools hides sizes that don't exist."
+   ],
+   [
+    "Why doesn't Download appear?",
+    "Some browsers block direct downloads of the image. Tap Open full size, then long-press (phone) or right-click (computer) to save it."
+   ],
+   [
+    "Can I use the thumbnail?",
+    "Thumbnails belong to the video's creator. Use them for reference, or ask for permission before reusing them."
+   ]
+  ],
+  "related": [
+   "youtube-title-generator",
+   "video-description-templates",
+   "image-resizer",
+   "hashtag-suggestions"
+  ],
+  "privacy": "yt"
+ },
+ {
+  "id": "merge-pdf",
+  "slug": "merge-pdf",
+  "name": "Merge PDF",
+  "title_name": "Merge PDF",
+  "category": "pdf",
+  "icon": "merge",
+  "description": "Combine several PDFs into one file, in the order you choose.",
+  "meta_description": "Combine two or more PDFs into one file in the order you choose. Pages stay exactly as they were, with selectable text and working links. Never uploaded.",
+  "steps": [
+   "Add two or more PDF files, up to 50 MB each.",
+   "Use the arrows to set the order, or × to remove a file.",
+   "Tap Merge PDFs and download merged.pdf."
+  ],
+  "about": "Merge PDF joins several documents into a single file, keeping every page exactly as it was: text stays selectable and links keep working. It's handy for combining scanned pages, invoices or chapters before sending them as one attachment. Your PDF is processed in your browser and is never uploaded.",
+  "faq": [
+   [
+    "Is there a limit on files?",
+    "Each PDF can be up to 50 MB. There's no fixed number of files, but very large merges depend on your device's memory."
+   ],
+   [
+    "Can I merge password-protected PDFs?",
+    "No. Remove the password in your PDF reader first, then add the file again."
+   ],
+   [
+    "Will the quality change?",
+    "No. Pages are copied as they are, without re-compressing images or text."
+   ]
+  ],
+  "related": [
+   "split-pdf",
+   "organize-pdf",
+   "images-to-pdf",
+   "compress-pdf"
+  ],
+  "privacy": "file-cdn"
+ },
+ {
+  "id": "split-pdf",
+  "slug": "split-pdf",
+  "name": "Split PDF",
+  "title_name": "Split PDF",
+  "category": "pdf",
+  "icon": "split",
+  "description": "Extract pages, or split a PDF into single pages or chunks.",
+  "meta_description": "Extract pages like 1-3,5 from a PDF, or split it into single pages or chunks of N pages, with no loss of quality. Works in your browser; nothing is uploaded.",
+  "steps": [
+   "Add one PDF, up to 50 MB.",
+   "Choose Extract pages (e.g. 1-3,5), Every page separately, or Chunks of N pages.",
+   "Tap Split PDF and download your files."
+  ],
+  "about": "Split PDF pulls out just the pages you need, or breaks a long document into single pages or equal parts. Pages are copied without any loss of quality. Your PDF is processed in your browser and is never uploaded.",
+  "faq": [
+   [
+    "How do I write page ranges?",
+    "Separate pages and ranges with commas: 1-3,5 gives pages 1, 2, 3 and 5. 7- means page 7 to the end."
+   ],
+   [
+    "What if the last chunk is short?",
+    "With Chunks of N pages, the final file holds whatever pages are left, so a 10-page PDF in chunks of 3 gives files of 3, 3, 3 and 1 pages."
+   ],
+   [
+    "Why doesn't Download all save every file?",
+    "Some browsers ask before saving several files at once. Allow it, or tap each file's own Download button."
+   ]
+  ],
+  "related": [
+   "merge-pdf",
+   "organize-pdf",
+   "pdf-to-images",
+   "compress-pdf"
+  ],
+  "privacy": "file-cdn"
+ },
+ {
+  "id": "compress-pdf",
+  "slug": "compress-pdf",
+  "name": "Compress PDF",
+  "title_name": "Compress PDF",
+  "category": "pdf",
+  "icon": "compress",
+  "description": "Make a PDF smaller by turning its pages into compressed images.",
+  "meta_description": "Shrink heavy scanned PDFs by redrawing each page as a JPEG at 150, 110 or 80 DPI, and see the size saved. Best for scans. Your PDF never leaves your device.",
+  "steps": [
+   "Add one PDF, up to 50 MB.",
+   "Choose Low, Medium or Strong compression and tap Compress PDF.",
+   "Check how much space you saved, then download."
+  ],
+  "about": "Compress PDF redraws each page as a JPEG image at a lower resolution: Low at 150 DPI, Medium at 110 DPI and Strong at 80 DPI. That shrinks heavy scanned documents a lot, but text won't be selectable afterwards, so it's best for scans. Your PDF is processed in your browser and is never uploaded.",
+  "faq": [
+   [
+    "Which level should I choose?",
+    "Low for documents you'll print, Medium for email, Strong for the smallest file when quality matters less."
+   ],
+   [
+    "Why did my file get bigger?",
+    "PDFs made of plain text are already tiny, and images of their pages can be larger. When that happens SugoiTools tells you and offers your original file."
+   ],
+   [
+    "Will links and text still work?",
+    "No. Each page becomes an image, so text, links and form fields are flattened."
+   ]
+  ],
+  "related": [
+   "merge-pdf",
+   "split-pdf",
+   "image-compressor",
+   "video-compressor"
+  ],
+  "privacy": "file-cdn"
+ },
+ {
+  "id": "organize-pdf",
+  "slug": "organize-pdf",
+  "name": "PDF Page Organizer",
+  "title_name": "PDF Page Organizer",
+  "category": "pdf",
+  "icon": "layers",
+  "description": "Reorder, rotate and delete the pages of a PDF.",
+  "meta_description": "Reorder, rotate and delete PDF pages from thumbnails, then save a new PDF. Pages are copied, not re-rendered, so text stays selectable. No upload.",
+  "steps": [
+   "Add one PDF, up to 50 MB.",
+   "Move pages with ← and →, rotate with ↻, or delete with ×.",
+   "Tap Save PDF and download organized.pdf."
+  ],
+  "about": "PDF Page Organizer shows every page as a thumbnail so you can fix the order, turn sideways scans upright and drop pages you don't need. Pages are copied, not re-rendered, so text stays selectable and quality is unchanged. Your PDF is processed in your browser and is never uploaded.",
+  "faq": [
+   [
+    "Can I delete every page?",
+    "No. A PDF needs at least one page, so the last page can't be deleted."
+   ],
+   [
+    "Does rotating lower the quality?",
+    "No. Rotation is saved as a page setting, so the content isn't redrawn."
+   ],
+   [
+    "Can I undo a change?",
+    "Rotate a page four times to return it to its start, or tap Reset and add the PDF again to start over."
+   ]
+  ],
+  "related": [
+   "merge-pdf",
+   "split-pdf",
+   "rotate-flip",
+   "pdf-to-images"
+  ],
+  "privacy": "file-cdn",
+  "i18n_key": "pdf-page-organizer"
+ },
+ {
+  "id": "pdf-to-images",
+  "slug": "pdf-to-image",
+  "name": "PDF to Images",
+  "title_name": "PDF to Image Converter",
+  "category": "pdf",
+  "icon": "image",
+  "description": "Turn every page of a PDF into a JPG or PNG image.",
+  "meta_description": "Turn every page of a PDF into a JPG or PNG image, in normal or high quality, and download pages one by one or all at once. Converted on your device.",
+  "steps": [
+   "Add one PDF, up to 50 MB.",
+   "Choose JPG or PNG, and Normal or High quality, then tap Convert to images.",
+   "Download single pages, or tap Download all."
+  ],
+  "about": "PDF to Images renders each page as a picture you can post, share or drop into a slide. JPG keeps files small; PNG is sharpest for text and diagrams. High quality renders at 2.5 times the page size for crisp zooming. Your PDF is processed in your browser and is never uploaded.",
+  "faq": [
+   [
+    "Which format should I choose?",
+    "JPG for photos and smaller files, PNG for documents with text, charts or line art."
+   ],
+   [
+    "How big are the images?",
+    "Normal renders an A4 page at about 1240 × 1754 pixels; High at about 2070 × 2920."
+   ],
+   [
+    "My PDF has many pages. Is that OK?",
+    "Yes, pages are rendered one at a time. Long documents at High quality take longer and use more memory, so use Normal on older phones."
+   ]
+  ],
+  "related": [
+   "images-to-pdf",
+   "split-pdf",
+   "image-compressor",
+   "image-converter"
+  ],
+  "privacy": "file-cdn"
+ },
+ {
+  "id": "instagram-caption-generator",
+  "slug": "instagram-caption-generator",
+  "name": "Instagram Caption Generator",
+  "title_name": "Instagram Caption Generator",
+  "category": "creator",
+  "icon": "chat",
+  "description": "Caption ideas for any topic, in four tones, with optional call to action and hashtags.",
+  "meta_description": "Get Instagram caption ideas for any topic in Fun, Professional, Inspiring or Casual tones, with optional call to action and hashtags. Copy in one tap.",
+  "steps": [
+   "Type your post's topic or keyword.",
+   "Pick a tone and choose whether to add a call to action and hashtags.",
+   "Tap Generate, then Copy the caption you like."
+  ],
+  "about": "Instagram Caption Generator mixes about 30 caption templates with your topic, emoji to match your tone, and optional call-to-action and hashtag lines.",
+  "faq": [
+   [
+    "Where do the ideas come from?",
+    "Ideas come from proven templates on your device, so they're instant and private."
+   ],
+   [
+    "Can I edit the captions?",
+    "Yes. Copy one, paste it into Instagram and change any words you like."
+   ],
+   [
+    "Do I need an account?",
+    "No. It's free with no sign-up, and nothing you type leaves your browser."
+   ]
+  ],
+  "related": [
+   "hashtag-suggestions",
+   "bio-generator",
+   "fancy-text-generator",
+   "image-cropper"
+  ],
+  "privacy": "text"
+ },
+ {
+  "id": "youtube-title-generator",
+  "slug": "youtube-title-generator",
+  "name": "YouTube Title Generator",
+  "title_name": "YouTube Title Generator",
+  "category": "creator",
+  "icon": "play",
+  "description": "Clickable YouTube title ideas with a character count for each.",
+  "meta_description": "Generate 10 clickable YouTube title ideas from your topic, each with a character count that flags titles over 60 characters. Free, no account needed.",
+  "steps": [
+   "Type your video's topic or keyword.",
+   "Pick a tone and tap Generate for 10 titles.",
+   "Copy the one you like, or Generate more to reshuffle."
+  ],
+  "about": "YouTube Title Generator fills about 30 proven title patterns with your topic and counts the characters, flagging titles over 60 that may be cut off in search.",
+  "faq": [
+   [
+    "Where do the ideas come from?",
+    "Ideas come from proven templates on your device, so they're instant and private."
+   ],
+   [
+    "Why flag titles over 60 characters?",
+    "YouTube allows 100, but search results and phones often cut titles after about 60."
+   ],
+   [
+    "Do I need an account?",
+    "No. It's free with no sign-up, and nothing you type leaves your browser."
+   ]
+  ],
+  "related": [
+   "video-description-templates",
+   "youtube-thumbnail-downloader",
+   "hashtag-suggestions",
+   "word-character-counter"
+  ],
+  "privacy": "text"
+ },
+ {
+  "id": "video-description-templates",
+  "slug": "youtube-description-template",
+  "name": "Video Description Templates",
+  "title_name": "YouTube Description Template",
+  "category": "creator",
+  "icon": "text",
+  "description": "Full YouTube descriptions with timestamps, links and socials.",
+  "meta_description": "Fill-in YouTube description templates with a hook, timestamps, links, socials and hashtags, checked against the 5,000-character limit. Copy and paste.",
+  "steps": [
+   "Pick a template that fits your video.",
+   "Fill in the fields you need; empty sections are skipped.",
+   "Check the count against YouTube's 5,000 limit and tap Copy."
+  ],
+  "about": "Builds a description with a hook, what you'll learn, timestamps, links, follow links and hashtags.",
+  "faq": [
+   [
+    "Where do the ideas come from?",
+    "Ideas come from proven templates on your device, so they're instant and private."
+   ],
+   [
+    "Why no timestamps for Shorts?",
+    "Shorts are too short for chapters."
+   ],
+   [
+    "Do I need an account?",
+    "No. It's free with no sign-up, and nothing you type leaves your browser."
+   ]
+  ],
+  "related": [
+   "youtube-title-generator",
+   "hashtag-suggestions",
+   "youtube-thumbnail-downloader",
+   "word-character-counter"
+  ],
+  "privacy": "text"
+ },
+ {
+  "id": "hashtag-suggestions",
+  "slug": "hashtag-generator",
+  "name": "Hashtag Suggestions",
+  "title_name": "Hashtag Generator",
+  "category": "creator",
+  "icon": "hash",
+  "description": "Up to 30 hashtags for your keyword, grouped into broad, niche and variants.",
+  "meta_description": "Get up to 30 hashtags for your keyword, grouped into broad, niche and variants, for Instagram, TikTok or YouTube. Copy all tags or one group at a time.",
+  "steps": [
+   "Type a keyword or two.",
+   "Tap Generate to see broad, niche and variant tags.",
+   "Copy all the tags, or one group, and paste them into your post."
+  ],
+  "about": "Hashtag Suggestions builds tags from your keyword plus a small set of categories such as fitness, food, travel, tech and India, grouped as broad, niche and variants.",
+  "faq": [
+   [
+    "Where do the ideas come from?",
+    "Ideas come from proven templates on your device, so they're instant and private."
+   ],
+   [
+    "How many hashtags should I use?",
+    "Instagram allows up to 30. A mix of broad and niche tags usually works better than only popular ones."
+   ],
+   [
+    "Do I need an account?",
+    "No. It's free with no sign-up, and nothing you type leaves your browser."
+   ]
+  ],
+  "related": [
+   "instagram-caption-generator",
+   "youtube-title-generator",
+   "bio-generator",
+   "video-description-templates"
+  ],
+  "privacy": "text"
+ },
+ {
+  "id": "bio-generator",
+  "slug": "bio-generator",
+  "name": "Bio Generator",
+  "title_name": "Bio Generator",
+  "category": "creator",
+  "icon": "user",
+  "description": "Eight short bios at a time for Instagram, X, LinkedIn or YouTube.",
+  "meta_description": "Write a short bio for Instagram, X, LinkedIn or YouTube: eight ideas at a time, in your tone, with a live count against each platform's limit.",
+  "steps": [
+   "Type what you do and a few interests.",
+   "Pick a tone and a platform, then tap Generate.",
+   "Copy a bio you like; red means it is over the limit."
+  ],
+  "about": "Fills about 20 bio templates with your details, with emoji for Fun and Casual, and counts characters against the platform's limit.",
+  "faq": [
+   [
+    "Where do the ideas come from?",
+    "Ideas come from proven templates on your device, so they're instant and private."
+   ],
+   [
+    "What are the limits?",
+    "Instagram 150, X 160, LinkedIn headline 220, YouTube 1,000 characters."
+   ],
+   [
+    "Do I need an account?",
+    "No. It's free with no sign-up, and nothing you type leaves your browser."
+   ]
+  ],
+  "related": [
+   "fancy-text-generator",
+   "instagram-caption-generator",
+   "hashtag-suggestions",
+   "text-case-converter"
+  ],
+  "privacy": "text"
+ },
+ {
+  "id": "fancy-text-generator",
+  "slug": "fancy-text-generator",
+  "name": "Fancy Text Generator",
+  "title_name": "Fancy Text Generator",
+  "category": "text",
+  "icon": "type",
+  "description": "Turn plain text into bold, script, bubble and other Unicode styles to copy.",
+  "meta_description": "Turn plain text into bold, italic, script, bubble and other Unicode styles you can copy and paste into Instagram bios, posts and messages. 15 styles.",
+  "steps": [
+   "Type your text in the box.",
+   "Browse the 15 styles as they update.",
+   "Tap Copy next to one and paste it anywhere."
+  ],
+  "about": "Fancy Text Generator swaps your letters for look-alike Unicode characters, so the style survives copy and paste where fonts can't be changed. Your text stays in your browser and is never uploaded.",
+  "faq": [
+   [
+    "Will it work on Instagram, X and TikTok?",
+    "Yes, in most places that accept text. A few apps or older devices may show boxes for some styles."
+   ],
+   [
+    "Why are some characters unchanged?",
+    "Unicode has no styled version of every symbol or accented letter, so those stay as they are."
+   ],
+   [
+    "Is fancy text bad for accessibility?",
+    "Screen readers may read it oddly, so keep it for short names and headings."
+   ]
+  ],
+  "related": [
+   "bio-generator",
+   "text-case-converter",
+   "instagram-caption-generator",
+   "word-character-counter"
+  ],
+  "privacy": "text"
+ },
+ {
+  "id": "word-character-counter",
+  "slug": "word-counter",
+  "name": "Word & Character Counter",
+  "title_name": "Word & Character Counter",
+  "category": "text",
+  "icon": "count",
+  "description": "Count words, characters, sentences and reading time as you type.",
+  "meta_description": "Count words, characters with and without spaces, sentences, paragraphs and reading time as you type, with limits for X, Instagram and meta descriptions.",
+  "steps": [
+   "Type or paste your text in the box.",
+   "Watch the counts and reading time update as you type.",
+   "Check the green or red badges for platform limits."
+  ],
+  "about": "Word & Character Counter shows words, characters with and without spaces, sentences, paragraphs, reading time at 200 words a minute and speaking time at 130. Your text stays in your browser and is never uploaded.",
+  "faq": [
+   [
+    "How are words counted?",
+    "Any run of characters between spaces or line breaks counts as one word."
+   ],
+   [
+    "Do emoji count as one character?",
+    "Yes. Each emoji or symbol counts once, though some platforms count certain emoji as two."
+   ],
+   [
+    "How is reading time worked out?",
+    "Words divided by 200 per minute for reading and 130 per minute for speaking aloud."
+   ]
+  ],
+  "related": [
+   "text-case-converter",
+   "fancy-text-generator",
+   "typing-speed-test",
+   "youtube-title-generator"
+  ],
+  "privacy": "text"
+ },
+ {
+  "id": "percentage-calculator",
+  "slug": "percentage-calculator",
+  "name": "Percentage Calculator",
+  "title_name": "Percentage Calculator",
+  "category": "calculators",
+  "icon": "percent",
+  "description": "Work out X% of Y, what percent X is of Y, and the % change between two numbers.",
+  "meta_description": "Work out X% of Y, what percent X is of Y, and the percentage increase or decrease between two numbers. Handy for discounts and marks. Updates as you type.",
+  "steps": [
+   "Choose a mode: X% of Y, X is what % of Y, or % change.",
+   "Enter the two numbers.",
+   "Read the answer, which updates as you type."
+  ],
+  "about": "Percentage Calculator handles the three questions people ask most: a share of a number, what share one number is of another, and how much a value rose or fell. Everything is worked out in your browser as you type; nothing is sent anywhere or saved.",
+  "faq": [
+   [
+    "How is percentage change worked out?",
+    "(New − Old) ÷ Old × 100. A positive result is an increase, a negative one a decrease."
+   ],
+   [
+    "How do I find a discount price?",
+    "Use X% of Y to get the discount, then subtract it from the price."
+   ],
+   [
+    "How do I turn marks into a percentage?",
+    "Use 'X is what % of Y' with your marks as X and the total as Y."
+   ]
+  ],
+  "related": [
+   "gst-calculator",
+   "loan-calculator",
+   "scientific-calculator",
+   "unit-converter"
+  ],
+  "privacy": "calc"
+ },
+ {
+  "id": "age-calculator",
+  "slug": "age-calculator",
+  "name": "Age Calculator",
+  "title_name": "Age Calculator",
+  "category": "calculators",
+  "icon": "cake",
+  "description": "Your exact age in years, months and days, plus your next birthday countdown.",
+  "meta_description": "Find your exact age in years, months and days from your date of birth, the weekday you were born, total days lived and a countdown to your next birthday.",
+  "steps": [
+   "Pick your date of birth.",
+   "Leave 'Age as of' on today, or choose another date.",
+   "Read your age in years, months and days, plus your next birthday."
+  ],
+  "about": "Age Calculator counts whole years, then months, then the days left over, the way age is usually stated on forms. It also shows the weekday you were born and how many days remain until your next birthday. Everything is worked out in your browser as you type; nothing is sent anywhere or saved.",
+  "faq": [
+   [
+    "How are leap-year birthdays handled?",
+    "If you were born on 29 February, your birthday in other years is counted as 1 March."
+   ],
+   [
+    "Can I find my age on a past or future date?",
+    "Yes. Change the 'Age as of' date to any day after your birth."
+   ],
+   [
+    "Why do months have different day counts?",
+    "Leftover days are counted against the actual length of the previous month, so results match the calendar."
+   ]
+  ],
+  "related": [
+   "percentage-calculator",
+   "bmi-calculator",
+   "timer-online",
+   "unit-converter"
+  ],
+  "privacy": "calc"
+ },
+ {
+  "id": "sip-calculator",
+  "slug": "sip-calculator",
+  "name": "SIP Calculator",
+  "title_name": "SIP Calculator",
+  "category": "calculators",
+  "icon": "growth",
+  "description": "Estimate what a monthly SIP could grow to, with invested amount and returns in ₹.",
+  "meta_description": "Estimate what a monthly SIP could grow to in ₹: enter the amount, expected annual return and years to see invested amount, estimated returns and total value.",
+  "steps": [
+   "Enter your monthly SIP amount in ₹.",
+   "Enter the annual return you expect and how many years you will invest.",
+   "See the invested amount, estimated returns and total value."
+  ],
+  "about": "SIP Calculator assumes you invest at the start of each month and returns compound monthly: FV = P × ((1 + i)ⁿ − 1) ÷ i × (1 + i), where i is the annual rate ÷ 12 and n is the number of months. Real fund returns vary year to year. Everything is worked out in your browser as you type; nothing is sent anywhere or saved.",
+  "faq": [
+   [
+    "Are these returns guaranteed?",
+    "No. Mutual fund returns depend on markets; treat the result as an estimate only."
+   ],
+   [
+    "What return should I use?",
+    "Pick a conservative figure. Past returns don't promise future ones."
+   ],
+   [
+    "Does it include tax or exit load?",
+    "No. The result is before taxes, charges and exit loads."
+   ]
+  ],
+  "related": [
+   "loan-calculator",
+   "gst-calculator",
+   "percentage-calculator",
+   "scientific-calculator"
+  ],
+  "privacy": "calc"
+ },
+ {
+  "id": "loan-calculator",
+  "slug": "emi-calculator",
+  "name": "Loan / EMI Calculator",
+  "title_name": "Loan EMI Calculator",
+  "category": "calculators",
+  "icon": "bank",
+  "description": "Monthly EMI, total interest and a year-by-year repayment table for any loan.",
+  "meta_description": "Calculate the monthly EMI and total interest for a home, car or personal loan in ₹, with a year-by-year principal and interest table. Reducing-balance method.",
+  "steps": [
+   "Enter the loan amount in ₹ and the yearly interest rate.",
+   "Enter the tenure in years or months.",
+   "See your EMI and total interest, and open the year-by-year table."
+  ],
+  "about": "Loan / EMI Calculator uses the standard reducing-balance formula EMI = P·r·(1 + r)ⁿ ÷ ((1 + r)ⁿ − 1), with r as the monthly rate. The yearly table splits each year's payments into principal and interest. Everything is worked out in your browser as you type; nothing is sent anywhere or saved.",
+  "faq": [
+   [
+    "Does it work for home, car and personal loans?",
+    "Yes, for any loan with a fixed rate and equal monthly instalments."
+   ],
+   [
+    "What if the interest rate is 0%?",
+    "The EMI is simply the loan amount divided by the number of months."
+   ],
+   [
+    "Why does my bank's EMI differ slightly?",
+    "Banks may add processing fees, round differently or count days in their own way."
+   ]
+  ],
+  "related": [
+   "sip-calculator",
+   "gst-calculator",
+   "percentage-calculator",
+   "age-calculator"
+  ],
+  "privacy": "calc"
+ },
+ {
+  "id": "bmi-calculator",
+  "slug": "bmi-calculator",
+  "name": "BMI Calculator",
+  "title_name": "BMI Calculator",
+  "category": "calculators",
+  "icon": "scale",
+  "description": "Body Mass Index from your height and weight, in metric or imperial units.",
+  "meta_description": "Calculate your Body Mass Index from height and weight in metric (kg, cm) or imperial (lb, ft) units, and see which WHO adult category it falls into.",
+  "steps": [
+   "Choose metric or imperial units.",
+   "Enter your height and weight.",
+   "Read your BMI and its WHO category."
+  ],
+  "about": "BMI Calculator divides weight in kilograms by height in metres squared and places the result in the WHO adult bands: under 18.5 underweight, 18.5–24.9 normal, 25–29.9 overweight, 30 and over obese. Everything is worked out in your browser as you type; nothing is sent anywhere or saved.",
+  "faq": [
+   [
+    "Is BMI accurate for everyone?",
+    "No. It ignores muscle mass, age, sex and build, so athletes and older adults can be misclassified."
+   ],
+   [
+    "Does it work for children?",
+    "No. Children and teens need age- and sex-specific BMI charts."
+   ],
+   [
+    "Is this medical advice?",
+    "No. Talk to a doctor about your weight and health."
+   ]
+  ],
+  "related": [
+   "age-calculator",
+   "unit-converter",
+   "percentage-calculator",
+   "pomodoro-timer"
+  ],
+  "privacy": "calc"
+ },
+ {
+  "id": "gst-calculator",
+  "slug": "gst-calculator",
+  "name": "GST Calculator",
+  "title_name": "GST Calculator",
+  "category": "calculators",
+  "icon": "receipt",
+  "description": "Add or remove GST at 5%, 12%, 18%, 28% or any rate, with the CGST and SGST split.",
+  "meta_description": "Add or remove GST at 5%, 12%, 18%, 28% or a custom rate, and see net amount, GST and the CGST/SGST split for intra-state invoices in India.",
+  "steps": [
+   "Choose Add GST or Remove GST.",
+   "Tap a rate, or Custom to type your own, and enter the amount.",
+   "Read the net, GST, CGST, SGST and gross amounts."
+  ],
+  "about": "GST Calculator adds tax to a price, or takes it out of a GST-inclusive price using Net = Gross ÷ (1 + rate ÷ 100). For sales within a state, the GST splits equally into CGST and SGST. Everything is worked out in your browser as you type; nothing is sent anywhere or saved.",
+  "faq": [
+   [
+    "How do I remove GST from a price?",
+    "Choose Remove GST and enter the inclusive price. ₹1,180 at 18% gives ₹1,000 net."
+   ],
+   [
+    "What about IGST?",
+    "For sales between states, IGST equals the full GST amount shown."
+   ],
+   [
+    "Which rate applies to my item?",
+    "Rates depend on the goods or service; check the current GST rate notified for it."
+   ]
+  ],
+  "related": [
+   "percentage-calculator",
+   "loan-calculator",
+   "sip-calculator",
+   "scientific-calculator"
+  ],
+  "privacy": "calc"
+ },
+ {
+  "id": "scientific-calculator",
+  "slug": "scientific-calculator",
+  "name": "Scientific Calculator",
+  "title_name": "Scientific Calculator",
+  "category": "calculators",
+  "icon": "calc",
+  "description": "A scientific calculator with trig, logs, powers and roots, by tap or keyboard.",
+  "meta_description": "A free scientific calculator with sin, cos, tan, log, ln, powers, roots, π and e, in degrees or radians. Use the buttons or your keyboard, with a live answer.",
+  "steps": [
+   "Tap the keys or type on your keyboard.",
+   "Switch DEG or RAD for trig functions.",
+   "Read the live answer, then press = or Enter."
+  ],
+  "about": "Scientific Calculator follows the usual order of operations: brackets, powers, then × and ÷, then + and −. It supports sin, cos, tan, log, ln, square roots, powers, percent, π and e, and multiplies implicitly, so 2π means 2 × π. Everything is worked out in your browser as you type; nothing is sent anywhere or saved.",
+  "faq": [
+   [
+    "What does % do?",
+    "It divides the number before it by 100, so 50% is 0.5."
+   ],
+   [
+    "Is log base 10?",
+    "Yes. log is base 10 and ln is the natural log."
+   ],
+   [
+    "Why do I see an error?",
+    "Check for a missing number, an unbalanced bracket or a division by zero."
+   ]
+  ],
+  "related": [
+   "percentage-calculator",
+   "unit-converter",
+   "gst-calculator",
+   "loan-calculator"
+  ],
+  "privacy": "calc"
+ },
+ {
+  "id": "pomodoro-timer",
+  "slug": "pomodoro-timer",
+  "name": "Pomodoro Timer",
+  "title_name": "Pomodoro Timer",
+  "category": "utilities",
+  "icon": "timer",
+  "description": "Focus in 25-minute sessions with short and long breaks and a chime between them.",
+  "meta_description": "Focus in 25-minute Pomodoro sessions with 5-minute short breaks and a long break after every fourth, a soft chime between phases and adjustable lengths.",
+  "steps": [
+   "Keep 25, 5 and 15 minutes, or set your own focus and break lengths.",
+   "Press Start and work until the chime.",
+   "Take the break, then carry on; Pause, Skip or Reset any time."
+  ],
+  "about": "The Pomodoro Timer splits work into focused blocks with planned rests: a short break after each focus session and a longer one after every fourth. The ring empties as time runs out, the tab title shows the minutes left, and a soft chime marks each change of phase. Time is measured against the clock, so it stays right even when the tab is in the background. It runs entirely in your browser, with nothing sent anywhere or saved.",
+  "faq": [
+   [
+    "Why 25 minutes?",
+    "It is long enough to get real work done and short enough to stay sharp. Change it if a different length suits you."
+   ],
+   [
+    "Does it keep running in another tab?",
+    "Yes. Remaining time comes from the clock, not from counting ticks, so it stays accurate in background tabs."
+   ],
+   [
+    "Can I turn the chime off?",
+    "Yes. Use the sound button at the corner of the page to mute all sounds."
+   ]
+  ],
+  "related": [
+   "timer-online",
+   "stopwatch-online",
+   "typing-speed-test",
+   "word-character-counter"
+  ],
+  "privacy": "calc"
+ },
+ {
+  "id": "timer-online",
+  "slug": "online-timer",
+  "name": "Online Timer",
+  "title_name": "Online Timer",
+  "category": "utilities",
+  "icon": "clock",
+  "description": "A countdown timer with big digits, quick presets and an alarm when time is up.",
+  "meta_description": "A free online countdown timer with big digits, quick presets and an alarm that beeps until you stop it. Set hours, minutes and seconds, up to 99 hours.",
+  "steps": [
+   "Tap a preset or enter hours, minutes and seconds.",
+   "Press Start; pause or reset at any time.",
+   "When the alarm rings, press Stop."
+  ],
+  "about": "The Online Timer counts down from any time up to 99 hours in big, easy-to-read digits, and shows the time left in the tab title too. When it reaches zero, a beep repeats every second until you press Stop. It runs entirely in your browser, with nothing sent anywhere or saved.",
+  "faq": [
+   [
+    "Will the alarm sound if the tab is in the background?",
+    "Yes, as long as the tab stays open and your device's sound is on."
+   ],
+   [
+    "Is it accurate?",
+    "Yes. It works from the clock time when the timer ends, so slow or throttled tabs don't make it drift."
+   ],
+   [
+    "Why can't I hear anything?",
+    "Check the page's sound button and your device volume; some browsers also need one tap on the page before playing sound."
+   ]
+  ],
+  "related": [
+   "stopwatch-online",
+   "pomodoro-timer",
+   "age-calculator",
+   "typing-speed-test"
+  ],
+  "privacy": "calc"
+ },
+ {
+  "id": "stopwatch-online",
+  "slug": "online-stopwatch",
+  "name": "Online Stopwatch",
+  "title_name": "Online Stopwatch",
+  "category": "utilities",
+  "icon": "stopwatch",
+  "description": "A precise stopwatch with laps, lap times and splits to the hundredth of a second.",
+  "meta_description": "A precise online stopwatch to the hundredth of a second, with lap and split times and the fastest and slowest laps highlighted. Stays accurate in the background.",
+  "steps": [
+   "Press Start to begin timing.",
+   "Press Lap to record a lap without stopping.",
+   "Press Stop to pause, then Resume or Reset."
+  ],
+  "about": "The Online Stopwatch times to the hundredth of a second using your browser's high-resolution clock. Each lap shows its own time and the total split, with the fastest and slowest laps highlighted once you have three or more. It runs entirely in your browser, with nothing sent anywhere or saved.",
+  "faq": [
+   [
+    "What is the difference between lap and split?",
+    "Lap time is how long that lap took; split is the total time from the start to the end of that lap."
+   ],
+   [
+    "Does it stay accurate in a background tab?",
+    "Yes. Elapsed time comes from timestamps, so the display catches up the moment you return."
+   ],
+   [
+    "Are my laps saved?",
+    "No. They clear when you reset or leave the page."
+   ]
+  ],
+  "related": [
+   "timer-online",
+   "pomodoro-timer",
+   "typing-speed-test",
+   "unit-converter"
+  ],
+  "privacy": "calc"
+ },
+ {
+  "id": "password-generator",
+  "slug": "password-generator",
+  "name": "Password Generator",
+  "title_name": "Password Generator",
+  "category": "utilities",
+  "icon": "key",
+  "description": "Strong random passwords with your choice of length, character sets and a strength meter.",
+  "meta_description": "Generate strong random passwords from 6 to 64 characters with your choice of letters, digits and symbols, skip look-alikes, and check the strength meter.",
+  "steps": [
+   "Drag the slider to pick a length.",
+   "Choose the character sets, and whether to skip look-alikes like O and 0.",
+   "Check the strength meter and press Copy, or Regenerate."
+  ],
+  "about": "The Password Generator builds passwords from your browser's cryptographic random generator, picking each character without bias and making sure every set you choose appears at least once. The strength meter estimates entropy in bits from the length and the size of the character pool. It runs entirely in your browser, with nothing sent anywhere or saved.",
+  "faq": [
+   [
+    "How long should a password be?",
+    "16 characters with all four sets is very strong for most accounts. Use 20 or more for a password manager's master password."
+   ],
+   [
+    "Is it truly random?",
+    "Yes. It uses crypto.getRandomValues, the same source browsers use for encryption, with rejection sampling so no character is favoured."
+   ],
+   [
+    "Why exclude look-alikes?",
+    "Characters like O and 0 or I, l and 1 are easy to mix up when you read or type a password by hand."
+   ]
+  ],
+  "related": [
+   "qr-code-generator",
+   "base64-encoder-decoder",
+   "json-formatter",
+   "text-case-converter"
+  ],
+  "privacy": "calc"
+ },
+ {
+  "id": "unit-converter",
+  "slug": "unit-converter",
+  "name": "Unit Converter",
+  "title_name": "Unit Converter",
+  "category": "utilities",
+  "icon": "ruler",
+  "description": "Convert length, weight, temperature, area, volume, speed, time and data units.",
+  "meta_description": "Convert length, weight, temperature, area, volume, speed, time and data units, such as km to miles, °C to °F or MB to MiB, with exact definitions.",
+  "steps": [
+   "Pick a category, such as Length or Temperature.",
+   "Enter a value and choose the units to convert from and to.",
+   "Read the result as you type, or tap Swap."
+  ],
+  "about": "The Unit Converter covers length, weight, temperature, area, volume, speed, time and data, using exact international definitions such as 1 mile = 1.609344 km. Temperature uses its formulas rather than a single factor, and data sizes come in both decimal (1000) and binary (1024) units. It runs entirely in your browser, with nothing sent anywhere or saved.",
+  "faq": [
+   [
+    "What's the difference between MB and MiB?",
+    "A megabyte (MB) is 1,000,000 bytes; a mebibyte (MiB) is 1,048,576 bytes. Drive makers use MB; many operating systems use MiB."
+   ],
+   [
+    "How is temperature converted?",
+    "°F = °C × 1.8 + 32, and K = °C + 273.15."
+   ],
+   [
+    "Which gallon does it use?",
+    "Both: the US gallon (3.785 l) and the UK gallon (4.546 l) are listed separately."
+   ]
+  ],
+  "related": [
+   "percentage-calculator",
+   "scientific-calculator",
+   "bmi-calculator",
+   "json-formatter"
+  ],
+  "privacy": "calc"
+ },
+ {
+  "id": "base64-encoder-decoder",
+  "slug": "base64-encoder",
+  "name": "Base64 & URL Encoder / Decoder",
+  "title_name": "Base64 & URL Encoder / Decoder",
+  "category": "utilities",
+  "icon": "code",
+  "description": "Encode or decode Base64 with full UTF-8, make data URLs from files, and URL-encode text.",
+  "meta_description": "Encode or decode Base64 with full UTF-8 support, turn files up to 5 MB into data URLs, and percent-encode or decode text for links. Runs in your browser.",
+  "steps": [
+   "Choose the Base64 or URL tab.",
+   "Type or paste your text, or pick a file for a Base64 data URL.",
+   "Press Encode or Decode and copy the output."
+  ],
+  "about": "The Base64 & URL Encoder converts text to and from Base64 with full UTF-8 support, so Hindi, emoji and accented letters survive the round trip. It also turns files up to 5 MB into data URLs, and percent-encodes or decodes text for use in links. It runs entirely in your browser, with nothing sent anywhere or saved.",
+  "faq": [
+   [
+    "Is Base64 encryption?",
+    "No. Base64 only changes how data is written; anyone can decode it. Don't use it to hide secrets."
+   ],
+   [
+    "Why does decoding fail?",
+    "The text may not be Base64, may be cut short, or may decode to binary data rather than text."
+   ],
+   [
+    "When do I need URL encoding?",
+    "When a value in a link holds spaces, &, ? or non-English letters, so the link isn't broken."
+   ]
+  ],
+  "related": [
+   "json-formatter",
+   "password-generator",
+   "qr-code-generator",
+   "text-case-converter"
+  ],
+  "privacy": "calc"
+ },
+ {
+  "id": "typing-speed-test",
+  "slug": "typing-speed-test",
+  "name": "Typing Speed Test",
+  "title_name": "Typing Speed Test",
+  "category": "utilities",
+  "icon": "keyboard",
+  "description": "Test your typing speed in WPM and accuracy over 30, 60 or 120 seconds.",
+  "meta_description": "Test your typing speed in words per minute and accuracy over 30, 60 or 120 seconds, with mistakes shown in red as you go. Works with phone keyboards too.",
+  "steps": [
+   "Choose 30, 60 or 120 seconds.",
+   "Start typing the paragraph; the timer starts on your first key.",
+   "Read your WPM, accuracy and errors, then Restart."
+  ],
+  "about": "The Typing Speed Test measures how fast and accurately you type an everyday English paragraph. Speed is counted the standard way, where every five correct characters make one word, divided by the minutes elapsed. It works with phone and tablet keyboards as well as physical ones. It runs entirely in your browser, with nothing sent anywhere or saved.",
+  "faq": [
+   [
+    "How is WPM calculated?",
+    "Correct characters ÷ 5 ÷ minutes. So 250 correct characters in one minute is 50 WPM."
+   ],
+   [
+    "What is a good typing speed?",
+    "Around 40 WPM is typical. 60 or more is fast, and accuracy above 95% matters more than raw speed."
+   ],
+   [
+    "Does backspace count?",
+    "You can fix mistakes; only the characters left in the box are scored."
+   ]
+  ],
+  "related": [
+   "word-character-counter",
+   "stopwatch-online",
+   "pomodoro-timer",
+   "text-case-converter"
+  ],
+  "privacy": "calc"
+ },
+ {
+  "id": "qr-code-generator",
+  "slug": "qr-code-generator",
+  "name": "QR Code Generator",
+  "title_name": "QR Code Generator",
+  "category": "utilities",
+  "icon": "qr",
+  "description": "Make a QR code from text or a link, with custom colours, and download PNG or SVG.",
+  "meta_description": "Make a QR code from any link or text with custom colours, size and error correction, preview it live and download it as PNG or SVG. Codes never expire.",
+  "steps": [
+   "Type or paste text or a link.",
+   "Pick a size, colours and error-correction level.",
+   "Check the live preview and download PNG or SVG."
+  ],
+  "about": "The QR Code Generator turns text or a URL into a scannable code that updates as you type. Higher error correction keeps a code readable when it is printed small or partly covered, at the cost of a denser pattern. SVG files stay sharp at any print size. It runs entirely in your browser, with nothing sent anywhere or saved.",
+  "faq": [
+   [
+    "Which error-correction level should I use?",
+    "M suits most uses. Choose Q or H if the code will be printed small, outdoors, or with a logo over it."
+   ],
+   [
+    "Do the codes expire?",
+    "No. The code holds your text directly, so it works for as long as the link or text inside it does."
+   ],
+   [
+    "Why won't my code scan?",
+    "Keep strong contrast with a dark foreground on a light background, and shorten long text."
+   ]
+  ],
+  "related": [
+   "password-generator",
+   "base64-encoder-decoder",
+   "youtube-thumbnail-downloader",
+   "json-formatter"
+  ],
+  "privacy": "calc"
+ },
+ {
+  "id": "json-formatter",
+  "slug": "json-formatter",
+  "name": "JSON Formatter",
+  "title_name": "JSON Formatter",
+  "category": "utilities",
+  "icon": "braces",
+  "description": "Format, minify and validate JSON, with the line and column of any error.",
+  "meta_description": "Format, minify and validate JSON with 2-space, 4-space or tab indents. Errors show the exact line and column. Copy or download the result as .json.",
+  "steps": [
+   "Paste your JSON into the box.",
+   "Choose 2 spaces, 4 spaces or a tab.",
+   "Press Format, Minify or Validate, then copy or download."
+  ],
+  "about": "The JSON Formatter tidies messy JSON into readable, indented text, or squeezes it onto one line to save space. If something is wrong, it tells you what and where, with the line and column, and selects the spot in the box. It runs entirely in your browser, with nothing sent anywhere or saved.",
+  "faq": [
+   [
+    "Is my JSON sent anywhere?",
+    "No. It is parsed by your own browser, so it is safe for API keys and private data."
+   ],
+   [
+    "Why is my JSON invalid?",
+    "The usual causes are trailing commas, single quotes instead of double quotes, and keys without quotes."
+   ],
+   [
+    "Does formatting change my data?",
+    "No. Only whitespace changes; keys, values and order stay the same."
+   ]
+  ],
+  "related": [
+   "base64-encoder-decoder",
+   "text-case-converter",
+   "word-character-counter",
+   "password-generator"
+  ],
+  "privacy": "calc"
+ },
+ {
+  "id": "text-case-converter",
+  "slug": "case-converter",
+  "name": "Text Case Converter",
+  "title_name": "Text Case Converter",
+  "category": "text",
+  "icon": "case",
+  "description": "Switch text to UPPER, lower, Title, Sentence, camelCase, snake_case, kebab-case and more.",
+  "meta_description": "Convert text to UPPERCASE, lowercase, Title Case, Sentence case, camelCase, PascalCase, snake_case, kebab-case and more, all at once, ready to copy.",
+  "steps": [
+   "Type or paste your text.",
+   "See it in every case at once.",
+   "Copy the version you need."
+  ],
+  "about": "The Text Case Converter rewrites text as UPPER, lower, Title or Sentence case, the camelCase, PascalCase, snake_case and kebab-case styles programmers use, and playful aLtErNaTe and iNVERSE. Every version updates as you type, with a live character count. It runs entirely in your browser, with nothing sent anywhere or saved.",
+  "faq": [
+   [
+    "What is camelCase?",
+    "Words joined with no spaces, each capitalised except the first, like helloWorldExample. PascalCase capitalises the first too."
+   ],
+   [
+    "Does Title Case skip small words?",
+    "No. It capitalises every word, which is the simplest style and works for most headings."
+   ],
+   [
+    "Does it handle hyphens and underscores?",
+    "Yes. For the code styles, spaces, hyphens and underscores all count as word breaks."
+   ]
+  ],
+  "related": [
+   "word-character-counter",
+   "fancy-text-generator",
+   "json-formatter",
+   "base64-encoder-decoder"
+  ],
+  "privacy": "text"
+ }
+]
