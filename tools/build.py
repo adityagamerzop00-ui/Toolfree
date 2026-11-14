@@ -168,7 +168,7 @@ def shell_bottom(root, scripts):
               </ul>
             </div>
           </div>
-          <p class="x-copy">© SugoiTools</p>
+          <p class="x-copy">© SugoiTools · Made by <a href="{root}about/#developer">Aditya Kumar</a></p>
         </div>
       </footer>
     </div>
