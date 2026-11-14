@@ -321,3 +321,33 @@
       /* Tool scripts load after this file; mount once everything has run. */
       document.addEventListener("DOMContentLoaded", () => { ready = true; route(); });
     
+/* Trending on YouTube (India): reads trending.json written by server/trending.py on the VPS; hidden if absent.
+   Home is re-rendered into #x-view, so re-insert after every render. */
+(function () {
+  if (!window.fetch || !window.MutationObserver) return;
+  var D = null;
+  var fmt = function (n) { return n >= 1e7 ? (n / 1e7).toFixed(1) + " Cr" : n >= 1e5 ? (n / 1e5).toFixed(1) + " L" : n >= 1e3 ? Math.round(n / 1e3) + "K" : n; };
+  var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
+  function put() {
+    var first = document.getElementById("cat-image");
+    if (!D || !first || document.getElementById("trending")) return;
+    var hi = (document.documentElement.lang || "").indexOf("hi") === 0;
+    var sec = document.createElement("section");
+    sec.className = "x-trend"; sec.id = "trending";
+    sec.innerHTML = '<div class="x-wrap"><h2>🔥 ' + (hi ? "YouTube पर ट्रेंडिंग (भारत)" : "Trending on YouTube India") + '</h2><div class="x-trow">' +
+      D.items.map(function (v) {
+        return '<a class="x-tcard" href="https://www.youtube.com/watch?v=' + encodeURIComponent(v.id) + '" target="_blank" rel="noopener">' +
+          '<img src="https://i.ytimg.com/vi/' + encodeURIComponent(v.id) + '/mqdefault.jpg" alt="" loading="lazy" width="320" height="180">' +
+          '<b>' + esc(v.t) + '</b><span>' + esc(v.c) + ' · ' + fmt(v.v) + ' ' + (hi ? "व्यूज़" : "views") + '</span></a>';
+      }).join("") + '</div></div>';
+    var anchor = first.closest("section") || first;
+    anchor.parentNode.insertBefore(sec, anchor);
+  }
+  var base = (document.querySelector('script[src*="core.js"]') || {}).src || "";
+  var url = base ? base.replace(/assets\/js\/core\.js.*$/, "trending.json") : "trending.json";
+  fetch(url, { cache: "no-store" }).then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+    if (!d || !d.items || !d.items.length) return;
+    D = d; put();
+    new MutationObserver(put).observe(document.body, { childList: true, subtree: true });
+  }).catch(function () {});
+})();
