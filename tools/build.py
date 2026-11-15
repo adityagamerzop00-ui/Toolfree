@@ -208,12 +208,20 @@ def embed_html(t):
     return open(os.path.join(HERE, t["embed"], "app.html"), encoding="utf-8").read()
 
 
+def guide_html(t):
+    """Optional longer guide for a tool: tools.json "guide" = [[heading, paragraph], ...]."""
+    g = t.get("guide")
+    if not g: return ""
+    inner = "".join(f"<h3>{e(h)}</h3><p>{e(p)}</p>" for h, p in g)
+    return f'<section class="x-box x-wide x-guide" aria-labelledby="x-h-guide"><h2 id="x-h-guide">{tile(t["category"], "info", 18)}{e(t["name"])} guide</h2>{inner}</section>\n            '
+
+
 # ---- Tool pages -----------------------------------------------------------------------
 def tool_page(t):
     root, c = "../", CATS[t["category"]]
     title = f'{t["title_name"]} Online Free – No Upload | {SITE_NAME}'
     canonical = url(t["slug"])
-    faq = t["faq"][:3]
+    faq = t["faq"][:6]
     ld = (jsonld(faq_ld(faq)) + "\n    " +
           jsonld(crumbs_ld([("Home", url()), (t["name"], canonical)])) + "\n    " +
           jsonld({"@context": "https://schema.org", "@type": "WebApplication", "name": t["name"], "url": canonical,
@@ -231,7 +239,7 @@ def tool_page(t):
           <div class="x-about">
             <section class="x-box" aria-labelledby="x-h-how"><h2 id="x-h-how">{tile(t["category"], "list", 18)}<span data-i18n="tool.how">How to use</span></h2><ol class="x-how">{steps}</ol></section>
             <section class="x-box" aria-labelledby="x-h-about"><h2 id="x-h-about">{tile(t["category"], "info", 18)}About {e(t["name"])}</h2><p>{e(t["about"])}</p></section>
-            <section class="x-box x-wide" aria-labelledby="x-h-faq"><h2 id="x-h-faq">{tile(t["category"], "help", 18)}<span data-i18n="tool.faq">FAQs</span></h2>{faq_html(faq)}</section>
+            {guide_html(t)}<section class="x-box x-wide" aria-labelledby="x-h-faq"><h2 id="x-h-faq">{tile(t["category"], "help", 18)}<span data-i18n="tool.faq">FAQs</span></h2>{faq_html(faq)}</section>
           </div></div>
           <div class="ad-slot" data-slot="tool-below-instructions">Advertisement</div>
           <div class="x-wrap"><section class="x-sec"><h2 data-i18n="tool.related">Related tools</h2><div class="x-cards">{related}</div></section></div>

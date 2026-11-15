@@ -567,3 +567,6 @@
 .x-tcard img { width: 100%; height: auto; aspect-ratio: 16/9; object-fit: cover; display: block; }
 .x-tcard b { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; font-size: .88rem; line-height: 1.3; margin: 8px 10px 4px; }
 .x-tcard span { display: block; font-size: .76rem; color: var(--muted); margin: 0 10px 10px; }
+      .x-guide h3 { font-size: 16px; font-weight: 650; margin: 16px 0 6px; }
+      .x-guide h3:first-of-type { margin-top: 4px; }
+      .x-guide p { margin: 0; line-height: 1.6; color: var(--muted, inherit); }

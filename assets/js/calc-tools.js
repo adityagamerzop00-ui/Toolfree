@@ -208,7 +208,7 @@
   }
 
   function toolGst(m) {
-    mk(m, seg("gm", [["add", "Add GST"], ["rem", "Remove GST"]], "add", "Mode") + seg("gr", [["5", "5%"], ["12", "12%"], ["18", "18%"], ["28", "28%"], ["c", "Custom"]], "18", "GST rate") +
+    mk(m, seg("gm", [["add", "Add GST"], ["rem", "Remove GST"]], "add", "Mode") + seg("gr", [["5", "5%"], ["18", "18%"], ["40", "40%"], ["3", "3%"], ["c", "Custom"]], "18", "GST rate") +
       `<div class="x-cg">${F("cg-a", "Amount (₹)", 1000, 'min="0"')}<span hidden>${F("cg-c", "Custom rate (%)", 3, 'min="0" step="0.01"')}</span></div>`, (q, n, sv) => {
       const md = sv("gm"), rc = sv("gr"), a = n("cg-a"), r = rc === "c" ? n("cg-c") : +rc;
       q("#cg-c").closest("label").parentNode.hidden = rc !== "c";

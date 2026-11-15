@@ -26,6 +26,18 @@
    [
     "Is there a size limit?",
     "Files up to 20 MB, and output up to 10,000 pixels on each side."
+   ],
+   [
+    "How do I resize without cropping?",
+    "Keep the aspect-ratio lock on and change just one side. If you use a preset with a different shape, choose Stretch to keep the whole photo in frame instead of cropping it."
+   ],
+   [
+    "What does the Passport preset do?",
+    "It resizes to 413 × 531 pixels, a common passport-photo shape (35 × 45 mm at 300 DPI). Always check the exact size your form asks for."
+   ],
+   [
+    "Can I resize several photos at once?",
+    "Not yet. Resize one image at a time; each one takes only a second or two."
    ]
   ],
   "related": [
@@ -34,7 +46,21 @@
    "image-converter",
    "video-resizer"
   ],
-  "privacy": "file"
+  "privacy": "file",
+  "guide": [
+   [
+    "Resize a photo to exact pixels",
+    "Type the width and height you need, for example 1080 × 1080 for an Instagram post. Keep the aspect-ratio lock on if you only know one side, and the other side is worked out for you, so the photo is never stretched."
+   ],
+   [
+    "Common sizes",
+    "Instagram post 1080 × 1080, Instagram Story and Reels 1080 × 1920, YouTube thumbnail 1280 × 720, Facebook cover 820 × 312, and Full HD 1920 × 1080. All of these are one tap away as presets."
+   ],
+   [
+    "Resize photos for exam and job forms",
+    "Online forms often ask for a photo or signature of a set size in pixels and a maximum file size in KB. Resize to the pixel size first, then use the Image Compressor if the file is still over the KB limit."
+   ]
+  ]
  },
  {
   "id": "image-compressor",
@@ -63,6 +89,18 @@
    [
     "Why is my file bigger after compressing?",
     "Already-optimised images, or PNGs with few colours, can grow when re-encoded. In that case, download the original."
+   ],
+   [
+    "Can I compress an image to under 100 KB?",
+    "Usually, yes. Lower the quality to 60 to 70 and set a maximum width of around 1200 pixels. Check the new size shown before you download, and lower it a little more if needed."
+   ],
+   [
+    "Does compressing remove photo details like location?",
+    "Yes. The image is redrawn and saved as a new file, so camera details such as GPS location are not copied over."
+   ],
+   [
+    "Can I compress PNG screenshots?",
+    "Yes. Saving a screenshot as WEBP or JPEG usually makes it much smaller. Keep it as PNG only if you need a transparent background."
    ]
   ],
   "related": [
@@ -71,7 +109,21 @@
    "compress-pdf",
    "video-compressor"
   ],
-  "privacy": "file"
+  "privacy": "file",
+  "guide": [
+   [
+    "How to reduce image size in KB",
+    "Start with the quality slider at 70. For most phone photos that cuts the file by half or more with no visible change. If you need a strict limit, such as under 100 KB or 50 KB for a form, also set a maximum width: shrinking a 4000-pixel photo to 1200 pixels saves far more than lowering quality alone."
+   ],
+   [
+    "Compress photos for WhatsApp, email and websites",
+    "WhatsApp and most email services shrink big photos on their own and can blur them. Compressing first to about 1600 pixels wide at quality 70 to 80 keeps them sharp and quick to send. For a website or blog, WEBP at quality 70 loads fastest."
+   ],
+   [
+    "Why compress in your browser?",
+    "Many compressors upload your photo to a server. Toolsaku does the work on your own phone or computer, so private photos, IDs and documents never leave your device, and it keeps working on a slow connection once the page has loaded."
+   ]
+  ]
  },
  {
   "id": "image-converter",
@@ -211,6 +263,18 @@
    [
     "What does Auto orientation do?",
     "It uses a landscape page for wide images and a portrait page for tall ones. Fit to image makes each page exactly the shape of its image."
+   ],
+   [
+    "Can I convert JPG to PDF on my phone?",
+    "Yes. It works in Chrome or Safari on Android and iPhone, with nothing to install."
+   ],
+   [
+    "Can I change the page order after adding images?",
+    "Yes. Use the arrows next to each image to move it up or down before you tap Create PDF."
+   ],
+   [
+    "Is text in the PDF searchable?",
+    "No. Each image is placed as a picture, so the text in it isn't selectable."
    ]
   ],
   "related": [
@@ -219,7 +283,21 @@
    "image-compressor",
    "compress-pdf"
   ],
-  "privacy": "file"
+  "privacy": "file",
+  "guide": [
+   [
+    "Turn phone photos into one PDF",
+    "Take clear photos of your pages, add them here, and put them in order with the arrows. Choose A4 for documents you'll print or submit, and tap Create PDF. You get one file that's easy to email or upload."
+   ],
+   [
+    "Best settings for documents and forms",
+    "Use A4 with a small margin for documents, certificates and assignments. Use Fit to image for photo albums or screenshots so there are no white borders. Auto orientation turns landscape photos sideways so they fill the page."
+   ],
+   [
+    "Keep the PDF small",
+    "If the PDF is too big to upload, compress the photos first with the Image Compressor, or run the finished PDF through Compress PDF. Both run in your browser too."
+   ]
+  ]
  },
  {
   "id": "photo-editor",
@@ -274,7 +352,7 @@
    "Pick the clip length, how many clips and the 9:16 crop, then choose caption and title styles.",
    "Tap Make clips, keep the tab open, then download or share each Short."
   ],
-  "about": "Toolsaku' Long Video to Shorts maker finds good moments in a long video and turns them into vertical 9:16 clips for YouTube Shorts, Instagram Reels and Moj. It can add auto captions (Whisper, running in your browser), a hook title, effects and background music, and builds a post kit with titles, a description and hashtags. Everything is rendered on your device, so your video is never uploaded and there is no watermark.",
+  "about": "Toolsaku's Long Video to Shorts maker finds good moments in a long video and turns them into vertical 9:16 clips for YouTube Shorts, Instagram Reels and Moj. It can add auto captions (Whisper, running in your browser), a hook title, effects and background music, and builds a post kit with titles, a description and hashtags. Everything is rendered on your device, so your video is never uploaded and there is no watermark.",
   "faq": [
    [
     "Is my video uploaded anywhere?",
@@ -287,6 +365,18 @@
    [
     "Can it make captions in Hindi?",
     "Yes. Captions can be in Hindi, English or Hinglish, and the tool's own buttons switch to Hindi too."
+   ],
+   [
+    "How long can my video be?",
+    "Longer videos take more time and memory to process. On phones, shorter videos work most smoothly; a computer handles long ones better."
+   ],
+   [
+    "Is it free?",
+    "Yes. There's no sign-up and no watermark on your clips."
+   ],
+   [
+    "Why is it slow the first time?",
+    "The caption model and render engine download once the first time you use them. After that they're cached in your browser."
    ]
   ],
   "related": [
@@ -294,6 +384,20 @@
    "video-resizer",
    "video-cropper",
    "video-compressor"
+  ],
+  "guide": [
+   [
+    "Turn one long video into many Shorts",
+    "Podcasts, gaming streams, lectures and vlogs hide great moments. Add the video, choose how long each clip should be and how many you want, and the tool picks moments and crops them to vertical 9:16 for YouTube Shorts, Instagram Reels and Moj."
+   ],
+   [
+    "Captions in Hindi, English or Hinglish",
+    "Most people watch Shorts with the sound off, so captions matter. Auto captions are made on your device by the Whisper speech model, in Hindi, English or Hinglish, with styles you can pick."
+   ],
+   [
+    "Free, private and no watermark",
+    "Clips are rendered in your own browser, so your video is never uploaded and there's no watermark on the result. Use a recent Chrome or Edge, and keep the tab open while it works."
+   ]
   ]
  },
  {
@@ -434,6 +538,18 @@
    [
     "How long does it take?",
     "It uses your device's hardware encoder, so it's usually faster than real time. Long or 4K videos take longer, and you can cancel at any point."
+   ],
+   [
+    "Which formats can I compress?",
+    "MP4, MOV, WEBM and MKV, up to 500 MB. The result is always an MP4 that plays everywhere."
+   ],
+   [
+    "Does it work on iPhone and Android?",
+    "It works in up-to-date phone browsers. Chrome on Android and a computer are fastest; very long videos may need a computer."
+   ],
+   [
+    "Will the sound be kept?",
+    "Yes. The audio is kept in the compressed MP4."
    ]
   ],
   "related": [
@@ -442,7 +558,21 @@
    "video-converter",
    "compress-pdf"
   ],
-  "privacy": "file-cdn"
+  "privacy": "file-cdn",
+  "guide": [
+   [
+    "Make a video small enough to share",
+    "Phone videos are large, especially in 4K. Medium compression caps the video at 720p, which looks good on phones and cuts the size a lot. Strong caps it at 480p for the smallest file, handy for email or slow networks."
+   ],
+   [
+    "Keep the best quality",
+    "Choose Light to keep the original resolution and only lower the bitrate. It's the right choice for YouTube uploads or anything you'll watch on a big screen."
+   ],
+   [
+    "Your video stays on your device",
+    "The video is compressed inside your browser using your device's own encoder. Nothing is uploaded, so it's safe for personal and family videos."
+   ]
+  ]
  },
  {
   "id": "video-converter",
@@ -508,6 +638,18 @@
    [
     "Can I use the thumbnail?",
     "Thumbnails belong to the video's creator. Use them for reference, or ask for permission before reusing them."
+   ],
+   [
+    "Can I download thumbnails of YouTube Shorts?",
+    "Yes. Paste the Shorts link and the tool finds its thumbnails."
+   ],
+   [
+    "Do I need to sign in?",
+    "No. There's no sign-up, and nothing is uploaded."
+   ],
+   [
+    "What size should my own thumbnail be?",
+    "YouTube recommends 1280 × 720 pixels (16:9). Use the Image Resizer's YouTube Thumbnail preset to get it right."
    ]
   ],
   "related": [
@@ -516,7 +658,21 @@
    "image-resizer",
    "hashtag-suggestions"
   ],
-  "privacy": "yt"
+  "privacy": "yt",
+  "guide": [
+   [
+    "How to download a YouTube thumbnail",
+    "Open the video in the YouTube app or website, tap Share, then Copy link. Paste the link here and tap Get thumbnails. You'll see every size YouTube has for that video, from 320 × 180 up to 1280 × 720 HD."
+   ],
+   [
+    "Works with Shorts and live streams",
+    "Regular videos, youtu.be short links, Shorts, embeds and live streams all work. You can also paste just the 11-character video ID."
+   ],
+   [
+    "Use thumbnails the right way",
+    "Thumbnails are handy for studying what gets clicks in your niche, for presentations, or for saving your own uploads. If you want to reuse someone else's thumbnail, ask the creator first."
+   ]
+  ]
  },
  {
   "id": "merge-pdf",
@@ -545,6 +701,18 @@
    [
     "Will the quality change?",
     "No. Pages are copied as they are, without re-compressing images or text."
+   ],
+   [
+    "Can I merge PDFs on my phone?",
+    "Yes. It works in your phone's browser, with no app or sign-up needed."
+   ],
+   [
+    "Can I remove or reorder pages inside a PDF?",
+    "Use Organize PDF to reorder, rotate or delete pages, or Split PDF to pull out the pages you need."
+   ],
+   [
+    "Is there a watermark?",
+    "No. Merged files have no watermark and no page limit beyond your device's memory."
    ]
   ],
   "related": [
@@ -553,7 +721,21 @@
    "images-to-pdf",
    "compress-pdf"
   ],
-  "privacy": "file-cdn"
+  "privacy": "file-cdn",
+  "guide": [
+   [
+    "How to combine PDF files",
+    "Add your PDFs, put them in the order you want with the arrows, and tap Merge PDFs. The pages are joined exactly as they are, so nothing is re-compressed or blurred."
+   ],
+   [
+    "When merging helps",
+    "Many portals accept only one file: job applications, college admissions, visa forms and tax uploads. Merge your marksheets, ID and certificates into one PDF first, then compress it if the portal has a size limit."
+   ],
+   [
+    "Private by design",
+    "Merging happens in your browser, so bank statements, ID cards and contracts are never uploaded to a server."
+   ]
+  ]
  },
  {
   "id": "split-pdf",
@@ -619,6 +801,18 @@
    [
     "Will links and text still work?",
     "No. Each page becomes an image, so text, links and form fields are flattened."
+   ],
+   [
+    "How do I compress a PDF to under 1 MB?",
+    "Try Medium first. If it's still over 1 MB, use Strong, or split the PDF and upload only the pages you need."
+   ],
+   [
+    "Is my PDF uploaded?",
+    "No. It's compressed in your browser and never leaves your device."
+   ],
+   [
+    "Can I compress a password-protected PDF?",
+    "No. Remove the password in your PDF reader first, then add the file again."
    ]
   ],
   "related": [
@@ -627,7 +821,21 @@
    "image-compressor",
    "video-compressor"
   ],
-  "privacy": "file-cdn"
+  "privacy": "file-cdn",
+  "guide": [
+   [
+    "Reduce PDF size for uploads",
+    "Government, exam and job portals often limit PDFs to 1 MB, 500 KB or less. Medium compression usually brings a scanned document under these limits; use Strong if it's still too big."
+   ],
+   [
+    "What gets smaller and what doesn't",
+    "Scanned pages and photo-heavy PDFs shrink the most, often by more than half. A PDF of plain typed text is already small and may not shrink; in that case Toolsaku offers your original file."
+   ],
+   [
+    "Before you compress",
+    "Compression turns each page into an image, so text can no longer be selected or searched. Keep your original if you need to copy text or fill in form fields later."
+   ]
+  ]
  },
  {
   "id": "organize-pdf",
@@ -1064,6 +1272,18 @@
    [
     "Does it include tax or exit load?",
     "No. The result is before taxes, charges and exit loads."
+   ],
+   [
+    "Is SIP better than a lump sum?",
+    "A SIP spreads your buying over time and builds a saving habit. A lump sum can grow more if markets rise, but it carries more timing risk."
+   ],
+   [
+    "Is the SIP calculator accurate?",
+    "The maths is exact for a steady return. Real funds go up and down, so treat the result as an estimate."
+   ],
+   [
+    "Does it include step-up SIP?",
+    "Not yet. It assumes the same amount every month."
    ]
   ],
   "related": [
@@ -1072,7 +1292,21 @@
    "percentage-calculator",
    "scientific-calculator"
   ],
-  "privacy": "calc"
+  "privacy": "calc",
+  "guide": [
+   [
+    "How a SIP grows",
+    "A SIP invests a fixed amount every month, and returns compound on everything you've invested so far. ₹5,000 a month for 10 years is ₹6,00,000 invested; at an assumed 12% a year it grows to roughly ₹11.6 lakh."
+   ],
+   [
+    "The power of time",
+    "Time matters more than the amount. The same ₹5,000 a month for 20 years instead of 10 can grow to roughly four times as much at the same return, because the gains keep compounding."
+   ],
+   [
+    "Use realistic returns",
+    "Equity mutual funds don't give a fixed return; some years are negative. Try a few rates, such as 8%, 10% and 12%, to see a range rather than one number."
+   ]
+  ]
  },
  {
   "id": "loan-calculator",
@@ -1101,6 +1335,18 @@
    [
     "Why does my bank's EMI differ slightly?",
     "Banks may add processing fees, round differently or count days in their own way."
+   ],
+   [
+    "Can I use it for home, car, bike or personal loans?",
+    "Yes, for any loan with a fixed interest rate and equal monthly EMIs."
+   ],
+   [
+    "Does it include processing fees?",
+    "No. Add any processing fees or insurance your bank charges separately."
+   ],
+   [
+    "What about floating-rate loans?",
+    "The EMI shown is for the rate you enter. If your floating rate changes, enter the new rate to see the new EMI."
    ]
   ],
   "related": [
@@ -1109,7 +1355,21 @@
    "percentage-calculator",
    "age-calculator"
   ],
-  "privacy": "calc"
+  "privacy": "calc",
+  "guide": [
+   [
+    "How EMI is calculated",
+    "EMI depends on three things: the loan amount, the interest rate and the tenure. A ₹10,00,000 loan at 9% a year for 20 years works out to about ₹8,997 a month, and the total interest is more than the loan itself, which is why tenure matters so much."
+   ],
+   [
+    "Shorter tenure or lower EMI?",
+    "A longer tenure lowers your monthly EMI but you pay much more interest overall. A shorter tenure costs more each month but saves interest. Try both here before you choose."
+   ],
+   [
+    "Read the yearly table",
+    "The year-by-year table shows how much of each year's payments goes to interest and how much reduces the loan. In early years most of the EMI is interest, so part-prepayments early on save the most."
+   ]
+  ]
  },
  {
   "id": "bmi-calculator",
@@ -1174,7 +1434,19 @@
    ],
    [
     "Which rate applies to my item?",
-    "Rates depend on the goods or service; check the current GST rate notified for it."
+    "Since 22 September 2025, most items are at 5% or 18%, and a few luxury and sin goods at 40%. Check the current notified rate for your item."
+   ],
+   [
+    "What is the GST on clothes and shoes?",
+    "Since 22 September 2025, clothing and footwear priced up to ₹2,500 are at 5%, and those above at 18%. Check the current notified rate for your item."
+   ],
+   [
+    "What is the difference between CGST, SGST and IGST?",
+    "Inside one state, GST is split equally into CGST for the centre and SGST for the state. Between states, the full amount is charged as IGST."
+   ],
+   [
+    "Can I use it for GST invoices?",
+    "Yes, to work out the figures. Copy the net, GST and total amounts into your invoice."
    ]
   ],
   "related": [
@@ -1183,7 +1455,21 @@
    "sip-calculator",
    "scientific-calculator"
   ],
-  "privacy": "calc"
+  "privacy": "calc",
+  "guide": [
+   [
+    "Current GST rates (GST 2.0)",
+    "Since 22 September 2025, most goods and services in India are taxed at 5% or 18%, with 40% for a short list of luxury and sin goods, such as tobacco, aerated sugary drinks and large cars. Gold, silver and jewellery have a special 3% rate. The old 12% and 28% slabs were removed; use Custom for older bills."
+   ],
+   [
+    "How to add GST to a price",
+    "Multiply the amount before tax by the rate. For ₹1,000 at 18%, the GST is ₹180 and the total is ₹1,180. Within a state that ₹180 is split into ₹90 CGST and ₹90 SGST."
+   ],
+   [
+    "How to remove GST from a price",
+    "Divide the inclusive price by 1 plus the rate. For ₹1,180 at 18%, ₹1,180 ÷ 1.18 = ₹1,000 net, so the GST is ₹180."
+   ]
+  ]
  },
  {
   "id": "scientific-calculator",
@@ -1508,6 +1794,18 @@
    [
     "Why won't my code scan?",
     "Keep strong contrast with a dark foreground on a light background, and shorten long text."
+   ],
+   [
+    "Can I make a QR code for my UPI ID?",
+    "Yes, if you type a UPI payment link. For payments, though, the QR code from your own UPI app is the safest choice."
+   ],
+   [
+    "Can I change the colours?",
+    "Yes. Pick any foreground and background colours, but keep strong contrast so phones can scan it."
+   ],
+   [
+    "PNG or SVG?",
+    "PNG for sharing on WhatsApp or social media. SVG for printing, because it stays sharp at any size."
    ]
   ],
   "related": [
@@ -1516,7 +1814,21 @@
    "youtube-thumbnail-downloader",
    "json-formatter"
   ],
-  "privacy": "calc"
+  "privacy": "calc",
+  "guide": [
+   [
+    "Make a QR code for a link or text",
+    "Paste a website link, your Instagram or YouTube profile, a phone number or any text. The QR code updates as you type, and you can download it right away."
+   ],
+   [
+    "Print it so it scans",
+    "Download SVG for posters, menus and visiting cards, because it stays sharp at any size. Keep dark colours on a light background, and leave a little blank space around the code."
+   ],
+   [
+    "Free forever, no expiry",
+    "The codes are static: your text sits inside the code itself, not on our server. They never expire and have no scan limit."
+   ]
+  ]
  },
  {
   "id": "json-formatter",
