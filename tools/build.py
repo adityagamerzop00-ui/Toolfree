@@ -18,8 +18,8 @@ import os
 import hashlib
 
 # ---- Settings -------------------------------------------------------------------------
-BASE_URL = "https://sugoitools.netlify.app"  # change to e.g. https://sugoitools.com and re-run
-LASTMOD = "2026-11-14"                         # <lastmod> written to sitemap.xml
+BASE_URL = "https://toolsak.online"  # the live domain; change and re-run if it ever moves
+LASTMOD = "2026-11-15"                         # <lastmod> written to sitemap.xml
 SITE_NAME = "Toolsaku"
 # Subpaths the site may be served under (for 404.html, which can be shown at any depth).
 # A request path starting with one of these resolves 404 assets from that prefix, otherwise "/".
@@ -162,7 +162,7 @@ def shell_top(root):
 def shell_bottom(root, scripts):
     home_link = root or "./"
     logo = f'<a class="x-logo" href="{home_link}" aria-label="Toolsaku home"><span data-logo></span><span class="x-wm">Toolsaku<small class="x-tag">作 · <span data-i18n="logo.tag">means create</span></small></span></a>'
-    js = ["i18n.js", "i18n-tools.js", "routes.js", "core.js"] + scripts + ["ui-fx.js"]
+    js = ["i18n.js", "i18n-tools.js", "routes.js", "core.js"] + scripts + ["ui-fx.js", "account.js"]
     return f"""</main>
       <div class="ad-slot" data-slot="above-footer">Advertisement</div>
       <footer class="x-foot">

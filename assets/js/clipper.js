@@ -2409,6 +2409,12 @@
           }
           out.appendChild(row); out.appendChild(help);
           show(out, true);
+          // Toolsaku account.js listens for this to add "Post to YouTube / Instagram / Facebook" (only when connected).
+          try {
+            window.dispatchEvent(new CustomEvent("lts:clip", { detail: { seg: seg, blob: blob, name: fname, row: row, kit: function () {
+              return makeKit(seg, { seed: 1, hi: ST.tpl === "hindi" || /[\u0900-\u097f]/.test(clipText(seg)), cat: S.kitCat || PRESET_CAT[ST.tpl] || "general" });
+            } } }));
+          } catch (e) {}
           seg.el.li.classList.add("is-done");
           TSET(seg.el.btn, "makeAgain", "Make again");
           seg.el.btn.setAttribute("aria-label", "Make Part " + seg.n + " again");
