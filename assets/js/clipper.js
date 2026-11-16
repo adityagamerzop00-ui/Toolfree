@@ -104,7 +104,7 @@
           hAgain: "फिर से एनालाइज़ करें", hMode: "मोड", hmN: "नॉर्मल", hmNs: "वीडियो को बाँटता है, पूरी तरह आपके डिवाइस पर", hmA: "AI ✨", hmAs: "सिर्फ़ असली हाइलाइट रखता है",
           hTitle: "वीडियो का टाइटल या गेम (वैकल्पिक)", hHookOn: "हर क्लिप पर AI हुक टाइटल लगाएँ",
           hPriv: "आपका पूरा वीडियो आपके डिवाइस पर ही रहता है। हर तेज़ आवाज़ वाले मोमेंट से सिर्फ़ कुछ छोटे स्नैपशॉट और बोले गए शब्द आपकी अपनी key से सीधे आपके ब्राउज़र से Google Gemini को जाते हैं। Toolsaku का सर्वर इन्हें कभी नहीं देखता।",
-          hGo: "✨ AI से असली मोमेंट ढूँढें", hMake: "इन मोमेंट्स से क्लिप बनाओ",
+          hGo: "✨ AI से असली मोमेंट ढूँढें", hUse: "टिक किए मोमेंट्स ही आपकी क्लिप बनेंगे। नीचे क्रॉप और बाकी सेटिंग्स चुनें, फिर नॉर्मल क्लिपिंग की तरह “आगे: स्टाइल” दबाएँ।",
           hAnT: "आपका वीडियो एनालाइज़ हो रहा है…", hAiT: "AI आपकी क्लिप्स जाँच रहा है…",
           hS1: "ऑडियो पढ़ रहे हैं", hS2: "आवाज़ डीकोड कर रहे हैं", hS3: "आवाज़ की तेज़ी माप रहे हैं", hS4: "तेज़ आवाज़ के उछाल गिन रहे हैं",
           hSnap: "क्लिप {k} / {n} के स्नैपशॉट ले रहे हैं", hAiN: "AI क्लिप {k} / {n} जाँच रहा है", hEl: "{s} सेकंड बीते",
@@ -1607,11 +1607,21 @@
             var pb = hyEsc("button", "lts-btn", "▶"); pb.type = "button"; pb.setAttribute("aria-label", "Preview moment " + (i + 1));
             var cb = document.createElement("input"); cb.type = "checkbox"; cb.checked = c.on !== false; cb.setAttribute("aria-label", "Use moment " + (i + 1));
             pb.addEventListener("click", function () { hyPlay(c); });
-            cb.addEventListener("change", function () { c.on = cb.checked; });
+            cb.addEventListener("change", function () { c.on = cb.checked; hyApply(); });
             li.appendChild(hyEsc("b", "", String(i + 1))); li.appendChild(txt); li.appendChild(pb); li.appendChild(cb);
             L.appendChild(li);
           });
           show($("hmake"), list.length > 0);
+          hyApply();
+        }
+        /* AI only picks the moments: ticked ones feed the normal clip list, so crop, style and export are the same as normal clipping */
+        function hyApply() {
+          if (hyMode() !== "ai") return;
+          var sel = (HY.res || []).filter(function (c) { return c.on && c.e - c.s >= 10; });
+          if (!sel.length) { if (S.moments && S.moments.ai) { S.moments = null; S.sig = ""; show($("mused"), false); } return; }
+          var out = sel.map(function (c) { return { s: c.s, e: c.e, ai: c.ai || null }; });
+          out.ai = true;
+          S.moments = out; S.sig = ""; show($("mused"), true);
         }
         var hv = $("hvid"), hvEnd = 0;
         function hyPlay(c) {
@@ -1622,15 +1632,6 @@
         }
         hv.addEventListener("timeupdate", function () { if (hvEnd && hv.currentTime >= hvEnd) { hv.pause(); hvEnd = 0; } });
         $("hgo").addEventListener("click", function () { aiRun(); });
-        $("hmake").addEventListener("click", function () {
-          var sel = (HY.res || []).filter(function (c) { return c.on && c.e - c.s >= 10; });
-          if (!sel.length) { $("hres").textContent = T("hPick", "Tick at least one moment first."); return; }
-          hv.pause();
-          var out = sel.map(function (c) { return { s: c.s, e: c.e, ai: c.ai || null }; });
-          out.ai = true;
-          S.moments = out; S.sig = ""; show($("mused"), true);
-          go(4);
-        });
         function hyReset() {
           HY.file = null; HY.spots = null; HY.err = ""; HY.res = null; HY.cancel = true; HY.top = 0;
           HY.ctl.forEach(function (a) { try { a.abort(); } catch (e) {} });
