@@ -596,7 +596,7 @@ SM_BUCKET = 30                 # seconds per signal bucket
 SM_CHAT_MAX_REQ = 150          # hard cap on live-chat replay requests per video
 SM_CHAT_MAX_SEC = 25.0         # hard cap on time spent reading chat
 SM_CHAT_PARALLEL = 6
-SM_PROMPT_CHARS = 280_000      # ~70-95k tokens even for Hinglish: well under the ~200k we allow ourselves
+SM_PROMPT_CHARS = 120_000      # ~70-95k tokens even for Hinglish: well under the ~200k we allow ourselves
 SM_RATE = (5, 600)             # 5 fresh analyses per IP per 10 minutes
 SM_CACHE_TTL = 1800
 SM_CACHE, SM_SIGNALS, SM_HITS = {}, {}, {}
@@ -1026,11 +1026,21 @@ Rules:
 
 async def call_gemini(prompt):
     body = {"contents": [{"role": "user", "parts": [{"text": prompt}]}],
-            "generationConfig": {"responseMimeType": "application/json", "responseSchema": MOMENT_SCHEMA, "temperature": 0.4, "maxOutputTokens": 32768}}
+            "generationConfig": {"responseMimeType": "application/json", "responseSchema": MOMENT_SCHEMA, "temperature": 0.4, "maxOutputTokens": 16384}}
     async with http() as h:
         try:
+            gc = body["generationConfig"]
+            gc["thinkingConfig"] = {"thinkingLevel": "low"}
             r = await h.post(GEMINI_URL.format(model=GEMINI_MODEL), headers={"x-goog-api-key": GEMINI_API_KEY, "Content-Type": "application/json"},
-                             json=body, timeout=httpx.Timeout(150))
+                             json=body, timeout=httpx.Timeout(210))
+            if r.status_code == 400 and "think" in r.text.lower():  # model doesn't take thinkingLevel: try a budget, then nothing
+                gc["thinkingConfig"] = {"thinkingBudget": 512}
+                r = await h.post(GEMINI_URL.format(model=GEMINI_MODEL), headers={"x-goog-api-key": GEMINI_API_KEY, "Content-Type": "application/json"},
+                                 json=body, timeout=httpx.Timeout(210))
+                if r.status_code == 400 and "think" in r.text.lower():
+                    gc.pop("thinkingConfig", None)
+                    r = await h.post(GEMINI_URL.format(model=GEMINI_MODEL), headers={"x-goog-api-key": GEMINI_API_KEY, "Content-Type": "application/json"},
+                                     json=body, timeout=httpx.Timeout(210))
         except httpx.HTTPError as e:
             raise SMError(504, "The AI took too long to answer (" + type(e).__name__ + ").")
     if r.status_code in (400, 401, 403) and "api key" in r.text.lower(): raise SMError(503, "The AI key on the server is invalid or not allowed for this model.")
