@@ -250,8 +250,8 @@
     segWire(m, "ec", build);
     m.addEventListener("click", (e) => {
       const b = e.target.closest("[data-k]"); if (!b || !qr) return;
-      if (b.dataset.k === "png") download(canvas.toDataURL("image/png"), "sugoitools-qr.png");
-      else dlText(svg(), "sugoitools-qr.svg", "image/svg+xml");
+      if (b.dataset.k === "png") download(canvas.toDataURL("image/png"), "toolsaku-qr.png");
+      else dlText(svg(), "toolsaku-qr.svg", "image/svg+xml");
     });
     loadScript(QRLIB, () => !!window.qrcode).then(build, () => {
       box.innerHTML = '<p class="x-bad" role="alert">The QR code library couldn\'t load. Check your connection and reload the page.</p>';
@@ -271,7 +271,7 @@
       const b = e.target.closest("[data-k]"); if (!b) return;
       const k = b.dataset.k;
       if (k === "copy") return ta.value && copyText(ta.value).then(() => flash(b));
-      if (k === "dl") return ta.value && dlText(ta.value, "sugoitools.json", "application/json");
+      if (k === "dl") return ta.value && dlText(ta.value, "toolsaku.json", "application/json");
       if (!ta.value.trim()) return say(false, "Paste some JSON first.");
       const r = jsonCheck(ta.value);
       if (!r.ok) {

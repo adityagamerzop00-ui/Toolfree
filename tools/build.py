@@ -143,7 +143,7 @@ def head(title, desc, canonical, root, extra="", robots=None, base_script=""):
   </head>"""
 
 
-TICKER = ["tick.tools|44 free tools", "tick.nosign|No sign-up", "tick.local|Files never leave your device", "tick.phone|Works on phone",
+TICKER = ["tick.tools|44 free tools", "tick.nosign|No sign-up", "tick.local|Files processed on your device", "tick.phone|Works on phone",
           "tick.langs|8 languages", "tick.clip|New: Long Video to Shorts Clipper", "tick.typing|New: Typing Speed Test", "tick.emi|New: EMI &amp; SIP Calculators"]
 
 

@@ -1496,7 +1496,9 @@
           if (st == null || Number.isNaN(st)) st = 0;
           if (en == null || Number.isNaN(en)) en = S.duration;
           st = Math.min(st, S.duration); en = Math.min(en, S.duration);
-          if (!error && en - st < 10) error = "The end time must be at least 10 seconds after the start time.";
+          var hiL = (document.documentElement.lang || "").indexOf("hi") === 0, secs = Math.round(S.duration * 10) / 10;
+          if (!error && S.duration < 10) error = hiL ? "यह वीडियो सिर्फ़ " + secs + " सेकंड का है। शॉर्ट्स बनाने के लिए कम से कम 10 सेकंड लंबा वीडियो चुनें।" : "This video is only " + secs + " seconds long. Choose a video that is at least 10 seconds long to make Shorts.";
+          if (!error && en - st < 10) error = hiL ? "अंत का समय शुरुआत से कम से कम 10 सेकंड बाद होना चाहिए।" : "The end time must be at least 10 seconds after the start time.";
           // A preset range splits the span evenly into the fewest clips no longer than the max.
           if (lenR && en > st) len = Math.max(lenR.min, (en - st) / Math.max(1, Math.ceil((en - st) / lenR.max - 1e-6)));
           if (lenR && en - st < lenR.min) len = lenR.min;
@@ -3858,8 +3860,9 @@
           var invalid = !!o.error;
           $("tstart").setAttribute("aria-invalid", invalid && $("tstart").value ? "true" : "false");
           $("tend").setAttribute("aria-invalid", invalid && $("tend").value ? "true" : "false");
+          if (S.duration < 10) $("fsum").textContent = o.error;
           if (invalid) {
-            $("ssum").textContent = "Check the times";
+            $("ssum").textContent = S.duration < 10 ? ((document.documentElement.lang || "").indexOf("hi") === 0 ? "वीडियो बहुत छोटा है" : "Video too short") : "Check the times";
             $("stime").textContent = o.error;
           } else {
             var total = segs.reduce(function (a, s) { return a + s.end - s.start; }, 0);

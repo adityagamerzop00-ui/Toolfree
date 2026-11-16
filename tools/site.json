@@ -197,7 +197,7 @@
   ],
   [
    "Are my files uploaded?",
-   "No. Your files are processed on your own device, inside your browser. Nothing is sent to a server."
+   "No for the file tools. Image, PDF and video tools process your files on your own device, inside your browser. AI tools (captions, titles, hashtags, bio, Stream Moment Finder and AI mode in Long Video to Shorts) send only the text you type, a link, or a few small snapshots to Google Gemini. Your full file is never uploaded."
   ],
   [
    "Is there a file size limit?",
@@ -241,7 +241,7 @@
   "how.3": "Adjust and preview",
   "how.3d": "See the result before you save.",
   "how.4": "Download",
-  "how.4d": "Your files never leave your device.",
+  "how.4d": "Files are processed on your device. Only AI tools send text or small snapshots to Google Gemini.",
   "faq.title": "Frequently asked questions",
   "tool.how": "How to use",
   "tool.faq": "FAQs",
@@ -254,7 +254,7 @@
   "nf.text": "That page doesn't exist. Try one of our free tools instead.",
   "browse": "Browse all tools",
   "meta.home": "Toolsaku – Free Online Image, PDF & Video Tools",
-  "foot.tag": "Free tools that run in your browser. Your files never leave your device.",
+  "foot.tag": "Free tools that run in your browser. Files are processed on your device; only AI tools send text or small snapshots to Google Gemini.",
   "foot.tools": "Tools",
   "logo.tag": "means amazing"
  },

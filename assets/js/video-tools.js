@@ -112,7 +112,17 @@
       info.textContent = ""; out.innerHTML = ""; out.hidden = true; bar.hidden = true;
     };
     W.done = (blob, name, text) => { dl.href = W.url(blob); dl.download = name; dl.classList.remove("is-busy"); info.textContent = text; };
-    W.convert = async ({ format, mime = "video/mp4", ...opts } = {}) => {
+    // Hardware encoders/decoders on some phones accept the job and then fail mid-way; run once more with no-preference.
+    W.convert = async (args = {}) => {
+      try { return await W.convert1(args); }
+      catch (e) {
+        const v = args.video;
+        if (stop || !v || !v.hardwareAcceleration || v.hardwareAcceleration === "no-preference" || (e && (e.name === "ConversionCanceledError" || e.user))) throw e;
+        W.pct(0); W.prog("Retrying with software encoding…");
+        return await W.convert1({ ...args, video: { ...v, hardwareAcceleration: "no-preference" } });
+      }
+    };
+    W.convert1 = async ({ format, mime = "video/mp4", ...opts } = {}) => {
       const M = window.Mediabunny, audioOnly = !!(opts.video && opts.video.discard);
       const mkFormat = typeof format === "function" ? format : () => format || new M.Mp4OutputFormat();
       const attempt = async (o) => {

@@ -200,7 +200,9 @@
 
       /* ===== Views ===== */
       const view = $("#x-view");
-      const HOME_FAQ = [["Is Toolsaku really free?", "Yes. Every tool is free to use with no sign-up, no watermark and no daily limit."], ["Are my files uploaded?", "No. Your files are processed on your own device, inside your browser. Nothing is sent to a server."], ["Is there a file size limit?", "Image tools take files up to 20 MB each, PDF tools up to 50 MB and video tools up to 500 MB. Very large files can be slow on older phones."], ["Does it work on my phone?", "Yes. Toolsaku works in modern browsers on iPhone, Android, tablets and computers."], ["Which formats are supported?", "Image tools open and save JPG, PNG and WEBP. Video tools open MP4, MOV, WEBM and MKV and save MP4 (or WebM, MOV and audio in the converter). PDF tools work with standard PDF files."]];
+      const HOME_FAQ_EN = [["Is Toolsaku really free?", "Yes. Every tool is free to use with no sign-up, no watermark and no daily limit."], ["Are my files uploaded?", "No for the file tools. Image, PDF and video tools process your files on your own device, inside your browser. AI tools (captions, titles, hashtags, bio, Stream Moment Finder and AI mode in Long Video to Shorts) send only the text you type, a link, or a few small snapshots to Google Gemini. Your full file is never uploaded."], ["Is there a file size limit?", "Image tools take files up to 20 MB each, PDF tools up to 50 MB and video tools up to 500 MB. Very large files can be slow on older phones."], ["Does it work on my phone?", "Yes. Toolsaku works in modern browsers on iPhone, Android, tablets and computers."], ["Which formats are supported?", "Image tools open and save JPG, PNG and WEBP. Video tools open MP4, MOV, WEBM and MKV and save MP4 (or WebM, MOV and audio in the converter). PDF tools work with standard PDF files."]];
+      const HOME_FAQ_HI = [["क्या Toolsaku सच में मुफ़्त है?", "हाँ। हर टूल मुफ़्त है: कोई साइन-अप नहीं, कोई वॉटरमार्क नहीं और कोई रोज़ की सीमा नहीं।"], ["क्या मेरी फ़ाइलें अपलोड होती हैं?", "फ़ाइल वाले टूल्स में नहीं। इमेज, PDF और वीडियो टूल आपकी फ़ाइलें आपके अपने डिवाइस पर, ब्राउज़र के अंदर ही प्रोसेस करते हैं। AI टूल (कैप्शन, टाइटल, हैशटैग, बायो, Stream Moment Finder और Long Video to Shorts का AI मोड) सिर्फ़ आपका लिखा टेक्स्ट, लिंक या कुछ छोटे स्नैपशॉट Google Gemini को भेजते हैं। आपकी पूरी फ़ाइल कभी अपलोड नहीं होती।"], ["क्या फ़ाइल साइज़ की कोई सीमा है?", "इमेज टूल हर फ़ाइल 20 MB तक, PDF टूल 50 MB तक और वीडियो टूल 500 MB तक लेते हैं। बहुत बड़ी फ़ाइलें पुराने फ़ोन पर धीमी चल सकती हैं।"], ["क्या यह मेरे फ़ोन पर चलता है?", "हाँ। Toolsaku iPhone, Android, टैबलेट और कंप्यूटर के नए ब्राउज़र में चलता है।"], ["कौन से फ़ॉर्मैट चलते हैं?", "इमेज टूल JPG, PNG और WEBP खोलते और सेव करते हैं। वीडियो टूल MP4, MOV, WEBM और MKV खोलते हैं और MP4 में सेव करते हैं (कन्वर्टर में WebM, MOV और ऑडियो भी)। PDF टूल सामान्य PDF फ़ाइलों के साथ चलते हैं।"]];
+      const homeFaq = () => ((document.documentElement.lang || "").indexOf("hi") === 0 ? HOME_FAQ_HI : HOME_FAQ_EN);
       /* Upcoming tools: shown on the homepage only; kept out of TOOLS, search and counts */
       const UPCOMING = [
         ["Currency Converter", "calculators", "convert"], ["Income Tax Calculator", "calculators", "receipt"], ["Markdown Editor", "text", "edit"],
@@ -233,7 +235,7 @@
           <section class="x-sec"><div class="x-wrap"><h2>${T_("how.title")}</h2>
             <ol class="x-steps">${[1, 2, 3, 4].map((i) => `<li><strong>${T_(`how.${i}`)}</strong><span>${T_(`how.${i}d`)}</span></li>`).join("")}</ol>
           </div></section>
-          <section class="x-sec"><div class="x-wrap"><h2>${T_("faq.title")}</h2>${faqHtml(HOME_FAQ)}</div></section>
+          <section class="x-sec"><div class="x-wrap"><h2>${T_("faq.title")}</h2>${faqHtml(homeFaq())}</div></section>
           <section class="x-sec x-upcoming" aria-labelledby="h-upcoming"><div class="x-wrap"><h2 id="h-upcoming">${T_("upcoming.title", "Coming soon")}</h2><p class="x-lead">${T_("upcoming.sub", "We're building these next")}</p>
             <div class="x-cards">${UPCOMING.map(([name, cat, icon]) => `<div class="x-card is-soon" aria-disabled="true"><span class="x-soon">${T_("soon", "Soon")}</span>${tile(cat, icon)}<span class="x-cb"><strong>${esc(name)}</strong></span></div>`).join("")}</div>
           </div></section>`;
@@ -326,6 +328,7 @@
    Home is re-rendered into #x-view, so re-insert after every render. */
 (function () {
   if (!window.fetch || !window.MutationObserver) return;
+  if (document.body && document.body.getAttribute("data-page") !== "home") return; /* the trending row only shows on home */
   var D = null;
   var fmt = function (n) { return n >= 1e7 ? (n / 1e7).toFixed(1) + " Cr" : n >= 1e5 ? (n / 1e5).toFixed(1) + " L" : n >= 1e3 ? Math.round(n / 1e3) + "K" : n; };
   var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
