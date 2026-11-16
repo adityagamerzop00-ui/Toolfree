@@ -1376,7 +1376,8 @@ CM_MAX_IMG = 150 * 1024            # bytes per snapshot (decoded)
 CM_MAX_SPAN = 180                  # seconds per candidate clip
 CM_RATE = (60, 600)                # 60 clips per IP per 10 minutes
 CM_HITS = {}
-CM_SEM = asyncio.Semaphore(5)      # at most 5 Gemini calls at once for this tool
+CM_SEM = asyncio.Semaphore(3)      # at most 3 Gemini calls at once for this tool
+CM_BUSY_WAIT = 3.0                 # seconds before one more try when every model was busy
 CM_PREFER = {"model": None, "until": 0.0}  # after the main model was busy, start on the backup that worked for 2 minutes
 CM_TYPES = ("clutch", "funny", "rage", "hype", "fail", "other")
 CM_SCHEMA = {
@@ -1480,11 +1481,16 @@ async def cm_check(c, q):
     models = None
     if CM_PREFER["model"] and CM_PREFER["until"] > time.time():
         models = [CM_PREFER["model"]] + [m for m in [GEMINI_MODEL] + GEMINI_BACKUP_MODELS if m != CM_PREFER["model"]]
-    async with CM_SEM:
-        t0 = time.time()
+    t0 = time.time()
+    for attempt in (0, 1):
         try:
-            raw, model = await gemini_call(parts, CM_SCHEMA, timeout=40, max_tokens=2048, temperature=0.3, thinking="minimal", timeout_next=True, models=models)
+            async with CM_SEM:
+                raw, model = await gemini_call(parts, CM_SCHEMA, timeout=40, max_tokens=2048, temperature=0.3, thinking="minimal", timeout_next=True, models=models)
+            break
         except SMError as e:
+            if attempt == 0 and e.status == 503 and "busy" in e.msg.lower():
+                await asyncio.sleep(CM_BUSY_WAIT)  # all models busy: wait outside the semaphore, then one more try
+                continue
             return {"id": c["id"], "ok": False, "status": e.status, "error": e.msg}
     if model != GEMINI_MODEL: CM_PREFER.update(model=model, until=time.time() + 120)
     return {"id": c["id"], "ok": True, **cm_clean(raw), "model": model, "ms": int((time.time() - t0) * 1000)}

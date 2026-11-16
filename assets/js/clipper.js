@@ -113,7 +113,8 @@
           hDone: "AI ने {n} क्लिप्स {s} सेकंड में जाँचीं · {k} असली मोमेंट", hNoReal: "AI को सबसे तेज़ स्पॉट्स में कोई असली हाइलाइट नहीं मिला। नॉर्मल मोड आज़माएँ।",
           hPart: "{u} क्लिप जाँची नहीं जा सकीं, आखिर में रखी गई हैं।", hFail: "AI अभी क्लिप्स नहीं जाँच पाया",
           hFailP: "{e} आपकी क्लिप्स आवाज़ की तेज़ी के क्रम में दिखाई गई हैं, आप इन्हें फिर भी बना सकते हैं।",
-          hLoud: "तेज़ आवाज़ वाला स्पॉट", hUnchecked: "AI से जाँची नहीं गई", hPick: "पहले कम से कम एक मोमेंट चुनें।",
+          hLoud: "तेज़ आवाज़ वाला स्पॉट", hUnchecked: "AI से जाँची नहीं गई",
+          hRetry: "↻ बची हुई क्लिप्स फिर से जाँचें", hRetrying: "AI अभी व्यस्त है। {s} सेकंड में फिर कोशिश…", hWhy: "वजह: {e}", hClipN: "क्लिप {k}", hPick: "पहले कम से कम एक मोमेंट चुनें।",
           kitAiWait: "✨ AI पोस्ट किट लिख रहा है…", kitAi: "✨ AI ने इस मोमेंट से लिखा।", kitAiFail: "AI पोस्ट किट नहीं मिली, इसलिए आपके डिवाइस पर बनी।", ytStudio: "YouTube Studio खोलें",
           infoT: "इस टूल के बारे में", infoAbout: "लंबी स्ट्रीम और वीडियो को कुछ ही मिनटों में शॉर्ट्स और रील्स में बदलें, सीधे अपने ब्राउज़र में।",
           infoHowT: "कैसे इस्तेमाल करें", infoHow1: "अपना वीडियो अपलोड करें।", infoHow2: "30 s या 60 s चुनें।", infoHow3: "नॉर्मल या AI चुनें।", infoHow4: "क्लिप्स देखें।", infoHow5: "एक्सपोर्ट करें और पोस्ट किट कॉपी करें।",
@@ -973,29 +974,64 @@
 
         /* ---------- hype finder (loud spikes, on device) + AI mode (checks each spike with Gemini) ---------- */
         // Normal mode = the regular split, fully on device. AI mode = snapshots from each loud spot go to /api/clip-moments.
-        var HY = { file: null, busy: false, cancel: false, spots: null, err: "", res: null, ctl: [], fv: null, fvSrc: null };
-        var HY_FRAMES = 8, HY_BATCH = 4, HY_AI_MAX = 20, HY_PAR = 2;
+        var HY = { file: null, busy: false, cancel: false, spots: null, err: "", res: null, ctl: [], tm: [], fv: null, fvSrc: null };
+        var HY_FRAMES = 8, HY_BATCH = 2, HY_AI_MAX = 20, HY_PAR = 2, HY_RETRY = [5000, 15000], HY_NORETRY = [400, 403, 413, 429];
         var HROOT = (document.body && document.body.dataset.root) || "";
         function hyEsc(el, cls, text) { var e = document.createElement(el); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
         function hyLen() { var r = document.querySelector('input[name="hlen"]:checked'); return r ? +r.value : 60; }
         function hyMode() { var r = document.querySelector('input[name="hmode"]:checked'); return r ? r.value : "normal"; }
         function hyLang() { return (window.L10N && window.L10N.lang() === "hi") || ST.tpl === "hindi" ? "hinglish" : "english"; }
         /* overlay */
-        var OV = { t0: 0, iv: 0, p: 0, creep: 0, onCancel: null };
-        function ovOpen(title, onCancel) {
+        var OV = { t0: 0, iv: 0, p: 0, creep: 0, onCancel: null, pool: [], pi: 0, siv: 0 };
+        // The tool sits inside a transformed parent on Toolsaku, which turns position:fixed into "fixed to that parent":
+        // the card lands far down the page and only the blur shows. Host the overlay on <body> and carry the tool's CSS vars over.
+        function ovHost() {
+          var o = $("hov"), tool = document.getElementById("x" + "-tool"); // split so make_clipper's x- -> lts- rename leaves the Toolsaku id alone
+          if (o.parentNode !== document.body) document.body.appendChild(o);
+          if (!tool) return;
+          var cs = getComputedStyle(tool), names = [];
+          for (var i = 0; i < cs.length; i++) if (cs[i].indexOf("--") === 0) names.push(cs[i]);
+          ["--text-primary", "--text-secondary", "--hover-wash", "--hover-wash-primary-on", "--r-l", "--tap", "--ease-out", "--type-body-strong", "--type-small", "--type-heading"].forEach(function (n) { if (names.indexOf(n) < 0) names.push(n); });
+          names.forEach(function (n) { var v = cs.getPropertyValue(n); if (v) o.style.setProperty(n, v.trim()); });
+          o.style.fontFamily = cs.fontFamily; o.style.color = cs.color;
+        }
+        function ovOpen(title, onCancel, ai, total) {
+          ovHost();
           $("hovh").textContent = title; OV.onCancel = onCancel; OV.t0 = performance.now(); OV.p = 0; ovSet("", 0);
+          OV.pool = []; OV.pi = 0; $("hovimg").removeAttribute("src"); $("hovtag").textContent = "";
+          var ch = $("hovchips"); ch.innerHTML = "";
+          for (var k = 1; ai && k <= (total || 0); k++) { var li = document.createElement("li"); li.textContent = k; li.title = T("hClipN", "Clip {k}", { k: k }); ch.appendChild(li); }
+          show($("hovscan"), !!ai); show(ch, !!ai && total > 0);
           show($("hov"), true); document.documentElement.classList.add("lts-noscroll");
-          clearInterval(OV.iv);
+          clearInterval(OV.iv); clearInterval(OV.siv);
           OV.iv = setInterval(function () {
             var s = Math.round((performance.now() - OV.t0) / 1000);
             $("hovs").textContent = T("hEl", "{s} s elapsed", { s: s });
             if (OV.creep > OV.p) ovBar(OV.p + (OV.creep - OV.p) * 0.06); // slow creep toward the next step so the bar never sits still
           }, 1000);
+          if (ai) OV.siv = setInterval(ovShot, 650);
           try { $("hovx").focus({ preventScroll: true }); } catch (e) {}
         }
+        // Snapshots of clips still in flight rotate through the scan box; a clip's frames leave the pool once it is final.
+        function ovPush(k, frames, times) {
+          (frames || []).forEach(function (f, i) { OV.pool.push({ k: k, f: f, t: times && times[i] }); });
+          if (OV.pool.length && !$("hovimg").getAttribute("src")) ovShot();
+        }
+        function ovDrop(k) { OV.pool = OV.pool.filter(function (x) { return x.k !== k; }); }
+        function ovShot() {
+          if (!OV.pool.length) return;
+          var x = OV.pool[OV.pi++ % OV.pool.length];
+          $("hovimg").src = "data:image/jpeg;base64," + x.f;
+          $("hovtag").textContent = T("hClipN", "Clip {k}", { k: x.k }) + (x.t != null ? " · " + (+x.t).toFixed(1) + " s" : "");
+        }
+        function ovChip(k, state) { var li = $("hovchips").children[k - 1]; if (li) li.className = state || ""; }
         function ovBar(p) { OV.p = p; $("hovbar").firstChild.style.width = Math.round(p) + "%"; $("hovbar").setAttribute("aria-valuenow", Math.round(p)); }
         function ovSet(text, p, creepTo) { if (text != null) $("hovt").textContent = text; if (p != null) ovBar(Math.max(p, OV.p)); OV.creep = creepTo || 0; }
-        function ovClose() { clearInterval(OV.iv); show($("hov"), false); document.documentElement.classList.remove("lts-noscroll"); OV.onCancel = null; }
+        function ovClose() {
+          clearInterval(OV.iv); clearInterval(OV.siv); OV.pool = [];
+          $("hovimg").removeAttribute("src"); $("hovtag").textContent = ""; $("hovchips").innerHTML = "";
+          show($("hov"), false); document.documentElement.classList.remove("lts-noscroll"); OV.onCancel = null;
+        }
         $("hovx").addEventListener("click", function () { var f = OV.onCancel; ovClose(); if (f) f(); });
         document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !$("hov").classList.contains("lts-hidden")) $("hovx").click(); });
 
@@ -1085,7 +1121,7 @@
           r.addEventListener("change", function () {
             var m = $(r.value === "30" ? "len30" : "len60");
             if (m && !m.checked) { m.checked = true; fire(m); }
-            HY.res = null; $("hlist").innerHTML = ""; $("hres").textContent = ""; show($("hmake"), false); alertMsg($("hwarn"));
+            HY.res = null; $("hlist").innerHTML = ""; $("hres").textContent = ""; show($("hmake"), false); show($("hretry"), false); alertMsg($("hwarn"));
             hypeUpdate();
           });
         });
@@ -1147,85 +1183,143 @@
           return fetch(url, { method: "POST", headers: { "Content-Type": "application/json", "X-Toolsaku": "1" }, body: body, signal: ac ? ac.signal : undefined })
             .then(function (r) {
               return r.json().catch(function () { return null; }).then(function (j) {
-                if (!r.ok) throw new Error((j && typeof j.detail === "string" && j.detail) || "The server answered " + r.status + ".");
+                if (!r.ok) { var er = new Error((j && typeof j.detail === "string" && j.detail) || "The server answered " + r.status + "."); er.status = r.status; throw er; }
                 return j;
               });
             }, function (e) {
-              throw new Error(e && e.name === "AbortError" ? (HY.cancel ? "Cancelled." : "The AI took too long to answer.") : "Couldn't reach Toolsaku's server. Check your internet.");
+              var er = new Error(e && e.name === "AbortError" ? (HY.cancel ? "Cancelled." : "The AI took too long to answer.") : "Couldn't reach Toolsaku's server. Check your internet.");
+              er.status = 0; // no HTTP answer: network down or timed out
+              throw er;
             })
             .then(function (j) { clearTimeout(to); return j; }, function (e) { clearTimeout(to); throw e; });
         }
-        function aiRun() {
+        // AI check. `only` = clips to check again (the unchecked ones); their verdicts are merged into HY.res.
+        function aiRun(only) {
           if (HY.busy || Q.state !== "idle") return;
-          var cands = hypeCands(hyLen()).slice(0, HY_AI_MAX);
-          alertMsg($("hwarn")); $("hlist").innerHTML = ""; show($("hmake"), false); HY.res = null;
-          if (!cands.length) { $("hres").textContent = HY.spots ? T("hFound0", "No clear hype spots found. Normal mode will split the whole video.") : HY.err || ""; return; }
-          HY.busy = true; HY.cancel = false; HY.ctl = [];
-          var t0 = performance.now(), total = cands.length, snapped = 0, checked = 0, verdicts = {}, errs = [], queue = [], flying = 0, title = $("htitle").value.trim(), lang = hyLang();
-          ovOpen(T("hAiT", "AI is checking your clips…"), function () { HY.cancel = true; HY.ctl.forEach(function (a) { try { a.abort(); } catch (e) {} }); });
+          var merge = Array.isArray(only), cands = merge ? only.slice() : hypeCands(hyLen()).slice(0, HY_AI_MAX);
+          alertMsg($("hwarn")); show($("hretry"), false);
+          if (!merge) { $("hlist").innerHTML = ""; show($("hmake"), false); HY.res = null; }
+          if (!cands.length) { if (!merge) $("hres").textContent = HY.spots ? T("hFound0", "No clear hype spots found. Normal mode will split the whole video.") : HY.err || ""; return; }
+          HY.busy = true; HY.cancel = false; HY.ctl = []; HY.tm = [];
+          var t0 = performance.now(), total = cands.length, snapped = 0, checked = 0, verdicts = {}, why = {}, queue = [], flying = 0, waiting = 0,
+            title = $("htitle").value.trim(), lang = hyLang(), resolveRun = null;
+          cands.forEach(function (c, i) { c.k = i + 1; c.st = null; });
+          ovOpen(T("hAiT", "AI is checking your clips…"), function () {
+            HY.cancel = true;
+            HY.ctl.forEach(function (a) { try { a.abort(); } catch (e) {} });
+            HY.tm.forEach(clearTimeout); HY.tm = []; waiting = 0; queue = [];
+            if (resolveRun && !flying) resolveRun();
+          }, true, total);
           function upd() {
             var p = 4 + 92 * (snapped * 0.35 + checked * 0.65) / total;
             if (checked || snapped >= total) ovSet(T("hAiN", "AI checking clip {k} of {n}", { k: Math.min(total, checked + 1), n: total }), p, Math.min(96, p + 8));
             else ovSet(T("hSnap", "Taking snapshots of clip {k} of {n}", { k: Math.min(total, snapped + 1), n: total }), p, Math.min(96, p + 4));
           }
+          // A clip is final once it has a verdict or ran out of tries; only then are its snapshots let go.
+          function final(c, state) { checked++; ovChip(c.k, state); ovDrop(c.k); c.frames = null; c.times = null; }
           upd();
           var finished = new Promise(function (resolve) {
-            function send(batch) {
+            resolveRun = resolve;
+            function send(batch, tryN) {
               flying++;
+              batch.forEach(function (c) { ovChip(c.k, "is-ai"); });
               var body = JSON.stringify({ title: title, lang: lang, clips: batch.map(function (c) {
                 return { id: c.id, start: +c.s.toFixed(2), end: +c.e.toFixed(2), spike: Math.max(0, +(c.pk - c.s).toFixed(1)), loud: hyLoud(c), words: hyWords(c.s, c.e), frames: c.frames, times: c.times };
               }) });
-              batch.forEach(function (c) { c.frames = null; });
               hyFetch(HROOT + "api/clip-moments", body, 150000).then(function (j) {
-                (j.verdicts || []).forEach(function (v) { verdicts[v.id] = v; });
-              }, function (e) { errs.push(e.message); }).then(function () {
-                flying--; checked += batch.length; upd(); pump();
+                var got = {}, left = [];
+                ((j && j.verdicts) || []).forEach(function (v) { got[v.id] = v; });
+                batch.forEach(function (c) {
+                  var v = got[c.id];
+                  if (v && v.ok) { verdicts[c.id] = v; final(c, v.is_moment ? "is-ok" : "is-no"); }
+                  else { why[c.id] = (v && v.error) || "The AI didn't answer for this clip."; c.st = v ? v.status || 0 : 0; left.push(c); }
+                });
+                return left;
+              }, function (e) {
+                batch.forEach(function (c) { why[c.id] = e.message; c.st = e.status || 0; });
+                return batch;
+              }).then(function (left) {
+                body = null; flying--;
+                var again = left.filter(function (c) { return HY_NORETRY.indexOf(c.st) < 0; });
+                left.forEach(function (c) { if (again.indexOf(c) < 0) final(c, "is-err"); }); // 400/403/413/429: another try can't help
+                if (again.length && tryN < HY_RETRY.length && !HY.cancel) {
+                  var wait = HY_RETRY[tryN];
+                  again.forEach(function (c) { ovChip(c.k, "is-err"); });
+                  ovSet(T("hRetrying", "AI is busy. Trying again in {s} s…", { s: Math.round(wait / 1000) }), null);
+                  waiting++;
+                  HY.tm.push(setTimeout(function () {
+                    waiting--;
+                    if (HY.cancel) { again.forEach(function (c) { final(c, "is-err"); }); pump(); return; }
+                    send(again, tryN + 1);
+                  }, wait));
+                } else again.forEach(function (c) { final(c, "is-err"); });
+                if (!waiting || flying) upd();
+                pump();
               });
             }
             function pump() {
               if (HY.cancel) queue = [];
-              while (flying < HY_PAR && (queue.length >= HY_BATCH || (queue.length && snapped >= total))) send(queue.splice(0, HY_BATCH));
-              if (!flying && snapped >= total && !queue.length) resolve();
+              while (flying < HY_PAR && (queue.length >= HY_BATCH || (queue.length && snapped >= total))) send(queue.splice(0, HY_BATCH), 0);
+              if (!flying && !waiting && snapped >= total && !queue.length) resolve();
             }
             var i = 0;
             (function nextSnap() {
               if (HY.cancel) { snapped = total; queue = []; pump(); return; }
               if (i >= total) return;
               var c = cands[i++];
-              hySnaps(c).then(function () { snapped++; if (c.frames && c.frames.length) queue.push(c); else checked++; upd(); pump(); nextSnap(); },
-                function () { snapped++; checked++; upd(); pump(); nextSnap(); });
+              ovChip(c.k, "is-snap");
+              hySnaps(c).then(function () {
+                snapped++;
+                if (HY.cancel) { c.frames = null; c.times = null; pump(); return; }
+                if (c.frames && c.frames.length) { queue.push(c); ovPush(c.k, c.frames, c.times); }
+                else { why[c.id] = "No snapshots could be taken from this part of the video."; final(c, "is-err"); }
+                upd(); pump(); nextSnap();
+              }, function () { snapped++; why[c.id] = "No snapshots could be taken from this part of the video."; final(c, "is-err"); upd(); pump(); nextSnap(); });
             })();
           });
           finished.then(function () {
-            HY.busy = false;
+            HY.busy = false; HY.tm = [];
             ovClose();
-            if (HY.cancel) { $("hres").textContent = ""; return; }
-            var secs = Math.max(1, Math.round((performance.now() - t0) / 1000)), real = [], rest = [];
+            cands.forEach(function (c) { c.frames = null; c.times = null; }); // free every snapshot, cancelled or not
+            if (HY.cancel && !merge) { $("hres").textContent = ""; return; }
+            var secs = Math.max(1, Math.round((performance.now() - t0) / 1000)), newly = 0;
             cands.forEach(function (c) {
               var v = verdicts[c.id];
-              if (v && v.ok) { if (v.is_moment) { c.ai = { score: v.score, type: v.type, reason: v.reason, hook_title: v.hook_title }; real.push(c); } }
-              else { c.unchecked = true; rest.push(c); }
+              if (v) {
+                newly++; c.unchecked = false; c.why = "";
+                if (v.is_moment) c.ai = { score: v.score, type: v.type, reason: v.reason, hook_title: v.hook_title }; else c.drop = true;
+              } else { c.unchecked = true; c.why = why[c.id] || (HY.cancel ? "Cancelled." : ""); }
             });
-            real.sort(function (a, b) { return b.ai.score - a.ai.score; });
-            if (rest.length === total) {
-              // AI failed or busy: keep the user's work, ranked by loudness.
-              alertMsg($("hwarn"), T("hFail", "AI couldn't check the clips right now"), T("hFailP", "{e} Your clips are shown ranked by loudness, and you can still make them.", { e: (errs[0] || "").replace(/\.?$/, ".") }));
-              rest.forEach(function (c) { c.unchecked = false; });
-              HY.res = rest; $("hres").textContent = "";
+            var list = (merge ? HY.res || [] : cands).filter(function (c) { return !c.drop; });
+            var real = list.filter(function (c) { return c.ai; }).sort(function (a, b) { return b.ai.score - a.ai.score; });
+            var rest = list.filter(function (c) { return !c.ai; }), unc = rest.filter(function (c) { return c.unchecked; });
+            HY.res = real.concat(rest);
+            var reason = hyWhy(unc);
+            if (!real.length && unc.length && unc.length === list.length) {
+              // AI failed or busy for every clip: keep the user's work, ranked by loudness.
+              alertMsg($("hwarn"), T("hFail", "AI couldn't check the clips right now"), T("hFailP", "{e} Your clips are shown ranked by loudness, and you can still make them.", { e: reason.replace(/\.?$/, ".") }));
+              $("hres").textContent = "";
             } else {
-              HY.res = real.concat(rest);
-              $("hres").textContent = T("hDone", "AI checked {n} clips in {s} s · {k} real moments", { n: total - rest.length, s: secs, k: real.length }) +
-                (rest.length ? " · " + T("hPart", "{u} couldn't be checked and are kept at the end.", { u: rest.length }) : "") +
+              $("hres").textContent = T("hDone", "AI checked {n} clips in {s} s · {k} real moments", { n: newly, s: secs, k: real.length }) +
+                (unc.length ? " · " + T("hPart", "{u} couldn't be checked and are kept at the end.", { u: unc.length }) + (reason ? " " + T("hWhy", "Why: {e}", { e: reason }) : "") : "") +
                 (!real.length && !rest.length ? " " + T("hNoReal", "AI found no real highlights in the loudest spots. Try Normal mode.") : "");
             }
+            show($("hretry"), unc.length > 0);
             hyRender();
           });
         }
+        // The most common reason among the clips AI couldn't check, as the server worded it.
+        function hyWhy(list) {
+          var n = {}, best = "", top = 0;
+          list.forEach(function (c) { if (c.why) { n[c.why] = (n[c.why] || 0) + 1; if (n[c.why] > top) { top = n[c.why]; best = c.why; } } });
+          return best;
+        }
+        $("hretry").addEventListener("click", function () { aiRun((HY.res || []).filter(function (c) { return c.unchecked; })); });
         function hyRender() {
           var L = $("hlist"), list = HY.res || [], hrs = S.duration >= 3600, topStr = list.reduce(function (m, c) { return Math.max(m, c.str); }, 1);
           L.innerHTML = "";
           list.forEach(function (c, i) {
-            c.on = true;
+            if (c.on == null) c.on = true;
             var li = document.createElement("li"), txt = hyEsc("span", "lts-hm__t");
             txt.appendChild(hyEsc("span", "", fmt(c.s, hrs) + "–" + fmt(c.e, hrs)));
             if (c.ai) {
@@ -1233,10 +1327,10 @@
               if (c.ai.hook_title) txt.appendChild(hyEsc("b", "", c.ai.hook_title));
               if (c.ai.reason) txt.appendChild(hyEsc("small", "", c.ai.reason));
             } else {
-              txt.appendChild(hyEsc("small", "", c.unchecked ? T("hUnchecked", "Not checked by AI") : T("hLoud", "Loud spot") + " · " + Math.round((c.str / topStr) * 100) + "%"));
+              txt.appendChild(hyEsc("small", "", (c.unchecked ? T("hUnchecked", "Not checked by AI") : T("hLoud", "Loud spot")) + " · " + Math.round((c.str / topStr) * 100) + "%"));
             }
             var pb = hyEsc("button", "lts-btn", "▶"); pb.type = "button"; pb.setAttribute("aria-label", "Preview moment " + (i + 1));
-            var cb = document.createElement("input"); cb.type = "checkbox"; cb.checked = true; cb.setAttribute("aria-label", "Use moment " + (i + 1));
+            var cb = document.createElement("input"); cb.type = "checkbox"; cb.checked = c.on !== false; cb.setAttribute("aria-label", "Use moment " + (i + 1));
             pb.addEventListener("click", function () { hyPlay(c); });
             cb.addEventListener("change", function () { c.on = cb.checked; });
             li.appendChild(hyEsc("b", "", String(i + 1))); li.appendChild(txt); li.appendChild(pb); li.appendChild(cb);
@@ -1252,7 +1346,7 @@
           ready(hv).then(function () { return seekTo(hv, c.s); }).then(function () { hv.play().catch(function () {}); }, function () {});
         }
         hv.addEventListener("timeupdate", function () { if (hvEnd && hv.currentTime >= hvEnd) { hv.pause(); hvEnd = 0; } });
-        $("hgo").addEventListener("click", aiRun);
+        $("hgo").addEventListener("click", function () { aiRun(); });
         $("hmake").addEventListener("click", function () {
           var sel = (HY.res || []).filter(function (c) { return c.on && c.e - c.s >= 10; });
           if (!sel.length) { $("hres").textContent = T("hPick", "Tick at least one moment first."); return; }
@@ -1265,7 +1359,8 @@
         function hyReset() {
           HY.file = null; HY.spots = null; HY.err = ""; HY.res = null; HY.cancel = true; HY.top = 0;
           HY.ctl.forEach(function (a) { try { a.abort(); } catch (e) {} });
-          HY.busy = false; ovClose();
+          (HY.tm || []).forEach(clearTimeout); HY.tm = [];
+          HY.busy = false; ovClose(); show($("hretry"), false);
           $("hlist").innerHTML = ""; $("hres").textContent = ""; show($("hmake"), false); alertMsg($("hwarn"));
           hv.pause(); hv.removeAttribute("src"); show(hv, false);
           hypeUpdate();

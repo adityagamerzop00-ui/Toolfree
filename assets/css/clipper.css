@@ -38,6 +38,22 @@
       @keyframes lts-eq { 0%, 100% { transform: scaleY(0.25); } 50% { transform: scaleY(1); } }
       @media (prefers-reduced-motion: reduce) { .lts-hov__eq i { animation: none; transform: scaleY(0.6); } .lts-hov__box .lts-bar > span { transition: none; } }
       .lts-noscroll { overflow: hidden; }
+      .lts-hov__scan { position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 12px; background: #0A0F1E; border: 1px solid rgb(37 99 255 / 0.35); }
+      .lts-hov__scan img { display: block; width: 100%; height: 100%; object-fit: cover; }
+      .lts-hov__scan img:not([src]) { visibility: hidden; }
+      .lts-hov__scan::after { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 30%; background: linear-gradient(180deg, transparent, rgb(34 211 238 / 0.28), transparent); border-bottom: 2px solid rgb(34 211 238 / 0.8); animation: lts-scan 1.8s linear infinite; pointer-events: none; }
+      .lts-hov__tag { position: absolute; left: 8px; bottom: 8px; margin: 0; padding: 2px 10px; border-radius: 999px; background: rgb(0 0 0 / 0.65); color: #fff; font-size: 0.75rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+      .lts-hov__tag:empty { display: none; }
+      .lts-hov__chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin: 0; padding: 0; list-style: none; }
+      .lts-hov__chips li { min-width: 28px; height: 28px; padding: 0 6px; display: grid; place-items: center; border-radius: 999px; font-size: 0.75rem; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--text-secondary); background: rgb(255 255 255 / 0.05); border: 1px solid rgb(255 255 255 / 0.14); transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease; }
+      .lts-hov__chips li.is-snap { color: #fff; border-color: #38BDF8; }
+      .lts-hov__chips li.is-ai { color: #fff; border-color: #2563FF; background: rgb(37 99 255 / 0.25); animation: lts-chip 1s ease-in-out infinite; }
+      .lts-hov__chips li.is-ok { color: #0A0F1E; border-color: #22D3EE; background: #22D3EE; }
+      .lts-hov__chips li.is-no { opacity: 0.5; text-decoration: line-through; }
+      .lts-hov__chips li.is-err { color: #fff; border-color: #f43f5e; background: rgb(244 63 94 / 0.3); }
+      @keyframes lts-scan { from { transform: translateY(-100%); } to { transform: translateY(340%); } }
+      @keyframes lts-chip { 50% { box-shadow: 0 0 0 4px rgb(37 99 255 / 0.25); } }
+      @media (prefers-reduced-motion: reduce) { .lts-hov__scan::after, .lts-hov__chips li.is-ai { animation: none; } }
       .lts-moments { list-style: none; margin: 0; padding: 0; display: grid; border-top: 1px solid var(--stroke-secondary); }
       .lts-moments:empty { display: none; }
       .lts-moments li { display: grid; grid-template-columns: 28px minmax(0, 1fr) auto auto; gap: 4px 10px; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--stroke-secondary); font: var(--type-small); font-variant-numeric: tabular-nums; }
@@ -399,3 +415,5 @@
 #x-tool .lts-top h1 { font-size: 1.35rem; }
 .lts-head, .lts-bg, .lts-more, .lts-foot { display: none !important; }
 html[data-theme="light"] #x-tool .lts-boost { color-scheme: light; }
+/* The AI overlay is moved to <body> at open (ovHost), outside #x-tool, so it needs its own hidden rule. */
+.lts-hov.lts-hidden, .lts-hov .lts-hidden { display: none !important; }

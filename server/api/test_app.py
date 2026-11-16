@@ -519,6 +519,7 @@ def cm_gemini(req, model, gb):
     mode = CMX["mode"]
     if mode == "busy-main" and model == "gemini-3.8-flash": return httpx.Response(503, json=BUSY)
     if mode == "busy-all": return httpx.Response(503, json=BUSY)
+    if mode == "busy-once" and len(CMX["models"]) <= 4: return httpx.Response(503, json=BUSY)  # main x2 + 2 backups busy, then free
     if mode == "down" or (mode == "fail-second" and "from 10:00 to" in prompt): return httpx.Response(500, json={"error": {"message": "internal"}})
     if mode == "hang-main" and model == "gemini-3.8-flash": raise httpx.ReadTimeout("hung", request=req)
     v = ({"is_moment": False, "score": 12, "type": "other", "reason": "Lobby screen with music", "hook_title": "nothing"} if "from 10:00 to" in prompt else
@@ -625,12 +626,36 @@ def test_cm_busy_main_moves_to_backup_and_sticks():
         assert j["model"] == "gemini-3.7-flash" and CMX["models"] == ["gemini-3.8-flash", "gemini-3.7-flash"]
 
 
+def test_cm_busy_retries_once_after_wait():
+    with client() as c:
+        cm_reset("busy-once")
+        old = A.CM_BUSY_WAIT; A.CM_BUSY_WAIT = 0
+        try:
+            j = cm_post(c).json()
+        finally:
+            A.CM_BUSY_WAIT = old
+        assert j["verdicts"][0]["ok"] and j["verdicts"][0]["is_moment"]
+        assert CMX["models"].count("gemini-3.8-flash") == 3  # 2 busy tries, then the retry after the wait worked
+        cm_reset("down")  # a 5xx that isn't "busy" is not retried
+        A.CM_BUSY_WAIT = 0
+        try:
+            n0 = len(CMX["models"]); cm_post(c); n1 = len(CMX["models"])
+        finally:
+            A.CM_BUSY_WAIT = old
+        assert n1 - n0 == 4  # one pass of the model chain (main x2 + 2 backups), no second pass
+
+
 def test_cm_gemini_down_and_partial():
     with client() as c:
         cm_reset("down")
         r = cm_post(c); assert r.status_code == 502 and "AI error" in r.json()["detail"]
         cm_reset("busy-all")
-        r = cm_post(c); assert r.status_code == 503 and "busy" in r.json()["detail"]
+        old = A.CM_BUSY_WAIT; A.CM_BUSY_WAIT = 0
+        try:
+            r = cm_post(c); assert r.status_code == 503 and "busy" in r.json()["detail"]
+        finally:
+            A.CM_BUSY_WAIT = old
+        assert len(CMX["models"]) == 8  # the whole model chain ran twice: once, then once more after the wait
         cm_reset("fail-second")  # one clip fails, the other still comes back
         r = cm_post(c, clips=[cm_clip(60), cm_clip(600)])
         assert r.status_code == 200

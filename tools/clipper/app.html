@@ -92,6 +92,7 @@
                 <button class="lts-btn lts-btn--primary lts-btn--block" type="button" id="hgo" data-li18n="hGo">✨ Find real moments with AI</button>
                 <div class="lts-alert lts-hidden" id="hwarn" role="alert"></div>
                 <p class="lts-note" id="hres" aria-live="polite"></p>
+                <button class="lts-btn lts-btn--block lts-hidden" type="button" id="hretry" data-li18n="hRetry">↻ Check the unchecked clips again</button>
                 <ol class="lts-moments lts-hmom" id="hlist"></ol>
                 <video class="lts-hidden lts-mvid" id="hvid" playsinline controls></video>
                 <button class="lts-btn lts-btn--primary lts-btn--block lts-hidden" type="button" id="hmake" data-li18n="hMake">Make clips from these moments</button>
@@ -550,9 +551,11 @@
           <div class="lts-hov lts-hidden" id="hov" role="dialog" aria-modal="true" aria-labelledby="hovh">
             <div class="lts-hov__box">
               <div class="lts-hov__eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              <div class="lts-hov__scan lts-hidden" id="hovscan" aria-hidden="true"><img id="hovimg" alt="" /><p class="lts-hov__tag" id="hovtag"></p></div>
               <h2 id="hovh">Analysing your video…</h2>
               <p class="lts-hov__step" id="hovt" aria-live="polite"></p>
               <div class="lts-bar" role="progressbar" aria-label="Progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="hovbar"><span></span></div>
+              <ol class="lts-hov__chips lts-hidden" id="hovchips" aria-hidden="true"></ol>
               <p class="lts-hint lts-hov__sub" id="hovs"></p>
               <button class="lts-btn lts-btn--block" type="button" id="hovx" data-li18n="cancel">Cancel</button>
             </div>

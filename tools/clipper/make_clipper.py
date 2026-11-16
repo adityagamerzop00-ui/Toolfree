@@ -50,6 +50,8 @@ css += """
 #x-tool .lts-top h1 { font-size: 1.35rem; }
 .lts-head, .lts-bg, .lts-more, .lts-foot { display: none !important; }
 html[data-theme="light"] #x-tool .lts-boost { color-scheme: light; }
+/* The AI overlay is moved to <body> at open (ovHost), outside #x-tool, so it needs its own hidden rule. */
+.lts-hov.lts-hidden, .lts-hov .lts-hidden { display: none !important; }
 """
 
 # ---- Markup ----------------------------------------------------------------------------
