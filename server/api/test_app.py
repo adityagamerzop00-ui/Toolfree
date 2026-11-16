@@ -494,3 +494,10 @@ def test_ac_hung_model_moves_to_backup():
         j = ac_post(c).json()
         assert j["source"] == "ai" and j["model"] == "gemini-3.7-flash"
         assert ACX["models"] == ["gemini-3.8-flash", "gemini-3.7-flash"]
+
+
+def test_sm_reply_has_no_debug():
+    with client() as c:
+        sm_reset()
+        j = sm_post(c).json()
+        assert j["moments"] and "debug" not in j["signal_detail"] and "debug" not in json.dumps(j)

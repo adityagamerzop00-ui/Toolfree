@@ -1024,6 +1024,7 @@ Rules:
 """
 
 
+SM_DEBUG = (ENV("SM_DEBUG", "") or "").strip() == "1"  # server-log only; never sent to visitors
 GEMINI_BACKUP_MODELS = [m.strip() for m in (ENV("GEMINI_BACKUP_MODELS", "gemini-3.7-flash,gemini-3.5-flash") or "").split(",") if m.strip()]
 GEMINI_BUSY_WAIT = 2.0  # seconds before retrying a busy model once
 
@@ -1187,10 +1188,9 @@ async def stream_moments(req: Request):
             sig = await gather_signals(vid)
             used = {"heatmap": bool(sig["heat"]), "captions": bool(sig["transcript"]), "chat": bool(sig["chat"])}
             if not any(used.values()):
-                print("stream-moments no signals", vid, json.dumps(sig.get("debug")), flush=True)
+                if SM_DEBUG: print("stream-moments no signals", vid, json.dumps(sig.get("debug")), flush=True)
                 return JSONResponse({"detail": "No signals to work with: this video has no chat replay, no captions and no Most-replayed data yet. "
-                                     "Try a finished stream with chat replay turned on, or come back after YouTube adds captions.",
-                                     "debug": sig.get("debug")}, status_code=422, headers={"Cache-Control": "no-store"})
+                                     "Try a finished stream with chat replay turned on, or come back after YouTube adds captions."}, status_code=422, headers={"Cache-Control": "no-store"})
             rows = build_table(sig)
             warning = None
             try:
@@ -1206,8 +1206,9 @@ async def stream_moments(req: Request):
            "signals_used": used,
            "signal_detail": {"chat_messages_sampled": sig["chat_messages"], "caption_language": sig["caption_lang"],
                              "chat_coverage_pct": round(100 * len(sig["covered"]) / max(1, dur // SM_BUCKET + 1)) if sig["chat"] else 0,
-                             "heatmap_points": len(sig["heat"]), "debug": sig.get("debug")},
+                             "heatmap_points": len(sig["heat"])},
            "model": GEMINI_MODEL, "count_requested": count, "moments": moments, "warning": warning, "cached": False}
+    if SM_DEBUG: print("stream-moments debug", vid, json.dumps(sig.get("debug")), flush=True)
     if not warning:
         SM_CACHE[key] = {"at": time.time(), "v": res}; _trim_cache(SM_CACHE)
     return JSONResponse(res, headers={"Cache-Control": "no-store"})
