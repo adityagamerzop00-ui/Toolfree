@@ -123,7 +123,10 @@
   S.ar["tools.zero"] = "لا أدوات"; S.ar["tools.two"] = "أداتان"; S.ar["tools.few"] = "{n} أدوات"; S.ar["tools.many"] = "{n} أداة";
 
   var codes = LANGS.map(function (l) { return l[0]; });
+  /* A page written in one language (/hi/<tool>/) always opens in it. */
+  var PAGE_LANG = document.documentElement.getAttribute("data-lang-page");
   function detect() {
+    if (PAGE_LANG) return PAGE_LANG;
     try { var saved = localStorage.getItem("sugoi-lang"); if (saved && codes.indexOf(saved) > -1) return saved; } catch (e) {}
     var list = (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || "en"]);
     for (var i = 0; i < list.length; i++) { var c = String(list[i] || "").slice(0, 2).toLowerCase(); if (codes.indexOf(c) > -1) return c; }
@@ -203,6 +206,9 @@
     if (codes.indexOf(code) < 0 || code === lang) return;
     lang = code; applyDoc(); paint();
     try { localStorage.setItem("sugoi-lang", code); } catch (e) {}
+    /* Tool pages have a Hindi twin: picking Hindi opens /hi/<tool>/, picking another language there opens the English page. */
+    var h = document.documentElement, to = code === "hi" ? h.getAttribute("data-alt-hi") : PAGE_LANG === "hi" ? h.getAttribute("data-alt-en") : null;
+    if (to) { location.href = to; return; }
     window.dispatchEvent(new CustomEvent("i18n:change", { detail: { lang: lang } }));
   }
 

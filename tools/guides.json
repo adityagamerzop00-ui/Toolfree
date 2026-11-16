@@ -1,0 +1,163 @@
+[
+ {
+  "slug": "compress-pdf-to-100kb",
+  "tool": "compress-pdf",
+  "also": [
+   "split-pdf",
+   "organize-pdf",
+   "pdf-to-images"
+  ],
+  "title": "How to Compress a PDF to 100 KB (Free, on Your Phone)",
+  "h1": "Compress a PDF to 100 KB",
+  "meta_description": "Make a scanned PDF smaller than 100 KB for online forms. Step-by-step on your phone, free, with tips for when it is still too big. No upload.",
+  "lead": "Many government, exam and job portals only accept PDFs under 100 KB. Here is the quickest way to get a scanned document under that limit for free, right in your phone's browser.",
+  "sections": [
+   [
+    "Steps",
+    [
+     "Open the Compress PDF tool and add your PDF (up to 50 MB).",
+     "Choose Strong compression and tap Compress PDF. Strong redraws each page at 80 DPI, the smallest setting.",
+     "Check the new size shown. If it is under 100 KB, download it and upload it to your form."
+    ]
+   ],
+   [
+    "Still over 100 KB?",
+    [
+     "Remove pages you don't need: use Split PDF or Organize PDF to keep only the pages the form asks for, then compress again.",
+     "Scan in black and white or greyscale if your scanner app allows it. Colour scans are much heavier.",
+     "Crop the white margins in your scanner app before you make the PDF.",
+     "A 1-page scan usually fits in 100 KB at Strong. Many pages often won't, so check whether the form lets you upload pages separately."
+    ]
+   ],
+   [
+    "Good to know",
+    [
+     "Compress PDF turns each page into an image, so text can't be selected afterwards. That is fine for scans and certificates, but keep your original file.",
+     "Your PDF is processed in your browser and is never uploaded."
+    ]
+   ]
+  ],
+  "faq": [
+   [
+    "Can every PDF be compressed to 100 KB?",
+    "No. A one or two page scan usually can at Strong compression. Long documents or very detailed colour pages may stay above 100 KB, so remove extra pages first."
+   ],
+   [
+    "Which compression level should I use for 100 KB?",
+    "Start with Strong. Low and Medium keep more detail, which is better for limits like 500 KB or 1 MB."
+   ],
+   [
+    "Is it safe for ID documents?",
+    "Yes. The file is compressed inside your browser and is never uploaded to a server."
+   ]
+  ],
+  "hi": "100 KB से कम PDF बनाने के लिए Compress PDF टूल खोलें, Strong चुनें और साइज़ देखें। फिर भी बड़ी हो तो Split PDF से सिर्फ़ ज़रूरी पेज रखें और दोबारा कंप्रेस करें। आपकी फ़ाइल अपलोड नहीं होती।"
+ },
+ {
+  "slug": "resize-photo-to-20kb",
+  "tool": "image-resizer",
+  "also": [
+   "image-compressor",
+   "image-cropper",
+   "image-converter"
+  ],
+  "title": "How to Resize a Photo to 20 KB for Online Forms (Free)",
+  "h1": "Resize a photo to 20 KB for a form",
+  "meta_description": "Get your passport photo or signature under 20 KB for exam and job forms. Resize to the right pixels, then compress. Free, on your phone, no upload.",
+  "lead": "Exam, job and government forms often want a photo or signature under 20 KB, sometimes also between a minimum and maximum size. A phone photo is usually 2 to 5 MB, so you need two quick steps: resize, then compress.",
+  "sections": [
+   [
+    "Step 1: resize to the right pixels",
+    [
+     "Check the form's rules for the photo size in pixels (or in cm or mm).",
+     "Open the Image Resizer, add your photo and type that width and height. The Passport preset makes 413 × 531 pixels (35 × 45 mm at 300 DPI); always check what your form asks for.",
+     "Download the resized photo."
+    ]
+   ],
+   [
+    "Step 2: compress under 20 KB",
+    [
+     "Open the Image Compressor and add the resized photo.",
+     "Choose JPEG and lower the quality slider. A small passport-size photo often reaches 20 KB at a quality of around 50 to 70.",
+     "Check the new size shown. If it is still above 20 KB, lower the quality a little more, or set a smaller maximum width. Then download."
+    ]
+   ],
+   [
+    "Tips",
+    [
+     "Crop to the face and shoulders first with the Image Cropper, so the file has less to store.",
+     "If the form also has a minimum size (for example 10 KB), don't push the quality too low.",
+     "A signature on white paper compresses very well. Crop it tightly before you resize.",
+     "Most forms want JPG. Use the Image Converter if your photo is PNG or WEBP."
+    ]
+   ]
+  ],
+  "faq": [
+   [
+    "Why is my photo still over 20 KB?",
+    "It is probably still too large in pixels. Resize it to the size your form asks for first, then compress. Lowering quality alone rarely gets a big phone photo to 20 KB."
+   ],
+   [
+    "Will my photo look blurry?",
+    "At passport size and a quality of 50 to 70 it usually looks fine. Check the preview before you download."
+   ],
+   [
+    "Is my photo uploaded?",
+    "No. Resizing and compressing happen in your browser, and the photo never leaves your device."
+   ]
+  ],
+  "hi": "फ़ॉर्म के लिए 20 KB से कम फ़ोटो बनाने के लिए पहले Image Resizer से फ़ॉर्म में बताए पिक्सेल साइज़ पर रीसाइज़ करें, फिर Image Compressor में JPEG चुनकर क्वालिटी घटाएँ और साइज़ देखें। फ़ोटो अपलोड नहीं होती।"
+ },
+ {
+  "slug": "compress-image-to-50kb",
+  "tool": "image-compressor",
+  "also": [
+   "image-resizer",
+   "image-converter",
+   "images-to-pdf"
+  ],
+  "title": "How to Compress an Image to 50 KB (JPG, PNG, WEBP) Free",
+  "h1": "Compress an image to 50 KB",
+  "meta_description": "Reduce a JPG, PNG or WEBP image to under 50 KB in your browser. Set quality and maximum width, see the size before you download. Free, no upload.",
+  "lead": "Need a photo under 50 KB for a form, a website or an email? You can do it in a few seconds in your phone's browser, without installing an app.",
+  "sections": [
+   [
+    "Steps",
+    [
+     "Open the Image Compressor and add your JPG, PNG or WEBP image.",
+     "Pick JPEG (or WEBP if the site accepts it) and set the quality to about 60.",
+     "Set a maximum width. Around 800 pixels is a good start for 50 KB.",
+     "Check the new size. Lower the width or quality a little until it is under 50 KB, then download."
+    ]
+   ],
+   [
+    "Why width matters most",
+    [
+     "A phone photo can be 4000 pixels wide. Shrinking it to 800 pixels removes most of the data, so the file drops far more than lowering quality alone.",
+     "If the form gives a pixel size, resize to that exact size with the Image Resizer first."
+    ]
+   ],
+   [
+    "PNG screenshots",
+    [
+     "PNG keeps every pixel, so screenshots can be large. Saving as JPEG or WEBP usually makes them much smaller."
+    ]
+   ]
+  ],
+  "faq": [
+   [
+    "What quality should I use for 50 KB?",
+    "Start around 60 with a maximum width of about 800 pixels, then adjust. Every photo is different, so check the size shown before you download."
+   ],
+   [
+    "Why did my file get bigger?",
+    "If the image was already well compressed, re-saving can make it larger. Toolsaku tells you when this happens so you can keep the original."
+   ],
+   [
+    "Does it work offline?",
+    "Yes. Once the page has loaded, compression runs in your browser and nothing is uploaded."
+   ]
+  ],
+  "hi": "इमेज को 50 KB से कम करने के लिए Image Compressor में JPEG चुनें, क्वालिटी लगभग 60 और अधिकतम चौड़ाई लगभग 800 पिक्सेल रखें, फिर साइज़ देखकर डाउनलोड करें। इमेज अपलोड नहीं होती।"
+ }
+]

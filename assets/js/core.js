@@ -263,6 +263,8 @@
         const h = $(".x-thead h1"), l = $("[data-tdesc]");
         if (h) h.textContent = tName(t);
         if (l) l.textContent = tDesc(t);
+        /* English page shown in Hindi: Hindi tab title too (the /hi/ page has its own Hindi title). */
+        if (I18N.lang === "hi" && !document.documentElement.getAttribute("data-lang-page")) document.title = tName(t) + " – मुफ़्त ऑनलाइन | Toolsaku";
         const cur = $(".x-crumb [aria-current]"); if (cur) cur.textContent = tName(t);
         document.querySelectorAll("[data-tool-card]").forEach((a) => { const x = byId[a.dataset.toolCard]; if (!x) return; const s = a.querySelector("strong"), d = a.querySelector(".x-cb > span"); if (s) s.textContent = tName(x); if (d) d.textContent = tDesc(x); });
       }
