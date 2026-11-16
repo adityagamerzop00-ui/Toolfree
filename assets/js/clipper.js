@@ -103,7 +103,7 @@
           savedAs: "{f} सेव हो गई", cancelling: "रद्द कर रहे हैं…", copied: "कॉपी हो गया ✓",
           hAgain: "फिर से एनालाइज़ करें", hMode: "मोड", hmN: "नॉर्मल", hmNs: "वीडियो को बाँटता है, पूरी तरह आपके डिवाइस पर", hmA: "AI ✨", hmAs: "सिर्फ़ असली हाइलाइट रखता है",
           hTitle: "वीडियो का टाइटल या गेम (वैकल्पिक)", hHookOn: "हर क्लिप पर AI हुक टाइटल लगाएँ",
-          hPriv: "आपका पूरा वीडियो आपके डिवाइस पर ही रहता है। हर तेज़ आवाज़ वाले मोमेंट से सिर्फ़ कुछ छोटे स्नैपशॉट और बोले गए शब्द AI को भेजे जाते हैं, यह जाँचने के लिए कि वह असली हाइलाइट है या नहीं। कुछ भी सेव नहीं होता।",
+          hPriv: "आपका पूरा वीडियो आपके डिवाइस पर ही रहता है। हर तेज़ आवाज़ वाले मोमेंट से सिर्फ़ कुछ छोटे स्नैपशॉट और बोले गए शब्द आपकी अपनी key से सीधे आपके ब्राउज़र से Google Gemini को जाते हैं। Toolsaku का सर्वर इन्हें कभी नहीं देखता।",
           hGo: "✨ AI से असली मोमेंट ढूँढें", hMake: "इन मोमेंट्स से क्लिप बनाओ",
           hAnT: "आपका वीडियो एनालाइज़ हो रहा है…", hAiT: "AI आपकी क्लिप्स जाँच रहा है…",
           hS1: "ऑडियो पढ़ रहे हैं", hS2: "आवाज़ डीकोड कर रहे हैं", hS3: "आवाज़ की तेज़ी माप रहे हैं", hS4: "तेज़ आवाज़ के उछाल गिन रहे हैं",
@@ -114,7 +114,13 @@
           hPart: "{u} क्लिप जाँची नहीं जा सकीं, आखिर में रखी गई हैं।", hFail: "AI अभी क्लिप्स नहीं जाँच पाया",
           hFailP: "{e} आपकी क्लिप्स आवाज़ की तेज़ी के क्रम में दिखाई गई हैं, आप इन्हें फिर भी बना सकते हैं।",
           hLoud: "तेज़ आवाज़ वाला स्पॉट", hUnchecked: "AI से जाँची नहीं गई",
-          hRetry: "↻ बची हुई क्लिप्स फिर से जाँचें", hRetrying: "AI अभी व्यस्त है। {s} सेकंड में फिर कोशिश…", hWhy: "वजह: {e}", hClipN: "क्लिप {k}", hPick: "पहले कम से कम एक मोमेंट चुनें।",
+          hkT: "🔑 AI इस्तेमाल करने के लिए अपनी फ़्री Gemini key जोड़ें", hk1: "नीचे “मेरी फ़्री key लें” पर टैप करें। नए टैब में Google AI Studio खुलेगा।", hk2: "अपने Google (Gmail) अकाउंट से साइन इन करें। पूछे तो शर्तें स्वीकार करें।", hk3: "“Create API key” पर टैप करें। प्रोजेक्ट पूछे तो “Create in new project” चुनें।", hk4: "अपनी key के पास कॉपी बटन दबाएँ। यह AIza से शुरू होती है।", hk5: "इस टैब पर वापस आएँ, key बॉक्स में पेस्ट करें और “key सेव करें और जाँचें” दबाएँ।", hkOpen: "मेरी फ़्री key लें ↗", hkSave: "key सेव करें और जाँचें", hkFree: "फ़्री: रोज़ लगभग 500 AI जाँच, करीब 25 वीडियो के लिए काफ़ी। आपकी key सिर्फ़ इसी डिवाइस पर सेव रहती है और सिर्फ़ Google को जाती है।", hkOn: "✅ आपकी Gemini key जुड़ी हुई है", hkDel: "key हटाएँ", hkUsed: "आज {n} / लगभग {m} फ़्री जाँच इस्तेमाल हुईं · {r} पर रीसेट", hkTest: "key जाँच रहे हैं…", hkOk: "key काम कर रही है ✓ अब AI से मोमेंट ढूँढें।", hkBad: "यह key काम नहीं की। AI Studio से दोबारा कॉपी करके पेस्ट करें।", hkShort: "पूरी key पेस्ट करें। यह आमतौर पर AIza से शुरू होती है।", hkNet: "Google तक नहीं पहुँच पाए। इंटरनेट चेक करें।", hkNeed: "पहले अपनी फ़्री Gemini key जोड़ें।", hkGone: "key हटा दी गई।", hkDay: "आपकी key की आज की फ़्री लिमिट खत्म हो गई। यह {r} पर रीसेट होगी।", hkWait: "फ़्री key की लिमिट: {s} सेकंड रुक रहे हैं…", hRetry: "↻ बची हुई क्लिप्स फिर से जाँचें", hRetrying: "AI अभी व्यस्त है। {s} सेकंड में फिर कोशिश…", hWhy: "वजह: {e}", hClipN: "क्लिप {k}", hPick: "पहले कम से कम एक मोमेंट चुनें।",
+          hkNeed: "पहले अपनी फ़्री Gemini key जोड़ें।", hkPriv: "आपकी key सिर्फ़ इसी डिवाइस पर सेव होती है और सिर्फ़ Google को जाती है।", hkOk2: "Key काम कर रही है ✓", rec: "सुझाया गया",
+          subAiOpt: "AI ✨ सुझाया गया (आपकी Gemini key)", subAiH: "AI इस हिस्से की सिर्फ़ आवाज़ आपकी key से Google को भेजता है, हर मिनट के लिए लगभग 1 रिक्वेस्ट। टाइमिंग हर लाइन की होती है, इसलिए शब्द हाइलाइट बराबर रफ़्तार से चलते हैं।",
+          subAiP: "AI सबटाइटल लिख रहा है… भाग {i} / {n}", subNone: "इस हिस्से में कोई बोली नहीं मिली।", subAiDone: "✨ AI ने {n} सबटाइटल लिखे। नाम जाँचें और कोई शब्द गलत हो तो नीचे ठीक करें।",
+          subAiFail: "AI सबटाइटल नहीं बने ({e}), इसलिए कैप्शन आपके डिवाइस पर बन रहे हैं।",
+          kitAiBtn: "✨ AI से लिखवाएँ", kitAiAgain: "✨ AI से फिर लिखवाएँ", kitAiFail2: "AI पोस्ट किट नहीं बनी ({e}), इसलिए यह आपके डिवाइस पर बनी।",
+          kitDev: "इस क्लिप के कैप्शन, हुक टाइटल और कैप्शन स्टाइल से आपके डिवाइस पर बनी।", kitYt: "▶ इस किट के साथ YouTube पर पोस्ट करें",
           kitAiWait: "✨ AI पोस्ट किट लिख रहा है…", kitAi: "✨ AI ने इस मोमेंट से लिखा।", kitAiFail: "AI पोस्ट किट नहीं मिली, इसलिए आपके डिवाइस पर बनी।", ytStudio: "YouTube Studio खोलें",
           infoT: "इस टूल के बारे में", infoAbout: "लंबी स्ट्रीम और वीडियो को कुछ ही मिनटों में शॉर्ट्स और रील्स में बदलें, सीधे अपने ब्राउज़र में।",
           infoHowT: "कैसे इस्तेमाल करें", infoHow1: "अपना वीडियो अपलोड करें।", infoHow2: "30 s या 60 s चुनें।", infoHow3: "नॉर्मल या AI चुनें।", infoHow4: "क्लिप्स देखें।", infoHow5: "एक्सपोर्ट करें और पोस्ट किट कॉपी करें।",
@@ -973,10 +979,212 @@
         $("mclear").addEventListener("click", function () { S.moments = null; S.sig = ""; show($("mused"), false); });
 
         /* ---------- hype finder (loud spikes, on device) + AI mode (checks each spike with Gemini) ---------- */
-        // Normal mode = the regular split, fully on device. AI mode = snapshots from each loud spot go to /api/clip-moments.
+        // Normal mode = the regular split, fully on device. AI mode = snapshots from each loud spot go straight to Gemini with the user's own key.
         var HY = { file: null, busy: false, cancel: false, spots: null, err: "", res: null, ctl: [], tm: [], fv: null, fvSrc: null };
         var HY_FRAMES = 8, HY_BATCH = 2, HY_AI_MAX = 20, HY_PAR = 2, HY_RETRY = [5000, 15000], HY_NORETRY = [400, 403, 413, 429];
         var HROOT = (document.body && document.body.dataset.root) || "";
+        /* ---------- the user's own Gemini key: AI mode calls Gemini straight from the browser ----------
+           The key is kept in this browser's localStorage only and sent only to Google. Free keys get about
+           15 requests a minute and 500 a day on Flash-Lite (one request per clip), reset at midnight Pacific. */
+        var GK = { K: "lts-gkey", U: "lts-gkey-use", models: ["gemini-3.5-flash-lite", "gemini-3.1-flash-lite"], day: 500, gap: 4300, next: 0,
+          url: "https://generativelanguage.googleapis.com/v1beta/models/" };
+        var CM_TYPES = ["clutch", "funny", "rage", "hype", "fail", "other"];
+        var CM_SCHEMA = { type: "OBJECT", properties: { is_moment: { type: "BOOLEAN" }, score: { type: "INTEGER" }, type: { type: "STRING", enum: CM_TYPES },
+          reason: { type: "STRING" }, hook_title: { type: "STRING" } }, required: ["is_moment", "score", "type", "reason", "hook_title"] };
+        var GK_H = "x" + "-goog-api-key"; // split so make_clipper's x- -> lts- rename leaves the header alone
+        function gkGet() { try { return localStorage.getItem(GK.K) || ""; } catch (e) { return ""; } }
+        function gkSet(k) { try { if (k) localStorage.setItem(GK.K, k); else localStorage.removeItem(GK.K); } catch (e) {} }
+        function gkPT() { // Pacific date and minutes into the day, for the daily reset
+          try {
+            var p = {}; new Intl.DateTimeFormat("en-US", { timeZone: "America/Los_Angeles", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hourCycle: "h23" })
+              .formatToParts(new Date()).forEach(function (x) { p[x.type] = x.value; });
+            return { d: p.year + "-" + p.month + "-" + p.day, m: (+p.hour % 24) * 60 + +p.minute };
+          } catch (e) { var n = new Date(); return { d: n.toISOString().slice(0, 10), m: n.getUTCHours() * 60 + n.getUTCMinutes() }; }
+        }
+        function gkReset() { var left = 1440 - gkPT().m; return new Date(Date.now() + left * 60000).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }); }
+        function gkUsed() { try { var u = JSON.parse(localStorage.getItem(GK.U) || "{}"); return u.d === gkPT().d ? u.n || 0 : 0; } catch (e) { return 0; } }
+        function gkCount() { try { localStorage.setItem(GK.U, JSON.stringify({ d: gkPT().d, n: gkUsed() + 1 })); } catch (e) {} }
+        function gkUI(msg) {
+          var k = gkGet();
+          show($("hkNo"), !k); show($("hkYes"), !!k); show($("hgo"), !!k);
+          $("hkUse").textContent = T("hkUsed", "{n} of about {m} free checks used today · resets at {r}", { n: gkUsed(), m: GK.day, r: gkReset() });
+          $("hkMsg").textContent = msg || "";
+        }
+        function gkErr(r, j) { // turn a Gemini error into { status, error, wait } for aiRun
+          var e = (j && j.error) || {}, msg = String(e.message || ""), det = e.details || [], daily = false, wait = 0;
+          det.forEach(function (d) {
+            (d.violations || []).forEach(function (v) { if (/PerDay/i.test(String(v.quotaId || ""))) daily = true; });
+            if (d.retryDelay) wait = Math.ceil(parseFloat(d.retryDelay) || 0) * 1000;
+          });
+          if (r.status === 429 && (daily || /per ?day/i.test(msg))) return { status: 429, error: T("hkDay", "Your key's free limit for today is used up. It resets at {r}.", { r: gkReset() }) };
+          if (r.status === 429) return { status: 1429, error: T("hRetrying", "AI is busy. Trying again in {s} s…", { s: Math.round((wait || 20000) / 1000) }), wait: wait || 20000 };
+          if (r.status === 400 && /api key/i.test(msg) || r.status === 401 || r.status === 403) return { status: 403, error: T("hkBad", "That key didn't work. Copy it again from AI Studio and paste it.") };
+          if (r.status === 404) return { status: 404, error: msg || "Model not found." };
+          if (r.status === 400) return { status: 400, error: msg || "Gemini couldn't read this clip." };
+          return { status: r.status || 503, error: "Gemini is busy right now." };
+        }
+        function gkPost(model, body, ms) {
+          var ac = window.AbortController ? new AbortController() : null, to;
+          if (ac) { HY.ctl.push(ac); to = setTimeout(function () { ac.abort(); }, ms); }
+          return fetch(GK.url + model + ":generateContent", { method: "POST", headers: (function () { var h = { "Content-Type": "application/json" }; h[GK_H] = gkGet(); return h; })(), body: body, signal: ac ? ac.signal : undefined })
+            .then(function (r) { clearTimeout(to); return r.json().catch(function () { return null; }).then(function (j) { return { r: r, j: j }; }); },
+              function (e) { clearTimeout(to); return { r: { status: 0 }, j: null, net: e && e.name === "AbortError" ? (HY.cancel ? "Cancelled." : "The AI took too long to answer.") : T("hkNet", "Couldn't reach Google. Check your internet.") }; });
+        }
+        function gkGate() { // keep under the free key's per-minute limit
+          var now = Date.now(), at = Math.max(now, GK.next); GK.next = at + GK.gap;
+          return at > now ? sleep(at - now) : Promise.resolve();
+        }
+        function hms(x) { x = Math.max(0, Math.floor(x)); var h = Math.floor(x / 3600), m = Math.floor((x % 3600) / 60), s = x % 60; return (h ? h + ":" + String(m).padStart(2, "0") : m) + ":" + String(s).padStart(2, "0"); }
+        function cmPrompt(c, q) {
+          var dur = Math.round(c.end - c.start);
+          var lang = q.lang === "hinglish" ? "Hinglish (Hindi words in Roman script mixed with English, like Indian gaming creators write; never Devanagari)" : "simple English";
+          var spike = c.spike != null ? " at about " + Math.round(c.spike) + " s into the clip" : "";
+          return "You check candidate highlight clips cut from a long video (usually a gaming live stream) for YouTube Shorts and Instagram Reels.\n\n" +
+            "Video title or game (typed by the creator): " + (q.title || "not given") + "\n" +
+            "This candidate runs from " + hms(c.start) + " to " + hms(c.end) + " (" + dur + " s). It was picked because the audio suddenly got loud" + spike + ".\n" +
+            "Loudness for each second of the clip (0-100): " + (c.loud.length ? c.loud.join(", ") : "not available") + "\n" +
+            "Spoken words in this clip: " + (c.words ? '"' + c.words + '"' : "not available") + "\n" +
+            "After this text come " + c.frames.length + " snapshots in time order, each labelled with its second inside the clip.\n\n" +
+            "Decide if this is a real highlight people would stop scrolling for: a clutch play, a funny moment, rage, big hype, or an epic fail.\n" +
+            "Loud music, menus, loading or lobby screens, ads, idle talk or a screen where nothing changes are NOT moments.\n" +
+            "Return JSON:\n- is_moment: true only for a real highlight.\n- score: 0-100, how strong a Short this would make.\n- type: clutch, funny, rage, hype, fail or other.\n" +
+            "- reason: at most 12 words on what happens, based only on these snapshots, loudness and words.\n" +
+            "- hook_title: a catchy on-screen hook for this clip, at most 60 characters, in " + lang + ", no hashtags, no invented names.\n";
+        }
+        function cmClean(raw) {
+          var sc = Math.round(+raw.score); if (!isFinite(sc)) sc = 0;
+          var ty = String(raw.type || "").toLowerCase();
+          return { is_moment: raw.is_moment === true, score: Math.max(0, Math.min(100, sc)), type: CM_TYPES.indexOf(ty) >= 0 ? ty : "other",
+            reason: String(raw.reason || "").slice(0, 140), hook_title: String(raw.hook_title || "").slice(0, 80).replace(/^#+|#+$/g, "").trim() };
+        }
+        // One clip -> one Gemini call with the user's key. Resolves (never rejects) to a verdict shaped like the server's.
+        function gkCheck(c, q, onWait) {
+          var parts = [{ text: cmPrompt(c, q) }];
+          c.frames.forEach(function (f, i) { parts.push({ text: "Snapshot at " + (+c.times[i] || 0).toFixed(1) + " s:" }, { inline_data: { mime_type: "image/jpeg", data: f } }); });
+          var body = JSON.stringify({ contents: [{ role: "user", parts: parts }],
+            generationConfig: { responseMimeType: "application/json", responseSchema: CM_SCHEMA, temperature: 0.3, maxOutputTokens: 2048 } });
+          var mi = 0, waits = 0, t0 = performance.now();
+          function attempt() {
+            if (HY.cancel) return Promise.resolve({ id: c.id, ok: false, status: 0, error: "Cancelled." });
+            return gkGate().then(function () {
+              if (HY.cancel) return { r: { status: 0 }, j: null, net: "Cancelled." };
+              gkCount(); return gkPost(GK.models[mi], body, 60000);
+            }).then(function (x) {
+              if (x.net) return { id: c.id, ok: false, status: 0, error: x.net };
+              if (x.r.ok) {
+                try {
+                  var tx = x.j.candidates[0].content.parts.map(function (p) { return p.text || ""; }).join("");
+                  return Object.assign({ id: c.id, ok: true, model: GK.models[mi], ms: Math.round(performance.now() - t0) }, cmClean(JSON.parse(tx)));
+                } catch (e) { return { id: c.id, ok: false, status: 502, error: "Gemini sent an answer that couldn't be read." }; }
+              }
+              var er = gkErr(x.r, x.j);
+              if (er.status === 404 && mi < GK.models.length - 1) { mi++; return attempt(); }
+              if (er.status === 1429 && waits < 3) { waits++; GK.next = Math.max(GK.next, Date.now() + er.wait); if (onWait) onWait(er.wait); return attempt(); }
+              return { id: c.id, ok: false, status: er.status === 1429 ? 503 : er.status, error: er.error };
+            });
+          }
+          return attempt();
+        }
+        // Any other Gemini job with the user's key (post kit, subtitles). Resolves (never rejects) to { ok, data } or { ok:false, error }.
+        function gkAsk(parts, schema, o) {
+          o = o || {};
+          var body = JSON.stringify({ contents: [{ role: "user", parts: parts }],
+            generationConfig: { responseMimeType: "application/json", responseSchema: schema, temperature: o.temp == null ? 0.7 : o.temp, maxOutputTokens: o.max || 4096 } });
+          var mi = 0, waits = 0;
+          function attempt() {
+            if (!gkGet()) return Promise.resolve({ ok: false, status: 403, error: T("hkNeed", "Add your free Gemini key first.") });
+            return gkGate().then(function () { gkCount(); return gkPost(GK.models[mi], body, o.ms || 60000); }).then(function (x) {
+              if (x.net) return { ok: false, status: 0, error: x.net };
+              if (x.r.ok) {
+                try {
+                  var tx = x.j.candidates[0].content.parts.map(function (p) { return p.text || ""; }).join("");
+                  return { ok: true, data: JSON.parse(tx), model: GK.models[mi] };
+                } catch (e) { return { ok: false, status: 502, error: "Gemini sent an answer that couldn't be read." }; }
+              }
+              var er = gkErr(x.r, x.j);
+              if (er.status === 404 && mi < GK.models.length - 1) { mi++; return attempt(); }
+              if (er.status === 1429 && waits < 3) { waits++; GK.next = Math.max(GK.next, Date.now() + er.wait); if (o.onWait) o.onWait(er.wait); return attempt(); }
+              return { ok: false, status: er.status === 1429 ? 503 : er.status, error: er.error };
+            });
+          }
+          return attempt();
+        }
+        // Test a pasted key. Resolves to "" when it works, else the message to show.
+        function gkTest(k) {
+          k = String(k || "").replace(/\s+/g, "");
+          if (k.length < 30) return Promise.resolve(T("hkShort", "Paste the whole key. It usually starts with AIza."));
+          return fetch(GK.url + GK.models[0], { headers: (function () { var h = {}; h[GK_H] = k; return h; })() }).then(function (r) {
+            if (r.ok || r.status === 404) { gkSet(k); return ""; }
+            return T("hkBad", "That key didn't work. Copy it again from AI Studio and paste it.");
+          }, function () { return T("hkNet", "Couldn't reach Google. Check your internet."); });
+        }
+        // A small "add your key" box for places outside AI mode (post kit, AI subtitles). onOk runs once the key works.
+        function gkBox(onOk) {
+          var b = document.createElement("div"); b.className = "lts-gkey__box lts-gkey__mini";
+          var t = hyEsc("b", "lts-gkey__t"); TSET(t, "hkT", "🔑 Add your free Gemini key to use AI"); b.appendChild(t);
+          var steps = document.querySelector("#hkNo .lts-gkey__steps"); if (steps) b.appendChild(steps.cloneNode(true));
+          var a = document.createElement("a"); a.className = "lts-btn lts-btn--block"; a.href = "https://aistudio.google.com/apikey"; a.target = "_blank"; a.rel = "noopener";
+          TSET(a, "hkOpen", "Get my free key ↗"); b.appendChild(a);
+          var row = hyEsc("div", "lts-gkey__row"), inp = document.createElement("input");
+          inp.className = "lts-input"; inp.type = "password"; inp.autocomplete = "off"; inp.setAttribute("autocapitalize", "off"); inp.spellcheck = false; inp.placeholder = "AIza…";
+          inp.setAttribute("aria-label", "Gemini API key"); row.appendChild(inp); b.appendChild(row);
+          var sv = hyEsc("button", "lts-btn lts-btn--primary lts-btn--block"); sv.type = "button"; TSET(sv, "hkSave", "Save and test key"); b.appendChild(sv);
+          var m = hyEsc("p", "lts-note"); m.setAttribute("aria-live", "polite"); b.appendChild(m);
+          var f = hyEsc("p", "lts-hint"); TSET(f, "hkPriv", "Your key is saved only on this device and goes only to Google."); b.appendChild(f);
+          sv.addEventListener("click", function (ev) {
+            ev.stopPropagation(); sv.disabled = true; m.textContent = T("hkTest", "Testing your key…");
+            gkTest(inp.value).then(function (err) {
+              sv.disabled = false;
+              if (err) { m.textContent = err; return; }
+              inp.value = ""; if ($("hkNo")) gkUI(); gkDefaults(); b.remove(); if (onOk) onOk();
+            });
+          });
+          b.addEventListener("click", function (ev) { ev.stopPropagation(); });
+          return b;
+        }
+        // With a saved key, AI is the recommended default for clip finding and auto captions.
+        function gkDefaults() {
+          if (!gkGet()) return;
+          var am = $("amodel"); if (am && !AUTO.busy && am.dataset.touched !== "1") am.value = "ai";
+          var hm = $("hmA"); if (hm && !hm.checked && !document.body.dataset.ltsModeTouched) { hm.checked = true; hm.dispatchEvent(new Event("change", { bubbles: true })); }
+          aiPaneUI();
+        }
+
+        /* ---------- AI post kit (titles, captions, descriptions, hashtags) with the user's key ---------- */
+        var KIT_KINDS = ["titles", "captions", "descriptions", "hashtags"], KIT_N = { titles: 8, captions: 6, descriptions: 2, hashtags: 20 };
+        var KIT_SCHEMA = { type: "OBJECT", properties: {}, required: KIT_KINDS };
+        KIT_KINDS.forEach(function (k) { KIT_SCHEMA.properties[k] = { type: "ARRAY", items: { type: "STRING" } }; });
+        function kitPrompt(q) {
+          var lang = q.lang === "hinglish" ? "Hinglish: Hindi words written in Roman (English) script mixed naturally with English, the way Indian creators write (for example \"Bhai ye scene dekh ke hasi nahi rukegi 😂\"). Never use Devanagari." : "simple, natural English";
+          return "You write copy for Indian content creators (gaming, vlogs, education, comedy, tech, lifestyle).\n\n" +
+            "Content: " + q.topic + "\n" + (q.details ? "Extra details: " + q.details + "\n" : "") +
+            "Platform: YouTube Shorts / Instagram Reels\nTone: Fun\nLanguage: " + lang + "\n\nReturn JSON with these lists:\n" +
+            "- titles: " + KIT_N.titles + " clickable titles, max 70 characters each, no hashtags, no clickbait lies.\n" +
+            "- captions: " + KIT_N.captions + " short captions (1-3 lines, max 220 characters) with fitting emoji, no hashtags.\n" +
+            "- descriptions: " + KIT_N.descriptions + " descriptions of 3-6 short lines: a hook line, what the viewer gets, and a call to like/subscribe/follow. No hashtags, no links, no made-up timestamps.\n" +
+            "- hashtags: " + KIT_N.hashtags + " relevant hashtags, each starting with #, no spaces, a mix of broad and niche, India-relevant where it fits. Include #shorts.\n" +
+            "Every item must be different, ready to copy and paste, and must not invent facts that are not in the content above.\n";
+        }
+        function kitClean(raw) {
+          var out = {}, lim = { titles: 100, captions: 400, descriptions: 1500, hashtags: 60 };
+          KIT_KINDS.forEach(function (k) {
+            var a = Array.isArray(raw && raw[k]) ? raw[k] : [], seen = {};
+            a = a.map(function (x) { return String(x == null ? "" : x).trim(); }).filter(Boolean);
+            if (k === "hashtags") a = a.map(function (x) { return "#" + x.replace(/[\s#]+/g, ""); }).filter(function (x) { return x.length > 1; });
+            out[k] = a.map(function (x) { return x.slice(0, lim[k]); }).filter(function (x) { var l = x.toLowerCase(); if (seen[l]) return false; seen[l] = 1; return true; }).slice(0, KIT_N[k] + 4);
+          });
+          return out;
+        }
+        $("hkEye").addEventListener("click", function () { var i = $("hkIn"); i.type = i.type === "password" ? "text" : "password"; });
+        $("hkSave").addEventListener("click", function () {
+          var b = $("hkSave"); b.disabled = true; $("hkMsg").textContent = T("hkTest", "Testing your key…");
+          gkTest($("hkIn").value).then(function (err) {
+            b.disabled = false;
+            if (err) { gkUI(err); return; }
+            $("hkIn").value = ""; gkUI(T("hkOk", "Key works ✓ Now find real moments with AI.")); gkDefaults();
+          });
+        });
+        $("hkDel").addEventListener("click", function () { gkSet(""); gkUI(T("hkGone", "Key removed.")); aiPaneUI(); });
         function hyEsc(el, cls, text) { var e = document.createElement(el); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
         function hyLen() { var r = document.querySelector('input[name="hlen"]:checked'); return r ? +r.value : 60; }
         function hyMode() { var r = document.querySelector('input[name="hmode"]:checked'); return r ? r.value : "normal"; }
@@ -1131,7 +1339,7 @@
         document.querySelectorAll('input[name="hmode"]').forEach(function (r) {
           r.addEventListener("change", function () {
             var ai = hyMode() === "ai";
-            show($("haiPane"), ai);
+            show($("haiPane"), ai); if (ai) gkUI();
             if (!ai && S.moments && S.moments.ai) { S.moments = null; S.sig = ""; show($("mused"), false); }
             hypeUpdate();
           });
@@ -1196,6 +1404,7 @@
         // AI check. `only` = clips to check again (the unchecked ones); their verdicts are merged into HY.res.
         function aiRun(only) {
           if (HY.busy || Q.state !== "idle") return;
+          if (!gkGet()) { gkUI(T("hkNeed", "Add your free Gemini key first.")); try { $("hkIn").focus(); } catch (e) {} return; }
           var merge = Array.isArray(only), cands = merge ? only.slice() : hypeCands(hyLen()).slice(0, HY_AI_MAX);
           alertMsg($("hwarn")); show($("hretry"), false);
           if (!merge) { $("hlist").innerHTML = ""; show($("hmake"), false); HY.res = null; }
@@ -1223,10 +1432,10 @@
             function send(batch, tryN) {
               flying++;
               batch.forEach(function (c) { ovChip(c.k, "is-ai"); });
-              var body = JSON.stringify({ title: title, lang: lang, clips: batch.map(function (c) {
+              var q = { title: title, lang: lang }, body = batch.map(function (c) {
                 return { id: c.id, start: +c.s.toFixed(2), end: +c.e.toFixed(2), spike: Math.max(0, +(c.pk - c.s).toFixed(1)), loud: hyLoud(c), words: hyWords(c.s, c.e), frames: c.frames, times: c.times };
-              }) });
-              hyFetch(HROOT + "api/clip-moments", body, 150000).then(function (j) {
+              });
+              Promise.all(body.map(function (c) { return gkCheck(c, q, function (ms) { ovSet(T("hkWait", "Free key limit: waiting {s} s…", { s: Math.round(ms / 1000) }), null); }); })).then(function (vs) { return { verdicts: vs }; }).then(function (j) {
                 var got = {}, left = [];
                 ((j && j.verdicts) || []).forEach(function (v) { got[v.id] = v; });
                 batch.forEach(function (c) {
@@ -1279,7 +1488,7 @@
           });
           finished.then(function () {
             HY.busy = false; HY.tm = [];
-            ovClose();
+            ovClose(); gkUI();
             cands.forEach(function (c) { c.frames = null; c.times = null; }); // free every snapshot, cancelled or not
             if (HY.cancel && !merge) { $("hres").textContent = ""; return; }
             var secs = Math.max(1, Math.round((performance.now() - t0) / 1000)), newly = 0;
@@ -1367,20 +1576,29 @@
         }
 
         /* AI post kit: asked for while the clip exports, so it's ready when the clip is */
-        function aiKit(seg) {
-          if (!seg.ai) return null;
-          if (seg.aiKitP) return seg.aiKitP;
-          var title = $("htitle").value.trim(), words = hyWords(seg.start, seg.end);
-          var topic = [seg.ai.hook_title, seg.ai.reason].filter(Boolean).join(" – ") || title || "Gaming highlight clip";
-          var details = [title ? "Video: " + title : "", seg.ai.type ? "Moment type: " + seg.ai.type : "", words ? "Spoken: " + words : ""].filter(Boolean).join(". ");
-          seg.aiKitP = hyFetch(HROOT + "api/ai-captions", JSON.stringify({ topic: topic.slice(0, 200), details: details.slice(0, 500), lang: hyLang(), tone: "Fun", platform: "shorts",
-            kinds: ["titles", "captions", "descriptions", "hashtags"] }), 90000).then(function (j) {
-            if (!j || j.source !== "ai" || !(j.titles || []).length) throw new Error("template");
-            seg.aiKit = j;
-          }).catch(function () { seg.aiKitFail = true; }).then(function () {
+        function aiKit(seg, force) {
+          if (!gkGet()) return null;
+          if (seg.aiKitP && !force) return seg.aiKitP;
+          seg.aiKit = null; seg.aiKitFail = ""; seg.aiKitBusy = true;
+          var title = $("htitle").value.trim(), hook = ($("bhook") && $("bhook").value.trim()) || "", words = hyWords(seg.start, seg.end) || clipText(seg);
+          var topic = seg.ai ? [seg.ai.hook_title, seg.ai.reason].filter(Boolean).join(" – ") : "";
+          topic = topic || hook || title || (words ? words.slice(0, 160) : "") || "Short clip from a longer video";
+          var details = [title ? "Video: " + title : "", seg.ai && seg.ai.type ? "Moment type: " + seg.ai.type : "", hook && topic !== hook ? "On-screen hook: " + hook : "",
+            "Clip length: " + Math.round(seg.end - seg.start) + " s, Part " + seg.n, words ? "Spoken: " + words : ""].filter(Boolean).join(". ");
+          var hi = hyLang() === "hinglish" || /[\u0900-\u097f]/.test(words);
+          var rerender = function () {
             if (seg.panels && seg.panels.kit && seg.panels.kit.__render) seg.panels.kit.__render();
             if (seg.aiKit && seg.el && seg.el.acts) { var kb = seg.el.acts.querySelector('[data-act="kit"]'); if (kb && kb.textContent.indexOf("✨") < 0) kb.textContent = "✨ " + kb.textContent; }
+          };
+          seg.aiKitP = gkAsk([{ text: kitPrompt({ topic: topic.slice(0, 200), details: details.slice(0, 1600), lang: hi ? "hinglish" : "english" }) }], KIT_SCHEMA,
+            { temp: 0.9, max: 4096, ms: 60000 }).then(function (x) {
+            seg.aiKitBusy = false;
+            var k = x.ok ? kitClean(x.data) : null;
+            if (k && k.titles.length) seg.aiKit = k;
+            else seg.aiKitFail = (x && x.error) || "The AI gave an empty answer.";
+            rerender();
           });
+          rerender();
           return seg.aiKitP;
         }
         $("bgap").addEventListener("input", function () { $("bgapv").textContent = (+$("bgap").value).toFixed(1); });
@@ -2010,6 +2228,75 @@
           });
         }
 
+        /* ---------- AI subtitles with the user's key: audio only, about 1 minute per request ---------- */
+        var SUB_SCHEMA = { type: "OBJECT", properties: { lines: { type: "ARRAY", items: { type: "OBJECT",
+          properties: { start: { type: "NUMBER" }, end: { type: "NUMBER" }, text: { type: "STRING" } }, required: ["start", "end", "text"] } } }, required: ["lines"] };
+        function wavB64(pcm) { // 16 kHz mono float -> 16-bit WAV, base64
+          var n = pcm.length, buf = new ArrayBuffer(44 + n * 2), v = new DataView(buf), i;
+          function s(o, t) { for (var j = 0; j < t.length; j++) v.setUint8(o + j, t.charCodeAt(j)); }
+          s(0, "RIFF"); v.setUint32(4, 36 + n * 2, true); s(8, "WAVE"); s(12, "fmt "); v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true);
+          v.setUint32(24, 16000, true); v.setUint32(28, 32000, true); v.setUint16(32, 2, true); v.setUint16(34, 16, true); s(36, "data"); v.setUint32(40, n * 2, true);
+          for (i = 0; i < n; i++) { var x = Math.max(-1, Math.min(1, pcm[i])); v.setInt16(44 + i * 2, x < 0 ? x * 0x8000 : x * 0x7fff, true); }
+          var u = new Uint8Array(buf), out = "", step = 0x8000;
+          for (i = 0; i < u.length; i += step) out += String.fromCharCode.apply(null, u.subarray(i, i + step));
+          return btoa(out);
+        }
+        function subChunks(pcm) { // cut near the quietest moment between 45 s and 60 s so words aren't split
+          var sr = 16000, out = [], a = 0;
+          while (a < pcm.length) {
+            var b = Math.min(pcm.length, a + 60 * sr);
+            if (b < pcm.length) {
+              var best = b, low = Infinity, w = sr / 10;
+              for (var c = a + 45 * sr; c + w <= b; c += w) {
+                var e = 0; for (var i = c; i < c + w; i++) e += pcm[i] * pcm[i];
+                if (e < low) { low = e; best = c + w / 2; }
+              }
+              b = Math.round(best);
+            }
+            out.push({ s: a / sr, pcm: pcm.subarray(a, b) }); a = b;
+          }
+          return out;
+        }
+        function subPrompt(len, lang) {
+          var how = lang === "hindi" ? "Write Hindi in Devanagari script and English words in English."
+            : lang === "english" ? "Write everything in Roman (English) script. Hindi words go in Roman script the way Indian creators write Hinglish (for example \"bhai kya scene hai\")."
+            : "Write each language in the script its speakers normally use online. For Hindi mixed with English, use Roman-script Hinglish.";
+          return "Transcribe the speech in this " + len.toFixed(1) + " second audio clip as subtitles for a YouTube Short.\n" +
+            "Write exactly what is said, word for word. Do not translate, summarise or add words. Leave out music, noise and silence.\n" + how + "\n" +
+            "Split it into short lines of 1 to 6 words that follow the speech. For each line give start and end in seconds from the start of this clip " +
+            "(decimals allowed, between 0 and " + len.toFixed(1) + "), in time order, without overlaps.\n" +
+            "If nobody speaks, return an empty list.\n";
+        }
+        function linesToWords(lines, off) {
+          var words = [];
+          lines.forEach(function (l) {
+            var w = String(l.text || "").replace(/\s+/g, " ").trim().split(" ").filter(Boolean);
+            var s = +l.start, e = +l.end; if (!w.length || !isFinite(s) || !isFinite(e)) return;
+            if (e <= s) e = s + 0.3 * w.length;
+            var tot = w.reduce(function (a, x) { return a + x.length + 1; }, 0), t = s;
+            w.forEach(function (x) { var d = (e - s) * (x.length + 1) / tot; words.push({ t: x, s: off + t, e: off + t + d }); t += d; });
+          });
+          return words;
+        }
+        // Resolves to the words for the whole range, or rejects with a message.
+        function aiSubs(pcm, from, lang, run) {
+          var ch = subChunks(pcm), all = [], i = 0;
+          function next() {
+            if (run !== AUTO.run) return Promise.reject(new Error("stale"));
+            if (i >= ch.length) return Promise.resolve(all);
+            var c = ch[i], len = c.pcm.length / 16000;
+            autoProg(T("subAiP", "AI is writing subtitles… part {i} of {n}", { i: i + 1, n: ch.length }), Math.round(i / ch.length * 100));
+            if (len < 0.5) { i++; return next(); }
+            return gkAsk([{ text: subPrompt(len, lang) }, { inline_data: { mime_type: "audio/wav", data: wavB64(c.pcm) } }], SUB_SCHEMA,
+              { temp: 0.1, max: 8192, ms: 90000, onWait: function (w) { autoProg(T("hRetrying", "AI is busy. Trying again in {s} s…", { s: Math.round(w / 1000) }), null); } }).then(function (x) {
+              if (!x.ok) throw new Error(x.error || "Gemini couldn't read this audio.");
+              var ls = ((x.data && x.data.lines) || []).filter(function (l) { return +l.start >= 0 && +l.start <= len + 1; })
+                .sort(function (a, b) { return a.start - b.start; });
+              all = all.concat(linesToWords(ls, from + c.s)); i++; return next();
+            });
+          }
+          return next();
+        }
         function runWorker(device, audio, cfg, run) {
           return new Promise(function (res, rej) {
             var w;
@@ -2077,11 +2364,30 @@
           from = Math.max(0, Math.min(from, S.duration)); to = Math.min(to, S.duration);
           if (!(to - from >= 1)) { msg.textContent = "The range must be at least 1 second long."; return; }
           var run = ++AUTO.run, cfg = { model: $("amodel").value, language: $("alang").value };
+          if (cfg.model === "ai" && !gkGet()) { aiPaneUI(); msg.textContent = T("hkNeed", "Add your free Gemini key first."); return; }
           killWorker(); autoUI(true); msg.textContent = ""; autoProg("Reading audio…", null);
           var decoded;
           try { decoded = decodeAudio(S.file, from, to); } catch (e) { decoded = Promise.reject(e); }
           decoded.then(function (audio) {
             if (run !== AUTO.run) return;
+            if (cfg.model !== "ai") return whisper(audio);
+            var keep = audio.slice(); // Whisper fallback needs its own copy
+            aiSubs(audio, from, cfg.language, run).then(function (words) {
+              if (run !== AUTO.run) return;
+              autoUI(false);
+              if (!words.length) { msg.textContent = T("subNone", "No speech found in that range."); return; }
+              AUTO.words = words; AUTO.wordLevel = false;
+              TSET($("agen"), "regen", "Regenerate");
+              applyAuto();
+              msg.textContent = T("subAiDone", "✨ AI wrote {n} subtitles. Check names and fix any word below.", { n: S.caps.length });
+            }).catch(function (err) {
+              if (run !== AUTO.run || (err && err.message === "stale")) return;
+              cfg.model = "onnx-community/whisper-base";
+              msg.textContent = T("subAiFail", "AI subtitles didn't work ({e}), so captions are being made on your device.", { e: String((err && err.message) || "error").replace(/\.$/, "") });
+              whisper(keep);
+            });
+          }, decodeFail);
+          function whisper(audio) {
             var gpu = !!navigator.gpu;
             var first;
             try { first = runWorker(gpu ? "webgpu" : "wasm", gpu ? audio.slice() : audio, cfg, run); } catch (e) { first = Promise.reject(e); }
@@ -2104,15 +2410,27 @@
               msg.textContent = AUTO_FAIL;
               try { console.warn("Auto captions:", err); } catch (e) {}
             });
-          }, function (err) {
+          }
+          function decodeFail(err) {
             if (run !== AUTO.run) return;
             autoUI(false);
             msg.textContent = err && err.message === "empty"
               ? "That range has no audio to transcribe."
               : "The audio in this video couldn't be decoded here. The file may be too large or use an unsupported codec. Try Chrome, or load an SRT.";
-          });
+          }
         }
         $("agen").addEventListener("click", autoGenerate);
+        function aiPaneUI() {
+          var am = $("amodel"), box = $("aKey"); if (!am || !box) return;
+          var ai = am.value === "ai"; show($("aAiHint"), ai); show($("aDevHint"), !ai);
+          if (ai && !gkGet()) { if (!box.firstChild) box.appendChild(gkBox(function () { aiPaneUI(); $("capmsg").textContent = T("hkOk2", "Key works ✓"); })); }
+          else box.textContent = "";
+        }
+        $("amodel").addEventListener("change", function () { $("amodel").dataset.touched = "1"; aiPaneUI(); });
+        if (gkGet()) $("amodel").value = "ai"; else $("amodel").value = "onnx-community/whisper-base";
+        aiPaneUI();
+        document.querySelectorAll('input[name="hmode"]').forEach(function (r) { r.addEventListener("click", function () { document.body.dataset.ltsModeTouched = "1"; }); });
+        gkDefaults();
         $("acancel").addEventListener("click", function () {
           AUTO.run++; killWorker(); autoUI(false);
           $("capmsg").textContent = "Cancelled.";
@@ -2607,6 +2925,13 @@
           shuffle(BROAD, r).forEach(function (t) { if (tags.length < 14) add(t); });
           return { titles: titles, desc: lines.join("\n"), tags: tags.join(" ") };
         }
+        // The post kit for one clip: what the open kit shows (with edits), else the AI kit, else the on-device one.
+        function kitFor(seg) {
+          if (seg.kitNow && seg.panels && seg.panels.kit) return seg.kitNow();
+          var A = seg.aiKit;
+          if (A) return { titles: A.titles.slice(0, 3), desc: [A.captions[0], A.descriptions[0]].filter(Boolean).join("\n\n"), tags: A.hashtags.slice(0, 15).join(" ") };
+          return makeKit(seg, { seed: 1, hi: ST.tpl === "hindi" || /[\u0900-\u097f]/.test(clipText(seg)), cat: S.kitCat || PRESET_CAT[ST.tpl] || "general" });
+        }
         function buildKit(seg) {
           var st = { seed: 1, hi: ST.tpl === "hindi" || /[\u0900-\u097f]/.test(clipText(seg)), cat: S.kitCat || PRESET_CAT[ST.tpl] || "general" };
           var box = mk("div", "lts-kit");
@@ -2615,6 +2940,13 @@
           top.appendChild(mk("h3", "", "Post kit · Part " + seg.n));
           var regen = mk("button", "lts-btn", "Regenerate"); regen.type = "button";
           top.appendChild(regen); box.appendChild(top);
+          var aiRow = mk("div", "lts-kit__ai"), aiB = mk("button", "lts-btn lts-btn--primary"); aiB.type = "button";
+          TSET(aiB, "kitAiBtn", "✨ Write with AI"); aiRow.appendChild(aiB); box.appendChild(aiRow);
+          var keySlot = mk("div"); box.appendChild(keySlot);
+          aiB.dataset.act = "fn"; aiB.__act = function () {
+            if (!gkGet()) { if (!keySlot.firstChild) keySlot.appendChild(gkBox(function () { aiKit(seg, true); })); return; }
+            keySlot.textContent = ""; aiKit(seg, true);
+          };
           var opts = mk("div", "lts-kit__grid");
           var catL = mk("label", "", "Category"), catS = mk("select", "lts-input");
           Object.keys(CATS).forEach(function (k) { var o = mk("option", "", CATS[k].name); o.value = k; catS.appendChild(o); });
@@ -2640,11 +2972,17 @@
           var tagIn = line(field("Hashtags"), true, "Hashtags");
           var allB = mk("button", "lts-btn lts-btn--primary", "Copy all"); allB.type = "button";
           var yt = mk("a", "lts-btn"); yt.href = "https://studio.youtube.com"; yt.target = "_blank"; yt.rel = "noopener"; TSET(yt, "ytStudio", "Open YouTube Studio");
-          var foot = mk("div", "lts-row"); foot.appendChild(allB); foot.appendChild(yt);
+          var foot = mk("div", "lts-row"); foot.appendChild(allB);
+          var post = mk("button", "lts-btn lts-btn--primary"); post.type = "button"; TSET(post, "kitYt", "▶ Post to YouTube with this kit");
+          post.dataset.act = "fn"; post.__act = function () {
+            try { window.dispatchEvent(new CustomEvent("lts:post", { detail: { seg: seg, p: "youtube" } })); } catch (e) {}
+          };
+          foot.appendChild(post);
+          foot.appendChild(yt);
           var src = mk("span", "lts-hint", "Made on your device from this clip's captions, the hook title and the caption style.");
           foot.appendChild(src);
           box.appendChild(foot);
-          if (seg.ai) aiKit(seg);
+          if (seg.ai && gkGet() && !seg.aiKitP) aiKit(seg);
           function render() {
             var A = seg.aiKit, k;
             if (A) {
@@ -2655,16 +2993,24 @@
               TSET(src, "kitAi", "✨ Written by AI from this moment.");
             } else {
               k = makeKit(seg, st); k.cap = "";
-              if (seg.ai && !seg.aiKitFail) TSET(src, "kitAiWait", "✨ AI is writing this post kit…");
-              else if (seg.ai) TSET(src, "kitAiFail", "AI post kit unavailable, so this one was made on your device.");
-              else src.textContent = "Made on your device from this clip's captions, the hook title and the caption style.";
+              if (seg.aiKitBusy) TSET(src, "kitAiWait", "✨ AI is writing this post kit…");
+              else if (seg.aiKitFail) TSET(src, "kitAiFail2", "AI post kit didn't work ({e}), so this one was made on your device.", { e: String(seg.aiKitFail).replace(/\.$/, "") });
+              else TSET(src, "kitDev", "Made on your device from this clip's captions, the hook title and the caption style.");
             }
+            aiB.disabled = !!seg.aiKitBusy;
+            show(post, !!(window.__ltsAcct && seg.blob));
+            TSET(aiB, A ? "kitAiAgain" : "kitAiBtn", A ? "✨ Write again with AI" : "✨ Write with AI");
             opts.classList.toggle("lts-hidden", !!A);
             titleIn.forEach(function (inp, i) { inp.value = k.titles[i] || ""; inp.parentNode.classList.toggle("lts-hidden", !k.titles[i]); });
             capIn.value = k.cap; capF.classList.toggle("lts-hidden", !k.cap);
             descIn.value = k.desc; tagIn.value = k.tags;
           }
-          box.__render = render;
+          box.__render = render; box.onOpen = function () { show(post, !!(window.__ltsAcct && seg.blob)); };
+          // What "Post to YouTube" fills in: the kit exactly as shown, including the user's edits.
+          seg.kitNow = function () {
+            var tt = titleIn.map(function (i) { return i.value.trim(); }).filter(Boolean);
+            return { titles: tt, desc: [capF.classList.contains("lts-hidden") ? "" : capIn.value.trim(), descIn.value.trim()].filter(Boolean).join("\n\n"), tags: tagIn.value.trim() };
+          };
           allB.dataset.act = "fn"; allB.__act = function () {
             var t = titleIn.map(function (i) { return i.value; }).filter(Boolean)[0] || "";
             copyText([t, capIn.value, descIn.value, tagIn.value].filter(function (x) { return x && x.trim(); }).join("\n\n"), allB);
@@ -2874,9 +3220,8 @@
           show(out, true);
           // Toolsaku account.js listens for this to add "Post to YouTube / Instagram / Facebook" (only when connected).
           try {
-            window.dispatchEvent(new CustomEvent("lts:clip", { detail: { seg: seg, blob: blob, name: fname, row: row, kit: function () {
-              return makeKit(seg, { seed: 1, hi: ST.tpl === "hindi" || /[\u0900-\u097f]/.test(clipText(seg)), cat: S.kitCat || PRESET_CAT[ST.tpl] || "general" });
-            } } }));
+            window.dispatchEvent(new CustomEvent("lts:clip", { detail: { seg: seg, blob: blob, name: fname, row: row, kit: function () { return kitFor(seg); } } }));
+            if (seg.panels && seg.panels.kit && seg.panels.kit.onOpen) seg.panels.kit.onOpen();
           } catch (e) {}
           seg.el.li.classList.add("is-done");
           TSET(seg.el.btn, "makeAgain", "Make again");

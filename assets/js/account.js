@@ -4,6 +4,7 @@
 (function () {
   "use strict";
   if (!window.I18N || !window.fetch) return;
+  window.__ltsAcct = true; // the clipper shows "Post to YouTube with this kit" only when this file is on the page
 
   /* ---------- Strings (8 languages) ---------- */
   var K = ["btn", "title", "opt", "why", "google", "yt", "ig", "fb", "cyt", "cig", "cfb", "signed", "connected", "none", "disc", "out", "del", "delQ",
@@ -257,6 +258,21 @@
     CLIPS = CLIPS.filter(function (c) { return c.seg !== d.seg; });
     CLIPS.push(d);
     if (ME) paintClip(d); else loadMe();
+  });
+  // "Post to YouTube with this kit" inside the clipper's post kit: open the post form already filled from the kit.
+  window.addEventListener("lts:post", function (e) {
+    var x = e.detail || {}, p = x.p || "youtube", d = CLIPS.filter(function (c) { return c.seg === x.seg; })[0];
+    if (!d) return;
+    loadMe().then(function () {
+      if (conns(p).length && d.row.isConnected) {
+        paintClip(d);
+        var r = d.row.parentNode.querySelector(":scope > .x-post-row");
+        if (!r) return;
+        form(d, p, r);
+        var f = r.parentNode.querySelector(":scope > .x-post");
+        if (f) { f.scrollIntoView({ block: "center", behavior: "smooth" }); var t = f.querySelector('[name="title"]'); if (t) try { t.focus({ preventScroll: true }); } catch (er) {} }
+      } else if (btn) { btn.scrollIntoView({ block: "center", behavior: "smooth" }); open(true); }
+    });
   });
   function conns(p) { return ((ME && ME.connections) || []).filter(function (c) { return c.provider === p; }); }
   function paintClips() { CLIPS.forEach(paintClip); }
