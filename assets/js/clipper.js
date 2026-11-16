@@ -110,7 +110,7 @@
           hSnap: "क्लिप {k} / {n} के स्नैपशॉट ले रहे हैं", hAiN: "AI क्लिप {k} / {n} जाँच रहा है", hEl: "{s} सेकंड बीते",
           hFound: "{n} हाइप स्पॉट मिले — लगभग {c} क्लिप्स", hFound0: "कोई साफ़ हाइप स्पॉट नहीं मिला। नॉर्मल मोड पूरे वीडियो को बाँटेगा।",
           hCancelled: "एनालिसिस रद्द हुआ। नॉर्मल मोड फिर भी चलता है।", hTop: "AI सबसे तेज़ {n} स्पॉट जाँचेगा।",
-          hDone: "AI ने {n} क्लिप्स {s} सेकंड में जाँचीं · {k} असली मोमेंट", hNoReal: "AI को सबसे तेज़ स्पॉट्स में कोई असली हाइलाइट नहीं मिला। नॉर्मल मोड आज़माएँ।",
+          hDone: "AI ने {n} क्लिप्स {s} सेकंड में जाँचीं · {k} असली मोमेंट", hNoReal: "AI को सबसे तेज़ स्पॉट्स में कोई असली हाइलाइट नहीं मिला। नॉर्मल मोड आज़माएँ।", hWeak: "कोई बहुत दमदार हाइलाइट नहीं मिला, इसलिए AI के हिसाब से सबसे अच्छी {n} क्लिप्स चुन दी हैं।", hMaybe: "शायद",
           hPart: "{u} क्लिप जाँची नहीं जा सकीं, आखिर में रखी गई हैं।", hFail: "AI अभी क्लिप्स नहीं जाँच पाया",
           hFailP: "{e} आपकी क्लिप्स आवाज़ की तेज़ी के क्रम में दिखाई गई हैं, आप इन्हें फिर भी बना सकते हैं।",
           hLoud: "तेज़ आवाज़ वाला स्पॉट", hUnchecked: "AI से जाँची नहीं गई",
@@ -981,12 +981,12 @@
         /* ---------- hype finder (loud spikes, on device) + AI mode (checks each spike with Gemini) ---------- */
         // Normal mode = the regular split, fully on device. AI mode = snapshots from each loud spot go straight to Gemini with the user's own key.
         var HY = { file: null, busy: false, cancel: false, spots: null, err: "", res: null, ctl: [], tm: [], fv: null, fvSrc: null };
-        var HY_FRAMES = 8, HY_BATCH = 2, HY_AI_MAX = 20, HY_PAR = 2, HY_RETRY = [5000, 15000], HY_NORETRY = [400, 403, 413, 429];
+        var HY_FRAMES = 6, HY_BATCH = 4, HY_AI_MAX = 20, HY_PAR = 2, HY_RETRY = [5000, 15000], HY_NORETRY = [400, 403, 413, 429];
         var HROOT = (document.body && document.body.dataset.root) || "";
         /* ---------- the user's own Gemini key: AI mode calls Gemini straight from the browser ----------
            The key is kept in this browser's localStorage only and sent only to Google. Free keys get about
            15 requests a minute and 500 a day on Flash-Lite (one request per clip), reset at midnight Pacific. */
-        var GK = { K: "lts-gkey", U: "lts-gkey-use", models: ["gemini-3.5-flash-lite", "gemini-3.1-flash-lite"], day: 500, gap: 4300, next: 0,
+        var GK = { K: "lts-gkey", U: "lts-gkey-use", models: ["gemini-3.5-flash-lite", "gemini-3.1-flash-lite"], day: 500, gap: 6500, next: 0,
           url: "https://generativelanguage.googleapis.com/v1beta/models/" };
         var CM_TYPES = ["clutch", "funny", "rage", "hype", "fail", "other"];
         var CM_SCHEMA = { type: "OBJECT", properties: { is_moment: { type: "BOOLEAN" }, score: { type: "INTEGER" }, type: { type: "STRING", enum: CM_TYPES },
@@ -1081,6 +1081,68 @@
               if (er.status === 404 && mi < GK.models.length - 1) { mi++; return attempt(); }
               if (er.status === 1429 && waits < 3) { waits++; GK.next = Math.max(GK.next, Date.now() + er.wait); if (onWait) onWait(er.wait); return attempt(); }
               return { id: c.id, ok: false, status: er.status === 1429 ? 503 : er.status, error: er.error };
+            });
+          }
+          return attempt();
+        }
+        // Several clips -> ONE Gemini call (fewer requests, so a free key stays far under its per-minute limit).
+        var CMB_SCHEMA = { type: "OBJECT", properties: { clips: { type: "ARRAY", items: { type: "OBJECT", properties: { id: { type: "STRING" }, is_moment: { type: "BOOLEAN" },
+          score: { type: "INTEGER" }, type: { type: "STRING", enum: CM_TYPES }, reason: { type: "STRING" }, hook_title: { type: "STRING" } },
+          required: ["id", "is_moment", "score", "type", "reason", "hook_title"] } } }, required: ["clips"] };
+        function cmPromptMany(list, q) {
+          var lang = q.lang === "hinglish" ? "Hinglish (Hindi words in Roman script mixed with English, like Indian creators write; never Devanagari)" : "simple English";
+          var head = "You pick the best parts of a long video (a gaming live stream, podcast, vlog, talk or any other video) to post as YouTube Shorts and Instagram Reels.\n\n" +
+            "Video title or topic (typed by the creator): " + (q.title || "not given") + "\n" +
+            "Below are " + list.length + " candidate clips. Each was picked because the audio suddenly got loud. For each clip you get its id, its time, loudness per second (0-100), any spoken words, then snapshots in time order.\n\n" +
+            "Judge every clip on its own. A good Short is anything people would stop scrolling for: a clutch or skilful play, a funny or awkward moment, a strong reaction, rage, hype, a surprise, an epic fail, an emotional or bold statement, or a useful tip.\n" +
+            "Menus, loading or lobby screens, ads, plain background music, silence, or a screen where nothing happens and nobody reacts are NOT good.\n" +
+            "Return JSON { clips: [...] } with exactly one entry per clip id, in the same order:\n- id: the clip id exactly as given.\n" +
+            "- is_moment: true when it would make a decent Short (score 50 or more).\n- score: 0-100, how strong a Short it would make.\n- type: clutch, funny, rage, hype, fail or other.\n" +
+            "- reason: at most 12 words on what happens, based only on what you were given.\n" +
+            "- hook_title: a catchy on-screen hook, at most 60 characters, in " + lang + ", no hashtags, no invented names.\n";
+          var parts = [{ text: head }];
+          list.forEach(function (c) {
+            var dur = Math.round(c.end - c.start), spike = c.spike != null ? ", loud at about " + Math.round(c.spike) + " s in" : "";
+            parts.push({ text: "\nClip id: " + c.id + " · " + hms(c.start) + " to " + hms(c.end) + " (" + dur + " s" + spike + ")\n" +
+              "Loudness per second: " + (c.loud.length ? c.loud.join(", ") : "not available") + "\nSpoken words: " + (c.words ? '"' + c.words + '"' : "not available") });
+            c.frames.forEach(function (f, i) { parts.push({ text: c.id + " snapshot at " + (+c.times[i] || 0).toFixed(1) + " s:" }, { inline_data: { mime_type: "image/jpeg", data: f } }); });
+          });
+          return parts;
+        }
+        // Resolves (never rejects) to one verdict per clip, shaped like gkCheck's.
+        function gkCheckMany(list, q, onWait) {
+          var body = JSON.stringify({ contents: [{ role: "user", parts: cmPromptMany(list, q) }],
+            generationConfig: { responseMimeType: "application/json", responseSchema: CMB_SCHEMA, temperature: 0.3, maxOutputTokens: 4096 } });
+          var mi = 0, waits = 0, t0 = performance.now();
+          function all(v) { return list.map(function (c) { return Object.assign({ id: c.id }, v); }); }
+          function attempt() {
+            if (HY.cancel) return Promise.resolve(all({ ok: false, status: 0, error: "Cancelled." }));
+            return gkGate().then(function () {
+              if (HY.cancel) return { r: { status: 0 }, j: null, net: "Cancelled." };
+              gkCount(); return gkPost(GK.models[mi], body, 120000);
+            }).then(function (x) {
+              if (x.net) return all({ ok: false, status: 0, error: x.net });
+              if (x.r.ok) {
+                var got = {};
+                try {
+                  var tx = x.j.candidates[0].content.parts.map(function (p) { return p.text || ""; }).join("");
+                  (JSON.parse(tx).clips || []).forEach(function (v) { if (v && v.id != null) got[String(v.id).trim()] = v; });
+                } catch (e) {}
+                return list.map(function (c, i) {
+                  var v = got[c.id];
+                  if (!v && Object.keys(got).length === list.length) v = got[Object.keys(got)[i]]; // ids came back changed but count matches: go by order
+                  return v ? Object.assign({ id: c.id, ok: true, model: GK.models[mi], ms: Math.round(performance.now() - t0) }, cmClean(v))
+                    : { id: c.id, ok: false, status: 502, error: "Gemini sent an answer that couldn't be read." };
+                });
+              }
+              var er = gkErr(x.r, x.j);
+              if (er.status === 404 && mi < GK.models.length - 1) { mi++; return attempt(); }
+              if (er.status === 1429 && waits < 4) { waits++; GK.next = Math.max(GK.next, Date.now() + er.wait); GK.gap = Math.min(15000, GK.gap + 2000); if (onWait) onWait(er.wait); return attempt(); }
+              if (er.status === 413 && list.length > 1) { // too big for one call: split in two
+                var h = Math.ceil(list.length / 2);
+                return gkCheckMany(list.slice(0, h), q, onWait).then(function (a) { return gkCheckMany(list.slice(h), q, onWait).then(function (b) { return a.concat(b); }); });
+              }
+              return all({ ok: false, status: er.status === 1429 ? 503 : er.status, error: er.error });
             });
           }
           return attempt();
@@ -1435,7 +1497,7 @@
               var q = { title: title, lang: lang }, body = batch.map(function (c) {
                 return { id: c.id, start: +c.s.toFixed(2), end: +c.e.toFixed(2), spike: Math.max(0, +(c.pk - c.s).toFixed(1)), loud: hyLoud(c), words: hyWords(c.s, c.e), frames: c.frames, times: c.times };
               });
-              Promise.all(body.map(function (c) { return gkCheck(c, q, function (ms) { ovSet(T("hkWait", "Free key limit: waiting {s} s…", { s: Math.round(ms / 1000) }), null); }); })).then(function (vs) { return { verdicts: vs }; }).then(function (j) {
+              gkCheckMany(body, q, function (ms) { ovSet(T("hkWait", "Free key limit: waiting {s} s…", { s: Math.round(ms / 1000) }), null); }).then(function (vs) { return { verdicts: vs }; }).then(function (j) {
                 var got = {}, left = [];
                 ((j && j.verdicts) || []).forEach(function (v) { got[v.id] = v; });
                 batch.forEach(function (c) {
@@ -1496,12 +1558,15 @@
               var v = verdicts[c.id];
               if (v) {
                 newly++; c.unchecked = false; c.why = "";
-                if (v.is_moment) c.ai = { score: v.score, type: v.type, reason: v.reason, hook_title: v.hook_title }; else c.drop = true;
+                c.ai = { score: v.score, type: v.type, reason: v.reason, hook_title: v.hook_title, weak: !v.is_moment }; c.on = v.is_moment;
               } else { c.unchecked = true; c.why = why[c.id] || (HY.cancel ? "Cancelled." : ""); }
             });
             var list = (merge ? HY.res || [] : cands).filter(function (c) { return !c.drop; });
-            var real = list.filter(function (c) { return c.ai; }).sort(function (a, b) { return b.ai.score - a.ai.score; });
+            var real = list.filter(function (c) { return c.ai && !c.ai.weak; }).sort(function (a, b) { return b.ai.score - a.ai.score; });
+            var weak = list.filter(function (c) { return c.ai && c.ai.weak; }).sort(function (a, b) { return b.ai.score - a.ai.score; });
+            if (!real.length) weak.slice(0, 3).forEach(function (c) { c.on = true; }); // nothing strong: still hand over the best few, ticked
             var rest = list.filter(function (c) { return !c.ai; }), unc = rest.filter(function (c) { return c.unchecked; });
+            rest = weak.concat(rest);
             HY.res = real.concat(rest);
             var reason = hyWhy(unc);
             if (!real.length && unc.length && unc.length === list.length) {
@@ -1511,6 +1576,7 @@
             } else {
               $("hres").textContent = T("hDone", "AI checked {n} clips in {s} s · {k} real moments", { n: newly, s: secs, k: real.length }) +
                 (unc.length ? " · " + T("hPart", "{u} couldn't be checked and are kept at the end.", { u: unc.length }) + (reason ? " " + T("hWhy", "Why: {e}", { e: reason }) : "") : "") +
+                (!real.length && weak.length ? " " + T("hWeak", "No strong highlights, so the {n} best clips AI saw are ticked for you.", { n: Math.min(3, weak.length) }) : "") +
                 (!real.length && !rest.length ? " " + T("hNoReal", "AI found no real highlights in the loudest spots. Try Normal mode.") : "");
             }
             show($("hretry"), unc.length > 0);
@@ -1532,7 +1598,7 @@
             var li = document.createElement("li"), txt = hyEsc("span", "lts-hm__t");
             txt.appendChild(hyEsc("span", "", fmt(c.s, hrs) + "–" + fmt(c.e, hrs)));
             if (c.ai) {
-              txt.appendChild(hyEsc("span", "pill", "🔥 " + c.ai.score + " · " + c.ai.type));
+              txt.appendChild(hyEsc("span", "pill", (c.ai.weak ? "🤔 " + T("hMaybe", "Maybe") + " · " : "🔥 ") + c.ai.score + " · " + c.ai.type));
               if (c.ai.hook_title) txt.appendChild(hyEsc("b", "", c.ai.hook_title));
               if (c.ai.reason) txt.appendChild(hyEsc("small", "", c.ai.reason));
             } else {
