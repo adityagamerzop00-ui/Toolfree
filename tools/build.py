@@ -37,7 +37,15 @@ CATS, ICONS, EN = SITE["cats"], SITE["icons"], SITE["en"]
 e = lambda s: html.escape(str(s), quote=True)
 
 # Which tool script(s) each tool needs, in load order (core, i18n and ui-fx load on every page).
+AI_CAPTION_TOOLS = ("instagram-caption-generator", "youtube-title-generator", "video-description-templates", "hashtag-suggestions", "long-to-shorts")
+
+
 def tool_scripts(t):
+    s = _tool_scripts(t)
+    return s + ["ai-captions.js"] if t["id"] in AI_CAPTION_TOOLS else s
+
+
+def _tool_scripts(t):
     i, c = t["id"], t["category"]
     if t.get("embed") == "clipper": return ["clipper.js"]
     if i == "stream-moment-finder": return ["stream-moments.js"]
@@ -55,8 +63,9 @@ PRIVACY = {
     "file": "Your files are processed on your device and never uploaded.",
     "file-cdn": "Your files are processed on your device and never uploaded. Only the open-source processing engine is downloaded when the tool opens.",
     "text": "Everything runs in your browser; nothing you type is sent anywhere or saved.",
+    "text-ai": "Template ideas are made in your browser. Only if you tap Generate with AI is the text you type sent to Toolsaku's server for the AI; nothing is saved and no files are uploaded.",
     "calc": "Everything is worked out in your browser; nothing is sent anywhere or saved.",
-    "clipper": "Your video is cut and rendered on your device and never uploaded. Only the open-source caption model and render engine are downloaded when you use them.",
+    "clipper": "Your video is cut and rendered on your device and never uploaded. Only the open-source caption model and render engine are downloaded when you use them. The AI Caption Generator sends only the text you type.",
     "link": "Only the YouTube link you paste is sent to Toolsaku's server, which reads the stream's public chat replay, captions and Most replayed data. No files are uploaded and the video is never downloaded.",
     "yt": "Thumbnails load straight from YouTube's public image server (img.youtube.com). Toolsaku stores nothing.",
 }

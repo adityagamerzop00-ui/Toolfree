@@ -979,22 +979,22 @@
  {
   "id": "instagram-caption-generator",
   "slug": "instagram-caption-generator",
-  "name": "Instagram Caption Generator",
-  "title_name": "Instagram Caption Generator",
+  "name": "AI Caption Generator",
+  "title_name": "AI Caption Generator for Instagram",
   "category": "creator",
   "icon": "chat",
-  "description": "Caption ideas for any topic, in four tones, with optional call to action and hashtags.",
-  "meta_description": "Get Instagram caption ideas for any topic in Fun, Professional, Inspiring or Casual tones, with optional call to action and hashtags. Copy in one tap.",
+  "description": "Caption ideas for any topic in four tones, plus AI captions and hashtags in Hinglish or English.",
+  "meta_description": "Free AI caption generator for Instagram: get captions and hashtags in Hinglish or English, in Fun, Professional, Inspiring or Casual tones. Copy in one tap.",
   "steps": [
    "Type your post's topic or keyword.",
    "Pick a tone and choose whether to add a call to action and hashtags.",
    "Tap Generate, then Copy the caption you like."
   ],
-  "about": "Instagram Caption Generator mixes about 30 caption templates with your topic, emoji to match your tone, and optional call-to-action and hashtag lines.",
+  "about": "AI Caption Generator mixes about 30 caption templates with your topic, emoji to match your tone, and optional call-to-action and hashtag lines. Tap Generate with AI for fresh captions, titles and hashtags in Hinglish or English.",
   "faq": [
    [
     "Where do the ideas come from?",
-    "Ideas come from proven templates on your device, so they're instant and private."
+    "The main generator uses proven templates on your device, so it's instant and private. Tap Generate with AI for fresh titles, captions, descriptions and hashtags in Hinglish or English, written by Google's Gemini AI."
    ],
    [
     "Can I edit the captions?",
@@ -1002,7 +1002,7 @@
    ],
    [
     "Do I need an account?",
-    "No. It's free with no sign-up, and nothing you type leaves your browser."
+    "No. It's free with no sign-up. Template ideas never leave your browser; the AI button sends only the text you type, and nothing is saved."
    ]
   ],
   "related": [
@@ -1011,7 +1011,7 @@
    "fancy-text-generator",
    "image-cropper"
   ],
-  "privacy": "text"
+  "privacy": "text-ai"
  },
  {
   "id": "youtube-title-generator",
@@ -1031,7 +1031,7 @@
   "faq": [
    [
     "Where do the ideas come from?",
-    "Ideas come from proven templates on your device, so they're instant and private."
+    "The main generator uses proven templates on your device, so it's instant and private. Tap Generate with AI for fresh titles, captions, descriptions and hashtags in Hinglish or English, written by Google's Gemini AI."
    ],
    [
     "Why flag titles over 60 characters?",
@@ -1039,7 +1039,7 @@
    ],
    [
     "Do I need an account?",
-    "No. It's free with no sign-up, and nothing you type leaves your browser."
+    "No. It's free with no sign-up. Template ideas never leave your browser; the AI button sends only the text you type, and nothing is saved."
    ]
   ],
   "related": [
@@ -1048,7 +1048,7 @@
    "hashtag-suggestions",
    "word-character-counter"
   ],
-  "privacy": "text"
+  "privacy": "text-ai"
  },
  {
   "id": "video-description-templates",
@@ -1068,7 +1068,7 @@
   "faq": [
    [
     "Where do the ideas come from?",
-    "Ideas come from proven templates on your device, so they're instant and private."
+    "The main generator uses proven templates on your device, so it's instant and private. Tap Generate with AI for fresh titles, captions, descriptions and hashtags in Hinglish or English, written by Google's Gemini AI."
    ],
    [
     "Why no timestamps for Shorts?",
@@ -1076,7 +1076,7 @@
    ],
    [
     "Do I need an account?",
-    "No. It's free with no sign-up, and nothing you type leaves your browser."
+    "No. It's free with no sign-up. Template ideas never leave your browser; the AI button sends only the text you type, and nothing is saved."
    ]
   ],
   "related": [
@@ -1085,7 +1085,7 @@
    "youtube-thumbnail-downloader",
    "word-character-counter"
   ],
-  "privacy": "text"
+  "privacy": "text-ai"
  },
  {
   "id": "hashtag-suggestions",
@@ -1105,7 +1105,7 @@
   "faq": [
    [
     "Where do the ideas come from?",
-    "Ideas come from proven templates on your device, so they're instant and private."
+    "The main generator uses proven templates on your device, so it's instant and private. Tap Generate with AI for fresh titles, captions, descriptions and hashtags in Hinglish or English, written by Google's Gemini AI."
    ],
    [
     "How many hashtags should I use?",
@@ -1113,7 +1113,7 @@
    ],
    [
     "Do I need an account?",
-    "No. It's free with no sign-up, and nothing you type leaves your browser."
+    "No. It's free with no sign-up. Template ideas never leave your browser; the AI button sends only the text you type, and nothing is saved."
    ]
   ],
   "related": [
@@ -1122,7 +1122,7 @@
    "bio-generator",
    "video-description-templates"
   ],
-  "privacy": "text"
+  "privacy": "text-ai"
  },
  {
   "id": "bio-generator",
