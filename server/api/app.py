@@ -1047,25 +1047,32 @@ async def _gemini_post(h, model, body, timeout):
     return r
 
 
-async def gemini_call(prompt, schema, timeout=210, max_tokens=16384, temperature=0.4, thinking="low"):
+async def gemini_call(prompt, schema, timeout=210, max_tokens=16384, temperature=0.4, thinking="low", timeout_next=False):
     """Call Gemini in JSON mode; returns (parsed object, model used). When the main model is busy (429/5xx,
     "high demand") it retries once after a short wait, then tries GEMINI_BACKUP_MODELS in order.
+    With timeout_next, a model that times out is skipped and the next backup gets its own `timeout`.
     Raises SMError with a user-facing message."""
     models = [GEMINI_MODEL] + [m for m in GEMINI_BACKUP_MODELS if m != GEMINI_MODEL]
     tries = [models[0], models[0]] + models[1:]
-    r, model = None, models[0]
+    r, model, timed_out = None, models[0], None
     async with http() as h:
         for i, model in enumerate(tries):
-            if i == 1: await asyncio.sleep(GEMINI_BUSY_WAIT)
+            if i == 1:
+                if timed_out: continue  # main model hung: don't wait on it again
+                await asyncio.sleep(GEMINI_BUSY_WAIT)
             body = {"contents": [{"role": "user", "parts": [{"text": prompt}]}],
                     "generationConfig": {"responseMimeType": "application/json", "responseSchema": schema, "temperature": temperature,
                                          "maxOutputTokens": max_tokens, "thinkingConfig": {"thinkingLevel": thinking}}}
             try:
                 r = await _gemini_post(h, model, body, timeout)
             except httpx.HTTPError as e:
+                timed_out = e
+                if timeout_next and i < len(tries) - 1: continue
                 raise SMError(504, "The AI took too long to answer (" + type(e).__name__ + ").")
+            timed_out = None
             if r.status_code == 404 and i >= 2: continue  # a backup model this key can't use: try the next one
             if not _gemini_busy(r): break
+    if r is None: raise SMError(504, "The AI took too long to answer.")
     if r.status_code in (400, 401, 403) and "api key" in r.text.lower(): raise SMError(503, "The AI key on the server is invalid or not allowed for this model.")
     if r.status_code == 429 or (r.status_code == 503 and "high demand" in r.text.lower()): raise SMError(503, "The AI is busy right now. Try again in a minute.")
     if r.status_code != 200: raise SMError(502, "AI error: " + _err(r)[:200])
@@ -1343,7 +1350,7 @@ async def ai_captions(req: Request):
     else:
         async with AC_SEM:
             try:
-                raw, used_model = await gemini_call(ac_prompt(q), AC_SCHEMA, timeout=150, max_tokens=4096, temperature=0.9, thinking="minimal")
+                raw, used_model = await gemini_call(ac_prompt(q), AC_SCHEMA, timeout=40, max_tokens=4096, temperature=0.9, thinking="minimal", timeout_next=True)
                 res = ac_clean(raw, q)
                 if not any(res.values()): raise SMError(502, "The AI gave an empty answer.")
             except SMError as e:

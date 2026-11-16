@@ -290,6 +290,9 @@ def sm_fake(req: httpx.Request):
             if ACX["mode"] == "busy-main" and model == "gemini-3.8-flash":
                 return httpx.Response(503, json={"error": {"message": "This model is currently experiencing high demand."}})
             if ACX["mode"] in ("ok", "busy-main"): return httpx.Response(200, json=ac_answer())
+            if ACX["mode"] == "hang-main":
+                if model == "gemini-3.8-flash": raise httpx.ReadTimeout("hung", request=req)
+                return httpx.Response(200, json=ac_answer())
             if ACX["mode"] == "busy-all": return httpx.Response(503, json={"error": {"message": "This model is currently experiencing high demand."}})
             if ACX["mode"] == "empty": return httpx.Response(200, json={"candidates": [{"content": {"parts": [{"text": "{}"}]}}]})
             return httpx.Response(500, json={"error": {"message": "internal"}})
@@ -483,3 +486,11 @@ def test_ac_busy_model_retries_then_backup():
         ac_reset("busy-all")
         j = ac_post(c).json()
         assert j["source"] == "template" and "busy" in j["warning"] and ACX["models"] == ["gemini-3.8-flash", "gemini-3.8-flash", "gemini-3.7-flash", "gemini-3.5-flash"]
+
+
+def test_ac_hung_model_moves_to_backup():
+    with client() as c:
+        ac_reset("hang-main")
+        j = ac_post(c).json()
+        assert j["source"] == "ai" and j["model"] == "gemini-3.7-flash"
+        assert ACX["models"] == ["gemini-3.8-flash", "gemini-3.7-flash"]
