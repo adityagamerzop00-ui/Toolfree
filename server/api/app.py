@@ -584,7 +584,7 @@ def post_status(jid: str, req: Request):
 # (title, channel, length, the "Most replayed" heatmap), the caption track and a capped sample of the live-chat
 # replay, turn them into a compact 30-second signal table and let Gemini pick the clip-worthy moments.
 GEMINI_API_KEY = ENV("GEMINI_API_KEY", "")
-GEMINI_MODEL = ENV("GEMINI_MODEL", "gemini-3.8-flash") or "gemini-3.8-flash"
+GEMINI_MODEL = ENV("GEMINI_MODEL", "gemini-3.5-flash-lite") or "gemini-3.5-flash-lite"
 GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
 YT_WATCH = "https://www.youtube.com/watch"
 YT_CHAT = "https://www.youtube.com/youtubei/v1/live_chat/get_live_chat_replay"
@@ -1026,7 +1026,7 @@ Rules:
 
 
 SM_DEBUG = (ENV("SM_DEBUG", "") or "").strip() == "1"  # server-log only; never sent to visitors
-GEMINI_BACKUP_MODELS = [m.strip() for m in (ENV("GEMINI_BACKUP_MODELS", "gemini-3.7-flash,gemini-3.5-flash") or "").split(",") if m.strip()]
+GEMINI_BACKUP_MODELS = [m.strip() for m in (ENV("GEMINI_BACKUP_MODELS", "gemini-3.1-flash-lite,gemini-3.8-flash") or "").split(",") if m.strip()]
 GEMINI_BUSY_WAIT = 2.0  # seconds before retrying a busy model once
 
 

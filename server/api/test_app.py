@@ -5,7 +5,7 @@ import base64, hashlib, hmac, json, os, tempfile, time, urllib.parse
 D = tempfile.mkdtemp()
 os.environ.update(PUBLIC_URL="http://testserver", GOOGLE_CLIENT_ID="gid", GOOGLE_CLIENT_SECRET="gsec", META_APP_ID="mid", META_APP_SECRET="msec",
                   TOKEN_KEY=base64.urlsafe_b64encode(b"k" * 32).decode(), DB_PATH=D + "/t.db", TMP_DIR=D + "/tmp",
-                  GEMINI_API_KEY="test-gemini-key", GEMINI_MODEL="gemini-3.8-flash")
+                  GEMINI_API_KEY="test-gemini-key", GEMINI_MODEL="gemini-3.5-flash-lite")
 import httpx  # noqa: E402
 import app as A  # noqa: E402
 from fastapi.testclient import TestClient  # noqa: E402
@@ -289,16 +289,16 @@ def sm_fake(req: httpx.Request):
             return cm_gemini(req, model, gb)
         if "titles" in gb["generationConfig"]["responseSchema"]["required"]:
             ACX["bodies"].append(gb); ACX["models"].append(model)
-            if ACX["mode"] == "busy-main" and model == "gemini-3.8-flash":
+            if ACX["mode"] == "busy-main" and model == "gemini-3.5-flash-lite":
                 return httpx.Response(503, json={"error": {"message": "This model is currently experiencing high demand."}})
             if ACX["mode"] in ("ok", "busy-main"): return httpx.Response(200, json=ac_answer())
             if ACX["mode"] == "hang-main":
-                if model == "gemini-3.8-flash": raise httpx.ReadTimeout("hung", request=req)
+                if model == "gemini-3.5-flash-lite": raise httpx.ReadTimeout("hung", request=req)
                 return httpx.Response(200, json=ac_answer())
             if ACX["mode"] == "busy-all": return httpx.Response(503, json={"error": {"message": "This model is currently experiencing high demand."}})
             if ACX["mode"] == "empty": return httpx.Response(200, json={"candidates": [{"content": {"parts": [{"text": "{}"}]}}]})
             return httpx.Response(500, json={"error": {"message": "internal"}})
-        assert model == "gemini-3.8-flash" or SMX["gemini"] != "ok"
+        assert model == "gemini-3.5-flash-lite" or SMX["gemini"] != "ok"
         SMX["gemini_body"].append(gb)
         if SMX["gemini"] == "ok": return httpx.Response(200, json=gemini_answer())
         if SMX["gemini"] == "badkey": return httpx.Response(400, json={"error": {"message": "API key not valid. Please pass a valid API key."}})
@@ -483,19 +483,19 @@ def test_ac_busy_model_retries_then_backup():
     with client() as c:
         ac_reset("busy-main")
         j = ac_post(c).json()
-        assert j["source"] == "ai" and j["model"] == "gemini-3.7-flash" and j["warning"] is None
-        assert ACX["models"] == ["gemini-3.8-flash", "gemini-3.8-flash", "gemini-3.7-flash"]
+        assert j["source"] == "ai" and j["model"] == "gemini-3.1-flash-lite" and j["warning"] is None
+        assert ACX["models"] == ["gemini-3.5-flash-lite", "gemini-3.5-flash-lite", "gemini-3.1-flash-lite"]
         ac_reset("busy-all")
         j = ac_post(c).json()
-        assert j["source"] == "template" and "busy" in j["warning"] and ACX["models"] == ["gemini-3.8-flash", "gemini-3.8-flash", "gemini-3.7-flash", "gemini-3.5-flash"]
+        assert j["source"] == "template" and "busy" in j["warning"] and ACX["models"] == ["gemini-3.5-flash-lite", "gemini-3.5-flash-lite", "gemini-3.1-flash-lite", "gemini-3.8-flash"]
 
 
 def test_ac_hung_model_moves_to_backup():
     with client() as c:
         ac_reset("hang-main")
         j = ac_post(c).json()
-        assert j["source"] == "ai" and j["model"] == "gemini-3.7-flash"
-        assert ACX["models"] == ["gemini-3.8-flash", "gemini-3.7-flash"]
+        assert j["source"] == "ai" and j["model"] == "gemini-3.1-flash-lite"
+        assert ACX["models"] == ["gemini-3.5-flash-lite", "gemini-3.1-flash-lite"]
 
 
 def test_sm_reply_has_no_debug():
@@ -517,11 +517,11 @@ def cm_gemini(req, model, gb):
     CMX["bodies"].append(gb); CMX["models"].append(model)
     prompt = gb["contents"][0]["parts"][0]["text"]
     mode = CMX["mode"]
-    if mode == "busy-main" and model == "gemini-3.8-flash": return httpx.Response(503, json=BUSY)
+    if mode == "busy-main" and model == "gemini-3.5-flash-lite": return httpx.Response(503, json=BUSY)
     if mode == "busy-all": return httpx.Response(503, json=BUSY)
     if mode == "busy-once" and len(CMX["models"]) <= 4: return httpx.Response(503, json=BUSY)  # main x2 + 2 backups busy, then free
     if mode == "down" or (mode == "fail-second" and "from 10:00 to" in prompt): return httpx.Response(500, json={"error": {"message": "internal"}})
-    if mode == "hang-main" and model == "gemini-3.8-flash": raise httpx.ReadTimeout("hung", request=req)
+    if mode == "hang-main" and model == "gemini-3.5-flash-lite": raise httpx.ReadTimeout("hung", request=req)
     v = ({"is_moment": False, "score": 12, "type": "other", "reason": "Lobby screen with music", "hook_title": "nothing"} if "from 10:00 to" in prompt else
          {"is_moment": True, "score": 188, "type": "clutch", "reason": "1v3 clutch with the last bullet", "hook_title": "#Last bullet 1v3 clutch 😱"})
     return httpx.Response(200, json={"candidates": [{"content": {"parts": [{"text": json.dumps(v, ensure_ascii=False)}]}, "finishReason": "STOP"}]})
@@ -554,9 +554,9 @@ def test_cm_verdicts_ok():
         j = r.json()
         v1, v2 = j["verdicts"]
         assert v1["id"] == "c60" and v1["ok"] and v1["is_moment"] is True and v1["score"] == 100 and v1["type"] == "clutch"
-        assert v1["hook_title"] == "Last bullet 1v3 clutch 😱" and v1["reason"].startswith("1v3") and v1["model"] == "gemini-3.8-flash"
+        assert v1["hook_title"] == "Last bullet 1v3 clutch 😱" and v1["reason"].startswith("1v3") and v1["model"] == "gemini-3.5-flash-lite"
         assert v2["id"] == "c600" and v2["ok"] and v2["is_moment"] is False and v2["score"] == 12  # server returns the verdict; the page drops it
-        assert j["model"] == "gemini-3.8-flash" and isinstance(j["ms"], int)
+        assert j["model"] == "gemini-3.5-flash-lite" and isinstance(j["ms"], int)
         assert len(CMX["bodies"]) == 2
         g = next(b for b in CMX["bodies"] if "from 1:00 to" in b["contents"][0]["parts"][0]["text"])
         parts = g["contents"][0]["parts"]
@@ -616,14 +616,14 @@ def test_cm_busy_main_moves_to_backup_and_sticks():
     with client() as c:
         cm_reset("busy-main")
         j = cm_post(c).json()
-        assert j["verdicts"][0]["ok"] and j["model"] == "gemini-3.7-flash"
-        assert CMX["models"] == ["gemini-3.8-flash", "gemini-3.8-flash", "gemini-3.7-flash"]
+        assert j["verdicts"][0]["ok"] and j["model"] == "gemini-3.1-flash-lite"
+        assert CMX["models"] == ["gemini-3.5-flash-lite", "gemini-3.5-flash-lite", "gemini-3.1-flash-lite"]
         CMX["models"].clear()
         j = cm_post(c).json()  # next request starts on the backup that worked
-        assert j["model"] == "gemini-3.7-flash" and CMX["models"] == ["gemini-3.7-flash"]
+        assert j["model"] == "gemini-3.1-flash-lite" and CMX["models"] == ["gemini-3.1-flash-lite"]
         cm_reset("hang-main")
         j = cm_post(c).json()
-        assert j["model"] == "gemini-3.7-flash" and CMX["models"] == ["gemini-3.8-flash", "gemini-3.7-flash"]
+        assert j["model"] == "gemini-3.1-flash-lite" and CMX["models"] == ["gemini-3.5-flash-lite", "gemini-3.1-flash-lite"]
 
 
 def test_cm_busy_retries_once_after_wait():
@@ -635,7 +635,7 @@ def test_cm_busy_retries_once_after_wait():
         finally:
             A.CM_BUSY_WAIT = old
         assert j["verdicts"][0]["ok"] and j["verdicts"][0]["is_moment"]
-        assert CMX["models"].count("gemini-3.8-flash") == 3  # 2 busy tries, then the retry after the wait worked
+        assert CMX["models"].count("gemini-3.5-flash-lite") == 3  # 2 busy tries, then the retry after the wait worked
         cm_reset("down")  # a 5xx that isn't "busy" is not retried
         A.CM_BUSY_WAIT = 0
         try:

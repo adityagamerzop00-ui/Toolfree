@@ -40,13 +40,13 @@ MAX_UPLOAD_MB=200
 # AI Stream Moment Finder (/api/stream-moments). Paste your Google AI Studio (Gemini) key after the = sign.
 # Empty key = the tool answers "AI key not set on server". Never commit the real key to GitHub.
 GEMINI_API_KEY=
-GEMINI_MODEL=gemini-3.8-flash
+GEMINI_MODEL=gemini-3.5-flash-lite
 ENV
   echo "   created (new TOKEN_KEY generated)"
 else
   echo "   exists, left as it is"
   # Installs made before the Stream Moment Finder: add GEMINI_API_KEY / GEMINI_MODEL to $ENVF by hand (see above).
-  grep -q '^GEMINI_API_KEY=' "$ENVF" || echo "   note: $ENVF has no GEMINI_API_KEY line; add GEMINI_API_KEY=... and GEMINI_MODEL=gemini-3.8-flash for the Stream Moment Finder"
+  grep -q '^GEMINI_API_KEY=' "$ENVF" || echo "   note: $ENVF has no GEMINI_API_KEY line; add GEMINI_API_KEY=... and GEMINI_MODEL=gemini-3.5-flash-lite for the Stream Moment Finder"
 fi
 chown root:root "$ENVF"; chmod 600 "$ENVF"
 
