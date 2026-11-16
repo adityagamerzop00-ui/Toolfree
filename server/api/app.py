@@ -721,6 +721,61 @@ def parse_json3(j):
     return out
 
 
+def parse_timedtext_xml(text):
+    """srv1 (<text start=..>) or srv3 (<p t=ms>) caption XML -> [(start_sec, text)]."""
+    import html as _html
+    out = []
+    for m in re.finditer(r'<text[^>]*\bstart="([\d.]+)"[^>]*>(.*?)</text>', text or "", re.S):
+        t = re.sub(r"<[^>]+>", "", _html.unescape(_html.unescape(m.group(2))))
+        t = re.sub(r"\s+", " ", t).strip()
+        if t: out.append((float(m.group(1)), t))
+    if not out:
+        for m in re.finditer(r'<p[^>]*\bt="(\d+)"[^>]*>(.*?)</p>', text or "", re.S):
+            t = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", _html.unescape(m.group(2)))).strip()
+            if t: out.append((int(m.group(1)) / 1000, t))
+    return out
+
+
+ANDROID_CTX = {"client": {"clientName": "ANDROID", "clientVersion": "20.10.38", "androidSdkVersion": 34, "hl": "en", "gl": "IN"}}
+ANDROID_UA = "com.google.android.youtube/20.10.38 (Linux; U; Android 14) gzip"
+
+
+async def fetch_captions(h, vid, player, api_key, dbg):
+    """Try the web caption URL, then the Android player's caption URL (no PO token needed). -> (transcript, lang)."""
+    async def grab(url, ua=None):
+        hdr = dict(YT_HEADERS); 
+        if ua: hdr["User-Agent"] = ua
+        base = re.sub(r"&fmt=[^&]*", "", url)
+        for fmt in ("json3", None):
+            r = await h.get(base + (f"&fmt={fmt}" if fmt else ""), headers=hdr)
+            dbg.setdefault("cap_tries", []).append([fmt or "xml", r.status_code, len(r.content)])
+            if r.status_code != 200 or not r.content.strip(): continue
+            try: tr = parse_json3(r.json()) if fmt == "json3" else parse_timedtext_xml(r.text)
+            except ValueError: tr = []
+            if tr: return tr
+        return []
+    tr = pick_caption_track(player)
+    dbg["cap_tracks_web"] = len(((player.get("captions") or {}).get("playerCaptionsTracklistRenderer") or {}).get("captionTracks") or [])
+    try:
+        if tr:
+            got = await grab(tr["baseUrl"])
+            if got: return got, tr.get("languageCode")
+        r = await h.post("https://www.youtube.com/youtubei/v1/player", params={"key": api_key or "", "prettyPrint": "false"},
+                         headers={"User-Agent": ANDROID_UA, "Content-Type": "application/json"},
+                         json={"context": ANDROID_CTX, "videoId": vid, "contentCheckOk": True, "racyCheckOk": True})
+        dbg["android_player"] = r.status_code
+        if r.status_code == 200:
+            ap = r.json()
+            dbg["cap_tracks_android"] = len(((ap.get("captions") or {}).get("playerCaptionsTracklistRenderer") or {}).get("captionTracks") or [])
+            tr2 = pick_caption_track(ap)
+            if tr2:
+                got = await grab(tr2["baseUrl"], ANDROID_UA)
+                if got: return got, tr2.get("languageCode")
+    except (httpx.HTTPError, ValueError, KeyError) as e:
+        dbg["cap_error"] = type(e).__name__ + ": " + str(e)[:120]
+    return [], None
+
+
 def chat_continuation(data):
     for d in _walk(data):
         lc = d.get("liveChatRenderer")
@@ -766,7 +821,8 @@ def hype_words(text):
     return len(KW_RE.findall(text or "")) + len(EMOJI_RE.findall(text or ""))
 
 
-async def fetch_chat(h, cont, api_key, ctx, duration):
+async def fetch_chat(h, cont, api_key, ctx, duration, dbg=None):
+    dbg = {} if dbg is None else dbg
     """Sample the chat replay across the whole stream within SM_CHAT_MAX_REQ requests / SM_CHAT_MAX_SEC seconds.
     Returns ({bucket: {"n", "kw", "samples"}}, covered_bucket_set, total_messages)."""
     if not cont or not api_key or not ctx: return {}, set(), 0
@@ -781,8 +837,12 @@ async def fetch_chat(h, cont, api_key, ctx, duration):
         r = await h.post(YT_CHAT, params={"key": api_key, "prettyPrint": "false"}, headers=hdr,
                          json={"context": ctx, "continuation": c, "currentPlayerState": {"playerOffsetMs": str(int(offset_ms))}})
         if r.status_code == 429: raise SMError(429, MSG_BLOCKED)
-        if r.status_code != 200: return None
-        return parse_chat_page(r.json())
+        if r.status_code != 200:
+            dbg.setdefault("chat_bad", []).append(r.status_code) if len(dbg.get("chat_bad", [])) < 5 else None
+            return None
+        res = parse_chat_page(r.json())
+        if "chat_first" not in dbg: dbg["chat_first"] = [len(res[0]), bool(res[1])]
+        return res
 
     def add(msgs):
         offs = []
@@ -837,6 +897,7 @@ async def fetch_chat(h, cont, api_key, ctx, duration):
         if left > 1:
             try: await asyncio.wait_for(segment(off / 1000, 10 ** 9, SM_CHAT_MAX_REQ, c), left)
             except (asyncio.TimeoutError, SMError, httpx.HTTPError): pass
+    dbg["chat_req"] = state["req"]; dbg["seek_broken"] = state["seek_broken"]
     return buckets, covered, len(seen)
 
 
@@ -858,23 +919,18 @@ async def gather_signals(vid):
         if meta["is_live_now"] or meta["is_upcoming"]:
             raise SMError(409, "This stream is still live or hasn't started. Try again after it ends and YouTube has processed the replay (usually a few hours).")
         heat = parse_heatmap(data)
-        transcript, cap_lang = [], None
-        tr = pick_caption_track(player)
-        if tr:
-            try:
-                cr = await h.get(tr["baseUrl"] + "&fmt=json3", headers=YT_HEADERS)
-                if cr.status_code == 200 and cr.content.strip():
-                    transcript = parse_json3(cr.json()); cap_lang = tr.get("languageCode")
-            except (httpx.HTTPError, ValueError):
-                pass
+        dbg = {"has_api_key": bool(api_key), "has_ctx": bool(ctx), "playability": (player.get("playabilityStatus") or {}).get("status")}
+        transcript, cap_lang = await fetch_captions(h, vid, player, api_key, dbg)
         chat, covered, n_msgs = {}, set(), 0
         cont = chat_continuation(data)
+        dbg["chat_cont"] = bool(cont)
         if cont:
-            try: chat, covered, n_msgs = await fetch_chat(h, cont, api_key, ctx, meta["duration_sec"])
-            except (httpx.HTTPError, ValueError, SMError): pass  # chat is a bonus; never fail the whole request on it
+            try: chat, covered, n_msgs = await fetch_chat(h, cont, api_key, ctx, meta["duration_sec"], dbg)
+            except (httpx.HTTPError, ValueError, SMError) as e:  # chat is a bonus; never fail the whole request on it
+                dbg["chat_error"] = type(e).__name__ + ": " + str(e)[:120]
     if not meta["duration_sec"]:
         meta["duration_sec"] = int(max([t for t, _ in transcript] + [s + d for s, d, _ in heat] + [b * SM_BUCKET + SM_BUCKET for b in chat] + [0]))
-    sig = {"meta": meta, "heat": heat, "transcript": transcript, "caption_lang": cap_lang, "chat": chat, "covered": covered, "chat_messages": n_msgs}
+    sig = {"meta": meta, "heat": heat, "transcript": transcript, "caption_lang": cap_lang, "chat": chat, "covered": covered, "chat_messages": n_msgs, "debug": dbg}
     SM_SIGNALS[vid] = {"at": time.time(), "v": sig}
     _trim_cache(SM_SIGNALS)
     return sig
@@ -1081,8 +1137,10 @@ async def stream_moments(req: Request):
             sig = await gather_signals(vid)
             used = {"heatmap": bool(sig["heat"]), "captions": bool(sig["transcript"]), "chat": bool(sig["chat"])}
             if not any(used.values()):
-                raise SMError(422, "No signals to work with: this video has no chat replay, no captions and no Most-replayed data yet. "
-                                   "Try a finished stream with chat replay turned on, or come back after YouTube adds captions.")
+                print("stream-moments no signals", vid, json.dumps(sig.get("debug")), flush=True)
+                return JSONResponse({"detail": "No signals to work with: this video has no chat replay, no captions and no Most-replayed data yet. "
+                                     "Try a finished stream with chat replay turned on, or come back after YouTube adds captions.",
+                                     "debug": sig.get("debug")}, status_code=422, headers={"Cache-Control": "no-store"})
             rows = build_table(sig)
             warning = None
             try:
@@ -1098,7 +1156,7 @@ async def stream_moments(req: Request):
            "signals_used": used,
            "signal_detail": {"chat_messages_sampled": sig["chat_messages"], "caption_language": sig["caption_lang"],
                              "chat_coverage_pct": round(100 * len(sig["covered"]) / max(1, dur // SM_BUCKET + 1)) if sig["chat"] else 0,
-                             "heatmap_points": len(sig["heat"])},
+                             "heatmap_points": len(sig["heat"]), "debug": sig.get("debug")},
            "model": GEMINI_MODEL, "count_requested": count, "moments": moments, "warning": warning, "cached": False}
     if not warning:
         SM_CACHE[key] = {"at": time.time(), "v": res}; _trim_cache(SM_CACHE)
