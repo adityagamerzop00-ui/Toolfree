@@ -137,7 +137,8 @@ def head(title, desc, canonical, root, extra="", robots=None, base_script=""):
     <link rel="stylesheet" href="{root}assets/css/base.css?v={VER}" />
     <link rel="stylesheet" href="{root}assets/css/site.css?v={VER}" />
     <script>try{{if(localStorage.getItem("sugoi-theme")==="light")document.documentElement.setAttribute("data-theme","light")}}catch(e){{}}</script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6381563330331265" crossorigin="anonymous"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6381563330331265"
+     crossorigin="anonymous"></script>
     {extra}
   </head>"""
 
