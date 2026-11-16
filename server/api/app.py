@@ -1024,35 +1024,63 @@ Rules:
 """
 
 
-async def gemini_json(prompt, schema, timeout=210, max_tokens=16384, temperature=0.4, thinking="low"):
-    """Call Gemini in JSON mode and return the parsed object. Raises SMError with a user-facing message."""
-    body = {"contents": [{"role": "user", "parts": [{"text": prompt}]}],
-            "generationConfig": {"responseMimeType": "application/json", "responseSchema": schema, "temperature": temperature, "maxOutputTokens": max_tokens}}
+GEMINI_BACKUP_MODELS = [m.strip() for m in (ENV("GEMINI_BACKUP_MODELS", "gemini-3.7-flash,gemini-3.5-flash") or "").split(",") if m.strip()]
+GEMINI_BUSY_WAIT = 2.0  # seconds before retrying a busy model once
+
+
+def _gemini_busy(r):
+    return r.status_code in (429, 500, 503) or any(w in r.text.lower() for w in ("high demand", "overloaded", "unavailable"))
+
+
+async def _gemini_post(h, model, body, timeout):
     hdrs = {"x-goog-api-key": GEMINI_API_KEY, "Content-Type": "application/json"}
+    gc = body["generationConfig"]
+    r = await h.post(GEMINI_URL.format(model=model), headers=hdrs, json=body, timeout=httpx.Timeout(timeout))
+    if r.status_code == 400 and "think" in r.text.lower() and "thinkingConfig" in gc:  # model doesn't take thinkingLevel: try a budget, then nothing
+        level = gc["thinkingConfig"]
+        gc["thinkingConfig"] = {"thinkingBudget": 512}
+        r = await h.post(GEMINI_URL.format(model=model), headers=hdrs, json=body, timeout=httpx.Timeout(timeout))
+        if r.status_code == 400 and "think" in r.text.lower():
+            gc.pop("thinkingConfig", None)
+            r = await h.post(GEMINI_URL.format(model=model), headers=hdrs, json=body, timeout=httpx.Timeout(timeout))
+        if "thinkingConfig" in gc: gc["thinkingConfig"] = level
+    return r
+
+
+async def gemini_call(prompt, schema, timeout=210, max_tokens=16384, temperature=0.4, thinking="low"):
+    """Call Gemini in JSON mode; returns (parsed object, model used). When the main model is busy (429/5xx,
+    "high demand") it retries once after a short wait, then tries GEMINI_BACKUP_MODELS in order.
+    Raises SMError with a user-facing message."""
+    models = [GEMINI_MODEL] + [m for m in GEMINI_BACKUP_MODELS if m != GEMINI_MODEL]
+    tries = [models[0], models[0]] + models[1:]
+    r, model = None, models[0]
     async with http() as h:
-        try:
-            gc = body["generationConfig"]
-            gc["thinkingConfig"] = {"thinkingLevel": thinking}
-            r = await h.post(GEMINI_URL.format(model=GEMINI_MODEL), headers=hdrs, json=body, timeout=httpx.Timeout(timeout))
-            if r.status_code == 400 and "think" in r.text.lower():  # model doesn't take thinkingLevel: try a budget, then nothing
-                gc["thinkingConfig"] = {"thinkingBudget": 512}
-                r = await h.post(GEMINI_URL.format(model=GEMINI_MODEL), headers=hdrs, json=body, timeout=httpx.Timeout(timeout))
-                if r.status_code == 400 and "think" in r.text.lower():
-                    gc.pop("thinkingConfig", None)
-                    r = await h.post(GEMINI_URL.format(model=GEMINI_MODEL), headers=hdrs, json=body, timeout=httpx.Timeout(timeout))
-        except httpx.HTTPError as e:
-            raise SMError(504, "The AI took too long to answer (" + type(e).__name__ + ").")
+        for i, model in enumerate(tries):
+            if i == 1: await asyncio.sleep(GEMINI_BUSY_WAIT)
+            body = {"contents": [{"role": "user", "parts": [{"text": prompt}]}],
+                    "generationConfig": {"responseMimeType": "application/json", "responseSchema": schema, "temperature": temperature,
+                                         "maxOutputTokens": max_tokens, "thinkingConfig": {"thinkingLevel": thinking}}}
+            try:
+                r = await _gemini_post(h, model, body, timeout)
+            except httpx.HTTPError as e:
+                raise SMError(504, "The AI took too long to answer (" + type(e).__name__ + ").")
+            if r.status_code == 404 and i >= 2: continue  # a backup model this key can't use: try the next one
+            if not _gemini_busy(r): break
     if r.status_code in (400, 401, 403) and "api key" in r.text.lower(): raise SMError(503, "The AI key on the server is invalid or not allowed for this model.")
-    if r.status_code == 429: raise SMError(503, "The AI is busy (quota reached). Try again in a minute.")
+    if r.status_code == 429 or (r.status_code == 503 and "high demand" in r.text.lower()): raise SMError(503, "The AI is busy right now. Try again in a minute.")
     if r.status_code != 200: raise SMError(502, "AI error: " + _err(r)[:200])
     j = r.json()
     try:
         text = "".join(p.get("text", "") for p in j["candidates"][0]["content"]["parts"])
         out = json.loads(text)
         if not isinstance(out, dict): raise ValueError
-        return out
+        return out, model
     except (KeyError, IndexError, ValueError, AttributeError, TypeError):
         raise SMError(502, "The AI answer couldn't be read" + (" (" + str((j.get("candidates") or [{}])[0].get("finishReason")) + ")" if isinstance(j, dict) else "") + ".")
+
+
+async def gemini_json(prompt, schema, **kw):
+    return (await gemini_call(prompt, schema, **kw))[0]
 
 
 async def call_gemini(prompt):
@@ -1309,17 +1337,18 @@ async def ai_captions(req: Request):
     AC_HITS[ip] = hits + [t]
     if len(AC_HITS) > 5000:
         for k in [k for k, v in AC_HITS.items() if not v or v[-1] < t - AC_RATE[1]]: AC_HITS.pop(k, None)
-    warning, source = None, "ai"
+    warning, source, used_model = None, "ai", None
     if not GEMINI_API_KEY:
         res, warning, source = ac_templates(q), "AI isn't set up on the server yet. Showing template ideas instead.", "template"
     else:
         async with AC_SEM:
             try:
-                res = ac_clean(await gemini_json(ac_prompt(q), AC_SCHEMA, timeout=150, max_tokens=4096, temperature=0.9, thinking="minimal"), q)
+                raw, used_model = await gemini_call(ac_prompt(q), AC_SCHEMA, timeout=150, max_tokens=4096, temperature=0.9, thinking="minimal")
+                res = ac_clean(raw, q)
                 if not any(res.values()): raise SMError(502, "The AI gave an empty answer.")
             except SMError as e:
                 res, warning, source = ac_templates(q), e.msg.rstrip(".") + ". Showing template ideas instead.", "template"
-    out = {**res, "kinds": q["kinds"], "lang": q["lang"], "source": source, "model": GEMINI_MODEL if source == "ai" else None, "warning": warning, "cached": False}
+    out = {**res, "kinds": q["kinds"], "lang": q["lang"], "source": source, "model": used_model if source == "ai" else None, "warning": warning, "cached": False}
     if not warning:
         AC_CACHE[key] = {"at": time.time(), "v": out}; _trim_cache(AC_CACHE)
     return JSONResponse(out, headers={"Cache-Control": "no-store"})

@@ -228,7 +228,7 @@ def chat_page(start_ms):
     return {"continuationContents": {"liveChatContinuation": {"actions": acts, "continuations": conts}}}
 
 
-ACX = {"mode": "ok", "bodies": []}
+ACX = {"mode": "ok", "bodies": [], "models": []}
 
 
 def ac_answer():
@@ -239,7 +239,7 @@ def ac_answer():
 
 
 def ac_reset(mode="ok"):
-    A.AC_CACHE.clear(); A.AC_HITS.clear(); ACX.update(mode=mode, bodies=[])
+    A.AC_CACHE.clear(); A.AC_HITS.clear(); ACX.update(mode=mode, bodies=[], models=[])
 
 
 def ac_post(c, headers=None, **kw):
@@ -282,13 +282,18 @@ def sm_fake(req: httpx.Request):
             start = int(c.split(":")[1])
         return httpx.Response(200, json=chat_page(start // 2000 * 2000))
     if u.startswith("https://generativelanguage.googleapis.com/"):
-        assert req.headers["x-goog-api-key"] == "test-gemini-key" and "gemini-3.8-flash:generateContent" in u
+        assert req.headers["x-goog-api-key"] == "test-gemini-key" and ":generateContent" in u
+        model = u.split("/models/")[1].split(":")[0]
         gb = json.loads(req.content)
         if "titles" in gb["generationConfig"]["responseSchema"]["required"]:
-            ACX["bodies"].append(gb)
-            if ACX["mode"] == "ok": return httpx.Response(200, json=ac_answer())
+            ACX["bodies"].append(gb); ACX["models"].append(model)
+            if ACX["mode"] == "busy-main" and model == "gemini-3.8-flash":
+                return httpx.Response(503, json={"error": {"message": "This model is currently experiencing high demand."}})
+            if ACX["mode"] in ("ok", "busy-main"): return httpx.Response(200, json=ac_answer())
+            if ACX["mode"] == "busy-all": return httpx.Response(503, json={"error": {"message": "This model is currently experiencing high demand."}})
             if ACX["mode"] == "empty": return httpx.Response(200, json={"candidates": [{"content": {"parts": [{"text": "{}"}]}}]})
             return httpx.Response(500, json={"error": {"message": "internal"}})
+        assert model == "gemini-3.8-flash" or SMX["gemini"] != "ok"
         SMX["gemini_body"].append(gb)
         if SMX["gemini"] == "ok": return httpx.Response(200, json=gemini_answer())
         if SMX["gemini"] == "badkey": return httpx.Response(400, json={"error": {"message": "API key not valid. Please pass a valid API key."}})
@@ -467,3 +472,14 @@ def test_ac_rate_limit():
         assert codes == [200] * 5 + [429]
         assert "Too many AI" in ac_post(c, topic="another one").json()["detail"]
         assert ac_post(c, topic="topic number 0").json()["cached"] is True  # cached answer still served
+
+
+def test_ac_busy_model_retries_then_backup():
+    with client() as c:
+        ac_reset("busy-main")
+        j = ac_post(c).json()
+        assert j["source"] == "ai" and j["model"] == "gemini-3.7-flash" and j["warning"] is None
+        assert ACX["models"] == ["gemini-3.8-flash", "gemini-3.8-flash", "gemini-3.7-flash"]
+        ac_reset("busy-all")
+        j = ac_post(c).json()
+        assert j["source"] == "template" and "busy" in j["warning"] and ACX["models"] == ["gemini-3.8-flash", "gemini-3.8-flash", "gemini-3.7-flash", "gemini-3.5-flash"]
