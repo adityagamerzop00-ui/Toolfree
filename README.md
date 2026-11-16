@@ -1,10 +1,12 @@
 # Toolsaku
 
-**Toolsaku** (作 saku, "create") is a set of 42 free online tools that run entirely in the browser:
+**Toolsaku** (作 saku, "create") is a set of 44 free online tools that run entirely in the browser:
 image (resize, compress, convert, crop, rotate, edit, image to PDF), PDF (merge, split, compress, organize, PDF to image),
-video (resize, crop, trim, compress, convert, YouTube thumbnails), creator tools (captions, titles, descriptions, hashtags, bios),
+video (resize, crop, trim, compress, convert, YouTube thumbnails, AI Stream Moment Finder), creator tools (captions, titles, descriptions, hashtags, bios),
 text tools, calculators (percentage, age, SIP, EMI, BMI, GST, scientific) and utilities (timers, stopwatch, passwords, QR codes,
 unit converter, Base64/URL, JSON formatter, typing test). Files are processed on the user's device and are never uploaded.
+The AI Stream Moment Finder is the one tool that calls the server (`POST /api/stream-moments` in `server/api/app.py`): it sends only a
+YouTube link, and the server reads the stream's public chat replay, captions and Most replayed data and asks Gemini to rank moments.
 
 It is a plain static site: no framework, no build step needed to deploy. Every tool has its own URL (for example
 `/resize-image/`, `/merge-pdf/`, `/compress-video/`) with its own title, description, canonical URL, FAQ and structured data.
@@ -13,7 +15,7 @@ It is a plain static site: no framework, no build step needed to deploy. Every t
 
 ```
 index.html                 Home (lists every tool; "coming soon" tools are shown as non-linked cards)
-<slug>/index.html          One page per tool (42 of them)
+<slug>/index.html          One page per tool (44 of them)
 about/ privacy/ terms/ disclaimer/
 404.html                   Not-found page (works at any depth, at a domain root or under /Toolfree/)
 assets/css/                base.css (design tokens/components), site.css (Toolsaku styles)

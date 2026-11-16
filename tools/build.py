@@ -19,7 +19,7 @@ import hashlib
 
 # ---- Settings -------------------------------------------------------------------------
 BASE_URL = "https://toolsak.online"  # the live domain; change and re-run if it ever moves
-LASTMOD = "2026-11-15"                         # <lastmod> written to sitemap.xml
+LASTMOD = "2026-11-16"                         # <lastmod> written to sitemap.xml
 SITE_NAME = "Toolsaku"
 # Subpaths the site may be served under (for 404.html, which can be shown at any depth).
 # A request path starting with one of these resolves 404 assets from that prefix, otherwise "/".
@@ -40,6 +40,7 @@ e = lambda s: html.escape(str(s), quote=True)
 def tool_scripts(t):
     i, c = t["id"], t["category"]
     if t.get("embed") == "clipper": return ["clipper.js"]
+    if i == "stream-moment-finder": return ["stream-moments.js"]
     if c == "image": return ["image-tools.js"]
     if c == "pdf": return ["pdf-tools.js"]
     if c == "video": return ["video-tools.js"]
@@ -56,6 +57,7 @@ PRIVACY = {
     "text": "Everything runs in your browser; nothing you type is sent anywhere or saved.",
     "calc": "Everything is worked out in your browser; nothing is sent anywhere or saved.",
     "clipper": "Your video is cut and rendered on your device and never uploaded. Only the open-source caption model and render engine are downloaded when you use them.",
+    "link": "Only the YouTube link you paste is sent to Toolsaku's server, which reads the stream's public chat replay, captions and Most replayed data. No files are uploaded and the video is never downloaded.",
     "yt": "Thumbnails load straight from YouTube's public image server (img.youtube.com). Toolsaku stores nothing.",
 }
 
@@ -130,7 +132,7 @@ def head(title, desc, canonical, root, extra="", robots=None, base_script=""):
   </head>"""
 
 
-TICKER = ["tick.tools|43 free tools", "tick.nosign|No sign-up", "tick.local|Files never leave your device", "tick.phone|Works on phone",
+TICKER = ["tick.tools|44 free tools", "tick.nosign|No sign-up", "tick.local|Files never leave your device", "tick.phone|Works on phone",
           "tick.langs|8 languages", "tick.clip|New: Long Video to Shorts Clipper", "tick.typing|New: Typing Speed Test", "tick.emi|New: EMI &amp; SIP Calculators"]
 
 

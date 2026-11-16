@@ -1,4 +1,4 @@
-"""Toolsaku account API: optional Google login + connect YouTube / Instagram / Facebook.
+"""Toolsaku API: optional Google login + connect YouTube / Instagram / Facebook, and the AI Stream Moment Finder.
 
 Runs on the VPS behind nginx at /api/ (systemd unit: server/deploy/toolsaku-api.service).
 Every secret comes from the environment file /etc/toolsaku/api.env (chmod 600). Nothing secret lives in the repo.
@@ -13,6 +13,7 @@ import hashlib
 import hmac
 import json
 import os
+import re
 import secrets
 import sqlite3
 import time
@@ -575,3 +576,530 @@ def post_status(jid: str, req: Request):
     j = JOBS.get(jid)
     if not j or j["user"] != u["id"]: raise HTTPException(404)
     return JSONResponse({k: j[k] for k in ("status", "step", "url", "error")}, headers={"Cache-Control": "no-store"})
+
+
+# ---- AI Stream Moment Finder ----------------------------------------------------------
+# POST /api/stream-moments {url, count}. The video itself is NEVER downloaded: we read the public watch page
+# (title, channel, length, the "Most replayed" heatmap), the caption track and a capped sample of the live-chat
+# replay, turn them into a compact 30-second signal table and let Gemini pick the clip-worthy moments.
+GEMINI_API_KEY = ENV("GEMINI_API_KEY", "")
+GEMINI_MODEL = ENV("GEMINI_MODEL", "gemini-2.5-flash") or "gemini-2.5-flash"
+GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
+YT_WATCH = "https://www.youtube.com/watch"
+YT_CHAT = "https://www.youtube.com/youtubei/v1/live_chat/get_live_chat_replay"
+YT_HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Cookie": "CONSENT=YES+cb.20210328-17-p0.en+FX+001; SOCS=CAI",
+}
+SM_BUCKET = 30                 # seconds per signal bucket
+SM_CHAT_MAX_REQ = 150          # hard cap on live-chat replay requests per video
+SM_CHAT_MAX_SEC = 25.0         # hard cap on time spent reading chat
+SM_CHAT_PARALLEL = 6
+SM_PROMPT_CHARS = 280_000      # ~70-95k tokens even for Hinglish: well under the ~200k we allow ourselves
+SM_RATE = (5, 600)             # 5 fresh analyses per IP per 10 minutes
+SM_CACHE_TTL = 1800
+SM_CACHE, SM_SIGNALS, SM_HITS = {}, {}, {}
+SM_SEM = asyncio.Semaphore(3)  # at most 3 analyses at once on the VPS
+MSG_BLOCKED = "YouTube is rate-limiting the server, try again in a few minutes."
+KW_RE = re.compile(r"(?<![a-z])(l+o+l+|lmao+|kekw|omegalul|pog+(?:gers)?|w+|gg+|op|omg|wtf|clip(?: it| that| this)?|bhai|bro+|insane|crazy|haha+|hehe+)(?![a-z])", re.I)
+EMOJI_RE = re.compile("[\U0001F602\U0001F923\U0001F525\U0001F480\U0001F631\U0001F633\U0001F92F\U0001F44F\U0001F3C6\u2764]")
+
+
+class SMError(Exception):
+    def __init__(self, status, msg):
+        super().__init__(msg); self.status, self.msg = status, msg
+
+
+def yt_video_id(s):
+    s = str(s or "").strip()
+    if re.fullmatch(r"[\w-]{11}", s): return s
+    if not re.match(r"^https?://", s, re.I): s = "https://" + s
+    try: u = urllib.parse.urlsplit(s)
+    except ValueError: return ""
+    h = (u.hostname or "").lower()
+    h = re.sub(r"^(www|m|music)\.", "", h)
+    vid = ""
+    if h == "youtu.be": vid = u.path.split("/")[1] if len(u.path) > 1 else ""
+    elif h in ("youtube.com", "youtube-nocookie.com"):
+        vid = (urllib.parse.parse_qs(u.query).get("v") or [""])[0]
+        if not vid:
+            m = re.match(r"^/(?:shorts|embed|live|v)/([^/?#]+)", u.path)
+            vid = m.group(1) if m else ""
+    return vid if re.fullmatch(r"[\w-]{11}", vid or "") else ""
+
+
+def hms(sec):
+    sec = int(max(0, sec)); h, r = divmod(sec, 3600); m, s = divmod(r, 60)
+    return f"{h}:{m:02d}:{s:02d}" if h else f"{m}:{s:02d}"
+
+
+def _json_after(text, marker):
+    """Decode the JSON object that follows `marker` (e.g. 'ytInitialData = '), trying every occurrence."""
+    dec_ = json.JSONDecoder()
+    for m in re.finditer(re.escape(marker), text):
+        i = m.end()
+        while i < len(text) and text[i] in " \t\r\n=": i += 1
+        if i < len(text) and text[i] == "{":
+            try: return dec_.raw_decode(text, i)[0]
+            except ValueError: continue
+    return None
+
+
+def _walk(o):
+    stack = [o]
+    while stack:
+        x = stack.pop()
+        if isinstance(x, dict):
+            yield x; stack.extend(x.values())
+        elif isinstance(x, list):
+            stack.extend(x)
+
+
+def parse_watch_page(html_text):
+    player = _json_after(html_text, "ytInitialPlayerResponse") or {}
+    data = _json_after(html_text, "ytInitialData") or {}
+    m = re.search(r'"INNERTUBE_API_KEY"\s*:\s*"([^"]+)"', html_text)
+    ctx = _json_after(html_text, '"INNERTUBE_CONTEXT":')
+    return player, data, (m.group(1) if m else ""), ctx
+
+
+def parse_meta(player, vid):
+    vd = player.get("videoDetails") or {}
+    mf = (player.get("microformat") or {}).get("playerMicroformatRenderer") or {}
+    dur = int(vd.get("lengthSeconds") or mf.get("lengthSeconds") or 0)
+    return {"id": vid, "title": vd.get("title") or "", "channel": vd.get("author") or mf.get("ownerChannelName") or "",
+            "duration_sec": dur, "is_live_now": bool(vd.get("isLive")), "is_upcoming": bool(vd.get("isUpcoming")),
+            "was_live": bool(vd.get("isLiveContent")), "url": "https://www.youtube.com/watch?v=" + vid,
+            "thumbnail": f"https://i.ytimg.com/vi/{vid}/hqdefault.jpg"}
+
+
+def check_playable(player):
+    ps = player.get("playabilityStatus") or {}
+    st, reason = ps.get("status") or "", " ".join(str(ps.get(k) or "") for k in ("reason", "messages")).lower()
+    if not player: raise SMError(429, MSG_BLOCKED)
+    if st in ("OK", "LIVE_STREAM_OFFLINE", ""): return
+    if "bot" in reason or "unusual traffic" in reason: raise SMError(429, MSG_BLOCKED)
+    if "private" in reason: raise SMError(403, "This video is private. Only public streams and videos can be analysed.")
+    if "members" in reason or "join this channel" in reason: raise SMError(403, "This stream is for channel members only, so it can't be analysed.")
+    if st == "LOGIN_REQUIRED": raise SMError(403, "YouTube needs a sign-in for this video (private or age-restricted), so it can't be analysed.")
+    raise SMError(404, "This video is unavailable. Check the link.")
+
+
+def parse_heatmap(data):
+    """Most-replayed markers -> [(start_sec, dur_sec, intensity 0..1)]. Handles both YouTube layouts."""
+    out = {}
+    for d in _walk(data):
+        if "intensityScoreNormalized" in d and "startMillis" in d:  # frameworkUpdates ... macroMarkersListEntity.markersList.markers
+            s, du, v = d.get("startMillis"), d.get("durationMillis"), d.get("intensityScoreNormalized")
+        elif "heatMarkerIntensityScoreNormalized" in d:  # playerOverlays ... markersMap ... heatMarkerRenderer
+            s, du, v = d.get("timeRangeStartMillis"), d.get("markerDurationMillis"), d.get("heatMarkerIntensityScoreNormalized")
+        else:
+            continue
+        try: out[int(s) / 1000] = (int(s) / 1000, int(du or 0) / 1000, float(v))
+        except (TypeError, ValueError): pass
+    return sorted(out.values())
+
+
+def pick_caption_track(player):
+    tracks = ((player.get("captions") or {}).get("playerCaptionsTracklistRenderer") or {}).get("captionTracks") or []
+    def rank(t):
+        lang, asr = (t.get("languageCode") or "").split("-")[0], t.get("kind") == "asr"
+        return ({"en": 0, "hi": 1}.get(lang, 2), asr)
+    tracks = [t for t in tracks if t.get("baseUrl")]
+    return min(tracks, key=rank) if tracks else None
+
+
+def parse_json3(j):
+    """YouTube timedtext fmt=json3 -> [(start_sec, text)]."""
+    out = []
+    for ev in (j or {}).get("events") or []:
+        segs = ev.get("segs")
+        if not segs: continue
+        txt = re.sub(r"\s+", " ", "".join(s.get("utf8", "") for s in segs)).strip()
+        if txt: out.append((int(ev.get("tStartMs") or 0) / 1000, txt))
+    return out
+
+
+def chat_continuation(data):
+    for d in _walk(data):
+        lc = d.get("liveChatRenderer")
+        if isinstance(lc, dict):
+            for c in lc.get("continuations") or []:
+                for v in c.values():
+                    if isinstance(v, dict) and v.get("continuation"): return v["continuation"]
+    return None
+
+
+def _runs_text(msg):
+    parts = []
+    for r in (msg or {}).get("runs") or []:
+        if "text" in r: parts.append(r["text"])
+        elif "emoji" in r:
+            e_ = r["emoji"]
+            parts.append(e_.get("emojiId") if not e_.get("isCustomEmoji") and len(e_.get("emojiId") or "") <= 4
+                         else ((e_.get("shortcuts") or [""])[0]))
+    return "".join(parts).strip()
+
+
+def parse_chat_page(j):
+    """One get_live_chat_replay answer -> ([(offset_sec, id, text, paid)], next_continuation)."""
+    lcc = ((j or {}).get("continuationContents") or {}).get("liveChatContinuation") or {}
+    msgs = []
+    for a in lcc.get("actions") or []:
+        rp = a.get("replayChatItemAction") or {}
+        try: off = int(rp.get("videoOffsetTimeMsec")) / 1000
+        except (TypeError, ValueError): continue
+        for sub in rp.get("actions") or []:
+            item = (sub.get("addChatItemAction") or {}).get("item") or {}
+            for kind in ("liveChatTextMessageRenderer", "liveChatPaidMessageRenderer"):
+                r = item.get(kind)
+                if r: msgs.append((off, r.get("id") or "", _runs_text(r.get("message")), kind != "liveChatTextMessageRenderer"))
+    nxt = None
+    for c in lcc.get("continuations") or []:
+        v = c.get("liveChatReplayContinuationData")
+        if v and v.get("continuation"): nxt = v["continuation"]; break
+    return msgs, nxt
+
+
+def hype_words(text):
+    return len(KW_RE.findall(text or "")) + len(EMOJI_RE.findall(text or ""))
+
+
+async def fetch_chat(h, cont, api_key, ctx, duration):
+    """Sample the chat replay across the whole stream within SM_CHAT_MAX_REQ requests / SM_CHAT_MAX_SEC seconds.
+    Returns ({bucket: {"n", "kw", "samples"}}, covered_bucket_set, total_messages)."""
+    if not cont or not api_key or not ctx: return {}, set(), 0
+    hdr = {**YT_HEADERS, "Content-Type": "application/json", "Origin": "https://www.youtube.com", "X-YouTube-Client-Name": "1",
+           "X-YouTube-Client-Version": ((ctx.get("client") or {}).get("clientVersion") or "2.20241101.00.00")}
+    state = {"req": 0, "seek_broken": False}
+    seen, buckets, covered = set(), {}, set()
+
+    async def page(c, offset_ms):
+        if state["req"] >= SM_CHAT_MAX_REQ: return None
+        state["req"] += 1
+        r = await h.post(YT_CHAT, params={"key": api_key, "prettyPrint": "false"}, headers=hdr,
+                         json={"context": ctx, "continuation": c, "currentPlayerState": {"playerOffsetMs": str(int(offset_ms))}})
+        if r.status_code == 429: raise SMError(429, MSG_BLOCKED)
+        if r.status_code != 200: return None
+        return parse_chat_page(r.json())
+
+    def add(msgs):
+        offs = []
+        for off, mid, txt, paid in msgs:
+            offs.append(off)
+            key = mid or f"{off}:{txt}"
+            if key in seen: continue
+            seen.add(key)
+            b = buckets.setdefault(int(off // SM_BUCKET), {"n": 0, "kw": 0, "samples": []})
+            b["n"] += 1; k = hype_words(txt) + (2 if paid else 0); b["kw"] += k
+            if txt and len(b["samples"]) < 4 and (k or len(b["samples"]) < 2): b["samples"].append(txt[:60])
+        if offs:
+            covered.update(range(int(min(offs) // SM_BUCKET), int(max(offs) // SM_BUCKET) + 1))
+        return offs
+
+    async def segment(start, end, budget, c=None):
+        c, off, last = c or cont, start * 1000, None
+        for _ in range(budget):
+            res = await page(c, off)
+            if not res: return None
+            msgs, nxt = res
+            offs = add(msgs)
+            if offs:
+                if last is None and start > 90 and min(offs) < start - 120:  # this endpoint ignored our seek
+                    state["seek_broken"] = True; return None
+                last = max(offs); off = last * 1000
+            if not nxt: return None
+            c = nxt
+            if last is not None and last >= end: break
+        return (c, off)  # where this segment stopped, so reading can carry on from here
+
+    n_seg = max(1, min(40, (duration or 0) // 300))
+    seg_len = (duration or 0) / n_seg if duration else 10 ** 9
+    per = max(2, SM_CHAT_MAX_REQ // n_seg)
+    sem = asyncio.Semaphore(SM_CHAT_PARALLEL)
+
+    async def run_seg(i):
+        async with sem:
+            if state["seek_broken"] and i: return None
+            return await segment(i * seg_len, (i + 1) * seg_len, per)
+
+    tasks = [asyncio.ensure_future(run_seg(i)) for i in range(n_seg)]
+    t0 = time.monotonic()
+    done, pending = await asyncio.wait(tasks, timeout=SM_CHAT_MAX_SEC)
+    for t in pending: t.cancel()
+    errs = [t.exception() for t in done if not t.cancelled() and t.exception()]
+    if errs and isinstance(errs[0], SMError) and not buckets: raise errs[0]
+    # Seeking not supported: read straight on from where the first segment stopped, with what is left of the budget.
+    if state["seek_broken"] and tasks[0] in done and not tasks[0].exception() and tasks[0].result():
+        c, off = tasks[0].result()
+        left = SM_CHAT_MAX_SEC - (time.monotonic() - t0)
+        if left > 1:
+            try: await asyncio.wait_for(segment(off / 1000, 10 ** 9, SM_CHAT_MAX_REQ, c), left)
+            except (asyncio.TimeoutError, SMError, httpx.HTTPError): pass
+    return buckets, covered, len(seen)
+
+
+async def gather_signals(vid):
+    hit = SM_SIGNALS.get(vid)
+    if hit and hit["at"] > time.time() - SM_CACHE_TTL: return hit["v"]
+    async with http() as h:
+        try:
+            r = await h.get(YT_WATCH, params={"v": vid, "hl": "en", "gl": "IN", "has_verified": "1", "bpctr": "9999999999"}, headers=YT_HEADERS)
+        except httpx.HTTPError:
+            raise SMError(502, "Couldn't reach YouTube from the server. Try again in a minute.")
+        loc = r.headers.get("location", "")
+        if r.status_code == 429 or "google.com/sorry" in loc or "consent." in loc: raise SMError(429, MSG_BLOCKED)
+        if r.status_code == 404: raise SMError(404, "This video is unavailable. Check the link.")
+        if r.status_code != 200: raise SMError(502, f"YouTube answered with an error ({r.status_code}). Try again in a minute.")
+        player, data, api_key, ctx = parse_watch_page(r.text)
+        check_playable(player)
+        meta = parse_meta(player, vid)
+        if meta["is_live_now"] or meta["is_upcoming"]:
+            raise SMError(409, "This stream is still live or hasn't started. Try again after it ends and YouTube has processed the replay (usually a few hours).")
+        heat = parse_heatmap(data)
+        transcript, cap_lang = [], None
+        tr = pick_caption_track(player)
+        if tr:
+            try:
+                cr = await h.get(tr["baseUrl"] + "&fmt=json3", headers=YT_HEADERS)
+                if cr.status_code == 200 and cr.content.strip():
+                    transcript = parse_json3(cr.json()); cap_lang = tr.get("languageCode")
+            except (httpx.HTTPError, ValueError):
+                pass
+        chat, covered, n_msgs = {}, set(), 0
+        cont = chat_continuation(data)
+        if cont:
+            try: chat, covered, n_msgs = await fetch_chat(h, cont, api_key, ctx, meta["duration_sec"])
+            except (httpx.HTTPError, ValueError, SMError): pass  # chat is a bonus; never fail the whole request on it
+    if not meta["duration_sec"]:
+        meta["duration_sec"] = int(max([t for t, _ in transcript] + [s + d for s, d, _ in heat] + [b * SM_BUCKET + SM_BUCKET for b in chat] + [0]))
+    sig = {"meta": meta, "heat": heat, "transcript": transcript, "caption_lang": cap_lang, "chat": chat, "covered": covered, "chat_messages": n_msgs}
+    SM_SIGNALS[vid] = {"at": time.time(), "v": sig}
+    _trim_cache(SM_SIGNALS)
+    return sig
+
+
+def _trim_cache(c, keep=200):
+    if len(c) > keep:
+        for k in sorted(c, key=lambda k: c[k]["at"])[: len(c) - keep]: c.pop(k, None)
+
+
+def build_table(sig):
+    """One row per 30 s bucket: chat count (None = not sampled), heatmap 0..1, transcript text, chat samples, hype score."""
+    dur = sig["meta"]["duration_sec"]
+    n = max(1, int(dur // SM_BUCKET) + 1)
+    rows = [{"b": i, "t": i * SM_BUCKET, "chat": (0 if i in sig["covered"] else None), "kw": 0, "heat": None, "text": "", "samples": []} for i in range(n)]
+    for i, b in sig["chat"].items():
+        if 0 <= i < n: rows[i].update(chat=b["n"], kw=b["kw"], samples=b["samples"])
+    for s, d, v in sig["heat"]:
+        for i in range(int(s // SM_BUCKET), int((s + max(d, 1) - 0.001) // SM_BUCKET) + 1):
+            if 0 <= i < n: rows[i]["heat"] = max(rows[i]["heat"] or 0, v)
+    for t, txt in sig["transcript"]:
+        i = int(t // SM_BUCKET)
+        if 0 <= i < n: rows[i]["text"] = (rows[i]["text"] + " " + txt).strip()
+    rates = sorted(r["chat"] for r in rows if r["chat"])
+    med = rates[len(rates) // 2] if rates else 0
+    for r in rows:
+        c = (min(r["chat"] / med, 6) / 6) if (med and r["chat"]) else 0
+        k = min((r["kw"] / max(r["chat"] or 1, 1)), 1) if r["chat"] else 0
+        r["rel"] = round(r["chat"] / med, 1) if (med and r["chat"] is not None) else None
+        r["score"] = 0.5 * c + 0.35 * (r["heat"] or 0) + 0.15 * k
+    return rows
+
+
+def table_text(rows, max_chars=SM_PROMPT_CHARS):
+    """Compact text table; merges buckets and trims transcript text so the prompt stays small."""
+    group = 1
+    while len(rows) / group > 1500: group += 1
+    merged = []
+    for i in range(0, len(rows), group):
+        g = rows[i:i + group]
+        chats = [r["chat"] for r in g if r["chat"] is not None]
+        heats = [r["heat"] for r in g if r["heat"] is not None]
+        rels = [r["rel"] for r in g if r["rel"] is not None]
+        merged.append({"t": g[0]["t"], "chat": sum(chats) if chats else None, "rel": max(rels) if rels else None,
+                       "heat": max(heats) if heats else None, "text": " ".join(r["text"] for r in g).strip(),
+                       "samples": [s for r in g for s in r["samples"]][:3], "score": max(r["score"] for r in g)})
+    top = set(sorted(range(len(merged)), key=lambda i: -merged[i]["score"])[:200])
+    text_budget = max(40, (max_chars - 70 * len(merged)) // max(1, len(merged) + len(top)))
+    lines = []
+    for i, r in enumerate(merged):
+        chat = "-" if r["chat"] is None else f'{r["chat"]}(x{r["rel"]})'
+        heat = "-" if r["heat"] is None else f'{r["heat"]:.2f}'
+        txt = r["text"][: text_budget * (2 if i in top else 1)].replace("|", "/")
+        smp = (" || chat: " + " / ".join(s.replace("|", "/") for s in r["samples"])) if (i in top and r["samples"]) else ""
+        lines.append(f'{hms(r["t"])}|{chat}|{heat}|{txt}{smp}')
+    return "\n".join(lines), group * SM_BUCKET
+
+
+MOMENT_SCHEMA = {
+    "type": "OBJECT",
+    "properties": {"moments": {"type": "ARRAY", "items": {"type": "OBJECT", "properties": {
+        "start_sec": {"type": "INTEGER"}, "end_sec": {"type": "INTEGER"}, "title": {"type": "STRING"}, "hook": {"type": "STRING"},
+        "why": {"type": "STRING"}, "score": {"type": "INTEGER"}},
+        "required": ["start_sec", "end_sec", "title", "hook", "why", "score"]}}},
+    "required": ["moments"],
+}
+
+
+def build_prompt(sig, rows, count):
+    m = sig["meta"]
+    table, step = table_text(rows)
+    used = [k for k, v in (("live-chat replay", bool(sig["chat"])), ("Most-replayed heatmap", bool(sig["heat"])), ("captions", bool(sig["transcript"]))) if v]
+    return f"""You help fan pages of live streamers (mostly Indian gaming streamers: GTA RP, BGMI, Valorant, Minecraft, IRL) find clip-worthy moments in a long stream replay. You cannot watch the video; you only get this signal table.
+
+Stream: "{m['title']}" by {m['channel']} — length {hms(m['duration_sec'])} ({m['duration_sec']} s). Caption language: {sig['caption_lang'] or 'none'}. Signals available: {', '.join(used)}.
+
+Table: one row per {step} s. Columns: start time | chat messages in the row (xN = times the stream's median chat rate; '-' = chat not sampled there) | Most-replayed intensity 0-1 ('-' = none) | what was said (captions, may be auto-generated and imperfect) || sample chat messages.
+
+Pick the {count} best moments for YouTube Shorts / Instagram Reels, best first. Good moments: big chat spikes (especially laughing, KEKW, LOL, W, 💀, 🔥, "clip it", super chats), high Most-replayed intensity, funny or wild quotes, fails, clutches, rage, jump scares, reveals, emotional or wholesome bits. Avoid intros, "starting soon", ads/sponsor reads, and breaks.
+
+Rules:
+- start_sec/end_sec are whole seconds inside 0..{m['duration_sec']}. Clip length 15-90 s (aim 30-60). Start about 5 s before the peak so the setup is included; end after the payoff.
+- Moments must not overlap each other.
+- title: short (max 60 chars), in the stream's own language and style (Hinglish in Roman script is fine).
+- hook: one punchy caption line for Shorts/Reels (max 90 chars), same language style, no hashtags.
+- why: one short line saying which signal backs it (e.g. "Chat x4 with KEKW spam", "Most replayed peak 0.92", or the quote).
+- score: 1-100, how strong the clip is likely to be.
+- Return exactly {count} moments if the table has enough material, otherwise as many good ones as you can.
+
+{table}
+"""
+
+
+async def call_gemini(prompt):
+    body = {"contents": [{"role": "user", "parts": [{"text": prompt}]}],
+            "generationConfig": {"responseMimeType": "application/json", "responseSchema": MOMENT_SCHEMA, "temperature": 0.4, "maxOutputTokens": 32768}}
+    async with http() as h:
+        try:
+            r = await h.post(GEMINI_URL.format(model=GEMINI_MODEL), headers={"x-goog-api-key": GEMINI_API_KEY, "Content-Type": "application/json"},
+                             json=body, timeout=httpx.Timeout(150))
+        except httpx.HTTPError as e:
+            raise SMError(504, "The AI took too long to answer (" + type(e).__name__ + ").")
+    if r.status_code in (400, 401, 403) and "api key" in r.text.lower(): raise SMError(503, "The AI key on the server is invalid or not allowed for this model.")
+    if r.status_code == 429: raise SMError(503, "The AI is busy (quota reached). Try again in a minute.")
+    if r.status_code != 200: raise SMError(502, "AI error: " + _err(r)[:200])
+    j = r.json()
+    try:
+        text = "".join(p.get("text", "") for p in j["candidates"][0]["content"]["parts"])
+        return json.loads(text).get("moments") or []
+    except (KeyError, IndexError, ValueError, AttributeError, TypeError):
+        raise SMError(502, "The AI answer couldn't be read" + (" (" + str((j.get("candidates") or [{}])[0].get("finishReason")) + ")" if isinstance(j, dict) else "") + ".")
+
+
+def _clean_moment(m, dur):
+    try: s, e_ = int(float(m.get("start_sec"))), int(float(m.get("end_sec")))
+    except (TypeError, ValueError): return None
+    s = max(0, s)
+    if dur: s = min(s, max(0, dur - 15))
+    if e_ - s < 15: e_ = s + 15
+    if e_ - s > 90: e_ = s + 90
+    if dur: e_ = min(e_, dur)
+    if e_ <= s: return None
+    try: sc = max(1, min(100, int(float(m.get("score") or 50))))
+    except (TypeError, ValueError): sc = 50
+    return {"start_sec": s, "end_sec": e_, "title": str(m.get("title") or "").strip()[:80] or "Moment",
+            "hook": str(m.get("hook") or "").strip()[:140], "why": str(m.get("why") or "").strip()[:160], "score": sc, "source": m.get("source", "ai")}
+
+
+def _overlaps(a, b):
+    inter = min(a["end_sec"], b["end_sec"]) - max(a["start_sec"], b["start_sec"])
+    return inter > 0.4 * min(a["end_sec"] - a["start_sec"], b["end_sec"] - b["start_sec"]) or abs(a["start_sec"] - b["start_sec"]) < 15
+
+
+def dedupe(moments):
+    kept = []
+    for m in sorted(moments, key=lambda m: -m["score"]):
+        if not any(_overlaps(m, k) for k in kept): kept.append(m)
+    return kept
+
+
+def fill_from_signals(kept, rows, count, dur):
+    """Top-up with the strongest signal buckets (labelled "Hype spike") until we have `count` moments."""
+    cand = sorted((r for r in rows if r["score"] > 0), key=lambda r: -r["score"])
+    best = cand[0]["score"] if cand else 1
+    for r in cand:
+        if len(kept) >= count: break
+        peak = r["t"] + SM_BUCKET // 2
+        why = []
+        if r["rel"]: why.append(f'Chat x{r["rel"]} vs normal' + (" with hype reactions" if r["kw"] else ""))
+        if r["heat"]: why.append(f'Most replayed {r["heat"]:.2f}')
+        hook = (r["text"][:100] + "…") if len(r["text"]) > 100 else r["text"]
+        if not hook and r["samples"]: hook = "Chat: " + r["samples"][0]
+        m = _clean_moment({"start_sec": peak - 20, "end_sec": peak + 25, "title": "Hype spike at " + hms(peak), "hook": hook,
+                           "why": " · ".join(why) or "Signal spike", "score": max(1, round(60 * r["score"] / best)), "source": "signal"}, dur)
+        if m and not any(_overlaps(m, k) for k in kept): kept.append(m)
+    return kept
+
+
+def finish_moments(raw, rows, count, dur, vid):
+    ms = [x for x in (_clean_moment(m, dur) for m in raw if isinstance(m, dict)) if x]
+    ai = dedupe(ms)[:count]
+    out = fill_from_signals(ai, rows, count, dur)
+    ai_part = [m for m in out if m["source"] == "ai"]
+    fill_part = [m for m in out if m["source"] != "ai"]
+    out = ai_part + fill_part  # AI picks (best first), then the signal top-ups
+    for i, m in enumerate(out):
+        m.update(rank=i + 1, start=hms(m["start_sec"]), end=hms(m["end_sec"]), url=f"https://www.youtube.com/watch?v={vid}&t={m['start_sec']}s")
+    return out
+
+
+def _client_ip(req):
+    return req.client.host if req.client else "?"
+
+
+@app.post("/api/stream-moments")
+async def stream_moments(req: Request):
+    if req.headers.get("x-toolsaku") != "1": raise HTTPException(403, "bad_request")
+    origin = req.headers.get("origin")
+    if origin and urllib.parse.urlsplit(origin).netloc not in (req.headers.get("host"), urllib.parse.urlsplit(PUBLIC_URL).netloc):
+        raise HTTPException(403, "bad_origin")
+    try: body = await req.json()
+    except ValueError: body = None
+    if not isinstance(body, dict): raise HTTPException(400, "Send JSON like {\"url\": \"https://www.youtube.com/watch?v=...\"}.")
+    vid = yt_video_id(body.get("url"))
+    if not vid: raise HTTPException(400, "That doesn't look like a YouTube link. Paste a youtube.com/watch?v=…, youtu.be/… or /live/… link.")
+    try: count = int(body.get("count") or 50)
+    except (TypeError, ValueError): count = 50
+    count = max(5, min(100, count))
+    if not GEMINI_API_KEY: raise HTTPException(503, "AI key not set on server")
+    key = f"{vid}:{count}"
+    hit = SM_CACHE.get(key)
+    if hit and hit["at"] > time.time() - SM_CACHE_TTL:
+        return JSONResponse({**hit["v"], "cached": True}, headers={"Cache-Control": "no-store"})
+    ip, t = _client_ip(req), time.time()
+    hits = [x for x in SM_HITS.get(ip, []) if x > t - SM_RATE[1]]
+    if len(hits) >= SM_RATE[0]:
+        wait_min = max(1, int((hits[0] + SM_RATE[1] - t) // 60) + 1)
+        raise HTTPException(429, f"Too many searches from your network. Try again in {wait_min} minute{'s' if wait_min > 1 else ''}.")
+    SM_HITS[ip] = hits + [t]
+    if len(SM_HITS) > 5000:
+        for k in [k for k, v in SM_HITS.items() if not v or v[-1] < t - SM_RATE[1]]: SM_HITS.pop(k, None)
+    async with SM_SEM:
+        try:
+            sig = await gather_signals(vid)
+            used = {"heatmap": bool(sig["heat"]), "captions": bool(sig["transcript"]), "chat": bool(sig["chat"])}
+            if not any(used.values()):
+                raise SMError(422, "No signals to work with: this video has no chat replay, no captions and no Most-replayed data yet. "
+                                   "Try a finished stream with chat replay turned on, or come back after YouTube adds captions.")
+            rows = build_table(sig)
+            warning = None
+            try:
+                raw = await call_gemini(build_prompt(sig, rows, count))
+            except SMError as e:
+                if e.status == 503 and "invalid" in e.msg: raise
+                raw, warning = [], e.msg + " Showing moments ranked from the stream's signals only."
+            moments = finish_moments(raw, rows, count, sig["meta"]["duration_sec"], vid)
+        except SMError as e:
+            raise HTTPException(e.status, e.msg)
+    dur = sig["meta"]["duration_sec"]
+    res = {"video": {k: sig["meta"][k] for k in ("id", "title", "channel", "duration_sec", "url", "thumbnail", "was_live")},
+           "signals_used": used,
+           "signal_detail": {"chat_messages_sampled": sig["chat_messages"], "caption_language": sig["caption_lang"],
+                             "chat_coverage_pct": round(100 * len(sig["covered"]) / max(1, dur // SM_BUCKET + 1)) if sig["chat"] else 0,
+                             "heatmap_points": len(sig["heat"])},
+           "model": GEMINI_MODEL, "count_requested": count, "moments": moments, "warning": warning, "cached": False}
+    if not warning:
+        SM_CACHE[key] = {"at": time.time(), "v": res}; _trim_cache(SM_CACHE)
+    return JSONResponse(res, headers={"Cache-Control": "no-store"})

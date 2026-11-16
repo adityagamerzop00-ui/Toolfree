@@ -37,10 +37,16 @@ TOKEN_KEY=$KEY
 DB_PATH=/var/lib/toolsaku/toolsaku.db
 TMP_DIR=/var/lib/toolsaku/tmp
 MAX_UPLOAD_MB=200
+# AI Stream Moment Finder (/api/stream-moments). Paste your Google AI Studio (Gemini) key after the = sign.
+# Empty key = the tool answers "AI key not set on server". Never commit the real key to GitHub.
+GEMINI_API_KEY=
+GEMINI_MODEL=gemini-2.5-flash
 ENV
   echo "   created (new TOKEN_KEY generated)"
 else
   echo "   exists, left as it is"
+  # Installs made before the Stream Moment Finder: add GEMINI_API_KEY / GEMINI_MODEL to $ENVF by hand (see above).
+  grep -q '^GEMINI_API_KEY=' "$ENVF" || echo "   note: $ENVF has no GEMINI_API_KEY line; add GEMINI_API_KEY=... and GEMINI_MODEL=gemini-2.5-flash for the Stream Moment Finder"
 fi
 chown root:root "$ENVF"; chmod 600 "$ENVF"
 
@@ -103,4 +109,4 @@ fi
 sleep 2
 echo "== check"
 curl -s http://127.0.0.1:8787/api/health && echo
-echo "Done. Next: put your Google / Meta keys in $ENVF, then: sudo systemctl restart toolsaku-api"
+echo "Done. Next: put your Google / Meta / Gemini keys in $ENVF, then: sudo systemctl restart toolsaku-api"

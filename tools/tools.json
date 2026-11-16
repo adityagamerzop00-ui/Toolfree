@@ -383,7 +383,7 @@
    "video-trimmer",
    "video-resizer",
    "video-cropper",
-   "video-compressor"
+   "stream-moment-finder"
   ],
   "guide": [
    [
@@ -671,6 +671,70 @@
    [
     "Use thumbnails the right way",
     "Thumbnails are handy for studying what gets clicks in your niche, for presentations, or for saving your own uploads. If you want to reuse someone else's thumbnail, ask the creator first."
+   ]
+  ]
+ },
+ {
+  "id": "stream-moment-finder",
+  "slug": "stream-moment-finder",
+  "name": "AI Stream Moment Finder",
+  "title_name": "AI Stream Moment Finder for YouTube Live Streams",
+  "category": "video",
+  "icon": "search",
+  "description": "Paste a YouTube live stream or VOD link and get the 50 best clip-worthy moments, ranked by AI.",
+  "meta_description": "Find the best moments in a long YouTube live stream. AI reads chat replay spikes, captions and Most replayed data and lists up to 100 clips with timestamps.",
+  "steps": [
+   "Copy the link of a finished YouTube live stream or long video (VOD).",
+   "Paste it, choose 25, 50, 75 or 100 moments and tap Find best moments.",
+   "Wait up to two minutes while the AI ranks the moments, best first.",
+   "Tap Open at this time, save that part with YouTube's Clip button or a screen recording, and make it a Short in the Long Video to Shorts clipper."
+  ],
+  "about": "AI Stream Moment Finder is made for clip channels and fan pages of streamers, from GTA RP and BGMI to IRL streams. Streams run for hours and are far too big to download, so the tool never downloads the video. Toolsaku's server reads only light public data for the link you paste: the live chat replay (where chat suddenly explodes with LOL, KEKW, W or 🔥), the captions, and YouTube's Most replayed graph. Google's Gemini AI then ranks the clip-worthy moments, each with a start and end time, a short title, a hook line for Shorts or Reels, the reason it was picked and a score. Only the link is sent to our server; no files are uploaded.",
+  "faq": [
+   [
+    "Does it download or watch the video?",
+    "No. The AI never watches the video and nothing is downloaded. It picks moments from the chat replay, the captions and YouTube's Most replayed graph, so always check a moment before you post it."
+   ],
+   [
+    "Which streams work best?",
+    "Finished YouTube live streams with chat replay turned on work best, followed by long videos with captions (auto-generated is fine). If a stream has no chat replay, no captions and no Most replayed data yet, there is nothing to rank and the tool tells you."
+   ],
+   [
+    "Does it work while the stream is still live?",
+    "Not yet. Wait until the stream ends and YouTube finishes processing the replay, which usually takes a few hours, then paste the link."
+   ],
+   [
+    "How do I save just one moment?",
+    "Open the moment with Open at this time, then use YouTube's Clip button under the stream (up to 60 seconds) or screen-record that part on your phone. Then turn it into a 9:16 Short with captions in the Long Video to Shorts clipper."
+   ],
+   [
+    "Can I post clips of someone else's stream?",
+    "Only with permission. The stream belongs to the streamer: credit them in every post and ask before you upload their content, or you may get a copyright strike."
+   ],
+   [
+    "What is sent to Toolsaku's server?",
+    "Only the YouTube link you paste. The server reads the stream's public data and sends a short text summary to Google's Gemini AI. No files are uploaded and nothing is linked to you; results are kept for 30 minutes so a repeat search is instant."
+   ]
+  ],
+  "related": [
+   "long-to-shorts",
+   "video-trimmer",
+   "youtube-title-generator",
+   "youtube-thumbnail-downloader"
+  ],
+  "privacy": "link",
+  "guide": [
+   [
+    "How the AI finds the best moments",
+    "Every 30 seconds of the stream gets a row: how fast chat was moving compared with normal, how strongly that part shows on YouTube's Most replayed graph, what the streamer said in the captions and a few sample chat messages. Chat spikes full of laughing, KEKW, W, 🔥 or clip-it messages are the strongest sign that something happened. The AI reads this table and picks the moments most likely to work as Shorts, starting each clip a few seconds before the peak so the setup is included."
+   ],
+   [
+    "From timestamp to Short in a few minutes",
+    "You don't need the whole multi-hour stream. Open the moment at its timestamp, save just that part with YouTube's Clip button (up to 60 seconds) or a screen recording, then open the Long Video to Shorts clipper to make it vertical with a facecam and gameplay split, add captions, and paste the AI hook as your caption."
+   ],
+   [
+    "Credit the streamer, get permission",
+    "Clip channels grow when streamers like them. Ask the streamer before posting, put their channel name in the title or caption, and link the original stream. Treat the AI picks as a shortlist: watch each moment before you post, because the AI only reads chat, captions and replay data."
    ]
   ]
  },
