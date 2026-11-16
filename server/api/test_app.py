@@ -5,7 +5,7 @@ import base64, hashlib, hmac, json, os, tempfile, time, urllib.parse
 D = tempfile.mkdtemp()
 os.environ.update(PUBLIC_URL="http://testserver", GOOGLE_CLIENT_ID="gid", GOOGLE_CLIENT_SECRET="gsec", META_APP_ID="mid", META_APP_SECRET="msec",
                   TOKEN_KEY=base64.urlsafe_b64encode(b"k" * 32).decode(), DB_PATH=D + "/t.db", TMP_DIR=D + "/tmp",
-                  GEMINI_API_KEY="test-gemini-key", GEMINI_MODEL="gemini-2.5-flash")
+                  GEMINI_API_KEY="test-gemini-key", GEMINI_MODEL="gemini-3.8-flash")
 import httpx  # noqa: E402
 import app as A  # noqa: E402
 from fastapi.testclient import TestClient  # noqa: E402
@@ -262,7 +262,7 @@ def sm_fake(req: httpx.Request):
             start = int(c.split(":")[1])
         return httpx.Response(200, json=chat_page(start // 2000 * 2000))
     if u.startswith("https://generativelanguage.googleapis.com/"):
-        assert req.headers["x-goog-api-key"] == "test-gemini-key" and "gemini-2.5-flash:generateContent" in u
+        assert req.headers["x-goog-api-key"] == "test-gemini-key" and "gemini-3.8-flash:generateContent" in u
         SMX["gemini_body"].append(json.loads(req.content))
         if SMX["gemini"] == "ok": return httpx.Response(200, json=gemini_answer())
         if SMX["gemini"] == "badkey": return httpx.Response(400, json={"error": {"message": "API key not valid. Please pass a valid API key."}})

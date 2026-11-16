@@ -583,7 +583,7 @@ def post_status(jid: str, req: Request):
 # (title, channel, length, the "Most replayed" heatmap), the caption track and a capped sample of the live-chat
 # replay, turn them into a compact 30-second signal table and let Gemini pick the clip-worthy moments.
 GEMINI_API_KEY = ENV("GEMINI_API_KEY", "")
-GEMINI_MODEL = ENV("GEMINI_MODEL", "gemini-2.5-flash") or "gemini-2.5-flash"
+GEMINI_MODEL = ENV("GEMINI_MODEL", "gemini-3.8-flash") or "gemini-3.8-flash"
 GEMINI_URL = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
 YT_WATCH = "https://www.youtube.com/watch"
 YT_CHAT = "https://www.youtube.com/youtubei/v1/live_chat/get_live_chat_replay"
