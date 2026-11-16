@@ -8,7 +8,7 @@
           b1: "साइनअप नहीं", b2: "कोई वॉटरमार्क नहीं", b3: "100% फ़्री", b4: "आपके डिवाइस पर चलता है",
           presets: "एक टैप वाले प्रीसेट", pGaming: "गेमिंग", pPodcast: "पॉडकास्ट", pMotivation: "मोटिवेशन", pStory: "हिंदी कहानी", pCustom: "कस्टम",
           sUpload: "अपलोड", sSettings: "सेटिंग्स", sStyle: "स्टाइल", sClips: "क्लिप्स",
-          dropT: "लंबा वीडियो यहाँ छोड़ें", choose: "वीडियो चुनें", dropH: "आपके डिवाइस से MP4, MOV या WebM। वीडियो कहीं अपलोड नहीं होता।",
+          dropT: "लंबा वीडियो यहाँ छोड़ें", choose: "वीडियो चुनें", dropH: "आपके डिवाइस से MP4, MOV या WebM। वीडियो फ़ाइल कभी अपलोड नहीं होती।",
           durL: "अवधि", clipsAbout: "क्लिप्स, लगभग", nextSettings: "आगे: सेटिंग्स", another: "दूसरा वीडियो चुनें",
           clipLen: "क्लिप की लंबाई", lenRh: "प्रीसेट रेंज: हर क्लिप दोनों लंबाइयों के बीच रहती है, बराबर बँटी हुई।",
           format: "फ़ॉर्मेट", fV: "वर्टिकल 9:16", fO: "ओरिजिनल रखें", fC: "कस्टम फ़्रेम", fCs: "9:16 हिस्सा चुनें", fS: "स्प्लिट: वेबकैम + स्क्रीन", fSs: "दो फ़्रेम, 9:16", fF: "ऑटो फ़ेस फ़ॉलो", fFs: "9:16, बोलने वाले के साथ चलता है",
@@ -49,7 +49,7 @@
           dlAll: "सभी डाउनलोड करें", dlStop: "डाउनलोड रोकें", download: "डाउनलोड करें", share: "शेयर / सेव करें", openTab: "नए टैब में खोलें",
           makeClip: "क्लिप बनाओ", makeAgain: "फिर से बनाओ", retry: "फिर कोशिश करें", pause: "रोकें", resume: "जारी रखें", postKit: "पोस्ट किट", thumb: "थंबनेल",
           tapClip: "सिर्फ़ एक क्लिप बनाने के लिए उस पर टैप करें।", tips: "टिप्स", tip1: "Chrome या Edge में सबसे अच्छा चलता है।",
-          tip2: "क्लिप्स बनते समय टैब खुला रखें।", tip3: "आपका वीडियो आपके डिवाइस पर ही रहता है। कुछ भी अपलोड नहीं होता।",
+          tip2: "क्लिप्स बनते समय टैब खुला रखें।", tip3: "नॉर्मल मोड पूरी तरह आपके डिवाइस पर चलता है। AI मोड सिर्फ़ कुछ छोटे स्नैपशॉट भेजता है, आपकी वीडियो फ़ाइल कभी नहीं।",
           rights: "सिर्फ़ वही वीडियो इस्तेमाल करें जो आपके हैं या जिनके अधिकार आपके पास हैं।",
           wT: "स्वागत है! 👋", w1: "यह सबके लिए एक फ़्री टूल है। अभी यह टेस्टिंग में है, और आगे और भी टूल्स आने वाले हैं। कोई सुझाव, मदद या दिक्कत हो तो Instagram पर", w2: "को DM करें। आने के लिए शुक्रिया, मज़े करें!",
           studio: "🎬 क्लिप स्टूडियो", studioSub: "हर क्लिप को कैची बनाओ: हुक, स्टाइल, म्यूज़िक और एक्सपोर्ट",
@@ -62,7 +62,7 @@
           iKick: "फ़्री · डिवाइस पर · कोई वॉटरमार्क नहीं", iTitle: "एक लंबा वीडियो, ढेर सारे शॉर्ट्स ✂️",
           iLead: "एक लंबा वीडियो डालो और पोस्ट करने लायक कई शॉर्ट्स और रील्स पाओ।",
           iF1: "💬 हिंदी, इंग्लिश और हिंग्लिश में ऑटो कैप्शन", iF2: "🪝 हुक टाइटल, इफ़ेक्ट और बैकग्राउंड म्यूज़िक",
-          iF3: "🔒 आपके डिवाइस पर चलता है। कुछ भी अपलोड नहीं होता", iF4: "🆓 100% फ़्री, साइनअप नहीं, वॉटरमार्क नहीं",
+          iF3: "🔒 आपका वीडियो आपके डिवाइस पर रहता है। AI मोड सिर्फ़ छोटे स्नैपशॉट भेजता है", iF4: "🆓 100% फ़्री, साइनअप नहीं, वॉटरमार्क नहीं",
           iTrendT: "🔥 YouTube और Instagram पर अभी ट्रेंडिंग", iStamp: "ट्रेंड टिप्स · नवंबर 2026 अपडेट",
           tr1: "POV हुक", tr1d: "पहले ही सेकंड में “POV: जब आप…” जैसा टेक्स्ट दिखाओ।",
           tr2: "“वेट फ़ॉर इट” एंडिंग", tr2d: "शुरू में झलक दो और आखिरी सेकंड में धमाका, ताकि लोग फिर से देखें।",
@@ -80,11 +80,11 @@
           c5T: "और म्यूज़िक ट्रैक", c5P: "आपकी क्लिप्स के लिए और मूड और बीट्स, सब फ़्री।",
           aboutK: "हमारे बारे में", aboutT: "भारत में बना, भारतीय क्रिएटर्स के लिए",
           aboutP1: "Long to Shorts Clipper, ADYVOLT (आदित्य) का बनाया एक फ़्री टूल है, भारतीय क्रिएटर्स के लिए। एक लंबा वीडियो अपलोड करें और हिंदी, इंग्लिश या हिंग्लिश कैप्शन, हुक टाइटल और म्यूज़िक के साथ कई वर्टिकल शॉर्ट्स और रील्स पाएँ।",
-          aboutP2: "सब कुछ आपके ब्राउज़र में चलता है। आपके वीडियो आपके डिवाइस से बाहर नहीं जाते: किसी सर्वर पर कुछ भी अपलोड नहीं होता।",
+          aboutP2: "कटिंग और रेंडरिंग आपके ब्राउज़र में होती है, इसलिए आपकी वीडियो फ़ाइल आपके डिवाइस से बाहर नहीं जाती। नॉर्मल मोड पूरी तरह डिवाइस पर चलता है; AI मोड हर तेज़ मोमेंट से सिर्फ़ कुछ छोटे स्नैपशॉट और बोले गए शब्द जाँच के लिए भेजता है, और कुछ भी सेव नहीं होता।",
           fact1: "100% फ़्री, साइनअप नहीं, वॉटरमार्क नहीं", fact2: "हिंदी, इंग्लिश और हिंग्लिश कैप्शन", fact3: "प्राइवेसी पहले: आपके डिवाइस पर चलता है",
           faqK: "सवाल-जवाब", faqT: "आपके सवाल, हमारे जवाब",
           q1: "क्या यह सच में फ़्री है?", a1: "हाँ। हर फ़ीचर फ़्री है। न साइनअप, न पेड प्लान, न कोई छुपी लिमिट।",
-          q2: "क्या मेरे वीडियो कहीं अपलोड होते हैं?", a2: "नहीं। आपका वीडियो आपके अपने डिवाइस पर, ब्राउज़र के अंदर ही प्रोसेस होता है। कुछ भी अपलोड नहीं होता। ऑटो कैप्शन एक बार स्पीच मॉडल (लगभग 80 से 150 MB) डाउनलोड करते हैं, फिर भी आपकी आवाज़ आपके डिवाइस पर ही रहती है।",
+          q2: "क्या मेरे वीडियो कहीं अपलोड होते हैं?", a2: "नहीं। आपका वीडियो आपके अपने डिवाइस पर, ब्राउज़र के अंदर ही प्रोसेस होता है और फ़ाइल कभी अपलोड नहीं होती। AI मोड में हर तेज़ मोमेंट से सिर्फ़ कुछ छोटे स्नैपशॉट और बोले गए शब्द AI को जाँच के लिए भेजे जाते हैं, और कुछ भी सेव नहीं होता। ऑटो कैप्शन एक बार स्पीच मॉडल (लगभग 80 से 150 MB) डाउनलोड करते हैं और आपके डिवाइस पर चलते हैं।",
           q3: "कौन-सा ब्राउज़र सबसे अच्छा है?", a3: "डेस्कटॉप या Android फ़ोन पर Chrome सबसे अच्छा चलता है। Edge भी चलता है। कुछ दूसरे ब्राउज़र अभी वीडियो रिकॉर्ड या एक्सपोर्ट नहीं कर पाते।",
           q4: "कौन-से वीडियो फ़ॉर्मेट चलते हैं?", a4: "MP4 और WebM सबसे अच्छे चलते हैं, MOV ज़्यादातर ब्राउज़र में चलता है। क्लिप्स MP4 (फ़ोन के लिए सबसे अच्छा) या WebM में सेव होती हैं।",
           q5: "क्या यह हिंदी कैप्शन बना सकता है?", a5: "हाँ। स्टाइल में ऑटो कैप्शन चुनें और हिंदी चुनें। रोमन अक्षरों वाली हिंग्लिश के लिए इंग्लिश चुनें। आप कैप्शन खुद लिख भी सकते हैं या SRT/VTT फ़ाइल लोड कर सकते हैं।",
@@ -100,7 +100,25 @@
           stFail: "फ़ेल – फिर कोशिश पर टैप करें", stRetry: "{e} से फिर कोशिश…", stRender: "रेंडर {p}%", stRecord: "रिकॉर्डिंग {p}%",
           engFast: "फ़ास्ट", engRec: "कम्पैटिबिलिटी मोड", qProg: "क्लिप {k} / {n} · {p}%", qDone: "{d} तैयार", qFail: "{f} फ़ेल",
           save: "सेव करें", dlHelp: "डाउनलोड शुरू नहीं हुआ? नीचे दिए विकल्प इस्तेमाल करें।", shareFell: "यहाँ फ़ाइल शेयर नहीं हो सकती, इसलिए डाउनलोड कर दी।",
-          savedAs: "{f} सेव हो गई", cancelling: "रद्द कर रहे हैं…", copied: "कॉपी हो गया ✓"
+          savedAs: "{f} सेव हो गई", cancelling: "रद्द कर रहे हैं…", copied: "कॉपी हो गया ✓",
+          hAgain: "फिर से एनालाइज़ करें", hMode: "मोड", hmN: "नॉर्मल", hmNs: "वीडियो को बाँटता है, पूरी तरह आपके डिवाइस पर", hmA: "AI ✨", hmAs: "सिर्फ़ असली हाइलाइट रखता है",
+          hTitle: "वीडियो का टाइटल या गेम (वैकल्पिक)", hHookOn: "हर क्लिप पर AI हुक टाइटल लगाएँ",
+          hPriv: "आपका पूरा वीडियो आपके डिवाइस पर ही रहता है। हर तेज़ आवाज़ वाले मोमेंट से सिर्फ़ कुछ छोटे स्नैपशॉट और बोले गए शब्द AI को भेजे जाते हैं, यह जाँचने के लिए कि वह असली हाइलाइट है या नहीं। कुछ भी सेव नहीं होता।",
+          hGo: "✨ AI से असली मोमेंट ढूँढें", hMake: "इन मोमेंट्स से क्लिप बनाओ",
+          hAnT: "आपका वीडियो एनालाइज़ हो रहा है…", hAiT: "AI आपकी क्लिप्स जाँच रहा है…",
+          hS1: "ऑडियो पढ़ रहे हैं", hS2: "आवाज़ डीकोड कर रहे हैं", hS3: "आवाज़ की तेज़ी माप रहे हैं", hS4: "तेज़ आवाज़ के उछाल गिन रहे हैं",
+          hSnap: "क्लिप {k} / {n} के स्नैपशॉट ले रहे हैं", hAiN: "AI क्लिप {k} / {n} जाँच रहा है", hEl: "{s} सेकंड बीते",
+          hFound: "{n} हाइप स्पॉट मिले — लगभग {c} क्लिप्स", hFound0: "कोई साफ़ हाइप स्पॉट नहीं मिला। नॉर्मल मोड पूरे वीडियो को बाँटेगा।",
+          hCancelled: "एनालिसिस रद्द हुआ। नॉर्मल मोड फिर भी चलता है।", hTop: "AI सबसे तेज़ {n} स्पॉट जाँचेगा।",
+          hDone: "AI ने {n} क्लिप्स {s} सेकंड में जाँचीं · {k} असली मोमेंट", hNoReal: "AI को सबसे तेज़ स्पॉट्स में कोई असली हाइलाइट नहीं मिला। नॉर्मल मोड आज़माएँ।",
+          hPart: "{u} क्लिप जाँची नहीं जा सकीं, आखिर में रखी गई हैं।", hFail: "AI अभी क्लिप्स नहीं जाँच पाया",
+          hFailP: "{e} आपकी क्लिप्स आवाज़ की तेज़ी के क्रम में दिखाई गई हैं, आप इन्हें फिर भी बना सकते हैं।",
+          hLoud: "तेज़ आवाज़ वाला स्पॉट", hUnchecked: "AI से जाँची नहीं गई", hPick: "पहले कम से कम एक मोमेंट चुनें।",
+          kitAiWait: "✨ AI पोस्ट किट लिख रहा है…", kitAi: "✨ AI ने इस मोमेंट से लिखा।", kitAiFail: "AI पोस्ट किट नहीं मिली, इसलिए आपके डिवाइस पर बनी।", ytStudio: "YouTube Studio खोलें",
+          infoT: "इस टूल के बारे में", infoAbout: "लंबी स्ट्रीम और वीडियो को कुछ ही मिनटों में शॉर्ट्स और रील्स में बदलें, सीधे अपने ब्राउज़र में।",
+          infoHowT: "कैसे इस्तेमाल करें", infoHow1: "अपना वीडियो अपलोड करें।", infoHow2: "30 s या 60 s चुनें।", infoHow3: "नॉर्मल या AI चुनें।", infoHow4: "क्लिप्स देखें।", infoHow5: "एक्सपोर्ट करें और पोस्ट किट कॉपी करें।",
+          infoAiT: "AI मोड के बारे में", infoCrT: "कॉपीराइट",
+          infoCr: "सिर्फ़ वही वीडियो क्लिप करें जो आपके हैं या जिनकी इजाज़त आपके पास है। दूसरे स्ट्रीमर्स के वीडियो के लिए पहले क्रिएटर से पूछें और उन्हें क्रेडिट दें। दूसरों के कंटेंट की क्लिप्स पर YouTube या Instagram पर फिर भी कॉपीराइट क्लेम आ सकता है। आप जो पोस्ट करते हैं उसकी ज़िम्मेदारी आपकी है।"
         };
         var lang = "en";
         function fill(s, v) { return v ? String(s).replace(/\{(\w+)\}/g, function (_, k) { return v[k] != null ? v[k] : ""; }) : s; }
@@ -324,7 +342,7 @@
         var HOOKS = ["Wait for it 😳", "Ye dekh ke shock ho jaoge 😱", "Nobody expected this...", "Last tak dekhna 🔥", "This changed everything", "Bhai ye kya tha 😂"];
         function boost() {
           return {
-            hook: $("bhook").value.trim(), pb: $("bpb").checked, pbPos: $("bpbpos").value, pbCol: $("bpbcol").value, blur: $("bblur").checked,
+            hook: $("bhook").value.trim() || (typeof Q !== "undefined" && Q.cur && Q.cur.ai && $("hhook").checked ? Q.cur.ai.hook_title || "" : ""), pb: $("bpb").checked, pbPos: $("bpbpos").value, pbCol: $("bpbcol").value, blur: $("bblur").checked,
             hDur: +$("hdur").value || 3, hStart: +$("hstart").value || 0, hY: +$("hy").value / 100,
             hCol: $("hcol").value, hBg: $("hbg").value, hBgA: +$("hbga").value / 100, hOut: $("hout").checked,
             hSize: +$("hsize").value || 80, hFont: $("hfont").value, hAnim: $("hanim").value
@@ -847,6 +865,7 @@
         var AN = null, MOM = [], MAXB = 400 * 1048576, mv = $("mvid"), mEnd = 0;
         function mProg(t, p) {
           show($("mprog"), true); $("mmsg").textContent = t;
+          if (S.anStep) S.anStep(t, p);
           if (p != null) { $("mbar").firstChild.style.width = p + "%"; $("mbar").setAttribute("aria-valuenow", p); }
         }
         function anReset() {
@@ -951,6 +970,324 @@
           go(4);
         });
         $("mclear").addEventListener("click", function () { S.moments = null; S.sig = ""; show($("mused"), false); });
+
+        /* ---------- hype finder (loud spikes, on device) + AI mode (checks each spike with Gemini) ---------- */
+        // Normal mode = the regular split, fully on device. AI mode = snapshots from each loud spot go to /api/clip-moments.
+        var HY = { file: null, busy: false, cancel: false, spots: null, err: "", res: null, ctl: [], fv: null, fvSrc: null };
+        var HY_FRAMES = 8, HY_BATCH = 4, HY_AI_MAX = 20, HY_PAR = 2;
+        var HROOT = (document.body && document.body.dataset.root) || "";
+        function hyEsc(el, cls, text) { var e = document.createElement(el); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+        function hyLen() { var r = document.querySelector('input[name="hlen"]:checked'); return r ? +r.value : 60; }
+        function hyMode() { var r = document.querySelector('input[name="hmode"]:checked'); return r ? r.value : "normal"; }
+        function hyLang() { return (window.L10N && window.L10N.lang() === "hi") || ST.tpl === "hindi" ? "hinglish" : "english"; }
+        /* overlay */
+        var OV = { t0: 0, iv: 0, p: 0, creep: 0, onCancel: null };
+        function ovOpen(title, onCancel) {
+          $("hovh").textContent = title; OV.onCancel = onCancel; OV.t0 = performance.now(); OV.p = 0; ovSet("", 0);
+          show($("hov"), true); document.documentElement.classList.add("lts-noscroll");
+          clearInterval(OV.iv);
+          OV.iv = setInterval(function () {
+            var s = Math.round((performance.now() - OV.t0) / 1000);
+            $("hovs").textContent = T("hEl", "{s} s elapsed", { s: s });
+            if (OV.creep > OV.p) ovBar(OV.p + (OV.creep - OV.p) * 0.06); // slow creep toward the next step so the bar never sits still
+          }, 1000);
+          try { $("hovx").focus({ preventScroll: true }); } catch (e) {}
+        }
+        function ovBar(p) { OV.p = p; $("hovbar").firstChild.style.width = Math.round(p) + "%"; $("hovbar").setAttribute("aria-valuenow", Math.round(p)); }
+        function ovSet(text, p, creepTo) { if (text != null) $("hovt").textContent = text; if (p != null) ovBar(Math.max(p, OV.p)); OV.creep = creepTo || 0; }
+        function ovClose() { clearInterval(OV.iv); show($("hov"), false); document.documentElement.classList.remove("lts-noscroll"); OV.onCancel = null; }
+        $("hovx").addEventListener("click", function () { var f = OV.onCancel; ovClose(); if (f) f(); });
+        document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !$("hov").classList.contains("lts-hidden")) $("hovx").click(); });
+
+        /* loud spikes: windows far above their local 5 s level and above the loud end of the whole video, grouped within 3 s */
+        function hypeSpots(an, st, en) {
+          var r = an.rms, n = r.length, i, P = new Float64Array(n + 1);
+          if (!n) return [];
+          for (i = 0; i < n; i++) P[i + 1] = P[i] + r[i];
+          var srt = Array.prototype.slice.call(r).sort(function (a, b) { return a - b; });
+          var med = srt[n >> 1] || 1e-4, hiLvl = srt[Math.min(n - 1, Math.floor(n * 0.85))] || 0, top = srt[Math.min(n - 1, Math.floor(n * 0.995))] || 1e-4;
+          var lo = Math.max(0, Math.floor((st || 0) * 10)), hi = Math.min(n, Math.ceil((en == null ? n / 10 : en) * 10));
+          var spots = [], cur = null;
+          for (i = lo; i < hi; i++) {
+            var a = Math.max(0, i - 25), b = Math.min(n, i + 26), loc = (P[b] - P[a]) / (b - a);
+            if (r[i] > loc * 1.6 && r[i] > Math.max(an.thr, hiLvl)) {
+              if (cur && i - cur.last <= 30) { cur.last = i; if (r[i] > r[cur.pk]) cur.pk = i; }
+              else { cur = { first: i, last: i, pk: i }; spots.push(cur); }
+            }
+          }
+          return spots.map(function (sp) { return { t: sp.pk / 10, str: r[sp.pk] / med, lv: Math.min(1, r[sp.pk] / top) }; });
+        }
+        // Non-overlapping clip windows around the strongest spikes: the spike sits ~40% in, so the build-up and the reaction both fit.
+        function hypeCands(len) {
+          if (!HY.spots || !S.duration) return [];
+          var o = settings(), lo = o.error ? 0 : o.start, hi = o.error ? S.duration : o.end;
+          if (hi - lo < 10) return [];
+          var L = Math.min(len, hi - lo), out = [];
+          HY.spots.slice().sort(function (a, b) { return b.str - a.str; }).forEach(function (sp) {
+            if (out.length >= 40 || sp.t < lo || sp.t > hi) return;
+            var clamp = function (x) { return Math.max(lo, Math.min(x, hi - L)); };
+            var free = function (x) { return !out.some(function (c) { return x < c.e - 0.01 && x + L > c.s + 0.01; }); };
+            var s = clamp(sp.t - L * 0.4);
+            if (!free(s)) {
+              // Slide the window next to the clip it hits, as long as the spike stays well inside (2 s lead-in, 4 s after).
+              var opts = [];
+              out.forEach(function (c) { opts.push(clamp(c.e), clamp(c.s - L)); });
+              opts = opts.filter(function (x) { return free(x) && sp.t >= x + 2 && sp.t <= x + L - 4; })
+                .sort(function (a, b) { return Math.abs(a - (sp.t - L * 0.4)) - Math.abs(b - (sp.t - L * 0.4)); });
+              if (!opts.length) return;
+              s = opts[0];
+            }
+            out.push({ id: "m" + out.length, s: s, e: s + L, pk: sp.t, str: sp.str });
+          });
+          return out;
+        }
+        function hypeUpdate() {
+          var sum = $("hsum");
+          show($("hagain"), !HY.spots && !HY.busy && !!S.file);
+          if (HY.busy) { sum.textContent = ""; return; }
+          if (!HY.spots) { sum.textContent = HY.err ? HY.err : (HY.file === S.file && S.file ? T("hCancelled", "Analysis cancelled. Normal mode still works.") : ""); return; }
+          var c = hypeCands(hyLen()).length;
+          sum.textContent = HY.spots.length ? "⚡ " + T("hFound", "Found {n} hype spots — about {c} clips", { n: HY.spots.length, c: c }) : T("hFound0", "No clear hype spots found. Normal mode will split the whole video.");
+          if (hyMode() === "ai" && c && !HY.res) $("hres").textContent = T("hTop", "AI checks the loudest {n} spots.", { n: Math.min(c, HY_AI_MAX) });
+        }
+        function hypeAnalyse(blocking) {
+          var file = S.file;
+          if (!file || HY.busy) return;
+          HY.file = file; HY.spots = null; HY.err = ""; HY.res = null; HY.busy = true; HY.cancel = false;
+          var done = false;
+          if (blocking) ovOpen(T("hAnT", "Analysing your video…"), function () { HY.cancel = true; HY.busy = false; hypeUpdate(); go(2); });
+          ovSet(T("hS1", "Reading audio"), 3, 20);
+          S.anStep = function (t, p) {
+            if (p === 25) ovSet(T("hS2", "Decoding the sound"), 22, 58);
+            else if (p === 60) ovSet(T("hS3", "Measuring loudness"), 60, 80);
+          };
+          analyze().then(function (an) {
+            if (file !== S.file) return;
+            ovSet(T("hS4", "Counting sound spikes"), 82, 95);
+            return sleep(80).then(function () {
+              HY.spots = hypeSpots(an, 0, null);
+              HY.busy = false; hypeUpdate();
+              ovSet($("hsum").textContent, 100);
+              if (!HY.cancel && blocking) return sleep(1100);
+            });
+          }).catch(function (e) {
+            if (file !== S.file) return;
+            HY.err = (e && e.message) || "The audio couldn't be analysed.";
+          }).then(function () {
+            S.anStep = null; done = true;
+            if (file !== S.file) return;
+            HY.busy = false; hypeUpdate();
+            if (blocking && !HY.cancel) { ovClose(); go(2); }
+          });
+        }
+        $("hagain").addEventListener("click", function () { hypeAnalyse(true); });
+        document.querySelectorAll('input[name="hlen"]').forEach(function (r) {
+          r.addEventListener("change", function () {
+            var m = $(r.value === "30" ? "len30" : "len60");
+            if (m && !m.checked) { m.checked = true; fire(m); }
+            HY.res = null; $("hlist").innerHTML = ""; $("hres").textContent = ""; show($("hmake"), false); alertMsg($("hwarn"));
+            hypeUpdate();
+          });
+        });
+        document.querySelectorAll('input[name="len"]').forEach(function (r) {
+          r.addEventListener("change", function () { var h = $("hlen" + r.value); if (h && r.checked && !h.checked) { h.checked = true; hypeUpdate(); } });
+        });
+        document.querySelectorAll('input[name="hmode"]').forEach(function (r) {
+          r.addEventListener("change", function () {
+            var ai = hyMode() === "ai";
+            show($("haiPane"), ai);
+            if (!ai && S.moments && S.moments.ai) { S.moments = null; S.sig = ""; show($("mused"), false); }
+            hypeUpdate();
+          });
+        });
+
+        /* snapshots: a hidden <video> of its own, seek + draw to a small canvas, JPEG ~0.6 */
+        function hyVideo() {
+          if (!HY.fv) { HY.fv = document.createElement("video"); HY.fv.muted = true; HY.fv.playsInline = true; HY.fv.preload = "auto"; }
+          if (HY.fvSrc !== S.url) { HY.fvSrc = S.url; HY.fv.src = S.url; }
+          return HY.fv;
+        }
+        function hySnaps(c) {
+          var v = hyVideo(), L = c.e - c.s, times = [], frames = [], k = 0, cv = document.createElement("canvas");
+          for (var i = 0; i < HY_FRAMES; i++) times.push(Math.round(L * (0.04 + 0.92 * i / (HY_FRAMES - 1)) * 10) / 10);
+          return ready(v).then(function next() {
+            if (HY.cancel || k >= times.length) return;
+            var t = times[k++];
+            return seekTo(v, Math.min(c.s + t, S.duration - 0.05)).then(function () {
+              var vw = v.videoWidth || 640, vh = v.videoHeight || 360, w = Math.round(Math.min(360, vw, (480 * vw) / vh)), h = Math.round((w * vh) / vw);
+              cv.width = w; cv.height = h;
+              cv.getContext("2d").drawImage(v, 0, 0, w, h);
+              var d = cv.toDataURL("image/jpeg", 0.6);
+              if (d.length > 190000) d = cv.toDataURL("image/jpeg", 0.4);
+              if (d.indexOf("data:image/jpeg") === 0) frames.push(d.slice(d.indexOf(",") + 1)); else times.splice(--k, 1);
+              return next();
+            });
+          }).then(function () { c.frames = frames; c.times = times.slice(0, frames.length); return c; });
+        }
+        function hyLoud(c) {
+          var r = AN && AN.rms, out = [];
+          if (!r) return out;
+          var srt = HY.top || (HY.top = Array.prototype.slice.call(r).sort(function (a, b) { return a - b; })[Math.min(r.length - 1, Math.floor(r.length * 0.995))] || 1e-4);
+          for (var t = Math.floor(c.s); t < c.e && out.length < 180; t++) {
+            var m = 0;
+            for (var j = t * 10; j < t * 10 + 10 && j < r.length; j++) if (r[j] > m) m = r[j];
+            out.push(Math.min(100, Math.round((m / srt) * 100)));
+          }
+          return out;
+        }
+        // Spoken words only if they already exist (typed/loaded captions or a finished auto-caption run); never starts Whisper.
+        function hyWords(s, e) {
+          var t = validCaps().filter(function (c) { return c.e > s && c.s < e; }).map(function (c) { return c.text; }).join(" ");
+          if (!t && AUTO && AUTO.words) t = AUTO.words.filter(function (w) { return w.s >= s && w.s < e; }).map(function (w) { return w.t; }).join(" ");
+          return t.replace(/\s+/g, " ").trim().slice(0, 1500);
+        }
+        function hyFetch(url, body, ms) {
+          var ac = window.AbortController ? new AbortController() : null, to;
+          if (ac) { HY.ctl.push(ac); to = setTimeout(function () { ac.abort(); }, ms); }
+          return fetch(url, { method: "POST", headers: { "Content-Type": "application/json", "X-Toolsaku": "1" }, body: body, signal: ac ? ac.signal : undefined })
+            .then(function (r) {
+              return r.json().catch(function () { return null; }).then(function (j) {
+                if (!r.ok) throw new Error((j && typeof j.detail === "string" && j.detail) || "The server answered " + r.status + ".");
+                return j;
+              });
+            }, function (e) {
+              throw new Error(e && e.name === "AbortError" ? (HY.cancel ? "Cancelled." : "The AI took too long to answer.") : "Couldn't reach Toolsaku's server. Check your internet.");
+            })
+            .then(function (j) { clearTimeout(to); return j; }, function (e) { clearTimeout(to); throw e; });
+        }
+        function aiRun() {
+          if (HY.busy || Q.state !== "idle") return;
+          var cands = hypeCands(hyLen()).slice(0, HY_AI_MAX);
+          alertMsg($("hwarn")); $("hlist").innerHTML = ""; show($("hmake"), false); HY.res = null;
+          if (!cands.length) { $("hres").textContent = HY.spots ? T("hFound0", "No clear hype spots found. Normal mode will split the whole video.") : HY.err || ""; return; }
+          HY.busy = true; HY.cancel = false; HY.ctl = [];
+          var t0 = performance.now(), total = cands.length, snapped = 0, checked = 0, verdicts = {}, errs = [], queue = [], flying = 0, title = $("htitle").value.trim(), lang = hyLang();
+          ovOpen(T("hAiT", "AI is checking your clips…"), function () { HY.cancel = true; HY.ctl.forEach(function (a) { try { a.abort(); } catch (e) {} }); });
+          function upd() {
+            var p = 4 + 92 * (snapped * 0.35 + checked * 0.65) / total;
+            if (checked || snapped >= total) ovSet(T("hAiN", "AI checking clip {k} of {n}", { k: Math.min(total, checked + 1), n: total }), p, Math.min(96, p + 8));
+            else ovSet(T("hSnap", "Taking snapshots of clip {k} of {n}", { k: Math.min(total, snapped + 1), n: total }), p, Math.min(96, p + 4));
+          }
+          upd();
+          var finished = new Promise(function (resolve) {
+            function send(batch) {
+              flying++;
+              var body = JSON.stringify({ title: title, lang: lang, clips: batch.map(function (c) {
+                return { id: c.id, start: +c.s.toFixed(2), end: +c.e.toFixed(2), spike: Math.max(0, +(c.pk - c.s).toFixed(1)), loud: hyLoud(c), words: hyWords(c.s, c.e), frames: c.frames, times: c.times };
+              }) });
+              batch.forEach(function (c) { c.frames = null; });
+              hyFetch(HROOT + "api/clip-moments", body, 150000).then(function (j) {
+                (j.verdicts || []).forEach(function (v) { verdicts[v.id] = v; });
+              }, function (e) { errs.push(e.message); }).then(function () {
+                flying--; checked += batch.length; upd(); pump();
+              });
+            }
+            function pump() {
+              if (HY.cancel) queue = [];
+              while (flying < HY_PAR && (queue.length >= HY_BATCH || (queue.length && snapped >= total))) send(queue.splice(0, HY_BATCH));
+              if (!flying && snapped >= total && !queue.length) resolve();
+            }
+            var i = 0;
+            (function nextSnap() {
+              if (HY.cancel) { snapped = total; queue = []; pump(); return; }
+              if (i >= total) return;
+              var c = cands[i++];
+              hySnaps(c).then(function () { snapped++; if (c.frames && c.frames.length) queue.push(c); else checked++; upd(); pump(); nextSnap(); },
+                function () { snapped++; checked++; upd(); pump(); nextSnap(); });
+            })();
+          });
+          finished.then(function () {
+            HY.busy = false;
+            ovClose();
+            if (HY.cancel) { $("hres").textContent = ""; return; }
+            var secs = Math.max(1, Math.round((performance.now() - t0) / 1000)), real = [], rest = [];
+            cands.forEach(function (c) {
+              var v = verdicts[c.id];
+              if (v && v.ok) { if (v.is_moment) { c.ai = { score: v.score, type: v.type, reason: v.reason, hook_title: v.hook_title }; real.push(c); } }
+              else { c.unchecked = true; rest.push(c); }
+            });
+            real.sort(function (a, b) { return b.ai.score - a.ai.score; });
+            if (rest.length === total) {
+              // AI failed or busy: keep the user's work, ranked by loudness.
+              alertMsg($("hwarn"), T("hFail", "AI couldn't check the clips right now"), T("hFailP", "{e} Your clips are shown ranked by loudness, and you can still make them.", { e: (errs[0] || "").replace(/\.?$/, ".") }));
+              rest.forEach(function (c) { c.unchecked = false; });
+              HY.res = rest; $("hres").textContent = "";
+            } else {
+              HY.res = real.concat(rest);
+              $("hres").textContent = T("hDone", "AI checked {n} clips in {s} s · {k} real moments", { n: total - rest.length, s: secs, k: real.length }) +
+                (rest.length ? " · " + T("hPart", "{u} couldn't be checked and are kept at the end.", { u: rest.length }) : "") +
+                (!real.length && !rest.length ? " " + T("hNoReal", "AI found no real highlights in the loudest spots. Try Normal mode.") : "");
+            }
+            hyRender();
+          });
+        }
+        function hyRender() {
+          var L = $("hlist"), list = HY.res || [], hrs = S.duration >= 3600, topStr = list.reduce(function (m, c) { return Math.max(m, c.str); }, 1);
+          L.innerHTML = "";
+          list.forEach(function (c, i) {
+            c.on = true;
+            var li = document.createElement("li"), txt = hyEsc("span", "lts-hm__t");
+            txt.appendChild(hyEsc("span", "", fmt(c.s, hrs) + "–" + fmt(c.e, hrs)));
+            if (c.ai) {
+              txt.appendChild(hyEsc("span", "pill", "🔥 " + c.ai.score + " · " + c.ai.type));
+              if (c.ai.hook_title) txt.appendChild(hyEsc("b", "", c.ai.hook_title));
+              if (c.ai.reason) txt.appendChild(hyEsc("small", "", c.ai.reason));
+            } else {
+              txt.appendChild(hyEsc("small", "", c.unchecked ? T("hUnchecked", "Not checked by AI") : T("hLoud", "Loud spot") + " · " + Math.round((c.str / topStr) * 100) + "%"));
+            }
+            var pb = hyEsc("button", "lts-btn", "▶"); pb.type = "button"; pb.setAttribute("aria-label", "Preview moment " + (i + 1));
+            var cb = document.createElement("input"); cb.type = "checkbox"; cb.checked = true; cb.setAttribute("aria-label", "Use moment " + (i + 1));
+            pb.addEventListener("click", function () { hyPlay(c); });
+            cb.addEventListener("change", function () { c.on = cb.checked; });
+            li.appendChild(hyEsc("b", "", String(i + 1))); li.appendChild(txt); li.appendChild(pb); li.appendChild(cb);
+            L.appendChild(li);
+          });
+          show($("hmake"), list.length > 0);
+        }
+        var hv = $("hvid"), hvEnd = 0;
+        function hyPlay(c) {
+          show(hv, true);
+          if (hv.src !== S.url) hv.src = S.url;
+          hvEnd = c.e;
+          ready(hv).then(function () { return seekTo(hv, c.s); }).then(function () { hv.play().catch(function () {}); }, function () {});
+        }
+        hv.addEventListener("timeupdate", function () { if (hvEnd && hv.currentTime >= hvEnd) { hv.pause(); hvEnd = 0; } });
+        $("hgo").addEventListener("click", aiRun);
+        $("hmake").addEventListener("click", function () {
+          var sel = (HY.res || []).filter(function (c) { return c.on && c.e - c.s >= 10; });
+          if (!sel.length) { $("hres").textContent = T("hPick", "Tick at least one moment first."); return; }
+          hv.pause();
+          var out = sel.map(function (c) { return { s: c.s, e: c.e, ai: c.ai || null }; });
+          out.ai = true;
+          S.moments = out; S.sig = ""; show($("mused"), true);
+          go(4);
+        });
+        function hyReset() {
+          HY.file = null; HY.spots = null; HY.err = ""; HY.res = null; HY.cancel = true; HY.top = 0;
+          HY.ctl.forEach(function (a) { try { a.abort(); } catch (e) {} });
+          HY.busy = false; ovClose();
+          $("hlist").innerHTML = ""; $("hres").textContent = ""; show($("hmake"), false); alertMsg($("hwarn"));
+          hv.pause(); hv.removeAttribute("src"); show(hv, false);
+          hypeUpdate();
+        }
+
+        /* AI post kit: asked for while the clip exports, so it's ready when the clip is */
+        function aiKit(seg) {
+          if (!seg.ai) return null;
+          if (seg.aiKitP) return seg.aiKitP;
+          var title = $("htitle").value.trim(), words = hyWords(seg.start, seg.end);
+          var topic = [seg.ai.hook_title, seg.ai.reason].filter(Boolean).join(" – ") || title || "Gaming highlight clip";
+          var details = [title ? "Video: " + title : "", seg.ai.type ? "Moment type: " + seg.ai.type : "", words ? "Spoken: " + words : ""].filter(Boolean).join(". ");
+          seg.aiKitP = hyFetch(HROOT + "api/ai-captions", JSON.stringify({ topic: topic.slice(0, 200), details: details.slice(0, 500), lang: hyLang(), tone: "Fun", platform: "shorts",
+            kinds: ["titles", "captions", "descriptions", "hashtags"] }), 90000).then(function (j) {
+            if (!j || j.source !== "ai" || !(j.titles || []).length) throw new Error("template");
+            seg.aiKit = j;
+          }).catch(function () { seg.aiKitFail = true; }).then(function () {
+            if (seg.panels && seg.panels.kit && seg.panels.kit.__render) seg.panels.kit.__render();
+            if (seg.aiKit && seg.el && seg.el.acts) { var kb = seg.el.acts.querySelector('[data-act="kit"]'); if (kb && kb.textContent.indexOf("✨") < 0) kb.textContent = "✨ " + kb.textContent; }
+          });
+          return seg.aiKitP;
+        }
         $("bgap").addEventListener("input", function () { $("bgapv").textContent = (+$("bgap").value).toFixed(1); });
         function cutsFor(seg) {
           if (!$("bcut").checked || !AN) return [];
@@ -1690,6 +2027,7 @@
         function go(n) {
           if (S.busy && n !== 4) return;
           if (n >= 2 && !S.url) return;
+          if (n >= 2 && S.step === 1 && S.file && HY.file !== S.file && !HY.busy) { hypeAnalyse(true); return; }
           if (n >= 3) {
             var o = settings();
             if (o.error) { updateSettings(); return; }
@@ -1791,6 +2129,7 @@
           S.segs.forEach(function (s) { if (s.url) URL.revokeObjectURL(s.url); });
           S.segs = []; S.sig = ""; $("clips").innerHTML = ""; $("cstatus").textContent = "";
           anReset();
+          hyReset();
           refreshDone();
           if (S.url) URL.revokeObjectURL(S.url);
           S.url = null; S.duration = 0;
@@ -1867,6 +2206,7 @@
           }
           $("toClips").disabled = invalid;
           updateStepper();
+          hypeUpdate();
         }
         document.querySelectorAll('input[name="len"], input[name="fmt"], #label, #badge').forEach(function (el) {
           el.addEventListener("change", function () { updateSettings(); drawCropPreview(); });
@@ -1925,7 +2265,7 @@
           list.innerHTML = "";
           alertMsg($("err3"));
           $("cstatus").textContent = "";
-          S.segs = S.moments ? S.moments.map(function (m, i) { return { n: i + 1, start: m.s, end: m.e }; }) : segments(o.start, o.end, o.len, o.max);
+          S.segs = S.moments ? S.moments.map(function (m, i) { return { n: i + 1, start: m.s, end: m.e, ai: m.ai || null }; }) : segments(o.start, o.end, o.len, o.max);
           var thumbW, thumbH, vert = o.format !== "original";
           if (vert) { thumbW = 72; thumbH = 128; }
           else { var sz = outSize("original"); thumbW = 128; thumbH = Math.round((128 * sz.h) / sz.w); }
@@ -1947,7 +2287,14 @@
             time.textContent = fmt(seg.start, hours) + "–" + fmt(seg.end, hours);
             var status = document.createElement("div");
             status.className = "lts-clip__status";
-            info.appendChild(title); info.appendChild(time); info.appendChild(status);
+            info.appendChild(title); info.appendChild(time);
+            var aiL = null;
+            if (seg.ai) {
+              title.insertAdjacentHTML("beforeend", ' <span class="pill">🔥 ' + seg.ai.score + "</span>");
+              aiL = document.createElement("p"); aiL.className = "lts-clip__ai";
+              aiL.textContent = [seg.ai.hook_title, seg.ai.reason].filter(Boolean).join(" — ");
+            }
+            info.appendChild(status);
             var acts = document.createElement("div");
             acts.className = "lts-clip__acts";
             var btn = document.createElement("button");
@@ -1966,7 +2313,9 @@
             tnB.type = "button"; tnB.className = "lts-btn"; TSET(tnB, "thumb", "Thumbnail");
             tnB.setAttribute("aria-label", "Thumbnail for Part " + seg.n); tnB.setAttribute("aria-expanded", "false");
             acts.appendChild(kitB); acts.appendChild(tnB);
-            li.appendChild(c); li.appendChild(info); li.appendChild(acts); li.appendChild(out);
+            li.appendChild(c); li.appendChild(info); li.appendChild(acts);
+            if (aiL) li.appendChild(aiL);
+            li.appendChild(out);
             // Clicks on every clip row are handled once, on the #clips list (see clipAction).
             kitB.dataset.act = "kit"; tnB.dataset.act = "tn"; li.dataset.i = i;
             frag.appendChild(li);
@@ -2191,20 +2540,39 @@
             w.appendChild(inp); w.appendChild(b); parent.appendChild(w); return inp;
           }
           var tf = field("Title"), titleIn = [line(tf, false, "Title option 1"), line(tf, false, "Title option 2"), line(tf, false, "Title option 3")];
+          var capF = field("Caption"), capIn = line(capF, true, "Caption");
           var descIn = line(field("Description"), true, "Description");
           var tagIn = line(field("Hashtags"), true, "Hashtags");
           var allB = mk("button", "lts-btn lts-btn--primary", "Copy all"); allB.type = "button";
-          var foot = mk("div", "lts-row"); foot.appendChild(allB);
-          foot.appendChild(mk("span", "lts-hint", "Made on your device from this clip's captions, the hook title and the caption style."));
+          var yt = mk("a", "lts-btn"); yt.href = "https://studio.youtube.com"; yt.target = "_blank"; yt.rel = "noopener"; TSET(yt, "ytStudio", "Open YouTube Studio");
+          var foot = mk("div", "lts-row"); foot.appendChild(allB); foot.appendChild(yt);
+          var src = mk("span", "lts-hint", "Made on your device from this clip's captions, the hook title and the caption style.");
+          foot.appendChild(src);
           box.appendChild(foot);
+          if (seg.ai) aiKit(seg);
           function render() {
-            var k = makeKit(seg, st);
+            var A = seg.aiKit, k;
+            if (A) {
+              var off = st.seed - 1, rot = function (a, n) { a = a || []; return a.length ? a.slice(off % a.length).concat(a.slice(0, off % a.length)).slice(0, n) : []; };
+              var tt = rot(A.titles, 3);
+              if (seriesName()) tt = tt.map(function (t) { return t + " | Part " + seg.n; });
+              k = { titles: tt, cap: rot(A.captions, 1)[0] || "", desc: rot(A.descriptions, 1)[0] || "", tags: (A.hashtags || []).slice(0, 15).join(" ") };
+              TSET(src, "kitAi", "✨ Written by AI from this moment.");
+            } else {
+              k = makeKit(seg, st); k.cap = "";
+              if (seg.ai && !seg.aiKitFail) TSET(src, "kitAiWait", "✨ AI is writing this post kit…");
+              else if (seg.ai) TSET(src, "kitAiFail", "AI post kit unavailable, so this one was made on your device.");
+              else src.textContent = "Made on your device from this clip's captions, the hook title and the caption style.";
+            }
+            opts.classList.toggle("lts-hidden", !!A);
             titleIn.forEach(function (inp, i) { inp.value = k.titles[i] || ""; inp.parentNode.classList.toggle("lts-hidden", !k.titles[i]); });
+            capIn.value = k.cap; capF.classList.toggle("lts-hidden", !k.cap);
             descIn.value = k.desc; tagIn.value = k.tags;
           }
+          box.__render = render;
           allB.dataset.act = "fn"; allB.__act = function () {
             var t = titleIn.map(function (i) { return i.value; }).filter(Boolean)[0] || "";
-            copyText(t + "\n\n" + descIn.value + "\n\n" + tagIn.value, allB);
+            copyText([t, capIn.value, descIn.value, tagIn.value].filter(function (x) { return x && x.trim(); }).join("\n\n"), allB);
           };
           regen.dataset.act = "fn"; regen.__act = function () { st.seed++; render(); };
           hiC.addEventListener("change", function () { st.hi = hiC.checked; render(); });
@@ -2239,7 +2607,7 @@
         }
         function buildThumb(seg) {
           var o = S.built;
-          var st = { t: Math.min(seg.start + 1, seg.end - 0.5), text: $("bhook").value.trim() || "Part " + seg.n, col: "#ffffff", out: "#000000", ow: 12, size: 110, y: 22, emoji: "", dark: 25, yt: false };
+          var st = { t: Math.min(seg.start + 1, seg.end - 0.5), text: $("bhook").value.trim() || (seg.ai && seg.ai.hook_title) || "Part " + seg.n, col: "#ffffff", out: "#000000", ow: 12, size: 110, y: 22, emoji: "", dark: 25, yt: false };
           var box = mk("div", "lts-kit");
           box.setAttribute("role", "region"); box.setAttribute("aria-label", "Thumbnail for Part " + seg.n);
           box.appendChild(mk("h3", "", "Thumbnail · Part " + seg.n));
@@ -3603,6 +3971,7 @@
             var i = Q.pending.shift(), seg = S.segs[i];
             if (!seg || !seg.el) return step();
             Q.cur = seg; curLen = lenOf(i); n++;
+            if (seg.ai) aiKit(seg);
             refreshButtons();
             progress(0);
             try { seg.el.li.scrollIntoView({ block: "nearest", behavior: "smooth" }); } catch (e) {}

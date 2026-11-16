@@ -39,7 +39,7 @@
               </span>
               <span class="lts-drop__title" data-li18n="dropT">Drop a long video here</span>
               <span class="lts-btn lts-btn--primary" data-li18n="choose">Choose video</span>
-              <span class="lts-hint" data-li18n="dropH">MP4, MOV or WebM from your device. It never leaves it.</span>
+              <span class="lts-hint" data-li18n="dropH">MP4, MOV or WebM from your device. The video file is never uploaded.</span>
               <input class="lts-sr" type="file" id="file" accept="video/*" />
             </label>
             <div class="lts-alert lts-hidden" id="err1" role="alert"></div>
@@ -64,6 +64,39 @@
           <!-- Step 2 -->
           <section class="lts-panel lts-hidden" id="step2" aria-labelledby="h2s">
             <h2 id="h2s" data-li18n="sSettings">Settings</h2>
+
+            <div class="lts-card lts-hype" id="hype">
+              <p class="lts-name" id="hsum" aria-live="polite"></p>
+              <button class="lts-btn lts-hidden" type="button" id="hagain" data-li18n="hAgain">Analyse again</button>
+              <fieldset class="lts-field">
+                <legend data-li18n="clipLen">Clip length</legend>
+                <div class="lts-seg">
+                  <input type="radio" name="hlen" id="hlen30" value="30" /><label for="hlen30">30 s</label>
+                  <input type="radio" name="hlen" id="hlen60" value="60" checked /><label for="hlen60">60 s</label>
+                </div>
+              </fieldset>
+              <fieldset class="lts-field">
+                <legend data-li18n="hMode">Mode</legend>
+                <div class="lts-seg lts-seg--tall">
+                  <input type="radio" name="hmode" id="hmN" value="normal" checked /><label for="hmN"><span data-li18n="hmN">Normal<small data-li18n="hmNs">Splits the video, fully on your device</small></span></label>
+                  <input type="radio" name="hmode" id="hmA" value="ai" /><label for="hmA"><span data-li18n="hmA">AI ✨<small data-li18n="hmAs">Keeps only real highlights</small></span></label>
+                </div>
+              </fieldset>
+              <div class="lts-hype__ai lts-hidden" id="haiPane">
+                <div class="lts-field">
+                  <label class="lts-label" for="htitle" data-li18n="hTitle">Video title or game (optional)</label>
+                  <input class="lts-input" id="htitle" type="text" maxlength="120" placeholder="BGMI ranked push" autocomplete="off" />
+                </div>
+                <label class="lts-switch"><span class="lts-label" data-li18n="hHookOn">Put the AI hook title on each clip</span><input type="checkbox" role="switch" id="hhook" checked /></label>
+                <p class="lts-hint" data-li18n="hPriv">Your full video stays on your device. Only a few small snapshots and the spoken words from each loud moment are sent to AI to check if it's a real highlight. Nothing is stored.</p>
+                <button class="lts-btn lts-btn--primary lts-btn--block" type="button" id="hgo" data-li18n="hGo">✨ Find real moments with AI</button>
+                <div class="lts-alert lts-hidden" id="hwarn" role="alert"></div>
+                <p class="lts-note" id="hres" aria-live="polite"></p>
+                <ol class="lts-moments lts-hmom" id="hlist"></ol>
+                <video class="lts-hidden lts-mvid" id="hvid" playsinline controls></video>
+                <button class="lts-btn lts-btn--primary lts-btn--block lts-hidden" type="button" id="hmake" data-li18n="hMake">Make clips from these moments</button>
+              </div>
+            </div>
 
             <fieldset class="lts-field">
               <legend data-li18n="clipLen">Clip length</legend>
@@ -493,9 +526,37 @@
             <ul class="lts-tips">
               <li data-li18n="tip1">Works best in Chrome or Edge.</li>
               <li data-li18n="tip2">Keep the tab open while clips are being made.</li>
-              <li data-li18n="tip3">Your video stays on your device. Nothing is uploaded.</li>
+              <li data-li18n="tip3">Normal mode runs fully on your device. AI mode sends only a few small snapshots, never your video file.</li>
             </ul>
           </section>
+
+          <section class="lts-info" aria-labelledby="infoh">
+            <h2 id="infoh" data-li18n="infoT">About this tool</h2>
+            <p data-li18n="infoAbout">Turn long streams and videos into Shorts and Reels in minutes, right in your browser.</p>
+            <h3 data-li18n="infoHowT">How to use</h3>
+            <ol>
+              <li data-li18n="infoHow1">Upload your video.</li>
+              <li data-li18n="infoHow2">Pick 30 s or 60 s.</li>
+              <li data-li18n="infoHow3">Choose Normal or AI.</li>
+              <li data-li18n="infoHow4">Review clips.</li>
+              <li data-li18n="infoHow5">Export and copy your post kit.</li>
+            </ol>
+            <h3 data-li18n="infoAiT">About AI mode</h3>
+            <p data-li18n="hPriv">Your full video stays on your device. Only a few small snapshots and the spoken words from each loud moment are sent to AI to check if it's a real highlight. Nothing is stored.</p>
+            <h3 data-li18n="infoCrT">Copyright</h3>
+            <p data-li18n="infoCr">Only clip videos you own or have permission to use. For other streamers' videos, ask the creator first and credit them. Clips of others' content can still get copyright claims on YouTube or Instagram. You are responsible for what you post.</p>
+          </section>
+
+          <div class="lts-hov lts-hidden" id="hov" role="dialog" aria-modal="true" aria-labelledby="hovh">
+            <div class="lts-hov__box">
+              <div class="lts-hov__eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              <h2 id="hovh">Analysing your video…</h2>
+              <p class="lts-hov__step" id="hovt" aria-live="polite"></p>
+              <div class="lts-bar" role="progressbar" aria-label="Progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="hovbar"><span></span></div>
+              <p class="lts-hint lts-hov__sub" id="hovs"></p>
+              <button class="lts-btn lts-btn--block" type="button" id="hovx" data-li18n="cancel">Cancel</button>
+            </div>
+          </div>
         </div>
 <video id="rec" class="lts-offscreen" playsinline preload="auto" aria-hidden="true" tabindex="-1"></video>
     <video id="thumbv" class="lts-offscreen" playsinline muted preload="auto" aria-hidden="true" tabindex="-1"></video>
@@ -511,7 +572,7 @@
         <ul class="lts-intro__feats">
           <li data-li18n="iF1">💬 Auto captions in Hindi, English &amp; Hinglish</li>
           <li data-li18n="iF2">🪝 Hook titles, effects &amp; background music</li>
-          <li data-li18n="iF3">🔒 Runs on your device. Nothing is uploaded</li>
+          <li data-li18n="iF3">🔒 Your video stays on your device. AI mode sends only small snapshots</li>
           <li data-li18n="iF4">🆓 100% free, no signup, no watermark</li>
         </ul>
         <div class="lts-intro__trend">

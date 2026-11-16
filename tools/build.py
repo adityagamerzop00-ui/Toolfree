@@ -65,7 +65,7 @@ PRIVACY = {
     "text": "Everything runs in your browser; nothing you type is sent anywhere or saved.",
     "text-ai": "Template ideas are made in your browser. Only if you tap Generate with AI is the text you type sent to Toolsaku's server for the AI; nothing is saved and no files are uploaded.",
     "calc": "Everything is worked out in your browser; nothing is sent anywhere or saved.",
-    "clipper": "Your video is cut and rendered on your device and never uploaded. Only the open-source caption model and render engine are downloaded when you use them. The AI Caption Generator sends only the text you type.",
+    "clipper": "Your video file is cut and rendered on your device and never uploaded. Normal mode is fully on-device. AI mode sends only a few small snapshots and the spoken words from each loud moment to Toolsaku's server for the AI, and nothing is stored. The AI post kit and AI Caption Generator send only text.",
     "link": "Only the YouTube link you paste is sent to Toolsaku's server, which reads the stream's public chat replay, captions and Most replayed data. No files are uploaded and the video is never downloaded.",
     "yt": "Thumbnails load straight from YouTube's public image server (img.youtube.com). Toolsaku stores nothing.",
 }

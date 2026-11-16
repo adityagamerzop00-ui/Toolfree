@@ -285,6 +285,8 @@ def sm_fake(req: httpx.Request):
         assert req.headers["x-goog-api-key"] == "test-gemini-key" and ":generateContent" in u
         model = u.split("/models/")[1].split(":")[0]
         gb = json.loads(req.content)
+        if "is_moment" in gb["generationConfig"]["responseSchema"]["required"]:
+            return cm_gemini(req, model, gb)
         if "titles" in gb["generationConfig"]["responseSchema"]["required"]:
             ACX["bodies"].append(gb); ACX["models"].append(model)
             if ACX["mode"] == "busy-main" and model == "gemini-3.8-flash":
@@ -501,3 +503,136 @@ def test_sm_reply_has_no_debug():
         sm_reset()
         j = sm_post(c).json()
         assert j["moments"] and "debug" not in j["signal_detail"] and "debug" not in json.dumps(j)
+
+
+
+# ---- Long Video to Shorts AI mode: /api/clip-moments ----------------------------------------------
+CMX = {"mode": "ok", "bodies": [], "models": []}
+JPG = b"\xff\xd8\xff\xe0" + b"\x00\x10JFIF" + bytes(range(200))
+JPG64 = base64.b64encode(JPG).decode()
+BUSY = {"error": {"message": "This model is currently experiencing high demand."}}
+
+
+def cm_gemini(req, model, gb):
+    CMX["bodies"].append(gb); CMX["models"].append(model)
+    prompt = gb["contents"][0]["parts"][0]["text"]
+    mode = CMX["mode"]
+    if mode == "busy-main" and model == "gemini-3.8-flash": return httpx.Response(503, json=BUSY)
+    if mode == "busy-all": return httpx.Response(503, json=BUSY)
+    if mode == "down" or (mode == "fail-second" and "from 10:00 to" in prompt): return httpx.Response(500, json={"error": {"message": "internal"}})
+    if mode == "hang-main" and model == "gemini-3.8-flash": raise httpx.ReadTimeout("hung", request=req)
+    v = ({"is_moment": False, "score": 12, "type": "other", "reason": "Lobby screen with music", "hook_title": "nothing"} if "from 10:00 to" in prompt else
+         {"is_moment": True, "score": 188, "type": "clutch", "reason": "1v3 clutch with the last bullet", "hook_title": "#Last bullet 1v3 clutch 😱"})
+    return httpx.Response(200, json={"candidates": [{"content": {"parts": [{"text": json.dumps(v, ensure_ascii=False)}]}, "finishReason": "STOP"}]})
+
+
+def cm_reset(mode="ok"):
+    A.CM_HITS.clear(); A.CM_PREFER.update(model=None, until=0.0); CMX.update(mode=mode, bodies=[], models=[])
+
+
+def cm_clip(start=60, n=3, **kw):
+    c = {"id": f"c{start}", "start": start, "end": start + 30, "spike": 12, "loud": [10, 20, 95, 40], "frames": [JPG64] * n, "times": [k * 10 for k in range(n)]}
+    c.update(kw)
+    return c
+
+
+def cm_post(c, clips=None, headers=None, raw=None, **kw):
+    if raw is not None:
+        return c.post("/api/clip-moments", headers={**(SMH if headers is None else headers), "content-type": "application/json"}, content=raw)
+    body = {"clips": [cm_clip()] if clips is None else clips, "title": "BGMI ranked push", "lang": "hinglish"}
+    body.update(kw)
+    return c.post("/api/clip-moments", headers=SMH if headers is None else headers, json=body)
+
+
+def test_cm_verdicts_ok():
+    cm_reset()
+    with client() as c:
+        r = cm_post(c, clips=[cm_clip(60), cm_clip(600, n=2, frames=["data:image/jpeg;base64," + JPG64] * 2, words="bhai kya clutch tha")])
+        assert r.status_code == 200, r.text
+        assert r.headers["cache-control"] == "no-store"
+        j = r.json()
+        v1, v2 = j["verdicts"]
+        assert v1["id"] == "c60" and v1["ok"] and v1["is_moment"] is True and v1["score"] == 100 and v1["type"] == "clutch"
+        assert v1["hook_title"] == "Last bullet 1v3 clutch 😱" and v1["reason"].startswith("1v3") and v1["model"] == "gemini-3.8-flash"
+        assert v2["id"] == "c600" and v2["ok"] and v2["is_moment"] is False and v2["score"] == 12  # server returns the verdict; the page drops it
+        assert j["model"] == "gemini-3.8-flash" and isinstance(j["ms"], int)
+        assert len(CMX["bodies"]) == 2
+        g = next(b for b in CMX["bodies"] if "from 1:00 to" in b["contents"][0]["parts"][0]["text"])
+        parts = g["contents"][0]["parts"]
+        imgs = [p["inline_data"] for p in parts if "inline_data" in p]
+        assert len(imgs) == 3 and all(i["mime_type"] == "image/jpeg" and i["data"] == JPG64 for i in imgs)
+        assert parts[1]["text"] == "Snapshot at 0.0 s:" and "BGMI ranked push" in parts[0]["text"] and "Hinglish" in parts[0]["text"]
+        assert "10, 20, 95, 40" in parts[0]["text"] and "at about 12 s" in parts[0]["text"]
+        gc = g["generationConfig"]
+        assert gc["responseMimeType"] == "application/json" and gc["responseSchema"]["required"][0] == "is_moment"
+        assert gc["thinkingConfig"] == {"thinkingLevel": "minimal"}
+        g2 = next(b for b in CMX["bodies"] if "from 10:00 to" in b["contents"][0]["parts"][0]["text"])
+        assert "bhai kya clutch tha" in g2["contents"][0]["parts"][0]["text"]
+
+
+def test_cm_bad_payloads():
+    cm_reset()
+    with client() as c:
+        assert cm_post(c, headers={}).status_code == 403
+        assert cm_post(c, headers={"x-toolsaku": "1", "origin": "https://evil.example"}).status_code == 403
+        assert cm_post(c, raw=b"not json").status_code == 400
+        assert cm_post(c, clips=[]).status_code == 400
+        r = cm_post(c, clips=[cm_clip(i * 40) for i in range(9)]); assert r.status_code == 413 and "max 8" in r.json()["detail"]
+        r = cm_post(c, clips=[cm_clip(n=13)]); assert r.status_code == 413 and "max 12" in r.json()["detail"]
+        big = base64.b64encode(b"\xff\xd8\xff" + b"0" * (151 * 1024)).decode()
+        r = cm_post(c, clips=[cm_clip(frames=[big], times=None)]); assert r.status_code == 413 and "150 KB" in r.json()["detail"]
+        r = cm_post(c, clips=[cm_clip(frames=["%%%notbase64"])]); assert r.status_code == 400 and "base64" in r.json()["detail"]
+        png = base64.b64encode(b"\x89PNG\r\n\x1a\n" + b"0" * 50).decode()
+        r = cm_post(c, clips=[cm_clip(frames=[png])]); assert r.status_code == 400 and "JPEG" in r.json()["detail"]
+        r = cm_post(c, clips=[cm_clip(frames=["data:image/png;base64," + png])]); assert r.status_code == 400
+        assert cm_post(c, clips=[cm_clip(frames=[])]).status_code == 400
+        assert cm_post(c, clips=[cm_clip(end=10)]).status_code == 400  # end before start
+        assert cm_post(c, clips=[cm_clip(end=60 + 500)]).status_code == 400  # too long
+        old = A.CM_MAX_BODY; A.CM_MAX_BODY = 2000
+        try:
+            r = cm_post(c, clips=[cm_clip(n=12)]); assert r.status_code == 413 and "12 MB" in r.json()["detail"]
+        finally:
+            A.CM_MAX_BODY = old
+        assert CMX["bodies"] == []  # nothing bad ever reached the AI
+        key, A.GEMINI_API_KEY = A.GEMINI_API_KEY, ""
+        try:
+            r = cm_post(c); assert r.status_code == 503 and r.json()["detail"] == "AI key not set on server"
+        finally:
+            A.GEMINI_API_KEY = key
+
+
+def test_cm_rate_limit_counts_clips():
+    cm_reset()
+    with client() as c:
+        codes = [cm_post(c, clips=[cm_clip(i * 40 + k * 400) for i in range(8)]).status_code for k in range(7)]  # 56 clips
+        assert codes == [200] * 7
+        r = cm_post(c, clips=[cm_clip(i * 40) for i in range(5)])  # 61 > 60
+        assert r.status_code == 429 and "Try again in" in r.json()["detail"]
+        assert cm_post(c, clips=[cm_clip(i * 40) for i in range(4)]).status_code == 200  # exactly 60 is fine
+
+
+def test_cm_busy_main_moves_to_backup_and_sticks():
+    with client() as c:
+        cm_reset("busy-main")
+        j = cm_post(c).json()
+        assert j["verdicts"][0]["ok"] and j["model"] == "gemini-3.7-flash"
+        assert CMX["models"] == ["gemini-3.8-flash", "gemini-3.8-flash", "gemini-3.7-flash"]
+        CMX["models"].clear()
+        j = cm_post(c).json()  # next request starts on the backup that worked
+        assert j["model"] == "gemini-3.7-flash" and CMX["models"] == ["gemini-3.7-flash"]
+        cm_reset("hang-main")
+        j = cm_post(c).json()
+        assert j["model"] == "gemini-3.7-flash" and CMX["models"] == ["gemini-3.8-flash", "gemini-3.7-flash"]
+
+
+def test_cm_gemini_down_and_partial():
+    with client() as c:
+        cm_reset("down")
+        r = cm_post(c); assert r.status_code == 502 and "AI error" in r.json()["detail"]
+        cm_reset("busy-all")
+        r = cm_post(c); assert r.status_code == 503 and "busy" in r.json()["detail"]
+        cm_reset("fail-second")  # one clip fails, the other still comes back
+        r = cm_post(c, clips=[cm_clip(60), cm_clip(600)])
+        assert r.status_code == 200
+        v1, v2 = r.json()["verdicts"]
+        assert v1["ok"] and v1["is_moment"] and v2["ok"] is False and v2["status"] == 502 and v2["error"]

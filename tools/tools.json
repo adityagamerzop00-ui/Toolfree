@@ -346,17 +346,27 @@
   "embed": "clipper",
   "privacy": "clipper",
   "description": "Turn one long video into vertical 30–60 second Shorts and Reels with captions, hook titles and music.",
-  "meta_description": "Cut a long video into vertical YouTube Shorts and Instagram Reels: auto captions in Hindi and English, hook titles, background music and a post kit. Free, no watermark, no upload.",
+  "meta_description": "Cut a long video or stream into vertical YouTube Shorts and Instagram Reels: hype-spot finder, optional AI mode that keeps only real highlights, auto captions in Hindi and English, hook titles and a post kit. Free, no watermark.",
   "steps": [
-   "Add a long video (MP4, MOV or WEBM) or tap a preset such as Gaming or Podcast.",
-   "Pick the clip length, how many clips and the 9:16 crop, then choose caption and title styles.",
-   "Tap Make clips, keep the tab open, then download or share each Short."
+   "Upload your video.",
+   "Pick 30 s or 60 s.",
+   "Choose Normal or AI.",
+   "Review clips.",
+   "Export and copy your post kit."
   ],
-  "about": "Toolsaku's Long Video to Shorts maker finds good moments in a long video and turns them into vertical 9:16 clips for YouTube Shorts, Instagram Reels and Moj. It can add auto captions (Whisper, running in your browser), a hook title, effects and background music, and builds a post kit with titles, a description and hashtags. Everything is rendered on your device, so your video is never uploaded and there is no watermark.",
+  "about": "Turn long streams and videos into Shorts and Reels in minutes, right in your browser. After you upload, the tool counts the loud hype spots in your video and tells you about how many clips it can make. Normal mode splits the video into vertical 9:16 clips fully on your device. AI mode checks each loud moment and keeps only the real highlights, with a score, a reason and a hook title. You can add auto captions (Whisper, running in your browser), a hook title, effects and music, and each clip gets a post kit with a title, caption, description and hashtags. There is no watermark.",
   "faq": [
    [
     "Is my video uploaded anywhere?",
-    "No. The clips are cut and rendered in your browser. Only the open-source caption model and render engine are downloaded the first time you use them."
+    "No. Your video file is cut and rendered in your browser and never uploaded. Normal mode is fully on your device. In AI mode only a few small snapshots and the spoken words from each loud moment are sent to AI to check it, and nothing is stored."
+   ],
+   [
+    "What does AI mode do?",
+    "It finds the loud hype spots in your video, then AI looks at a few snapshots from each one and keeps only real highlights such as clutch plays, funny moments, rage or fails. Each kept clip gets a score, a short reason and a hook title. If the AI is busy, your clips are still shown, ranked by loudness."
+   ],
+   [
+    "Can I clip other streamers' videos?",
+    "Only with permission. Ask the creator first and credit them. Clips of others' content can still get copyright claims on YouTube or Instagram, and you are responsible for what you post."
    ],
    [
     "Which browsers work?",
@@ -367,16 +377,12 @@
     "Yes. Captions can be in Hindi, English or Hinglish, and the tool's own buttons switch to Hindi too."
    ],
    [
-    "How long can my video be?",
-    "Longer videos take more time and memory to process. On phones, shorter videos work most smoothly; a computer handles long ones better."
-   ],
-   [
     "Is it free?",
     "Yes. There's no sign-up and no watermark on your clips."
    ],
    [
-    "Why is it slow the first time?",
-    "The caption model and render engine download once the first time you use them. After that they're cached in your browser."
+    "How long can my video be?",
+    "Longer videos take more time and memory to process. On phones, shorter videos work most smoothly; a computer handles long ones better."
    ]
   ],
   "related": [
@@ -387,16 +393,16 @@
   ],
   "guide": [
    [
-    "Turn one long video into many Shorts",
-    "Podcasts, gaming streams, lectures and vlogs hide great moments. Add the video, choose how long each clip should be and how many you want, and the tool picks moments and crops them to vertical 9:16 for YouTube Shorts, Instagram Reels and Moj."
+    "About AI mode",
+    "Your full video stays on your device. Only a few small snapshots and the spoken words from each loud moment are sent to AI to check if it's a real highlight. Nothing is stored. Normal mode sends nothing at all."
+   ],
+   [
+    "Copyright",
+    "Only clip videos you own or have permission to use. For other streamers' videos, ask the creator first and credit them. Clips of others' content can still get copyright claims on YouTube or Instagram. You are responsible for what you post."
    ],
    [
     "Captions in Hindi, English or Hinglish",
     "Most people watch Shorts with the sound off, so captions matter. Auto captions are made on your device by the Whisper speech model, in Hindi, English or Hinglish, with styles you can pick."
-   ],
-   [
-    "Free, private and no watermark",
-    "Clips are rendered in your own browser, so your video is never uploaded and there's no watermark on the result. Use a recent Chrome or Edge, and keep the tab open while it works."
    ]
   ]
  },

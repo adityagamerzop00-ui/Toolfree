@@ -9,6 +9,7 @@ uploaded to the platform, and deleted right after.
 """
 import asyncio
 import base64
+import binascii
 import hashlib
 import hmac
 import json
@@ -1048,12 +1049,14 @@ async def _gemini_post(h, model, body, timeout):
     return r
 
 
-async def gemini_call(prompt, schema, timeout=210, max_tokens=16384, temperature=0.4, thinking="low", timeout_next=False):
+async def gemini_call(prompt, schema, timeout=210, max_tokens=16384, temperature=0.4, thinking="low", timeout_next=False, models=None):
     """Call Gemini in JSON mode; returns (parsed object, model used). When the main model is busy (429/5xx,
     "high demand") it retries once after a short wait, then tries GEMINI_BACKUP_MODELS in order.
     With timeout_next, a model that times out is skipped and the next backup gets its own `timeout`.
+    `prompt` is text, or a list of Gemini parts (text and inline_data images). `models` overrides the order to try.
     Raises SMError with a user-facing message."""
-    models = [GEMINI_MODEL] + [m for m in GEMINI_BACKUP_MODELS if m != GEMINI_MODEL]
+    models = list(models) if models else [GEMINI_MODEL] + [m for m in GEMINI_BACKUP_MODELS if m != GEMINI_MODEL]
+    parts = prompt if isinstance(prompt, list) else [{"text": prompt}]
     tries = [models[0], models[0]] + models[1:]
     r, model, timed_out = None, models[0], None
     async with http() as h:
@@ -1061,7 +1064,7 @@ async def gemini_call(prompt, schema, timeout=210, max_tokens=16384, temperature
             if i == 1:
                 if timed_out: continue  # main model hung: don't wait on it again
                 await asyncio.sleep(GEMINI_BUSY_WAIT)
-            body = {"contents": [{"role": "user", "parts": [{"text": prompt}]}],
+            body = {"contents": [{"role": "user", "parts": parts}],
                     "generationConfig": {"responseMimeType": "application/json", "responseSchema": schema, "temperature": temperature,
                                          "maxOutputTokens": max_tokens, "thinkingConfig": {"thinkingLevel": thinking}}}
             try:
@@ -1360,3 +1363,162 @@ async def ai_captions(req: Request):
     if not warning:
         AC_CACHE[key] = {"at": time.time(), "v": out}; _trim_cache(AC_CACHE)
     return JSONResponse(out, headers={"Cache-Control": "no-store"})
+
+
+# ---- Long Video to Shorts, AI mode: is this loud moment a real highlight? ----------------------
+# The phone finds loud spikes on its own, then sends ~8 small JPEG snapshots (and spoken words, if it
+# already has them) per candidate clip. The full video never leaves the device. Images live only in
+# memory for the length of the request and are never stored or logged.
+CM_MAX_BODY = 12 * 1024 * 1024     # whole request
+CM_MAX_CLIPS = 8                   # clips per request
+CM_MAX_FRAMES = 12                 # snapshots per clip
+CM_MAX_IMG = 150 * 1024            # bytes per snapshot (decoded)
+CM_MAX_SPAN = 180                  # seconds per candidate clip
+CM_RATE = (60, 600)                # 60 clips per IP per 10 minutes
+CM_HITS = {}
+CM_SEM = asyncio.Semaphore(5)      # at most 5 Gemini calls at once for this tool
+CM_PREFER = {"model": None, "until": 0.0}  # after the main model was busy, start on the backup that worked for 2 minutes
+CM_TYPES = ("clutch", "funny", "rage", "hype", "fail", "other")
+CM_SCHEMA = {
+    "type": "OBJECT",
+    "properties": {"is_moment": {"type": "BOOLEAN"}, "score": {"type": "INTEGER"}, "type": {"type": "STRING", "enum": list(CM_TYPES)},
+                   "reason": {"type": "STRING"}, "hook_title": {"type": "STRING"}},
+    "required": ["is_moment", "score", "type", "reason", "hook_title"],
+}
+CM_B64_RE = re.compile(r"^[A-Za-z0-9+/_-]+={0,2}$")
+
+
+def _cm_img(s):
+    """Validate one snapshot (base64 JPEG, optionally a data: URL). Returns clean standard base64."""
+    if not isinstance(s, str) or not s: raise HTTPException(400, "Each snapshot must be a base64 JPEG.")
+    if s.startswith("data:"):
+        head, _, s = s.partition(",")
+        if "image/jpeg" not in head.lower(): raise HTTPException(400, "Snapshots must be JPEG images.")
+    s = s.strip()
+    if len(s) > CM_MAX_IMG * 4 // 3 + 8: raise HTTPException(413, "A snapshot is too big (max 150 KB each).")
+    if not CM_B64_RE.match(s): raise HTTPException(400, "A snapshot isn't valid base64.")
+    try: raw = base64.b64decode(s.replace("-", "+").replace("_", "/") + "=" * (-len(s) % 4), validate=True)
+    except (binascii.Error, ValueError): raise HTTPException(400, "A snapshot isn't valid base64.")
+    if len(raw) > CM_MAX_IMG: raise HTTPException(413, "A snapshot is too big (max 150 KB each).")
+    if raw[:3] != b"\xff\xd8\xff": raise HTTPException(400, "Snapshots must be JPEG images.")
+    return base64.b64encode(raw).decode()
+
+
+def _num(v, lo=None, hi=None):
+    try: x = float(v)
+    except (TypeError, ValueError): return None
+    if x != x or x in (float("inf"), float("-inf")): return None
+    if lo is not None and x < lo: return None
+    if hi is not None and x > hi: return None
+    return x
+
+
+def cm_parse(body):
+    """Validate a /api/clip-moments body. Raises HTTPException 400 (bad shape) or 413 (too much)."""
+    if not isinstance(body, dict) or not isinstance(body.get("clips"), list) or not body["clips"]:
+        raise HTTPException(400, "Send JSON like {\"clips\": [{\"start\": 60, \"end\": 90, \"frames\": [\"<base64 jpeg>\"]}]}.")
+    if len(body["clips"]) > CM_MAX_CLIPS: raise HTTPException(413, f"Too many clips in one request (max {CM_MAX_CLIPS}).")
+    clips = []
+    for i, c in enumerate(body["clips"]):
+        if not isinstance(c, dict): raise HTTPException(400, "Each clip must be an object.")
+        st, en = _num(c.get("start"), 0), _num(c.get("end"), 0)
+        if st is None or en is None or en <= st: raise HTTPException(400, "Each clip needs a start and an end time in seconds, end after start.")
+        if en - st > CM_MAX_SPAN: raise HTTPException(400, f"A clip can be at most {CM_MAX_SPAN} seconds long.")
+        frames = c.get("frames")
+        if not isinstance(frames, list) or not frames: raise HTTPException(400, "Each clip needs at least one snapshot.")
+        if len(frames) > CM_MAX_FRAMES: raise HTTPException(413, f"Too many snapshots in one clip (max {CM_MAX_FRAMES}).")
+        imgs = [_cm_img(f) for f in frames]
+        times = c.get("times") if isinstance(c.get("times"), list) and len(c.get("times")) == len(imgs) else None
+        times = [(_num(t, 0, en - st + 1) or 0.0) for t in times] if times else [(en - st) * (k + 0.5) / len(imgs) for k in range(len(imgs))]
+        loud = c.get("loud") if isinstance(c.get("loud"), list) else []
+        loud = [int(max(0, min(100, _num(x) or 0))) for x in loud[:int(CM_MAX_SPAN)]]
+        spike = _num(c.get("spike"), 0, en - st)
+        clips.append({"id": _ac_text(c.get("id"), 40) or str(i), "start": st, "end": en, "frames": imgs, "times": times,
+                      "loud": loud, "spike": spike, "words": _ac_text(c.get("words"), 1500)})
+    lang = "hinglish" if str(body.get("lang") or "").lower() == "hinglish" else "english"
+    return {"clips": clips, "title": _ac_text(body.get("title"), 120), "lang": lang}
+
+
+def cm_prompt(c, q):
+    dur = round(c["end"] - c["start"])
+    lang = ("Hinglish (Hindi words in Roman script mixed with English, like Indian gaming creators write; never Devanagari)"
+            if q["lang"] == "hinglish" else "simple English")
+    spike = f" at about {c['spike']:.0f} s into the clip" if c["spike"] is not None else ""
+    loud = ", ".join(str(x) for x in c["loud"]) if c["loud"] else "not available"
+    words = f'"{c["words"]}"' if c["words"] else "not available"
+    return f"""You check candidate highlight clips cut from a long video (usually a gaming live stream) for YouTube Shorts and Instagram Reels.
+
+Video title or game (typed by the creator): {q['title'] or 'not given'}
+This candidate runs from {hms(int(c['start']))} to {hms(int(c['end']))} ({dur} s). It was picked because the audio suddenly got loud{spike}.
+Loudness for each second of the clip (0-100): {loud}
+Spoken words in this clip: {words}
+After this text come {len(c['frames'])} snapshots in time order, each labelled with its second inside the clip.
+
+Decide if this is a real highlight people would stop scrolling for: a clutch play, a funny moment, rage, big hype, or an epic fail.
+Loud music, menus, loading or lobby screens, ads, idle talk or a screen where nothing changes are NOT moments.
+Return JSON:
+- is_moment: true only for a real highlight.
+- score: 0-100, how strong a Short this would make.
+- type: clutch, funny, rage, hype, fail or other.
+- reason: at most 12 words on what happens, based only on these snapshots, loudness and words.
+- hook_title: a catchy on-screen hook for this clip, at most 60 characters, in {lang}, no hashtags, no invented names.
+"""
+
+
+def cm_clean(raw):
+    try: score = int(round(float(raw.get("score"))))
+    except (TypeError, ValueError): score = 0
+    typ = str(raw.get("type") or "").lower()
+    return {"is_moment": raw.get("is_moment") is True, "score": max(0, min(100, score)), "type": typ if typ in CM_TYPES else "other",
+            "reason": _ac_text(raw.get("reason"), 140), "hook_title": _ac_text(raw.get("hook_title"), 80).strip("#").strip()}
+
+
+async def cm_check(c, q):
+    parts = [{"text": cm_prompt(c, q)}]
+    for t, img in zip(c["times"], c["frames"]):
+        parts += [{"text": f"Snapshot at {t:.1f} s:"}, {"inline_data": {"mime_type": "image/jpeg", "data": img}}]
+    models = None
+    if CM_PREFER["model"] and CM_PREFER["until"] > time.time():
+        models = [CM_PREFER["model"]] + [m for m in [GEMINI_MODEL] + GEMINI_BACKUP_MODELS if m != CM_PREFER["model"]]
+    async with CM_SEM:
+        t0 = time.time()
+        try:
+            raw, model = await gemini_call(parts, CM_SCHEMA, timeout=40, max_tokens=2048, temperature=0.3, thinking="minimal", timeout_next=True, models=models)
+        except SMError as e:
+            return {"id": c["id"], "ok": False, "status": e.status, "error": e.msg}
+    if model != GEMINI_MODEL: CM_PREFER.update(model=model, until=time.time() + 120)
+    return {"id": c["id"], "ok": True, **cm_clean(raw), "model": model, "ms": int((time.time() - t0) * 1000)}
+
+
+@app.post("/api/clip-moments")
+async def clip_moments(req: Request):
+    if req.headers.get("x-toolsaku") != "1": raise HTTPException(403, "bad_request")
+    origin = req.headers.get("origin")
+    if origin and urllib.parse.urlsplit(origin).netloc not in (req.headers.get("host"), urllib.parse.urlsplit(PUBLIC_URL).netloc):
+        raise HTTPException(403, "bad_origin")
+    cl = req.headers.get("content-length") or ""
+    if cl.isdigit() and int(cl) > CM_MAX_BODY: raise HTTPException(413, "Too much data in one request (max 12 MB).")
+    raw = await req.body()
+    if len(raw) > CM_MAX_BODY: raise HTTPException(413, "Too much data in one request (max 12 MB).")
+    try: body = json.loads(raw)
+    except ValueError: body = None
+    q = cm_parse(body)
+    del raw, body
+    if not GEMINI_API_KEY: raise HTTPException(503, "AI key not set on server")
+    ip, t = _client_ip(req), time.time()
+    hits = [x for x in CM_HITS.get(ip, []) if x > t - CM_RATE[1]]
+    if len(hits) + len(q["clips"]) > CM_RATE[0]:
+        wait_min = max(1, int(((hits[0] if hits else t) + CM_RATE[1] - t) // 60) + 1)
+        raise HTTPException(429, f"AI has checked a lot of clips from your network. Try again in {wait_min} minute{'s' if wait_min > 1 else ''}.")
+    CM_HITS[ip] = hits + [t] * len(q["clips"])
+    if len(CM_HITS) > 5000:
+        for k in [k for k, v in CM_HITS.items() if not v or v[-1] < t - CM_RATE[1]]: CM_HITS.pop(k, None)
+    verdicts = await asyncio.gather(*(cm_check(c, q) for c in q["clips"]))
+    q = None  # drop the snapshots now
+    ok = [v for v in verdicts if v["ok"]]
+    if not ok:
+        bad = verdicts[0]
+        raise HTTPException(bad["status"], bad["error"])
+    models = [v["model"] for v in ok]
+    return JSONResponse({"verdicts": verdicts, "model": max(set(models), key=models.count), "ms": int((time.time() - t) * 1000)},
+                        headers={"Cache-Control": "no-store"})
