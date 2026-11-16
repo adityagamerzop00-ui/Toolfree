@@ -1024,7 +1024,7 @@ Rules:
 """
 
 
-async def gemini_json(prompt, schema, timeout=210, max_tokens=16384, temperature=0.4):
+async def gemini_json(prompt, schema, timeout=210, max_tokens=16384, temperature=0.4, thinking="low"):
     """Call Gemini in JSON mode and return the parsed object. Raises SMError with a user-facing message."""
     body = {"contents": [{"role": "user", "parts": [{"text": prompt}]}],
             "generationConfig": {"responseMimeType": "application/json", "responseSchema": schema, "temperature": temperature, "maxOutputTokens": max_tokens}}
@@ -1032,7 +1032,7 @@ async def gemini_json(prompt, schema, timeout=210, max_tokens=16384, temperature
     async with http() as h:
         try:
             gc = body["generationConfig"]
-            gc["thinkingConfig"] = {"thinkingLevel": "low"}
+            gc["thinkingConfig"] = {"thinkingLevel": thinking}
             r = await h.post(GEMINI_URL.format(model=GEMINI_MODEL), headers=hdrs, json=body, timeout=httpx.Timeout(timeout))
             if r.status_code == 400 and "think" in r.text.lower():  # model doesn't take thinkingLevel: try a budget, then nothing
                 gc["thinkingConfig"] = {"thinkingBudget": 512}
@@ -1315,7 +1315,7 @@ async def ai_captions(req: Request):
     else:
         async with AC_SEM:
             try:
-                res = ac_clean(await gemini_json(ac_prompt(q), AC_SCHEMA, timeout=60, max_tokens=4096, temperature=0.9), q)
+                res = ac_clean(await gemini_json(ac_prompt(q), AC_SCHEMA, timeout=150, max_tokens=4096, temperature=0.9, thinking="minimal"), q)
                 if not any(res.values()): raise SMError(502, "The AI gave an empty answer.")
             except SMError as e:
                 res, warning, source = ac_templates(q), e.msg.rstrip(".") + ". Showing template ideas instead.", "template"
