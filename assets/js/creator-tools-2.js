@@ -111,8 +111,8 @@
     out.addEventListener("click", (e) => { const b = e.target.closest("button[data-c]"); if (b) copied(b, b.dataset.c); });
   }
 
-  const LOCAL = ["Do I need an account?", "No. It's free with no sign-up, and nothing you type leaves your browser."];
-  const TPL = ["Where do the ideas come from?", "Ideas come from proven templates on your device, so they're instant and private."];
+  const LOCAL = ["Do I need an account?", "No. It's free with no sign-up. Template ideas never leave your browser; the AI button sends only the text you type, and nothing is saved."];
+  const TPL = ["Where do the ideas come from?", "The main generator uses proven templates on your device, so it's instant and private. Tap Generate with AI for fresh titles, captions, descriptions and hashtags in Hinglish or English, written by Google's Gemini AI."];
   const defs = {
     "video-description-templates": { render: toolDesc, added: 24, description: "Full YouTube descriptions with timestamps, links and socials.",
       info: { steps: ["Pick a template.", "Fill in the fields you need; empty sections are skipped.", "Check the count against YouTube's 5,000 limit and tap Copy."],

@@ -1,4 +1,4 @@
-/* Toolsaku creator tools: Instagram Caption Generator, YouTube Title Generator, Hashtag Suggestions. Uses window.Toolora from core.js. */
+/* Toolsaku creator tools: AI Caption Generator, YouTube Title Generator, Hashtag Suggestions. Uses window.Toolora from core.js. */
 (function () {
   "use strict";
   const T = window.Toolora;
@@ -144,12 +144,12 @@
       `<p class="x-note">Instagram allows up to 30 hashtags per post.</p>`;
   }
 
-  const LOCAL = ["Do I need an account?", "No. It's free with no sign-up, and nothing you type leaves your browser."];
-  const TPL = ["Where do the ideas come from?", "Ideas come from proven templates on your device, so they're instant and private."];
+  const LOCAL = ["Do I need an account?", "No. It's free with no sign-up. Template ideas never leave your browser; the AI button sends only the text you type, and nothing is saved."];
+  const TPL = ["Where do the ideas come from?", "The main generator uses proven templates on your device, so it's instant and private. Tap Generate with AI for fresh titles, captions, descriptions and hashtags in Hinglish or English, written by Google's Gemini AI."];
   const defs = {
-    "instagram-caption-generator": { render: toolCap, added: 21, description: "Caption ideas for any topic, in four tones, with optional call to action and hashtags.",
+    "instagram-caption-generator": { render: toolCap, added: 21, description: "Caption ideas for any topic in four tones, plus AI captions and hashtags in Hinglish or English.",
       info: { steps: ["Type your post's topic or keyword.", "Pick a tone: Fun, Professional, Inspiring or Casual.", "Choose whether to add a call to action and hashtags, then tap Generate.", "Tap Copy on a caption you like, or Generate more for new ones."],
-        about: "Instagram Caption Generator mixes about 30 caption templates with your topic, emoji to match your tone, and optional call-to-action and hashtag lines.",
+        about: "AI Caption Generator mixes about 30 caption templates with your topic, emoji to match your tone, and optional call-to-action and hashtag lines. Tap Generate with AI for fresh captions, titles and hashtags in Hinglish or English.",
         faq: [TPL, ["Can I edit the captions?", "Yes. Copy one, paste it into Instagram and change any words you like."], LOCAL] } },
     "youtube-title-generator": { render: (m) => form(m, { label: "Video topic or keyword", ph: "e.g. home workouts", tone: true, gen: genYT }), added: 22,
       description: "Clickable YouTube title ideas with a character count for each.",

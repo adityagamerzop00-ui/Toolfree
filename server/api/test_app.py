@@ -228,6 +228,26 @@ def chat_page(start_ms):
     return {"continuationContents": {"liveChatContinuation": {"actions": acts, "continuations": conts}}}
 
 
+ACX = {"mode": "ok", "bodies": []}
+
+
+def ac_answer():
+    j = {"titles": ["Bhai police chase mein kya ho gaya 😱", "Bhai police chase mein kya ho gaya 😱", "GTA RP ka sabse funny din"],
+         "captions": ["Chase dekh ke hasi nahi rukegi 😂"], "descriptions": ["Line one\nLine two"],
+         "hashtags": ["#GTARP", "gta5", "#Police Chase", "#"]}
+    return {"candidates": [{"content": {"parts": [{"text": json.dumps(j, ensure_ascii=False)}]}, "finishReason": "STOP"}]}
+
+
+def ac_reset(mode="ok"):
+    A.AC_CACHE.clear(); A.AC_HITS.clear(); ACX.update(mode=mode, bodies=[])
+
+
+def ac_post(c, headers=None, **kw):
+    body = {"topic": "GTA RP police chase", "lang": "hinglish", "tone": "fun", "platform": "shorts"}
+    body.update(kw)
+    return c.post("/api/ai-captions", headers=SMH if headers is None else headers, json=body)
+
+
 def gemini_answer():
     ms = [{"start_sec": 2695, "end_sec": 2740, "title": "Bhai police ne pakad liya", "hook": "Jab plan fail ho jaye 😂", "why": "Most replayed peak 1.0", "score": 95},
           {"start_sec": 2700, "end_sec": 2745, "title": "Duplicate", "hook": "dup", "why": "dup", "score": 80},
@@ -263,7 +283,13 @@ def sm_fake(req: httpx.Request):
         return httpx.Response(200, json=chat_page(start // 2000 * 2000))
     if u.startswith("https://generativelanguage.googleapis.com/"):
         assert req.headers["x-goog-api-key"] == "test-gemini-key" and "gemini-3.8-flash:generateContent" in u
-        SMX["gemini_body"].append(json.loads(req.content))
+        gb = json.loads(req.content)
+        if "titles" in gb["generationConfig"]["responseSchema"]["required"]:
+            ACX["bodies"].append(gb)
+            if ACX["mode"] == "ok": return httpx.Response(200, json=ac_answer())
+            if ACX["mode"] == "empty": return httpx.Response(200, json={"candidates": [{"content": {"parts": [{"text": "{}"}]}}]})
+            return httpx.Response(500, json={"error": {"message": "internal"}})
+        SMX["gemini_body"].append(gb)
         if SMX["gemini"] == "ok": return httpx.Response(200, json=gemini_answer())
         if SMX["gemini"] == "badkey": return httpx.Response(400, json={"error": {"message": "API key not valid. Please pass a valid API key."}})
         return httpx.Response(500, json={"error": {"message": "internal"}})
@@ -388,3 +414,56 @@ def test_sm_rate_limit():
         assert codes == [200] * 5 + [429]
         assert "Too many" in sm_post(c, count=99).json()["detail"]
         assert sm_post(c, count=5).json()["cached"] is True  # a cached answer is still served
+
+
+def test_ac_ai_flow_clean_and_cache():
+    ac_reset()
+    with client() as c:
+        r = ac_post(c)
+        assert r.status_code == 200, r.text
+        j = r.json()
+        assert j["source"] == "ai" and j["warning"] is None and j["cached"] is False and j["lang"] == "hinglish"
+        assert j["titles"] == ["Bhai police chase mein kya ho gaya 😱", "GTA RP ka sabse funny din"]  # duplicates removed
+        assert j["hashtags"] == ["#GTARP", "#gta5", "#PoliceChase"]  # '#' added, spaces removed, empty tag dropped
+        g = ACX["bodies"][0]
+        prompt = g["contents"][0]["parts"][0]["text"]
+        assert "GTA RP police chase" in prompt and "Hinglish" in prompt and "Tone: Fun" in prompt and "Reels" in prompt
+        assert g["generationConfig"]["responseMimeType"] == "application/json"
+        assert ac_post(c).json()["cached"] is True and len(ACX["bodies"]) == 1  # cache: no second AI call
+
+
+def test_ac_kinds_and_english():
+    ac_reset()
+    with client() as c:
+        j = ac_post(c, kinds=["hashtags"], lang="english").json()
+        assert j["kinds"] == ["hashtags"] and j["titles"] == [] and j["captions"] == [] and j["hashtags"]
+        prompt = ACX["bodies"][0]["contents"][0]["parts"][0]["text"]
+        assert "simple, natural English" in prompt and "Return an empty list for: titles, captions, descriptions." in prompt
+
+
+def test_ac_errors_and_fallback():
+    with client() as c:
+        ac_reset()
+        assert ac_post(c, headers={}).status_code == 403
+        assert ac_post(c, headers={"x-toolsaku": "1", "origin": "https://evil.example"}).status_code == 403
+        r = ac_post(c, topic="a"); assert r.status_code == 400 and "at least 3" in r.json()["detail"]
+        for mode in ("down", "empty"):  # AI fails -> template ideas plus a warning, not cached
+            ac_reset(mode)
+            j = ac_post(c, lang="english").json()
+            assert j["source"] == "template" and j["warning"] and len(j["titles"]) == 8 and j["hashtags"][0] == "#GTARPPoliceChase"
+            assert ac_post(c, lang="english").json()["cached"] is False
+        ac_reset()
+        key, A.GEMINI_API_KEY = A.GEMINI_API_KEY, ""
+        try:
+            j = ac_post(c).json(); assert j["source"] == "template" and "isn't set up" in j["warning"] and "Bhai" not in j["titles"][0]
+        finally:
+            A.GEMINI_API_KEY = key
+
+
+def test_ac_rate_limit():
+    ac_reset()
+    with client() as c:
+        codes = [ac_post(c, topic=f"topic number {i}").status_code for i in range(6)]
+        assert codes == [200] * 5 + [429]
+        assert "Too many AI" in ac_post(c, topic="another one").json()["detail"]
+        assert ac_post(c, topic="topic number 0").json()["cached"] is True  # cached answer still served

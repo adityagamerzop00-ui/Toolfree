@@ -1024,23 +1024,22 @@ Rules:
 """
 
 
-async def call_gemini(prompt):
+async def gemini_json(prompt, schema, timeout=210, max_tokens=16384, temperature=0.4):
+    """Call Gemini in JSON mode and return the parsed object. Raises SMError with a user-facing message."""
     body = {"contents": [{"role": "user", "parts": [{"text": prompt}]}],
-            "generationConfig": {"responseMimeType": "application/json", "responseSchema": MOMENT_SCHEMA, "temperature": 0.4, "maxOutputTokens": 16384}}
+            "generationConfig": {"responseMimeType": "application/json", "responseSchema": schema, "temperature": temperature, "maxOutputTokens": max_tokens}}
+    hdrs = {"x-goog-api-key": GEMINI_API_KEY, "Content-Type": "application/json"}
     async with http() as h:
         try:
             gc = body["generationConfig"]
             gc["thinkingConfig"] = {"thinkingLevel": "low"}
-            r = await h.post(GEMINI_URL.format(model=GEMINI_MODEL), headers={"x-goog-api-key": GEMINI_API_KEY, "Content-Type": "application/json"},
-                             json=body, timeout=httpx.Timeout(210))
+            r = await h.post(GEMINI_URL.format(model=GEMINI_MODEL), headers=hdrs, json=body, timeout=httpx.Timeout(timeout))
             if r.status_code == 400 and "think" in r.text.lower():  # model doesn't take thinkingLevel: try a budget, then nothing
                 gc["thinkingConfig"] = {"thinkingBudget": 512}
-                r = await h.post(GEMINI_URL.format(model=GEMINI_MODEL), headers={"x-goog-api-key": GEMINI_API_KEY, "Content-Type": "application/json"},
-                                 json=body, timeout=httpx.Timeout(210))
+                r = await h.post(GEMINI_URL.format(model=GEMINI_MODEL), headers=hdrs, json=body, timeout=httpx.Timeout(timeout))
                 if r.status_code == 400 and "think" in r.text.lower():
                     gc.pop("thinkingConfig", None)
-                    r = await h.post(GEMINI_URL.format(model=GEMINI_MODEL), headers={"x-goog-api-key": GEMINI_API_KEY, "Content-Type": "application/json"},
-                                     json=body, timeout=httpx.Timeout(210))
+                    r = await h.post(GEMINI_URL.format(model=GEMINI_MODEL), headers=hdrs, json=body, timeout=httpx.Timeout(timeout))
         except httpx.HTTPError as e:
             raise SMError(504, "The AI took too long to answer (" + type(e).__name__ + ").")
     if r.status_code in (400, 401, 403) and "api key" in r.text.lower(): raise SMError(503, "The AI key on the server is invalid or not allowed for this model.")
@@ -1049,9 +1048,15 @@ async def call_gemini(prompt):
     j = r.json()
     try:
         text = "".join(p.get("text", "") for p in j["candidates"][0]["content"]["parts"])
-        return json.loads(text).get("moments") or []
+        out = json.loads(text)
+        if not isinstance(out, dict): raise ValueError
+        return out
     except (KeyError, IndexError, ValueError, AttributeError, TypeError):
         raise SMError(502, "The AI answer couldn't be read" + (" (" + str((j.get("candidates") or [{}])[0].get("finishReason")) + ")" if isinstance(j, dict) else "") + ".")
+
+
+async def call_gemini(prompt):
+    return (await gemini_json(prompt, MOMENT_SCHEMA)).get("moments") or []
 
 
 def _clean_moment(m, dur):
@@ -1171,3 +1176,150 @@ async def stream_moments(req: Request):
     if not warning:
         SM_CACHE[key] = {"at": time.time(), "v": res}; _trim_cache(SM_CACHE)
     return JSONResponse(res, headers={"Cache-Control": "no-store"})
+
+
+# ---- AI Caption Generator: titles, captions, descriptions and hashtags ----------------------------
+# Only the text the user types is sent here (never files). Same guards as Stream Moment Finder:
+# x-toolsaku header + same-origin check, 5 fresh requests per IP per 10 minutes, 30-minute cache,
+# and a template fallback with a warning when the AI is down.
+AC_RATE = (5, 600)
+AC_CACHE_TTL = 1800
+AC_CACHE, AC_HITS = {}, {}
+AC_SEM = asyncio.Semaphore(4)
+AC_KINDS = ("titles", "captions", "descriptions", "hashtags")
+AC_COUNTS = {"titles": 8, "captions": 6, "descriptions": 2, "hashtags": 20}
+AC_TONES = ("Fun", "Professional", "Inspiring", "Casual")
+AC_PLATFORMS = {"youtube": "a YouTube video", "shorts": "YouTube Shorts / Instagram Reels", "instagram": "an Instagram post"}
+AC_SCHEMA = {
+    "type": "OBJECT",
+    "properties": {k: {"type": "ARRAY", "items": {"type": "STRING"}} for k in AC_KINDS},
+    "required": list(AC_KINDS),
+}
+
+
+def _ac_text(v, n):
+    return re.sub(r"\s+", " ", str(v or "")).strip()[:n]
+
+
+def ac_parse(body):
+    """Validate and normalise a request body. Raises HTTPException(400) with a friendly message."""
+    if not isinstance(body, dict): raise HTTPException(400, "Send JSON like {\"topic\": \"GTA RP police chase\"}.")
+    topic = _ac_text(body.get("topic"), 200)
+    if len(topic) < 3: raise HTTPException(400, "Type what your video or post is about (at least 3 characters).")
+    details = _ac_text(body.get("details"), 500)
+    lang = "english" if str(body.get("lang") or "").lower() == "english" else "hinglish"
+    tone = next((t for t in AC_TONES if t.lower() == str(body.get("tone") or "").lower()), "Fun")
+    platform = str(body.get("platform") or "").lower()
+    if platform not in AC_PLATFORMS: platform = "youtube"
+    kinds = body.get("kinds")
+    kinds = [k for k in AC_KINDS if isinstance(kinds, list) and k in kinds] or list(AC_KINDS)
+    return {"topic": topic, "details": details, "lang": lang, "tone": tone, "platform": platform, "kinds": kinds}
+
+
+def ac_prompt(q):
+    lang = ("Hinglish: Hindi words written in Roman (English) script mixed naturally with English, the way Indian creators write "
+            "(for example \"Bhai ye scene dekh ke hasi nahi rukegi 😂\"). Never use Devanagari." if q["lang"] == "hinglish" else "simple, natural English")
+    want = []
+    if "titles" in q["kinds"]: want.append(f"- titles: {AC_COUNTS['titles']} clickable titles, max 70 characters each, no hashtags, no clickbait lies.")
+    if "captions" in q["kinds"]: want.append(f"- captions: {AC_COUNTS['captions']} short captions (1-3 lines, max 220 characters) with fitting emoji, no hashtags.")
+    if "descriptions" in q["kinds"]: want.append(f"- descriptions: {AC_COUNTS['descriptions']} descriptions of 3-6 short lines: a hook line, what the viewer gets, and a call to like/subscribe/follow. No hashtags, no links, no made-up timestamps.")
+    if "hashtags" in q["kinds"]: want.append(f"- hashtags: {AC_COUNTS['hashtags']} relevant hashtags, each starting with #, no spaces, a mix of broad and niche, India-relevant where it fits.")
+    skip = [k for k in AC_KINDS if k not in q["kinds"]]
+    return f"""You write copy for Indian content creators (gaming, vlogs, education, comedy, tech, lifestyle).
+
+Content: {q['topic']}
+{('Extra details: ' + q['details']) if q['details'] else ''}
+Platform: {AC_PLATFORMS[q['platform']]}
+Tone: {q['tone']}
+Language: {lang}
+
+Return JSON with these lists:
+{chr(10).join(want)}
+{('Return an empty list for: ' + ', '.join(skip) + '.') if skip else ''}
+Every item must be different, ready to copy and paste, and must not invent facts that are not in the content above.
+"""
+
+
+def _ac_tag(s):
+    w = re.sub(r"[^0-9A-Za-z]+", " ", s).split()
+    return "#" + "".join(_ac_cap(x) for x in w[:4]) if w else ""
+
+
+def _ac_cap(x):
+    return x if x.isupper() else x[:1].upper() + x[1:]
+
+
+def ac_templates(q):
+    """Offline fallback so the tool still gives something useful when the AI is down."""
+    t = q["topic"]
+    if q["lang"] == "hinglish":
+        titles = [f"{t} 😱 | Ye dekh ke shock ho jaoge", f"{t} – Full Story in Hindi", f"Maine try kiya {t}… aur ye hua!", f"{t} | Last tak zaroor dekhna",
+                  f"{t} ka sach 🔥", f"{t} – Beginners ke liye Guide", f"{t} 😂 Funniest Moments", f"Kya {t} worth hai? Honest Review"]
+        caps = [f"{t} vibes 🔥 Aapka kya kehna hai? 👇", f"Ye moment miss mat karna 😂 #{t.split()[0] if t.split() else 'video'}", f"{t} – full energy ⚡ Share karo apne dost ke saath!",
+                f"Bas itna hi kahunga… {t} 💯", f"Kaun kaun relate kar raha hai? 🙋 {t}", f"{t} ✨ Save kar lo baad ke liye 📌"]
+        descs = [f"{t} 🔥\nIs video mein dekhiye {t} ka poora maza.\nVideo pasand aaye toh Like karo, Share karo aur Subscribe karna mat bhoolna! 🔔",
+                 f"Aaj ka topic: {t}\nLast tak dekhna, best part end mein hai 😉\nComment mein batao aapko kaisa laga 👇"]
+    else:
+        titles = [f"{t} 😱 You Won't Believe This", f"{t} – The Full Story", f"I Tried {t}… Here's What Happened", f"{t} | Watch Till the End",
+                  f"The Truth About {t} 🔥", f"{t}: A Beginner's Guide", f"{t} 😂 Funniest Moments", f"Is {t} Worth It? Honest Review"]
+        caps = [f"{t} vibes 🔥 What do you think? 👇", f"Don't miss this moment 😂", f"{t} – full energy ⚡ Share with a friend!",
+                f"Just going to leave this here… {t} 💯", f"Who can relate? 🙋 {t}", f"{t} ✨ Save this for later 📌"]
+        descs = [f"{t} 🔥\nIn this video, enjoy {t} from start to finish.\nIf you liked it, Like, Share and Subscribe! 🔔",
+                 f"Today's topic: {t}\nWatch till the end, the best part is last 😉\nTell me what you think in the comments 👇"]
+    base = _ac_tag(t)
+    words = [w for w in re.sub(r"[^0-9A-Za-z]+", " ", t).split() if len(w) > 2]
+    plat = {"youtube": ["#YouTube", "#YouTubeIndia", "#Trending"], "shorts": ["#Shorts", "#Reels", "#Viral"], "instagram": ["#Instagram", "#InstaDaily", "#Explore"]}[q["platform"]]
+    tags = [x for x in [base] + ["#" + _ac_cap(w) for w in words] + plat + ["#India", "#Hindi" if q["lang"] == "hinglish" else "#Creator", "#ContentCreator", "#Viral"] if x]
+    tags = list(dict.fromkeys(tags))[:AC_COUNTS["hashtags"]]
+    out = {"titles": titles, "captions": caps, "descriptions": descs, "hashtags": tags}
+    return {k: (out[k] if k in q["kinds"] else []) for k in AC_KINDS}
+
+
+def ac_clean(raw, q):
+    out = {}
+    for k in AC_KINDS:
+        items = raw.get(k) if k in q["kinds"] else []
+        items = [str(x).strip() for x in (items if isinstance(items, list) else []) if str(x).strip()]
+        if k == "hashtags":
+            items = ["#" + re.sub(r"[\s#]+", "", x) for x in items]
+            items = [x for x in items if len(x) > 1]
+        lim = {"titles": 100, "captions": 400, "descriptions": 1500, "hashtags": 60}[k]
+        out[k] = list(dict.fromkeys(x[:lim] for x in items))[:AC_COUNTS[k] + 4]
+    return out
+
+
+@app.post("/api/ai-captions")
+async def ai_captions(req: Request):
+    if req.headers.get("x-toolsaku") != "1": raise HTTPException(403, "bad_request")
+    origin = req.headers.get("origin")
+    if origin and urllib.parse.urlsplit(origin).netloc not in (req.headers.get("host"), urllib.parse.urlsplit(PUBLIC_URL).netloc):
+        raise HTTPException(403, "bad_origin")
+    try: body = await req.json()
+    except ValueError: body = None
+    q = ac_parse(body)
+    key = hashlib.sha256(json.dumps(q, sort_keys=True, ensure_ascii=False).encode()).hexdigest()
+    hit = AC_CACHE.get(key)
+    if hit and hit["at"] > time.time() - AC_CACHE_TTL:
+        return JSONResponse({**hit["v"], "cached": True}, headers={"Cache-Control": "no-store"})
+    ip, t = _client_ip(req), time.time()
+    hits = [x for x in AC_HITS.get(ip, []) if x > t - AC_RATE[1]]
+    if len(hits) >= AC_RATE[0]:
+        wait_min = max(1, int((hits[0] + AC_RATE[1] - t) // 60) + 1)
+        raise HTTPException(429, f"Too many AI requests from your network. Try again in {wait_min} minute{'s' if wait_min > 1 else ''}.")
+    AC_HITS[ip] = hits + [t]
+    if len(AC_HITS) > 5000:
+        for k in [k for k, v in AC_HITS.items() if not v or v[-1] < t - AC_RATE[1]]: AC_HITS.pop(k, None)
+    warning, source = None, "ai"
+    if not GEMINI_API_KEY:
+        res, warning, source = ac_templates(q), "AI isn't set up on the server yet. Showing template ideas instead.", "template"
+    else:
+        async with AC_SEM:
+            try:
+                res = ac_clean(await gemini_json(ac_prompt(q), AC_SCHEMA, timeout=60, max_tokens=4096, temperature=0.9), q)
+                if not any(res.values()): raise SMError(502, "The AI gave an empty answer.")
+            except SMError as e:
+                res, warning, source = ac_templates(q), e.msg.rstrip(".") + ". Showing template ideas instead.", "template"
+    out = {**res, "kinds": q["kinds"], "lang": q["lang"], "source": source, "model": GEMINI_MODEL if source == "ai" else None, "warning": warning, "cached": False}
+    if not warning:
+        AC_CACHE[key] = {"at": time.time(), "v": out}; _trim_cache(AC_CACHE)
+    return JSONResponse(out, headers={"Cache-Control": "no-store"})
