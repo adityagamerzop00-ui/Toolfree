@@ -907,24 +907,28 @@
                 error: function (e) { err = e; }
               });
               dec.configure(cfg);
-              var i = 0, SPAN = 33554432;
+              // Read only the audio bytes: merge neighbouring audio samples into runs, fetch 4 runs at a time, decode in order.
+              var runs = [], GAP = 65536, RMAX = 4194304, i = 0;
+              while (i < sm.length) {
+                var a0 = i, lo = sm[i].off, hi = sm[i].off + sm[i].size; i++;
+                while (i < sm.length && sm[i].off >= hi && sm[i].off - hi <= GAP && sm[i].off + sm[i].size - lo <= RMAX && i - a0 < 4000) { hi = sm[i].off + sm[i].size; i++; }
+                runs.push({ a: a0, b: i, lo: lo, hi: hi });
+              }
+              var r0 = 0, PAR = 4, pend = [];
+              function fetchRun(k) { var R = runs[k]; return file.slice(R.lo, R.hi).arrayBuffer(); }
               function step() {
                 if (err) return Promise.reject(err);
                 if (S.file !== file) return Promise.reject(new Error("A new video was loaded."));
-                if (i >= sm.length) return dec.flush();
-                var a = i, lo = sm[i].off, hi = sm[i].off + sm[i].size;
-                while (i < sm.length && i - a < 4000) {
-                  var o = sm[i].off, e2 = o + sm[i].size, nl = Math.min(lo, o), nh = Math.max(hi, e2);
-                  if (i > a && nh - nl > SPAN) break;
-                  lo = nl; hi = nh; i++;
-                }
-                return file.slice(lo, hi).arrayBuffer().then(function (ab) {
-                  for (var j = a; j < i; j++) {
+                while (pend.length < PAR && r0 + pend.length < runs.length) pend.push(fetchRun(r0 + pend.length));
+                if (!pend.length) return dec.flush();
+                return pend.shift().then(function (ab) {
+                  var R = runs[r0++];
+                  for (var j = R.a; j < R.b; j++) {
                     var q = sm[j];
-                    dec.decode(new EncodedAudioChunk({ type: "key", timestamp: Math.round(q.t * 1e6), duration: Math.round(q.d * 1e6), data: new Uint8Array(ab, q.off - lo, q.size) }));
+                    dec.decode(new EncodedAudioChunk({ type: "key", timestamp: Math.round(q.t * 1e6), duration: Math.round(q.d * 1e6), data: new Uint8Array(ab, q.off - R.lo, q.size) }));
                   }
-                  if (onP) onP(i / sm.length);
-                  return dec.decodeQueueSize > 200 ? dec.flush() : null;
+                  if (onP) onP(R.b / sm.length);
+                  return dec.decodeQueueSize > 400 ? dec.flush() : null;
                 }).then(step);
               }
               return step().then(function () {
