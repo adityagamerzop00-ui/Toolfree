@@ -1482,7 +1482,68 @@
           if (HY.fvSrc !== S.url) { HY.fvSrc = S.url; HY.fv.src = S.url; }
           return HY.fv;
         }
+        // Fast snapshots for MP4/MOV: decode the keyframe nearest each time straight from the file (no video seeking).
+        var KSN = { dec: null, cfg: null, file: null };
+        function keySnaps(c, times) {
+          if (typeof VideoDecoder !== "function" || typeof EncodedVideoChunk !== "function") return Promise.reject(new Error("no decoder"));
+          var file = S.file;
+          return demux(file).then(function (dm) {
+            var cfg = { codec: dm.codec, codedWidth: dm.w, codedHeight: dm.h };
+            if (dm.desc) cfg.description = dm.desc;
+            return (KSN.file === file && KSN.cfg ? Promise.resolve({ supported: true }) : VideoDecoder.isConfigSupported(cfg)).then(function (sup) {
+              if (!sup.supported) throw new Error("unsupported");
+              KSN.file = file; KSN.cfg = cfg;
+              var keys = dm.samples.filter(function (q) { return q.key; });
+              if (!keys.length) throw new Error("no keyframes");
+              var frames = [], got = [], cv = document.createElement("canvas"), k = 0, used = {};
+              function one(t) {
+                var lo = 0, hi = keys.length - 1, at = c.s + t;
+                while (lo < hi) { var mid = (lo + hi + 1) >> 1; if (keys[mid].t <= at) lo = mid; else hi = mid - 1; }
+                var q = keys[lo];
+                if (used[lo]) return Promise.resolve();
+                used[lo] = 1;
+                return file.slice(q.off, q.off + q.size).arrayBuffer().then(function (ab) {
+                  return new Promise(function (res, rej) {
+                    var out = null, dec = new VideoDecoder({ output: function (f) { if (out) f.close(); else out = f; }, error: rej });
+                    dec.configure(cfg);
+                    dec.decode(new EncodedVideoChunk({ type: "key", timestamp: Math.round(q.t * 1e6), data: new Uint8Array(ab) }));
+                    dec.flush().then(function () { try { dec.close(); } catch (e) {} res(out); }, rej);
+                  });
+                }).then(function (f) {
+                  if (!f) return;
+                  try {
+                    var vw = f.displayWidth, vh = f.displayHeight, sw = dm.rot % 180 ? vh : vw, sh = dm.rot % 180 ? vw : vh;
+                    var w = Math.round(Math.min(360, sw, (480 * sw) / sh)), h = Math.round((w * sh) / sw), x = cv.getContext("2d");
+                    cv.width = w; cv.height = h; x.save(); x.translate(w / 2, h / 2); x.rotate(dm.rot * Math.PI / 180);
+                    var dw = dm.rot % 180 ? h : w, dh = dm.rot % 180 ? w : h;
+                    x.drawImage(f, -dw / 2, -dh / 2, dw, dh); x.restore();
+                  } finally { f.close(); }
+                  var d = cv.toDataURL("image/jpeg", 0.6);
+                  if (d.length > 190000) d = cv.toDataURL("image/jpeg", 0.4);
+                  if (d.indexOf("data:image/jpeg") === 0) { frames.push(d.slice(d.indexOf(",") + 1)); got.push(Math.max(0, Math.round((q.t - c.s) * 10) / 10)); }
+                });
+              }
+              function next() { if (HY.cancel || k >= times.length) return; return one(times[k++]).then(next); }
+              return Promise.resolve().then(next).then(function () {
+                if (!frames.length) throw new Error("no frames");
+                c.frames = frames; c.times = got; return c;
+              });
+            });
+          });
+        }
         function hySnaps(c) {
+          if (S.file && !/webm|matroska|mkv/i.test((S.file.type || "") + " " + (S.file.name || "").slice(-5)) && KSN.bad !== S.file) {
+            var L0 = c.e - c.s, t0 = [];
+            for (var i0 = 0; i0 < HY_FRAMES; i0++) t0.push(Math.round(L0 * (0.04 + 0.92 * i0 / (HY_FRAMES - 1)) * 10) / 10);
+            return keySnaps(c, t0).catch(function (e) {
+              if (HY.cancel) { c.frames = []; c.times = []; return c; }
+              KSN.bad = S.file; try { console.warn("Fast snapshots failed, seeking instead:", e && e.message); } catch (x) {}
+              return seekSnaps(c);
+            });
+          }
+          return seekSnaps(c);
+        }
+        function seekSnaps(c) {
           var v = hyVideo(), L = c.e - c.s, times = [], frames = [], k = 0, cv = document.createElement("canvas");
           for (var i = 0; i < HY_FRAMES; i++) times.push(Math.round(L * (0.04 + 0.92 * i / (HY_FRAMES - 1)) * 10) / 10);
           return ready(v).then(function next() {
