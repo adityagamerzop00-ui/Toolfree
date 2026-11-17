@@ -882,15 +882,72 @@
           $("mlist").innerHTML = ""; [$("mprog"), $("mmake"), $("mused"), mv].forEach(function (e) { show(e, false); });
           mv.pause(); mv.removeAttribute("src");
         }
+        // Big MP4/MOV: read the audio in pieces (WebCodecs), never the whole file, so 2-3 GB works on phones.
+        var MAXS = 3 * 1073741824;
+        function streamRms(file, win, onP) {
+          if (typeof AudioDecoder !== "function" || typeof EncodedAudioChunk !== "function") return Promise.reject(new Error("no decoder"));
+          return demux(file).then(function (dm) {
+            var AT = dm.audio;
+            if (!AT || !AT.samples.length) throw new Error("no audio");
+            var cfg = { codec: AT.codec, sampleRate: AT.sr, numberOfChannels: AT.ch };
+            if (AT.desc) cfg.description = AT.desc;
+            return AudioDecoder.isConfigSupported(cfg).then(function (sup) {
+              if (!sup.supported) throw new Error("unsupported");
+              var sm = AT.samples, last = sm[sm.length - 1], n = Math.ceil((last.t + last.d) / win) + 2;
+              var sum = new Float64Array(n), cnt = new Uint32Array(n), err = null;
+              var dec = new AudioDecoder({
+                output: function (ad) {
+                  try {
+                    var f = ad.numberOfFrames, ch = ad.numberOfChannels, sr = ad.sampleRate, t0 = ad.timestamp / 1e6, tmp = new Float32Array(f), mono = new Float32Array(f), c, k;
+                    for (c = 0; c < ch; c++) { ad.copyTo(tmp, { planeIndex: c, format: "f32-planar" }); for (k = 0; k < f; k++) mono[k] += tmp[k]; }
+                    for (k = 0; k < f; k++) { var w = Math.floor((t0 + k / sr) / win); if (w >= 0 && w < n) { var m = mono[k] / ch; sum[w] += m * m; cnt[w]++; } }
+                  } catch (e) { err = e; }
+                  ad.close();
+                },
+                error: function (e) { err = e; }
+              });
+              dec.configure(cfg);
+              var i = 0, SPAN = 33554432;
+              function step() {
+                if (err) return Promise.reject(err);
+                if (S.file !== file) return Promise.reject(new Error("A new video was loaded."));
+                if (i >= sm.length) return dec.flush();
+                var a = i, lo = sm[i].off, hi = sm[i].off + sm[i].size;
+                while (i < sm.length && i - a < 4000) {
+                  var o = sm[i].off, e2 = o + sm[i].size, nl = Math.min(lo, o), nh = Math.max(hi, e2);
+                  if (i > a && nh - nl > SPAN) break;
+                  lo = nl; hi = nh; i++;
+                }
+                return file.slice(lo, hi).arrayBuffer().then(function (ab) {
+                  for (var j = a; j < i; j++) {
+                    var q = sm[j];
+                    dec.decode(new EncodedAudioChunk({ type: "key", timestamp: Math.round(q.t * 1e6), duration: Math.round(q.d * 1e6), data: new Uint8Array(ab, q.off - lo, q.size) }));
+                  }
+                  if (onP) onP(i / sm.length);
+                  return dec.decodeQueueSize > 200 ? dec.flush() : null;
+                }).then(step);
+              }
+              return step().then(function () {
+                try { dec.close(); } catch (e) {}
+                if (err) throw err;
+                while (n > 1 && !cnt[n - 1]) n--;
+                var r = new Float32Array(n);
+                for (var w = 0; w < n; w++) r[w] = cnt[w] ? Math.sqrt(sum[w] / cnt[w]) : 0;
+                return r;
+              }, function (e) { try { dec.close(); } catch (x) {} throw e; });
+            });
+          });
+        }
         function analyze() {
           if (AN && AN.file === S.file) return Promise.resolve(AN);
           if (!S.file) return Promise.reject(new Error("Upload a video first."));
           if (S.anP) return S.anP;
           var file = S.file, big = file.size > MAXB, Ctx = window.OfflineAudioContext || window.webkitOfflineAudioContext;
-          mProg(big ? "File too big for full analysis. Reading the first 400 MB…" : "Reading audio…", 5);
+          var full = false;
+          mProg(big && file.size <= MAXS ? "Big video: reading audio in parts…" : big ? "File too big for full analysis. Reading the first 400 MB…" : "Reading audio…", 5);
           $("manalyze").disabled = true;
           function end() { S.anP = null; $("manalyze").disabled = false; }
-          S.anP = (big ? file.slice(0, MAXB) : file).arrayBuffer().then(function (buf) {
+          var dec8 = function () { return (big ? file.slice(0, MAXB) : file).arrayBuffer().then(function (buf) {
             mProg((big ? "File too big for full analysis. " : "") + "Decoding audio…", 25);
             var ctx = new Ctx(1, 1, 8000);
             return new Promise(function (res, rej) { var p = ctx.decodeAudioData(buf, res, rej); if (p && p.then) p.then(res, rej); });
@@ -899,9 +956,15 @@
             return new Promise(function (r) { setTimeout(r, 30); }).then(function () { return ab; });
           }, function () {
             throw new Error(big ? "File too big for full analysis, and its first 400 MB couldn't be decoded. Try a smaller file, or an MP4 saved for the web." : "This video's audio couldn't be decoded here. Try Chrome, or an MP4 file.");
-          }).then(function (ab) {
+          }).then(function (ab) { if (file !== S.file) throw new Error("A new video was loaded."); return rmsWindows(ab, 0.1); }); };
+          S.anP = (big && file.size <= MAXS ? streamRms(file, 0.1, function (f) { mProg("Big video: reading audio in parts… " + Math.round(f * 100) + "%", 5 + Math.round(f * 85)); }).then(function (r) { full = true; return r; }, function (e) {
+            if (e && /new video/.test(e.message)) throw e;
+            try { console.warn("Streaming analysis failed, using the first 400 MB:", e && e.message); } catch (x) {}
+            return dec8();
+          }) : dec8()).then(function (rms) {
             if (file !== S.file) throw new Error("A new video was loaded.");
-            var rms = rmsWindows(ab, 0.1), n = rms.length, i;
+            var n = rms.length, i;
+
             var sorted = Array.prototype.slice.call(rms).sort(function (a, b) { return a - b; });
             var thr = Math.max(0.02, 0.35 * (sorted[n >> 1] || 0)), sil = [], s0 = -1;
             for (i = 0; i <= n; i++) {
@@ -909,7 +972,7 @@
               if (q && s0 < 0) s0 = i; else if (!q && s0 >= 0) { sil.push({ s: s0 / 10, e: i / 10 }); s0 = -1; }
             }
             AN = { rms: rms, sil: sil, thr: thr, file: file };
-            mProg((big ? "File too big for full analysis: analysed the first " + fmt(n / 10) + ". " : "Analysis done. ") + sil.length + " silent gaps found.", 100);
+            mProg((big && !full ? "File too big for full analysis: analysed the first " + fmt(n / 10) + ". " : "Analysis done. ") + sil.length + " silent gaps found.", 100);
             end(); return AN;
           }).catch(function (e) { end(); throw e; });
           return S.anP;
