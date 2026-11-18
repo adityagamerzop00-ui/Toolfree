@@ -59,6 +59,57 @@
                 <button class="lts-btn lts-btn--block" type="button" id="another" data-li18n="another">Choose another video</button>
               </div>
             </div>
+
+            <div class="lts-kick" id="kick">
+              <p class="lts-kick__or" data-li18n="kOr">or use a Kick link, no download needed</p>
+              <div class="lts-card lts-kick__card">
+                <label class="lts-label" for="kurl"><span class="lts-kick__dot" aria-hidden="true"></span><span data-li18n="kLab">Kick VOD link</span></label>
+                <div class="lts-kick__row">
+                  <input class="lts-input" id="kurl" type="url" inputmode="url" autocomplete="off" placeholder="https://kick.com/channel/videos/…" />
+                  <button class="lts-btn lts-btn--primary" type="button" id="kgo" data-li18n="kGo">Open</button>
+                </div>
+                <p class="lts-hint" data-li18n="kHint">Paste a Kick past-stream link. Clips are cut straight from Kick, so nothing big is saved on your phone.</p>
+                <div class="lts-alert lts-hidden" id="kerr" role="alert"></div>
+                <div class="lts-hidden" id="kinfo">
+                  <p class="lts-name" id="ktitle"></p>
+                  <p class="lts-note" id="kmeta"></p>
+                  <div class="lts-kick__jump">
+                    <span class="lts-label" data-li18n="kJump">Know the time? Skip the scan</span>
+                    <div class="lts-kick__row">
+                      <input class="lts-input" id="kjump" type="text" inputmode="decimal" autocomplete="off" aria-label="Start time" />
+                      <button class="lts-btn lts-btn--primary" type="button" id="kjumpgo" data-li18n="kJumpGo">Edit from here</button>
+                    </div>
+                    <p class="lts-kick__msg lts-hidden" id="kjmsg"></p>
+                  </div>
+                  <p class="lts-kick__or" data-li18n="kOr2">or find the loud moments automatically</p>
+                  <details class="lts-kick__more">
+                    <summary data-li18n="kPart">Scan only part of the stream</summary>
+                    <div class="lts-kick__range">
+                      <label><span class="lts-label" data-li18n="kFrom">From</span><input class="lts-input" id="kfrom" type="text" inputmode="decimal" placeholder="00:00:00" autocomplete="off" /></label>
+                      <label><span class="lts-label" data-li18n="kTo">To</span><input class="lts-input" id="kto" type="text" inputmode="decimal" autocomplete="off" /></label>
+                    </div>
+                  </details>
+                  <p class="lts-hint" id="kcost"></p>
+                  <button class="lts-btn lts-btn--primary lts-btn--block" type="button" id="kscan" data-li18n="kScan">Find the best moments</button>
+                  <div class="lts-hidden" id="kprogw">
+                    <div class="lts-bar" id="kbar"><span></span></div>
+                    <p class="lts-hint" id="kprog"></p>
+                    <button class="lts-btn lts-btn--block" type="button" id="kstop" data-li18n="kStop">Stop scan</button>
+                  </div>
+                  <canvas class="lts-kick__graph lts-hidden" id="kgraph" width="640" height="90" aria-hidden="true"></canvas>
+                  <fieldset class="lts-field lts-hidden" id="kqual">
+                    <legend data-li18n="kQual">Clip quality</legend>
+                    <div class="lts-seg">
+                      <input type="radio" name="kq" id="kq480" value="480p30" /><label for="kq480">480p</label>
+                      <input type="radio" name="kq" id="kq720" value="720p60" checked /><label for="kq720">720p</label>
+                      <input type="radio" name="kq" id="kq1080" value="1080p60" /><label for="kq1080">1080p</label>
+                    </div>
+                  </fieldset>
+                  <ol class="lts-kick__list" id="klist"></ol>
+                  <video class="lts-video lts-hidden" id="kvid" controls playsinline></video>
+                </div>
+              </div>
+            </div>
           </section>
 
           <!-- Step 2 -->
@@ -68,13 +119,6 @@
             <div class="lts-card lts-hype" id="hype">
               <p class="lts-name" id="hsum" aria-live="polite"></p>
               <button class="lts-btn lts-hidden" type="button" id="hagain" data-li18n="hAgain">Analyse again</button>
-              <fieldset class="lts-field">
-                <legend data-li18n="clipLen">Clip length</legend>
-                <div class="lts-seg">
-                  <input type="radio" name="hlen" id="hlen30" value="30" /><label for="hlen30">30 s</label>
-                  <input type="radio" name="hlen" id="hlen60" value="60" checked /><label for="hlen60">60 s</label>
-                </div>
-              </fieldset>
               <fieldset class="lts-field">
                 <legend data-li18n="hMode">Mode</legend>
                 <div class="lts-seg lts-seg--tall">
@@ -133,55 +177,6 @@
             </fieldset>
 
             <fieldset class="lts-field">
-              <legend data-li18n="format">Format</legend>
-              <div class="lts-seg lts-seg--tall lts-seg--grid">
-                <input type="radio" name="fmt" id="fmtV" value="vertical" checked /><label for="fmtV"><span data-li18n="fV">Vertical 9:16<small data-li18n="fVs">Shorts, Reels</small></span></label>
-                <input type="radio" name="fmt" id="fmtO" value="original" /><label for="fmtO"><span data-li18n="fO">Keep original<small id="origdim">Same shape</small></span></label>
-                <input type="radio" name="fmt" id="fmtC" value="custom" /><label for="fmtC"><span data-li18n="fC">Custom frame<small data-li18n="fCs">Pick the 9:16 area</small></span></label>
-                <input type="radio" name="fmt" id="fmtS" value="split" /><label for="fmtS"><span data-li18n="fS">Split: Webcam + Screen<small data-li18n="fSs">Two frames, 9:16</small></span></label>
-                <input type="radio" name="fmt" id="fmtF" value="face" /><label for="fmtF"><span data-li18n="fF">Auto face follow<small data-li18n="fFs">9:16, tracks the speaker</small></span></label>
-              </div>
-              <p class="lts-hint lts-hidden" id="ffmsg" aria-live="polite"></p>
-            </fieldset>
-
-            <div class="lts-picker lts-hidden" id="picker">
-              <p class="lts-label" id="pickh">Drag the boxes over the video</p>
-              <div class="lts-stage" id="stage">
-                <canvas id="srccanvas" width="640" height="360" role="img" aria-label="Source video frame"></canvas>
-                <div class="lts-box lts-box--a" id="boxA" data-box="A" aria-label="Webcam box"><span class="lts-box__tag">A · Webcam</span><span class="lts-h lts-h--nw" data-h="nw"></span><span class="lts-h lts-h--ne" data-h="ne"></span><span class="lts-h lts-h--sw" data-h="sw"></span><span class="lts-h lts-h--se" data-h="se"></span></div>
-                <div class="lts-box lts-box--b" id="boxB" data-box="B" aria-label="Main screen box"><span class="lts-box__tag">B · Main screen</span><span class="lts-h lts-h--nw" data-h="nw"></span><span class="lts-h lts-h--ne" data-h="ne"></span><span class="lts-h lts-h--sw" data-h="sw"></span><span class="lts-h lts-h--se" data-h="se"></span></div>
-                <div class="lts-box" id="boxC" data-box="C" aria-label="Frame box"><span class="lts-box__tag">9:16 frame</span><span class="lts-h lts-h--nw" data-h="nw"></span><span class="lts-h lts-h--ne" data-h="ne"></span><span class="lts-h lts-h--sw" data-h="sw"></span><span class="lts-h lts-h--se" data-h="se"></span></div>
-              </div>
-              <div class="lts-legend" id="splitlegend"><span style="--lts-c: #ff8a00"><i></i>A · Webcam (top)</span><span style="--lts-c: #2f80ff"><i></i>B · Main screen (bottom)</span></div>
-              <div class="lts-field">
-                <label class="lts-label" for="scrub">Show frame at <span id="scrubt">00:00</span></label>
-                <input class="lts-range" type="range" id="scrub" min="0" max="1000" step="1" value="0" />
-              </div>
-              <p class="lts-hint" id="pickhint" data-li18n="pickhint">Drag a box to move it; drag a corner to resize. Works with touch and mouse.</p>
-            </div>
-
-            <div class="lts-cropbox">
-              <canvas class="lts-preview-canvas" id="cropcanvas" width="180" height="320" aria-label="Live preview of the clip frame" role="img"></canvas>
-              <div class="lts-field lts-hidden" id="splitfield">
-                <label class="lts-label" for="ratio">Split: <span id="ratiot">35% top / 65% bottom</span></label>
-                <input class="lts-range" type="range" id="ratio" min="20" max="50" step="1" value="35" />
-                <div class="lts-ticks" aria-hidden="true"><span>20%</span><span>35%</span><span>50%</span></div>
-                <label class="lts-switch">
-                  <span class="lts-label">Swap top/bottom</span>
-                  <input type="checkbox" role="switch" id="swap" />
-                </label>
-                <p class="lts-hint">Live 9:16 preview. Each box is cover-cropped into its part, never stretched.</p>
-              </div>
-              <p class="lts-hint lts-hidden" id="customhint">Live 9:16 preview of your custom frame.</p>
-              <div class="lts-field" id="cropfield">
-                <label class="lts-label" for="crop" data-li18n="cropPos">Crop position</label>
-                <input class="lts-range" type="range" id="crop" min="0" max="100" step="1" value="50" aria-describedby="croph" />
-                <div class="lts-ticks" aria-hidden="true"><span>Left</span><span>Center</span><span>Right</span></div>
-                <p class="lts-hint" id="croph">Choose which part of the wide frame stays in the 1080×1920 clip.</p>
-              </div>
-            </div>
-
-            <fieldset class="lts-field">
               <legend data-li18n="partOnly">Only clip part of the video <span class="lts-hint" data-li18n="optional">(optional)</span></legend>
               <div class="lts-times">
                 <div class="lts-field">
@@ -227,6 +222,81 @@
           <!-- Step 3: Style -->
           <section class="lts-panel lts-hidden" id="step3" aria-labelledby="hstyle">
             <h2 id="hstyle" data-li18n="sStyle">Style</h2>
+            <div class="lts-tabs" role="tablist" id="styleTabs" aria-label="Style">
+              <button class="lts-tab" type="button" role="tab" data-sp="layout" aria-selected="true" data-li18n="spLayout">🧩 Layout</button>
+              <button class="lts-tab" type="button" role="tab" data-sp="caps" aria-selected="false" data-li18n="spCaps">💬 Captions</button>
+              <button class="lts-tab" type="button" role="tab" data-sp="studio" aria-selected="false" data-li18n="spStudio">🎬 Studio</button>
+            </div>
+<div class="lts-spanel" id="sp-layout">
+            <fieldset class="lts-field">
+              <legend data-li18n="szL">Size</legend>
+              <div class="lts-seg">
+                <input type="radio" name="osz" id="oszV" value="v" checked /><label for="oszV" data-li18n="szV">9:16 Shorts</label>
+                <input type="radio" name="osz" id="oszO" value="o" /><label for="oszO"><span data-li18n="szO">Keep original</span>&nbsp;<small id="origdim">Same shape</small></label>
+              </div>
+            </fieldset>
+            <fieldset class="lts-field">
+              <legend data-li18n="layoutL">Layout</legend>
+              <div class="lts-seg lts-seg--tall lts-seg--grid">
+                <input type="radio" name="fmt" id="fmtV" value="vertical" checked /><label for="fmtV"><span data-li18n="fV">Full frame<small data-li18n="fVs">Fills the whole clip</small></span></label>
+                <input type="radio" name="fmt" id="fmtS" value="split" /><label for="fmtS"><span data-li18n="fS">Facecam stack<small data-li18n="fSs">AI finds the webcam</small></span></label>
+                <input type="radio" name="fmt" id="fmtF" value="face" /><label for="fmtF"><span data-li18n="fF">Auto face follow<small data-li18n="fFs">Tracks the speaker</small></span></label>
+                <input type="radio" name="fmt" id="fmtT" value="tweet" /><label for="fmtT"><span data-li18n="fT">Tweet card<small data-li18n="fTs">Post with the clip inside</small></span></label>
+                <input type="radio" name="fmt" id="fmtC" value="custom" /><label for="fmtC"><span data-li18n="fC">Custom frame<small data-li18n="fCs">Pick the area</small></span></label>
+              </div>
+              <p class="lts-hint lts-hidden" id="ffmsg" aria-live="polite"></p>
+            </fieldset>
+
+            <div class="lts-field lts-hidden" id="twfield">
+              <div class="lts-times">
+                <div class="lts-field"><label class="lts-hint" for="twname" data-li18n="twName">Name</label><input class="lts-input" id="twname" type="text" maxlength="40" placeholder="Your Name" autocomplete="off" /></div>
+                <div class="lts-field"><label class="lts-hint" for="twhandle" data-li18n="twHandle">@handle</label><input class="lts-input" id="twhandle" type="text" maxlength="30" placeholder="@yourhandle" autocomplete="off" /></div>
+              </div>
+              <label class="lts-hint" for="twtext" data-li18n="twText">Post text</label>
+              <textarea class="lts-input" id="twtext" rows="2" maxlength="200" placeholder="Empty = your hook title" data-li18n-ph="twTextPh"></textarea>
+              <label class="lts-switch"><span class="lts-label" data-li18n="twDark">Dark card</span><input type="checkbox" role="switch" id="twdark" /></label>
+            </div>
+            <div class="lts-picker lts-hidden" id="picker">
+              <p class="lts-label" id="pickh">Drag the boxes over the video</p>
+              <div class="lts-qbtns lts-hidden" id="camrow"><button class="lts-btn" type="button" id="camfind" data-li18n="camFind">✨ Find webcam again</button><button class="lts-btn" type="button" id="camreset" data-li18n="camReset">Reset boxes</button></div>
+              <p class="lts-note" id="cammsg" aria-live="polite"></p>
+              <div class="lts-stage" id="stage">
+                <canvas id="srccanvas" width="640" height="360" role="img" aria-label="Source video frame"></canvas>
+                <div class="lts-box lts-box--a" id="boxA" data-box="A" aria-label="Webcam box"><span class="lts-box__tag">A · Webcam</span><span class="lts-h lts-h--nw" data-h="nw"></span><span class="lts-h lts-h--ne" data-h="ne"></span><span class="lts-h lts-h--sw" data-h="sw"></span><span class="lts-h lts-h--se" data-h="se"></span></div>
+                <div class="lts-box lts-box--b" id="boxB" data-box="B" aria-label="Main screen box"><span class="lts-box__tag">B · Main screen</span><span class="lts-h lts-h--nw" data-h="nw"></span><span class="lts-h lts-h--ne" data-h="ne"></span><span class="lts-h lts-h--sw" data-h="sw"></span><span class="lts-h lts-h--se" data-h="se"></span></div>
+                <div class="lts-box" id="boxC" data-box="C" aria-label="Frame box"><span class="lts-box__tag">9:16 frame</span><span class="lts-h lts-h--nw" data-h="nw"></span><span class="lts-h lts-h--ne" data-h="ne"></span><span class="lts-h lts-h--sw" data-h="sw"></span><span class="lts-h lts-h--se" data-h="se"></span></div>
+              </div>
+              <div class="lts-legend" id="splitlegend"><span style="--lts-c: #ff8a00"><i></i>A · Webcam (top)</span><span style="--lts-c: #2f80ff"><i></i>B · Main screen (bottom)</span></div>
+              <div class="lts-field">
+                <label class="lts-label" for="scrub">Show frame at <span id="scrubt">00:00</span></label>
+                <input class="lts-range" type="range" id="scrub" min="0" max="1000" step="1" value="0" />
+              </div>
+              <p class="lts-hint" id="pickhint" data-li18n="pickhint">Drag a box to move it; drag a corner to resize. Works with touch and mouse.</p>
+            </div>
+
+            <div class="lts-cropbox">
+              <canvas class="lts-preview-canvas" id="cropcanvas" width="180" height="320" aria-label="Live preview of the clip frame" role="img"></canvas>
+              <div class="lts-field lts-hidden" id="splitfield">
+                <label class="lts-label" for="ratio">Split: <span id="ratiot">35% top / 65% bottom</span></label>
+                <input class="lts-range" type="range" id="ratio" min="20" max="50" step="1" value="35" />
+                <div class="lts-ticks" aria-hidden="true"><span>20%</span><span>35%</span><span>50%</span></div>
+                <label class="lts-switch">
+                  <span class="lts-label">Swap top/bottom</span>
+                  <input type="checkbox" role="switch" id="swap" />
+                </label>
+                <p class="lts-hint" data-li18n="splitH">Each box keeps the exact shape of its part, so nothing is stretched.</p>
+              </div>
+              <p class="lts-hint lts-hidden" id="customhint">Live 9:16 preview of your custom frame.</p>
+              <div class="lts-field" id="cropfield">
+                <label class="lts-label" for="crop" data-li18n="cropPos">Crop position</label>
+                <input class="lts-range" type="range" id="crop" min="0" max="100" step="1" value="50" aria-describedby="croph" />
+                <div class="lts-ticks" aria-hidden="true"><span>Left</span><span>Center</span><span>Right</span></div>
+                <p class="lts-hint" id="croph">Choose which part of the wide frame stays in the 1080×1920 clip.</p>
+              </div>
+            </div>
+
+            </div>
+            <div class="lts-spanel lts-hidden" id="sp-caps">
 
             <fieldset class="lts-field">
               <legend data-li18n="captions">Captions</legend>
@@ -336,6 +406,8 @@
               </div>
             </div>
 
+            </div>
+            <div class="lts-spanel lts-hidden" id="sp-studio">
             <details class="lts-boost lts-studio" id="boost" open>
               <summary class="lts-studio__head"><span class="lts-studio__titles"><span class="lts-studio__title" data-li18n="studio">🎬 Clip Studio</span><span class="lts-studio__subt" data-li18n="studioSub">Make every clip catchy: hook, style, music &amp; export</span></span></summary>
               <div class="lts-boost__body lts-studio__body">
@@ -506,6 +578,7 @@
                 </div>
               </div>
             </details>
+            </div>
 
             <button class="lts-btn lts-btn--primary lts-btn--block" type="button" data-go="4" id="toClips2" data-li18n="nextClips">Next: see clips</button>
           </section>
