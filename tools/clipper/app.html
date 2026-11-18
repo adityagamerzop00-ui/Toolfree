@@ -8,11 +8,11 @@
           <div class="lts-presets" role="group" aria-labelledby="presetsh">
             <p class="lts-label" id="presetsh" data-li18n="presets">One-tap presets</p>
             <div class="lts-presets__row" id="presets">
-              <button class="lts-preset" type="button" data-preset="gaming" aria-pressed="false"><span aria-hidden="true">🎮</span><b data-li18n="pGaming">Gaming</b></button>
-              <button class="lts-preset" type="button" data-preset="podcast" aria-pressed="false"><span aria-hidden="true">🎙️</span><b data-li18n="pPodcast">Podcast</b></button>
-              <button class="lts-preset" type="button" data-preset="motivation" aria-pressed="false"><span aria-hidden="true">🔥</span><b data-li18n="pMotivation">Motivation</b></button>
-              <button class="lts-preset" type="button" data-preset="story" aria-pressed="false"><span aria-hidden="true">📖</span><b data-li18n="pStory">Hindi Story</b></button>
-              <button class="lts-preset" type="button" data-preset="custom" aria-pressed="true"><span aria-hidden="true">⚙️</span><b data-li18n="pCustom">Custom</b></button>
+              <button class="lts-preset" type="button" data-preset="gaming" aria-pressed="false"><b data-li18n="pGaming">Gaming</b></button>
+              <button class="lts-preset" type="button" data-preset="podcast" aria-pressed="false"><b data-li18n="pPodcast">Podcast</b></button>
+              <button class="lts-preset" type="button" data-preset="motivation" aria-pressed="false"><b data-li18n="pMotivation">Motivation</b></button>
+              <button class="lts-preset" type="button" data-preset="story" aria-pressed="false"><b data-li18n="pStory">Hindi Story</b></button>
+              <button class="lts-preset" type="button" data-preset="custom" aria-pressed="true"><b data-li18n="pCustom">Custom</b></button>
             </div>
           </div>
 
@@ -63,16 +63,30 @@
             <div class="lts-kick" id="kick">
               <p class="lts-kick__or" data-li18n="kOr">or use a Kick link, no download needed</p>
               <div class="lts-card lts-kick__card">
-                <label class="lts-label" for="kurl"><span class="lts-kick__dot" aria-hidden="true"></span><span data-li18n="kLab">Kick VOD link</span></label>
+                <label class="lts-label" for="kurl"><span class="lts-kick__dot" aria-hidden="true"></span><span data-li18n="kLab">Kick link</span></label>
                 <div class="lts-kick__row">
-                  <input class="lts-input" id="kurl" type="url" inputmode="url" autocomplete="off" placeholder="https://kick.com/channel/videos/…" />
+                  <input class="lts-input" id="kurl" type="url" inputmode="url" autocomplete="off" placeholder="https://kick.com/channel" />
                   <button class="lts-btn lts-btn--primary" type="button" id="kgo" data-li18n="kGo">Open</button>
                 </div>
-                <p class="lts-hint" data-li18n="kHint">Paste a Kick past-stream link. Clips are cut straight from Kick, so nothing big is saved on your phone.</p>
+                <p class="lts-hint" data-li18n="kHint">Paste a Kick channel, live stream or past-stream link. Clips are cut straight from Kick, so nothing big is saved on your phone.</p>
                 <div class="lts-alert lts-hidden" id="kerr" role="alert"></div>
+                <div class="lts-hidden" id="kpast">
+                  <span class="lts-label" data-li18n="kPastT">This channel is offline. Pick a past stream</span>
+                  <ol class="lts-kick__list" id="kpastl"></ol>
+                </div>
                 <div class="lts-hidden" id="kinfo">
                   <p class="lts-name" id="ktitle"></p>
                   <p class="lts-note" id="kmeta"></p>
+                  <div class="lts-kick__jump lts-hidden" id="klive">
+                    <span class="lts-label" data-li18n="kLastT">Clip the last</span>
+                    <div class="lts-kick__lastb">
+                      <button class="lts-btn lts-btn--primary" type="button" data-klast="60" data-li18n="kLast1">1 min</button>
+                      <button class="lts-btn lts-btn--primary" type="button" data-klast="120" data-li18n="kLast2">2 min</button>
+                      <button class="lts-btn lts-btn--primary" type="button" data-klast="300" data-li18n="kLast5">5 min</button>
+                    </div>
+                    <button class="lts-btn lts-btn--block" type="button" id="krefresh" data-li18n="kRefresh">Refresh to the newest minutes</button>
+                    <p class="lts-kick__msg lts-hidden" id="klmsg"></p>
+                  </div>
                   <div class="lts-kick__jump">
                     <span class="lts-label" data-li18n="kJump">Know the time? Skip the scan</span>
                     <div class="lts-kick__row">

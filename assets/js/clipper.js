@@ -8,14 +8,14 @@
           b1: "साइनअप नहीं", b2: "कोई वॉटरमार्क नहीं", b3: "100% फ़्री", b4: "आपके डिवाइस पर चलता है",
           presets: "एक टैप वाले प्रीसेट", pGaming: "गेमिंग", pPodcast: "पॉडकास्ट", pMotivation: "मोटिवेशन", pStory: "हिंदी कहानी", pCustom: "कस्टम",
           kJump: "समय पता है? स्कैन छोड़ें", kJumpGo: "यहाँ से एडिट करें", kOr2: "या ज़ोरदार पल अपने-आप ढूँढें",
-          kOr: "या Kick लिंक डालें, डाउनलोड की ज़रूरत नहीं", kLab: "Kick VOD लिंक", kGo: "खोलें",
-          kHint: "Kick के पुराने स्ट्रीम का लिंक डालें। क्लिप सीधे Kick से कटती हैं, फ़ोन में कुछ बड़ा सेव नहीं होता।",
+          kOr: "या Kick लिंक डालें, डाउनलोड की ज़रूरत नहीं", kLab: "Kick लिंक", kGo: "खोलें",
+          kHint: "Kick चैनल, लाइव स्ट्रीम या पुराने स्ट्रीम का लिंक डालें। क्लिप सीधे Kick से कटती हैं, फ़ोन में कुछ बड़ा सेव नहीं होता।",
           kFrom: "कहाँ से", kTo: "कहाँ तक", kPart: "स्ट्रीम का सिर्फ़ एक हिस्सा स्कैन करें", kLoud: "आवाज़ {x}× ज़्यादा", kMore: "{n} और दिखाएँ", kScan: "सबसे अच्छे पल ढूँढें", kStop: "स्कैन रोकें", kQual: "क्लिप क्वालिटी",
-          kBadLink: "यह Kick VOD लिंक नहीं लगता। kick.com/चैनल/videos/… वाला लिंक डालें।", kNoVod: "Kick से यह वीडियो नहीं मिला। हो सकता है यह प्राइवेट हो या हटा दिया गया हो।",
+          kBadLink: "यह Kick लिंक नहीं लगता। kick.com/चैनल वाला लिंक डालें।", kNoVod: "Kick से यह वीडियो नहीं मिला। हो सकता है यह प्राइवेट हो या हटा दिया गया हो।",
           kLooking: "Kick से वीडियो खोल रहे हैं…", kMeta: "{ch} · {dur} लंबा", kCost: "स्कैन में लगभग {mb} MB डेटा लगेगा ({h} घंटे)। कम डेटा के लिए छोटा हिस्सा चुनें।",
           kScanning: "आवाज़ पढ़ रहे हैं… {p}% · {done} / {all}", kScanStop: "स्कैन रोक दिया। अब तक मिले पल नीचे हैं।", kFound: "{n} सबसे ज़ोरदार पल मिले। देखें, फिर एडिट करें।",
           kNone: "इस हिस्से में कोई ज़ोरदार पल नहीं मिला।", kPrev: "देखें", kEdit: "एडिट करें", kGet: "क्लिप ला रहे हैं… {p}%", kGetFail: "यह हिस्सा Kick से नहीं आ पाया। फिर से टैप करें।",
-          kLoaded: "क्लिप एडिटर में खुल गई। आगे सेटिंग्स और स्टाइल चुनें।", kRange: "समय सही नहीं है। जैसे 1:30:00 लिखें।", kLive: "यह अभी लाइव है। स्ट्रीम ख़त्म होने के बाद उसका VOD लिंक डालें।",
+          kLoaded: "क्लिप एडिटर में खुल गई। आगे सेटिंग्स और स्टाइल चुनें।", kRange: "समय सही नहीं है। जैसे 1:30:00 लिखें।", kLive: "यह अभी लाइव है। स्ट्रीम ख़त्म होने के बाद उसका VOD लिंक डालें।", kLiveMeta: "{ch} · अब तक {dur}", kLiveTag: "लाइव", kLastT: "आख़िरी हिस्से की क्लिप बनाएँ", kLast1: "1 मिनट", kLast2: "2 मिनट", kLast5: "5 मिनट", kRefresh: "सबसे नए मिनट जोड़ें", kRefreshing: "Kick से नए मिनट ला रहे हैं…", kRefreshed: "अपडेट हो गया। अब तक {dur}।", kPastT: "यह चैनल अभी ऑफ़लाइन है। कोई पुराना स्ट्रीम चुनें", kNoChan: "Kick पर यह चैनल नहीं मिला। नाम दोबारा देखें।", kNoPast: "इस चैनल का कोई पुराना स्ट्रीम नहीं मिला।", kOpen: "खोलें", kLiveNote: "लाइव से लगभग एक मिनट पीछे।",
           sUpload: "अपलोड", sSettings: "सेटिंग्स", sStyle: "स्टाइल", sClips: "क्लिप्स",
           dropT: "लंबा वीडियो यहाँ छोड़ें", choose: "वीडियो चुनें", dropH: "आपके डिवाइस से MP4, MOV या WebM। वीडियो फ़ाइल कभी अपलोड नहीं होती।",
           durL: "अवधि", clipsAbout: "क्लिप्स, लगभग", nextSettings: "आगे: सेटिंग्स", another: "दूसरा वीडियो चुनें",
@@ -5328,6 +5328,8 @@ var KICK = (function () {
         var K = { vod: null, rms: null, mom: [], stop: false, busy: false, vars: {}, segs: {} };
         function err(msg) { $("kerr").textContent = msg || ""; show($("kerr"), !!msg); }
         function fmtT(x) { return window.CLIP ? window.CLIP.fmt(x, x >= 3600) : String(Math.round(x)); }
+        function slugOf(u) { u = u.trim(); var m = /kick\.com\/([A-Za-z0-9_-]+)(?:\/?$|\/?[?#]|\/videos\/?$)/i.exec(u); if (m && !/^(api|video|videos|categories|category|browse|search)$/i.test(m[1])) return m[1].toLowerCase(); if (/^[A-Za-z0-9_-]{2,30}$/.test(u)) return u.toLowerCase(); return null; }
+        function bust(u) { return K.vod && K.vod.live ? u + (u.indexOf("?") < 0 ? "?" : "&") + "t=" + Date.now() : u; }
         function uuidOf(u) { var m = /videos\/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/i.exec(u); return m && m[1]; }
         function getText(u) { return fetch(u).then(function (r) { if (!r.ok) throw new Error("http " + r.status); return r.text(); }); }
         function getBytes(u, tries) {
@@ -5337,45 +5339,93 @@ var KICK = (function () {
         function playlist(name) {
           if (K.segs[name]) return K.segs[name];
           var v = K.vars[name] || K.vars[Object.keys(K.vars)[0]];
-          K.segs[name] = getText(v.url).then(function (t) { var p = KICK.parseM3U(t, v.url); p.v = v; return p; });
+          K.segs[name] = getText(bust(v.url)).then(function (t) { var p = KICK.parseM3U(t, v.url); p.v = v; return p; });
           K.segs[name].catch(function () { delete K.segs[name]; });
           return K.segs[name];
         }
 
         /* ---------- open a link ---------- */
         function open() {
-          var u = $("kurl").value.trim(), id = uuidOf(u);
-          err(""); show($("kinfo"), false);
-          if (!id && !/\.m3u8(\?|$)/.test(u)) { err(T("kBadLink", "That doesn't look like a Kick VOD link. Paste a kick.com/channel/videos/… link.")); return; }
+          var u = $("kurl").value.trim(), id = uuidOf(u), slug = id ? null : slugOf(u);
+          err(""); show($("kinfo"), false); show($("kpast"), false);
+          if (!id && !slug && !/\.m3u8(\?|$)/.test(u)) { err(T("kBadLink", "That doesn't look like a Kick link. Paste a kick.com/channel link.")); return; }
           $("kgo").disabled = true; $("kmeta").textContent = ""; $("ktitle").textContent = T("kLooking", "Opening the video from Kick…"); show($("kinfo"), true);
-          var meta = id ? fetch("https://kick.com/api/v1/video/" + id, { headers: { Accept: "application/json" } }).then(function (r) { if (!r.ok) throw new Error("vod"); return r.json(); })
-            : Promise.resolve({ source: u, livestream: {} });
-          meta.then(function (j) {
-            if (!j || !j.source) throw new Error("vod");
-            var ls = j.livestream || {};
-            if (ls.is_live) throw new Error("live");
-            return getText(j.source).then(function (t) {
-              var m = KICK.parseM3U(t, j.source);
-              if (!m.vars.length) throw new Error("vod");
-              K.vars = {}; m.vars.forEach(function (v) { K.vars[v.name] = v; });
-              K.segs = {}; K.rms = null; K.mom = [];
-              K.vod = { id: id || "link", title: ls.session_title || "Kick VOD", ch: (ls.channel && ls.channel.slug) || (/kick\.com\/([^/]+)/.exec(u) || [])[1] || "kick" };
-              var low = K.vars["160p30"] ? "160p30" : m.vars[m.vars.length - 1].name;
-              K.low = low;
-              return playlist(low);
+          var job;
+          if (id) job = fetch("https://kick.com/api/v1/video/" + id, { headers: { Accept: "application/json" } }).then(function (r) { if (!r.ok) throw new Error("vod"); return r.json(); })
+            .then(function (j) { if (!j || !j.source) throw new Error("vod"); var ls = j.livestream || {}; return openSrc(j.source, { id: id, title: ls.session_title, ch: (ls.channel && ls.channel.slug) || (/kick\.com\/([^/]+)/.exec(u) || [])[1], live: !!ls.is_live }); });
+          else if (slug) job = fetch("https://kick.com/api/v2/channels/" + slug + "/videos", { headers: { Accept: "application/json" } }).then(function (r) { if (!r.ok) throw new Error("chan"); return r.json(); })
+            .then(function (list) {
+              list = (Array.isArray(list) ? list : []).filter(function (x) { return x && x.source; });
+              if (list[0] && list[0].is_live) return openSrc(list[0].source, { id: (list[0].video || {}).uuid, title: list[0].session_title, ch: slug, live: true });
+              if (!list.length) throw new Error("nopast");
+              show($("kinfo"), false); past(list.slice(0, 5), slug);
             });
+          else job = openSrc(u, { id: "link", live: false });
+          job.catch(function (e) {
+            show($("kinfo"), false);
+            var m = e && e.message;
+            err(m === "chan" ? T("kNoChan", "Couldn't find this channel on Kick. Check the name.") : m === "nopast" ? T("kNoPast", "This channel has no past streams yet.") : T("kNoVod", "Couldn't get this video from Kick. It may be private or deleted."));
+          }).then(function () { $("kgo").disabled = false; });
+        }
+        function past(list, slug) {
+          var L = $("kpastl"); L.innerHTML = "";
+          list.forEach(function (x) {
+            var li = document.createElement("li");
+            li.innerHTML = '<span class="lts-kick__n"></span><span class="lts-kick__tt"><span class="lts-kick__t"></span><span class="lts-kick__x"></span></span><div class="lts-kick__btns"><button class="lts-btn lts-btn--primary" type="button" style="grid-column:1/-1"></button></div>';
+            li.querySelector(".lts-kick__n").textContent = (x.start_time || x.created_at || "").slice(0, 10);
+            li.querySelector(".lts-kick__t").textContent = x.session_title || slug;
+            li.querySelector(".lts-kick__x").textContent = fmtT((x.duration || 0) / 1000);
+            var b = li.querySelector("button"); b.textContent = T("kOpen", "Open");
+            b.addEventListener("click", function () {
+              err(""); show($("kpast"), false); $("ktitle").textContent = T("kLooking", "Opening the video from Kick…"); $("kmeta").textContent = ""; show($("kinfo"), true);
+              openSrc(x.source, { id: (x.video || {}).uuid, title: x.session_title, ch: slug, live: false })
+                .catch(function () { show($("kinfo"), false); show($("kpast"), true); err(T("kNoVod", "Couldn't get this video from Kick. It may be private or deleted.")); });
+            });
+            L.appendChild(li);
+          });
+          show($("kpast"), true);
+        }
+        function meta() {
+          $("kmeta").innerHTML = "";
+          if (K.vod.live) { var tag = document.createElement("span"); tag.className = "lts-kick__live"; tag.textContent = T("kLiveTag", "LIVE"); $("kmeta").appendChild(tag); }
+          $("kmeta").appendChild(document.createTextNode(K.vod.live ? T("kLiveMeta", "{ch} · {dur} so far", { ch: K.vod.ch, dur: fmtT(K.vod.dur) }) + " · " + T("kLiveNote", "About a minute behind live.") : T("kMeta", "{ch} · {dur} long", { ch: K.vod.ch, dur: fmtT(K.vod.dur) })));
+        }
+        function openSrc(src, info) {
+          K.vod = { id: info.id || "link", title: info.title || "Kick VOD", ch: info.ch || "kick", live: !!info.live, src: src };
+          return getText(bust(src)).then(function (t) {
+            var m = KICK.parseM3U(t, src);
+            if (!m.vars.length) throw new Error("vod");
+            K.vars = {}; m.vars.forEach(function (v) { K.vars[v.name] = v; });
+            K.segs = {}; K.rms = null; K.mom = [];
+            K.low = K.vars["160p30"] ? "160p30" : m.vars[m.vars.length - 1].name;
+            return playlist(K.low);
           }).then(function (p) {
             K.vod.dur = p.total;
             $("ktitle").textContent = K.vod.title;
-            $("kmeta").textContent = T("kMeta", "{ch} · {dur} long", { ch: K.vod.ch, dur: fmtT(p.total) });
-            $("kfrom").value = ""; $("kto").value = ""; $("kto").placeholder = fmtT(p.total);
+            meta();
+            $("kfrom").value = K.vod.live && p.total > 1800 ? fmtT(p.total - 1800) : ""; $("kto").value = ""; $("kto").placeholder = fmtT(p.total);
+            if (K.vod.live && p.total > 1800) $("kfrom").closest("details").open = true;
             $("kjump").placeholder = "1:00:00";
+            show($("klive"), K.vod.live); $("klmsg").textContent = ""; show($("klmsg"), false);
             cost(); $("klist").innerHTML = ""; show($("kgraph"), false); show($("kqual"), true);
             ["kq480", "kq720", "kq1080"].forEach(function (q) { var el = $(q); el.disabled = !K.vars[el.value]; });
-          }).catch(function (e) {
-            show($("kinfo"), false);
-            err(e && e.message === "live" ? T("kLive", "This stream is still live. Paste its VOD link after the stream ends.") : T("kNoVod", "Couldn't get this video from Kick. It may be private or deleted."));
-          }).then(function () { $("kgo").disabled = false; });
+          });
+        }
+        function refresh() {
+          if (!K.vod || !K.vod.live) return Promise.resolve();
+          K.segs = {};
+          return playlist(K.low).then(function (p) {
+            K.vod.dur = p.total;
+            var N = Math.ceil(p.total * 10) + 1;
+            if (K.rms && K.rms.length < N) { var r = new Float32Array(N); r.fill(-1); r.set(K.rms); K.rms = r; }
+            $("kto").placeholder = fmtT(p.total); meta(); cost();
+          });
+        }
+        function last(sec, b) {
+          if (!K.vod || window.CLIP.busy()) return;
+          var msg = $("klmsg"); msg.textContent = T("kRefreshing", "Getting the newest minutes from Kick…"); busyBtn(b, msg, true);
+          refresh().then(function () { busyBtn(b, msg, false); grab(Math.max(0, K.vod.dur - sec), K.vod.dur, b, msg); },
+            function () { msg.textContent = T("kGetFail", "Couldn't get this part from Kick. Tap again."); busyBtn(b, msg, false); });
         }
         function range() {
           var P = window.CLIP ? window.CLIP.parseTime : function (s) { return s ? +s : null; };
@@ -5402,6 +5452,7 @@ var KICK = (function () {
           K.busy = true; K.stop = false; err("");
           $("kscan").disabled = true; show($("kprogw"), true); show($("kgraph"), true); $("klist").innerHTML = "";
           var N = Math.ceil(K.vod.dur * 10) + 1;
+          if (K.rms && K.rms.length < N) { var r2 = new Float32Array(N); r2.fill(-1); r2.set(K.rms); K.rms = r2; }
           if (!K.rms || K.rms.length !== N) { K.rms = new Float32Array(N); K.rms.fill(-1); }
           playlist(K.low).then(function (p) {
             var segs = p.segs.filter(function (s) { return s.t + s.d > r.a && s.t < r.b; }), done = 0, next = 0, B = 6;
@@ -5543,8 +5594,12 @@ var KICK = (function () {
         }
         function edit(s, b, msg) {
           if (window.CLIP.busy()) return;
-          var q = document.querySelector('input[name="kq"]:checked'), name = q && K.vars[q.value] ? q.value : K.low, L = window.CLIP.len();
-          var from = Math.max(0, s - 5), to = Math.min(K.vod.dur, s + L + 15);
+          var L = window.CLIP.len();
+          grab(Math.max(0, s - 5), Math.min(K.vod.dur, s + L + 15), b, msg);
+        }
+        function grab(from, to, b, msg) {
+          if (window.CLIP.busy()) return;
+          var q = document.querySelector('input[name="kq"]:checked'), name = q && K.vars[q.value] ? q.value : K.low;
           msg.textContent = T("kGet", "Getting the clip… {p}%", { p: 0 }); busyBtn(b, msg, true);
           cut(name, from, to, function (f) { msg.textContent = T("kGet", "Getting the clip… {p}%", { p: Math.round(f * 100) }); }).then(function (r) {
             var hh = fmtT(r.start).replace(/:/g, "-");
@@ -5563,7 +5618,12 @@ var KICK = (function () {
 
         $("kgo").addEventListener("click", open);
         $("kurl").addEventListener("keydown", function (e) { if (e.key === "Enter") open(); });
-        $("kurl").addEventListener("paste", function () { setTimeout(function () { if (uuidOf($("kurl").value)) open(); }, 0); });
+        $("kurl").addEventListener("paste", function () { setTimeout(function () { var v = $("kurl").value; if (uuidOf(v) || (/kick\.com\//i.test(v) && slugOf(v))) open(); }, 0); });
+        document.querySelectorAll("[data-klast]").forEach(function (b) { b.addEventListener("click", function () { last(+b.getAttribute("data-klast"), b); }); });
+        $("krefresh").addEventListener("click", function () {
+          var b = $("krefresh"), msg = $("klmsg"); msg.textContent = T("kRefreshing", "Getting the newest minutes from Kick…"); busyBtn(b, msg, true);
+          refresh().then(function () { msg.textContent = T("kRefreshed", "Updated. {dur} so far.", { dur: fmtT(K.vod.dur) }); }, function () { msg.textContent = T("kGetFail", "Couldn't get this part from Kick. Tap again."); }).then(function () { busyBtn(b, msg, false); });
+        });
         $("kscan").addEventListener("click", scan);
         $("kstop").addEventListener("click", function () { K.stop = true; });
         ["kfrom", "kto"].forEach(function (id) { $(id).addEventListener("input", cost); });
