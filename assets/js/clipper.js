@@ -15,7 +15,7 @@
           kLooking: "Kick से वीडियो खोल रहे हैं…", kMeta: "{ch} · {dur} लंबा", kCost: "स्कैन में लगभग {mb} MB डेटा लगेगा ({h} घंटे)। कम डेटा के लिए छोटा हिस्सा चुनें।",
           kScanning: "आवाज़ पढ़ रहे हैं… {p}% · {done} / {all}", kScanStop: "स्कैन रोक दिया। अब तक मिले पल नीचे हैं।", kFound: "{n} सबसे ज़ोरदार पल मिले। देखें, फिर एडिट करें।",
           kNone: "इस हिस्से में कोई ज़ोरदार पल नहीं मिला।", kPrev: "देखें", kEdit: "एडिट करें", kGet: "क्लिप ला रहे हैं… {p}%", kGetFail: "यह हिस्सा Kick से नहीं आ पाया। फिर से टैप करें।",
-          kLoaded: "क्लिप एडिटर में खुल गई। आगे सेटिंग्स और स्टाइल चुनें।", kRange: "समय सही नहीं है। जैसे 1:30:00 लिखें।", kLive: "यह अभी लाइव है। स्ट्रीम ख़त्म होने के बाद उसका VOD लिंक डालें।", kLiveMeta: "{ch} · अब तक {dur}", kLiveTag: "लाइव", kLastT: "आख़िरी हिस्से की क्लिप बनाएँ", kLast1: "1 मिनट", kLast2: "2 मिनट", kLast5: "5 मिनट", kRefresh: "सबसे नए मिनट जोड़ें", kRefreshing: "Kick से नए मिनट ला रहे हैं…", kRefreshed: "अपडेट हो गया। अब तक {dur}।", kPastT: "यह चैनल अभी ऑफ़लाइन है। कोई पुराना स्ट्रीम चुनें", kNoChan: "Kick पर यह चैनल नहीं मिला। नाम दोबारा देखें।", kNoPast: "इस चैनल का कोई पुराना स्ट्रीम नहीं मिला।", kOpen: "खोलें", kLiveNote: "लाइव से लगभग एक मिनट पीछे।",
+          kLoaded: "क्लिप एडिटर में खुल गई। आगे सेटिंग्स और स्टाइल चुनें।", kRange: "समय सही नहीं है। जैसे 1:30:00 लिखें।", kLive: "यह अभी लाइव है। स्ट्रीम ख़त्म होने के बाद उसका VOD लिंक डालें।", kLiveMeta: "{ch} · अब तक {dur}", kLiveTag: "लाइव", kLastT: "आख़िरी हिस्से की क्लिप बनाएँ", kLast1: "1 मिनट", kLast2: "2 मिनट", kLast5: "5 मिनट", kRefresh: "सबसे नए मिनट जोड़ें", kRefreshing: "Kick से नए मिनट ला रहे हैं…", kRefreshed: "अपडेट हो गया। अब तक {dur}।", kPastT: "यह चैनल अभी ऑफ़लाइन है। कोई पुराना स्ट्रीम चुनें", kNoChan: "Kick पर यह चैनल नहीं मिला। नाम दोबारा देखें।", kNoPast: "इस चैनल का कोई पुराना स्ट्रीम नहीं मिला।", kOpen: "खोलें", kFindMore: "10 और पल ढूँढें", kMakeAll: "सारी क्लिप बनाएँ ({n})", kAllMade: "सारी क्लिप बन गईं। और पल ढूँढें।", kLenQ: "हर क्लिप कितनी लंबी हो?", kMakeGo: "क्लिप बनाना शुरू करें", kStop2: "रोकें", kMCost: "{n} क्लिप · लगभग {mb} MB डेटा ({q})", kMGet: "क्लिप {i} / {n} ला रहे हैं… {p}%", kMJoin: "क्लिप जोड़ रहे हैं…", kMStop: "रोक दिया। कोई क्लिप नहीं बनी।", kMFail: "Kick से क्लिप नहीं आ पाईं। फिर से टैप करें।", kNoMore: "इस हिस्से में और ज़ोरदार पल नहीं मिले। बड़ा हिस्सा स्कैन करें।", kAdded: "{n} नए पल जोड़े।", kMDone: "{n} क्लिप स्टाइल में खुल गईं।", kLiveNote: "लाइव से लगभग एक मिनट पीछे।",
           sUpload: "अपलोड", sSettings: "सेटिंग्स", sStyle: "स्टाइल", sClips: "क्लिप्स",
           dropT: "लंबा वीडियो यहाँ छोड़ें", choose: "वीडियो चुनें", dropH: "आपके डिवाइस से MP4, MOV या WebM। वीडियो फ़ाइल कभी अपलोड नहीं होती।",
           durL: "अवधि", clipsAbout: "क्लिप्स, लगभग", nextSettings: "आगे: सेटिंग्स", another: "दूसरा वीडियो चुनें",
@@ -4838,13 +4838,13 @@
         /* ---------- one-tap presets ---------- */
         var PRESETS = {
           gaming: { name: ["pGaming", "Gaming"], fmt: function () { return S.camSet ? "split" : "original"; }, blur: true, tpl: "gaming",
-            hcol: "#39ff14", hbg: "#000000", hbga: 0, hout: true, hy: 18, hanim: "pop", zoom: true, zs: 1.2, pb: true, sfx: true, len: [20, 45], cat: "gaming", mus: "hype" },
+            hcol: "#39ff14", hbg: "#000000", hbga: 0, hout: true, hy: 18, hanim: "pop", zoom: true, zs: 1.2, pb: false, sfx: true, len: [20, 45], cat: "gaming", mus: "hype" },
           podcast: { name: ["pPodcast", "Podcast"], fmt: "face", blur: false, tpl: "word",
-            hcol: "#ffffff", hbg: "#000000", hbga: 85, hout: false, hy: 18, hanim: "slide", zoom: true, zs: 1.06, pb: true, sfx: false, len: [30, 60], cat: "podcast", mus: "off" },
+            hcol: "#ffffff", hbg: "#000000", hbga: 85, hout: false, hy: 18, hanim: "slide", zoom: true, zs: 1.06, pb: false, sfx: false, len: [30, 60], cat: "podcast", mus: "off" },
           motivation: { name: ["pMotivation", "Motivation"], fmt: "vertical", crop: 50, blur: false, tpl: "bounce",
-            hcol: "#ffd400", hbg: "#000000", hbga: 0, hout: true, hy: 50, hanim: "pop", zoom: true, zs: 1.12, pb: true, sfx: true, len: [20, 40], cat: "motivation", mus: "cine" },
+            hcol: "#ffd400", hbg: "#000000", hbga: 0, hout: true, hy: 50, hanim: "pop", zoom: true, zs: 1.12, pb: false, sfx: true, len: [20, 40], cat: "motivation", mus: "cine" },
           story: { name: ["pStory", "Hindi Story"], fmt: "vertical", crop: 50, blur: false, tpl: "hindi", alang: "hindi",
-            hcol: "#ffffff", hbg: "#000000", hbga: 60, hout: true, hy: 18, hanim: "fade", zoom: false, pb: true, sfx: false, len: [40, 60], cat: "story", mus: "lofi", mvol: 15 }
+            hcol: "#ffffff", hbg: "#000000", hbga: 60, hout: true, hy: 18, hanim: "fade", zoom: false, pb: false, sfx: false, len: [40, 60], cat: "story", mus: "lofi", mvol: 15 }
         };
         var PRESET_APPLYING = false;
         S.preset = "custom";
@@ -4955,7 +4955,25 @@
           if (!seen()) open();
         })();
 
-        window.CLIP = { load: loadFile, lib: function () { return loadLib(MUXER_URL, "Mp4Muxer"); }, len: hyLen, busy: function () { return !!S.busy; }, parseTime: parseTime, fmt: fmt };
+        function loadMoments(file, moms, len) {
+          loadFile(file);
+          var t0 = Date.now();
+          return new Promise(function (res, rej) {
+            (function wait() {
+              if (S.file === file && S.duration && S.vw) {
+                var r = $("len" + len); if (r) r.checked = true;
+                HY.file = file;
+                S.moments = moms.map(function (m) { return { s: m.s, e: Math.min(S.duration, m.e) }; });
+                S.sig = ""; show($("mused"), true);
+                updateSettings(); go(3);
+                var top = $("step3"); if (top) top.scrollIntoView({ block: "start", behavior: "smooth" });
+                res();
+              } else if (S.file !== file || Date.now() - t0 > 30000) rej(new Error("load"));
+              else setTimeout(wait, 150);
+            })();
+          });
+        }
+        window.CLIP = { loadMoments: loadMoments, load: loadFile, lib: function () { return loadLib(MUXER_URL, "Mp4Muxer"); }, len: hyLen, busy: function () { return !!S.busy; }, parseTime: parseTime, fmt: fmt };
         window.addEventListener("beforeunload", function (e) { if (S.busy) { e.preventDefault(); e.returnValue = ""; } });
       })();
     
@@ -5325,7 +5343,7 @@ var KICK = (function () {
         if (!$("kick")) return;
         var T = function (k, en, v) { return window.L10N ? window.L10N.t(k, en, v) : en.replace(/\{(\w+)\}/g, function (_, x) { return v && v[x] != null ? v[x] : ""; }); };
         var show = function (el, on) { el.classList.toggle("lts-hidden", !on); };
-        var K = { vod: null, rms: null, mom: [], stop: false, busy: false, vars: {}, segs: {} };
+        var K = { vod: null, rms: null, mom: [], stop: false, busy: false, vars: {}, segs: {}, made: {}, limit: 10, making: false };
         function err(msg) { $("kerr").textContent = msg || ""; show($("kerr"), !!msg); }
         function fmtT(x) { return window.CLIP ? window.CLIP.fmt(x, x >= 3600) : String(Math.round(x)); }
         function slugOf(u) { u = u.trim(); var m = /kick\.com\/([A-Za-z0-9_-]+)(?:\/?$|\/?[?#]|\/videos\/?$)/i.exec(u); if (m && !/^(api|video|videos|categories|category|browse|search)$/i.test(m[1])) return m[1].toLowerCase(); if (/^[A-Za-z0-9_-]{2,30}$/.test(u)) return u.toLowerCase(); return null; }
@@ -5396,7 +5414,7 @@ var KICK = (function () {
             var m = KICK.parseM3U(t, src);
             if (!m.vars.length) throw new Error("vod");
             K.vars = {}; m.vars.forEach(function (v) { K.vars[v.name] = v; });
-            K.segs = {}; K.rms = null; K.mom = [];
+            K.segs = {}; K.rms = null; K.mom = []; K.made = {}; K.limit = 10;
             K.low = K.vars["160p30"] ? "160p30" : m.vars[m.vars.length - 1].name;
             return playlist(K.low);
           }).then(function (p) {
@@ -5505,23 +5523,26 @@ var KICK = (function () {
           }
           return out;
         }
-        function pick() {
+        function pick(add) {
           var L = window.CLIP ? window.CLIP.len() : 60, sm = smooth(20), vals = [];
           for (var i = 0; i < sm.length; i++) if (sm[i] >= 0) vals.push(sm[i]);
-          K.mom = [];
-          if (vals.length < 100) { renderList(); return; }
+          if (!add) { K.mom = []; K.limit = 10; }
+          if (vals.length < 100) { renderList(); return 0; }
           vals.sort(function (a, b) { return a - b; });
-          var med = vals[Math.floor(vals.length / 2)] || 1e-6, top = vals[vals.length - 1] || 1, order = [];
-          for (i = 0; i < sm.length; i += 5) if (sm[i] > med * 1.3) order.push(i);
+          var med = vals[Math.floor(vals.length / 2)] || 1e-6, top = vals[vals.length - 1] || 1, order = [], before = K.mom.length;
+          for (i = 0; i < sm.length; i += 5) if (sm[i] > med * (add ? 1.1 : 1.3)) order.push(i);
           order.sort(function (a, b) { return sm[b] - sm[a]; });
+          var fresh = [];
           order.forEach(function (i) {
-            if (K.mom.length >= 10) return;
+            if (before + fresh.length >= K.limit) return;
             var t = i / 10;
-            if (K.mom.some(function (m) { return Math.abs(m.t - t) < L; })) return;
-            K.mom.push({ t: t, s: Math.max(0, t - L * 0.4), lv: Math.min(1, sm[i] / top), x: sm[i] / med });
+            if (K.mom.concat(fresh).some(function (m) { return Math.abs(m.t - t) < L; })) return;
+            fresh.push({ t: t, s: Math.max(0, t - L * 0.4), lv: Math.min(1, sm[i] / top), x: sm[i] / med });
           });
-          K.mom.sort(function (a, b) { return b.x - a.x; });
-          renderList(); graph();
+          if (add) K.mom = K.mom.concat(fresh);
+          else { K.mom = fresh; K.mom.sort(function (a, b) { return b.x - a.x; }); }
+          renderList(add); graph();
+          return fresh.length;
         }
         function graph() {
           var c = $("kgraph"), g = c.getContext("2d"), r = K.rms; if (!r) return;
@@ -5546,13 +5567,14 @@ var KICK = (function () {
             g.fillStyle = "#0b0f19"; g.fillText(String(k + 1), Math.min(W - 8, Math.max(8, x)), 12);
           });
         }
-        function renderList() {
+        function renderList(all) {
           var L = $("klist"); L.innerHTML = "";
+          show($("kall"), !!K.mom.length); show($("kmakep"), false); allBtn();
           if (!K.mom.length) { var p = document.createElement("li"); p.textContent = T("kNone", "No loud moments found in this part."); L.appendChild(p); return; }
           var head = document.createElement("p"); head.className = "lts-hint"; head.textContent = T("kFound", "Found the {n} loudest moments. Watch, then edit.", { n: K.mom.length });
           L.appendChild(head);
-          K.mom.forEach(function (m, k) { var li = item(m, k); if (k >= 5) li.classList.add("lts-hidden"); L.appendChild(li); });
-          if (K.mom.length > 5) {
+          K.mom.forEach(function (m, k) { var li = item(m, k); if (k >= 5 && !all) li.classList.add("lts-hidden"); L.appendChild(li); });
+          if (K.mom.length > 5 && !all) {
             var more = document.createElement("button"); more.type = "button"; more.className = "lts-btn lts-btn--block lts-kick__moreb";
             more.textContent = T("kMore", "Show {n} more", { n: K.mom.length - 5 });
             more.addEventListener("click", function () { L.querySelectorAll("li.lts-hidden").forEach(function (li) { li.classList.remove("lts-hidden"); }); more.remove(); });
@@ -5610,6 +5632,74 @@ var KICK = (function () {
             var top = $("step1"); if (top) top.scrollIntoView({ block: "start", behavior: "smooth" });
           }, function () { msg.textContent = T("kGetFail", "Couldn't get this part from Kick. Tap again."); }).then(function () { busyBtn(b, msg, false); });
         }
+        /* ---------- make all clips: pull each moment, join into one video, open in Style ---------- */
+        function mkey(m) { return m.t.toFixed(1); }
+        function todo() { return K.mom.filter(function (m) { return !K.made[mkey(m)]; }); }
+        function allBtn() {
+          var n = todo().length, b = $("kmake");
+          b.disabled = !n || K.making;
+          b.textContent = n ? T("kMakeAll", "Make all clips ({n})", { n: n }) : T("kAllMade", "All clips made. Find more moments.");
+        }
+        function qname() { var q = document.querySelector('input[name="kq"]:checked'); return q && K.vars[q.value] ? q.value : K.low; }
+        function klen() { var r = document.querySelector('input[name="klen"]:checked'); return r ? +r.value : 60; }
+        function mcost() {
+          var n = todo().length, v = K.vars[qname()], len = klen();
+          var mb = Math.max(1, Math.round(n * (len + 10) * ((v && v.bw) || 3500000) / 8 / 1e6));
+          $("kmcost").textContent = T("kMCost", "{n} clips · about {mb} MB of data ({q})", { n: n, mb: mb, q: (v ? v.h + "p" : "") });
+        }
+        function makeAll() {
+          var list = todo(); if (!list.length || K.making || window.CLIP.busy()) return;
+          var len = klen(), name = qname(), msg = $("kmmsg"), bar = $("kmbar").firstChild;
+          K.making = true; K.mstop = false; allBtn(); show($("kmakep"), false); show($("kmprog"), true); $("kallmsg").textContent = ""; show($("kallmsg"), false);
+          var parts = [], moms = [], off = 0;
+          function setP(i, f) { var p = Math.round(((i + f) / list.length) * 100); bar.style.width = p + "%"; msg.textContent = T("kMGet", "Getting clip {i} of {n}… {p}%", { i: Math.min(list.length, i + 1), n: list.length, p: p }); }
+          Promise.all([playlist(name), window.CLIP.lib()]).then(function (x) {
+            var p = x[0], MX = x[1], i = 0;
+            function next() {
+              if (K.mstop) throw new Error("stop");
+              if (i >= list.length) return;
+              var m = list[i], from = Math.max(0, m.t - len * 0.4), to = Math.min(K.vod.dur, from + len);
+              var segs = p.segs.filter(function (sg) { return sg.t + sg.d > from && sg.t < to; });
+              if (!segs.length) { i++; return next(); }
+              var b0 = segs[0].t, got = 0; setP(i, 0);
+              return Promise.all(segs.map(function (sg) { return getBytes(sg.url).then(function (u8) { got++; setP(i, got / segs.length); return { t: off + (sg.t - b0), u8: u8 }; }); }))
+                .then(function (ps) {
+                  parts.push.apply(parts, ps);
+                  var blk = segs.reduce(function (a, sg) { return a + sg.d; }, 0), st = off + (from - b0);
+                  moms.push({ s: st, e: Math.min(off + blk, st + len), key: mkey(m) });
+                  off += blk; i++;
+                  return next();
+                });
+            }
+            return next().then(function () {
+              if (!parts.length) throw new Error("none");
+              msg.textContent = T("kMJoin", "Joining the clips…");
+              return new Promise(function (r) { setTimeout(r, 30); }).then(function () {
+                var r = KICK.toMp4(MX, parts, 0, off, p.v); parts = null;
+                var sh = r.start || 0;
+                var f = new File([r.buf], "kick-" + K.vod.ch + "-" + moms.length + "-clips.mp4", { type: "video/mp4" });
+                return window.CLIP.loadMoments(f, moms.map(function (m) { return { s: Math.max(0, m.s - sh), e: m.e - sh }; }), len).then(function () {
+                  moms.forEach(function (m) { K.made[m.key] = true; });
+                  $("kallmsg").textContent = T("kMDone", "{n} clips opened in Style.", { n: moms.length }); show($("kallmsg"), true);
+                });
+              });
+            });
+          }).catch(function (e) {
+            $("kallmsg").textContent = e && e.message === "stop" ? T("kMStop", "Stopped. No clips were made.") : T("kMFail", "Couldn't get the clips from Kick. Tap again.");
+            show($("kallmsg"), true);
+          }).then(function () { K.making = false; parts = null; show($("kmprog"), false); bar.style.width = "0%"; allBtn(); });
+        }
+        $("kmake").addEventListener("click", function () { if (K.making) return; var p = $("kmakep"), on = p.classList.contains("lts-hidden"); show(p, on); if (on) mcost(); });
+        document.querySelectorAll('input[name="klen"], input[name="kq"]').forEach(function (r) { r.addEventListener("change", function () { if (!$("kmakep").classList.contains("lts-hidden")) mcost(); }); });
+        $("kmgo").addEventListener("click", makeAll);
+        $("kmstop").addEventListener("click", function () { K.mstop = true; });
+        $("kfindmore").addEventListener("click", function () {
+          if (!K.rms || K.busy) return;
+          K.limit = K.mom.length + 10;
+          var n = pick(true), m = $("kallmsg");
+          m.textContent = n ? T("kAdded", "Added {n} new moments.", { n: n }) : T("kNoMore", "No more loud moments in this part. Scan a bigger part.");
+          show(m, true);
+        });
         $("kjumpgo").addEventListener("click", function () {
           var t = window.CLIP.parseTime($("kjump").value);
           if (t == null || isNaN(t) || !K.vod || t >= K.vod.dur) { $("kjmsg").textContent = T("kRange", "That time isn't right. Type it like 1:30:00."); show($("kjmsg"), true); return; }

@@ -125,6 +125,8 @@
       .lts-kick__live { display: inline-block; margin-right: 6px; padding: 1px 7px; border-radius: 6px; background: #e5243b; color: #fff; font: var(--type-tag); letter-spacing: 0.04em; vertical-align: middle; }
       .lts-kick__lastb { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
       .lts-kick__lastb .lts-btn { min-height: 40px; padding: 0 8px; white-space: nowrap; }
+      .lts-kick__all { display: grid; gap: 8px; }
+      .lts-kick__all .lts-seg { margin: 0; }
       .lts-kick__dot { width: 10px; height: 10px; border-radius: 50%; background: #53fc18; box-shadow: 0 0 8px #53fc18; }
       .lts-kick__row { display: flex; gap: 8px; }
       .lts-kick__row .lts-input { flex: 1; min-width: 0; }

@@ -120,6 +120,26 @@
                     </div>
                   </fieldset>
                   <ol class="lts-kick__list" id="klist"></ol>
+                  <div class="lts-kick__all lts-hidden" id="kall">
+                    <button class="lts-btn lts-btn--block" type="button" id="kfindmore" data-li18n="kFindMore">Find 10 more moments</button>
+                    <button class="lts-btn lts-btn--primary lts-btn--block" type="button" id="kmake">Make all clips</button>
+                    <p class="lts-kick__msg lts-hidden" id="kallmsg"></p>
+                    <div class="lts-kick__jump lts-hidden" id="kmakep">
+                      <span class="lts-label" data-li18n="kLenQ">How long should each clip be?</span>
+                      <div class="lts-seg">
+                        <input type="radio" name="klen" id="klen30" value="30" /><label for="klen30">30s</label>
+                        <input type="radio" name="klen" id="klen45" value="45" /><label for="klen45">45s</label>
+                        <input type="radio" name="klen" id="klen60" value="60" checked /><label for="klen60">60s</label>
+                      </div>
+                      <p class="lts-hint" id="kmcost"></p>
+                      <button class="lts-btn lts-btn--primary lts-btn--block" type="button" id="kmgo" data-li18n="kMakeGo">Start making clips</button>
+                    </div>
+                    <div class="lts-hidden" id="kmprog">
+                      <div class="lts-bar" id="kmbar"><span></span></div>
+                      <p class="lts-hint" id="kmmsg"></p>
+                      <button class="lts-btn lts-btn--block" type="button" id="kmstop" data-li18n="kStop2">Stop</button>
+                    </div>
+                  </div>
                   <video class="lts-video lts-hidden" id="kvid" controls playsinline></video>
                 </div>
               </div>
@@ -491,7 +511,7 @@
                 <div class="lts-studio__panel" id="studio-look" role="tabpanel" aria-labelledby="stab-look" hidden>
                   <p class="lts-studio__hint" data-li18n="gLookH">Extra polish drawn into every clip.</p>
                   <h3 class="lts-studio__sub" data-li18n="shLook">Look</h3>
-                <label class="lts-switch"><span class="lts-label" data-li18n="pbar">Progress bar</span><input type="checkbox" role="switch" id="bpb" checked /></label>
+                <label class="lts-switch"><span class="lts-label" data-li18n="pbar">Progress bar</span><input type="checkbox" role="switch" id="bpb" /></label>
                 <div class="lts-boost__row">
                   <select class="lts-input" id="bpbpos" aria-label="Progress bar position"><option value="bottom" data-li18n="bottom">Bottom</option><option value="top" data-li18n="top">Top</option></select>
                   <input type="color" id="bpbcol" value="#ffd400" aria-label="Progress bar colour" />
