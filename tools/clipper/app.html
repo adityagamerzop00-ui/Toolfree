@@ -89,6 +89,41 @@
                     <button class="lts-btn lts-btn--block" type="button" id="krefresh" data-li18n="kRefresh">Refresh to the newest minutes</button>
                     <p class="lts-kick__msg lts-hidden" id="klmsg"></p>
                   </div>
+                  <div class="lts-kick__jump lts-kick__auto lts-hidden" id="kauto">
+                    <span class="lts-label" data-li18n="aT">Auto-clip while live</span>
+                    <p class="lts-hint" data-li18n="aHint">Saves a clip at every loud moment while the stream runs, up to 100 clips.</p>
+                    <div class="lts-kick__opt">
+                      <span class="lts-kick__ol" data-li18n="aLen">Clip length</span>
+                      <div class="lts-seg">
+                        <input type="radio" name="alen" id="alen30" value="30" /><label for="alen30">30s</label>
+                        <input type="radio" name="alen" id="alen60" value="60" checked /><label for="alen60">60s</label>
+                        <input type="radio" name="alen" id="alen90" value="90" /><label for="alen90">90s</label>
+                      </div>
+                    </div>
+                    <div class="lts-kick__opt">
+                      <span class="lts-kick__ol" data-li18n="aSens">Sensitivity</span>
+                      <div class="lts-seg">
+                        <input type="radio" name="asens" id="asLow" value="2.6" /><label for="asLow" data-li18n="aLow">Fewer</label>
+                        <input type="radio" name="asens" id="asMid" value="2" checked /><label for="asMid" data-li18n="aMid">Normal</label>
+                        <input type="radio" name="asens" id="asHigh" value="1.6" /><label for="asHigh" data-li18n="aHigh">More</label>
+                      </div>
+                    </div>
+                    <div class="lts-kick__opt">
+                      <span class="lts-kick__ol" data-li18n="aDest">Save clips to</span>
+                      <div class="lts-seg">
+                        <input type="radio" name="adest" id="adDrive" value="drive" checked /><label for="adDrive">Google Drive</label>
+                        <input type="radio" name="adest" id="adPhone" value="phone" /><label for="adPhone" data-li18n="aPhone">This phone</label>
+                      </div>
+                    </div>
+                    <div class="lts-kick__drive" id="adrow">
+                      <span class="lts-kick__dst" id="adst" data-li18n="aDrOff">Drive not connected</span>
+                      <button class="lts-btn" type="button" id="adrive" data-li18n="aDrGo">Connect</button>
+                    </div>
+                    <button class="lts-btn lts-btn--primary lts-btn--block" type="button" id="astart" data-li18n="aStart">Start auto-clip</button>
+                    <button class="lts-btn lts-btn--block lts-hidden" type="button" id="astop" data-li18n="aStop">Stop auto-clip</button>
+                    <p class="lts-kick__stat lts-hidden" id="astat" aria-live="polite"></p>
+                    <ol class="lts-kick__alist" id="alist"></ol>
+                  </div>
                   <div class="lts-kick__jump">
                     <span class="lts-label" data-li18n="kJump">Know the time? Skip the scan</span>
                     <div class="lts-kick__row">

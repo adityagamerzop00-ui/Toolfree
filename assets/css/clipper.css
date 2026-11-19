@@ -135,6 +135,17 @@
       .lts-kick__range .lts-label { margin: 0; }
       #ktitle { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
       .lts-kick__moreb { margin-top: 4px; }
+      .lts-kick__auto { gap: 10px; }
+      .lts-kick__opt { display: flex; flex-direction: column; gap: 6px; }
+      .lts-kick__ol { font: var(--type-caption); color: var(--text-secondary); }
+      .lts-kick__drive { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 12px; border-radius: 12px; background: var(--fill-tertiary); }
+      .lts-kick__drive .lts-btn { min-height: 36px; padding: 0 16px; }
+      .lts-kick__dst { font: var(--type-caption); color: var(--text-secondary); }
+      .lts-kick__dst.is-on { color: var(--text-primary); }
+      .lts-kick__stat { font: var(--type-caption); color: var(--text-secondary); margin: 0; }
+      .lts-kick__alist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+      .lts-kick__alist li { display: flex; justify-content: space-between; gap: 8px; font: var(--type-caption); padding: 8px 12px; border-radius: 10px; background: var(--fill-tertiary); }
+      .lts-kick__alist .ok { color: #3ddc84; } .lts-kick__alist .bad { color: #ff6b6b; }
       .lts-kick__more summary { cursor: pointer; font: var(--type-label); color: var(--text-secondary); min-height: 32px; display: flex; align-items: center; }
       .lts-kick__more[open] summary { margin-bottom: 8px; }
       .lts-kick__tt { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }

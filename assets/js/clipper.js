@@ -16,6 +16,7 @@
           kLooking: "Kick से वीडियो खोल रहे हैं…", kMeta: "{ch} · {dur} लंबा", kCost: "स्कैन में लगभग {mb} MB डेटा लगेगा ({h} घंटे)। कम डेटा के लिए छोटा हिस्सा चुनें।",
           kScanning: "आवाज़ पढ़ रहे हैं… {p}% · {done} / {all}", kScanStop: "स्कैन रोक दिया। अब तक मिले पल नीचे हैं।", kFound: "{n} सबसे ज़ोरदार पल मिले। देखें, फिर एडिट करें।",
           kNone: "इस हिस्से में कोई ज़ोरदार पल नहीं मिला।", kPrev: "देखें", kEdit: "एडिट करें", kGet: "क्लिप ला रहे हैं… {p}%", kGetFail: "यह हिस्सा Kick से नहीं आ पाया। फिर से टैप करें।",
+ aT: "लाइव के दौरान ऑटो-क्लिप", aHint: "स्ट्रीम चलते समय हर ज़ोरदार पल पर क्लिप सेव करता है, 100 क्लिप तक।", aLen: "क्लिप की लंबाई", aSens: "संवेदनशीलता", aLow: "कम", aMid: "सामान्य", aHigh: "ज़्यादा", aDest: "क्लिप कहाँ सेव करें", aPhone: "यही फ़ोन", aDrOff: "Drive जुड़ा नहीं है", aDrOn: "Drive जुड़ा है", aDrGo: "जोड़ें", aDrRe: "फिर जोड़ें", aDrNo: "Drive अभी सेट नहीं है। क्लिप इसी फ़ोन में सेव होंगी।", aDrFail: "Drive नहीं जुड़ पाया। फिर से टैप करें।", aStart: "ऑटो-क्लिप शुरू करें", aStop: "ऑटो-क्लिप रोकें", aListen: "सुन रहे हैं… पहली क्लिप से पहले लगभग 1 मिनट लगता है।", aStat: "{n} / {max} क्लिप · {up} सेव · {mb} MB डेटा", aKeep: "इस पेज को खुला और स्क्रीन ऑन रखें।", aDone: "100 क्लिप पूरी हो गईं। ऑटो-क्लिप रुक गया।", aStopped: "ऑटो-क्लिप रुक गया। {n} क्लिप बनीं।", aUp: "Drive में सेव", aUpIng: "अपलोड हो रही है…", aUpFail: "अपलोड नहीं हुई", aSaved: "फ़ोन में सेव", aLoud: "आवाज़ {x}×", aNeedDrive: "पहले Drive जोड़ें, या \"यही फ़ोन\" चुनें।", aRe: "Drive का साइन-इन ख़त्म हो गया। क्लिप सेव करने के लिए \"फिर जोड़ें\" पर टैप करें।",
           kLoaded: "क्लिप एडिटर में खुल गई। आगे सेटिंग्स और स्टाइल चुनें।", kRange: "समय सही नहीं है। जैसे 1:30:00 लिखें।", kLive: "यह अभी लाइव है। स्ट्रीम ख़त्म होने के बाद उसका VOD लिंक डालें।", kLiveMeta: "{ch} · अब तक {dur}", kLiveTag: "लाइव", kLastT: "आख़िरी हिस्से की क्लिप बनाएँ", kLast1: "1 मिनट", kLast2: "2 मिनट", kLast5: "5 मिनट", kRefresh: "सबसे नए मिनट जोड़ें", kRefreshing: "Kick से नए मिनट ला रहे हैं…", kRefreshed: "अपडेट हो गया। अब तक {dur}।", kPastT: "यह चैनल अभी ऑफ़लाइन है। कोई पुराना स्ट्रीम चुनें", kNoChan: "Kick पर यह चैनल नहीं मिला। नाम दोबारा देखें।", kNoPast: "इस चैनल का कोई पुराना स्ट्रीम नहीं मिला।", kOpen: "खोलें", kFindMore: "10 और पल ढूँढें", kMakeAll: "सारी क्लिप बनाएँ ({n})", kAllMade: "सारी क्लिप बन गईं। और पल ढूँढें।", kLenQ: "हर क्लिप कितनी लंबी हो?", kMakeGo: "क्लिप बनाना शुरू करें", kStop2: "रोकें", kMCost: "{n} क्लिप · लगभग {mb} MB डेटा ({q})", kMGet: "क्लिप {i} / {n} ला रहे हैं… {p}%", kMJoin: "क्लिप जोड़ रहे हैं…", kMStop: "रोक दिया। कोई क्लिप नहीं बनी।", kMFail: "Kick से क्लिप नहीं आ पाईं। फिर से टैप करें।", kNoMore: "इस हिस्से में और ज़ोरदार पल नहीं मिले। बड़ा हिस्सा स्कैन करें।", kAdded: "{n} नए पल जोड़े।", kMDone: "{n} क्लिप स्टाइल में खुल गईं।", kLiveNote: "लाइव से लगभग एक मिनट पीछे।",
           twVod: "Twitch दूसरी साइटों को पुराने स्ट्रीम खोलने नहीं देता। लाइव होने पर चैनल का लिंक डालें और आख़िरी 1, 2 या 5 मिनट की क्लिप बनाएँ।", twLooking: "Twitch से स्ट्रीम खोल रहे हैं…",
           twWait: "{ch} · स्ट्रीम इस फ़ोन पर सेव हो रही है… कुछ सेकंड में क्लिप बन सकेंगी। यह पेज खुला रखें।", twSaving: "{ch} · {dur} इस फ़ोन पर सेव। यह पेज खुला रखें।",
@@ -6018,7 +6019,7 @@ var KICK = (function () {
         }
         function twParts(on) {
           // Twitch mode shows the title, live status, the last 1/2/5 min buttons and quality. Everything else in the Kick card is hidden.
-          var keep = { ktitle: 1, kmeta: 1, klive: 1, kqual: 1 };
+          var keep = { ktitle: 1, kmeta: 1, klive: 1, kqual: 1, kauto: 1 };
           Array.prototype.forEach.call($("kinfo").children, function (el) { if (!keep[el.id]) el.style.display = on ? "none" : ""; });
           $("krefresh").style.display = on ? "none" : "";
           ["kq480", "kq720", "kq1080"].forEach(function (q) { $(q).disabled = on ? !twVar(q) : $(q).disabled; });
@@ -6068,7 +6069,7 @@ var KICK = (function () {
             if (run !== TW.run) return;
             TW.vars = vars;
             $("kq480").checked = true; // the phone keeps up to 5 minutes, 480p keeps that small
-            twParts(true); show($("kqual"), true); show($("klive"), true);
+            twParts(true); show($("kqual"), true); show($("klive"), true); show($("kauto"), true);
             $("ktitle").textContent = ch; twMeta(); twStart();
             fetch("https://gql.twitch.tv/gql", { method: "POST", headers: { "Client-ID": TW_CID }, body: JSON.stringify({ query: '{ user(login:"' + ch + '"){ displayName stream{ title } } }' }) })
               .then(function (r) { return r.json(); }).then(function (j) {
@@ -6085,6 +6086,7 @@ var KICK = (function () {
         }
         function twStart() {
           clearTimeout(TW.timer);
+          AU.hist = []; AU.pend = null; AU.last = -1e9;
           var v = twQ(); TW.name = v.name; TW.vu = v.url; TW.segs = []; TW.seen = {}; TW.init = null; TW.initUrl = ""; TW.total = 0; TW.fails = 0; TW.ad = false;
           twStatus(); twPoll(TW.run);
         }
@@ -6092,6 +6094,7 @@ var KICK = (function () {
           clearTimeout(TW.timer); TW.run++;
           if (!TW.on) return;
           TW.on = false; TW.segs = []; TW.seen = {}; TW.init = null; TW.vars = [];
+          auStop(true); show($("kauto"), false);
           twParts(false); $("klmsg").textContent = ""; show($("klmsg"), false);
           document.querySelectorAll("[data-klast]").forEach(function (b) { b.disabled = false; });
         }
@@ -6137,6 +6140,7 @@ var KICK = (function () {
             : Promise.resolve();
           return initJob.then(function () { return getBytes(j.u); }).then(function (b) {
             if (run !== TW.run) return;
+            AU.bytes += b.length;
             var f;
             if (j.map) { if (!TW.init) return; f = KICK.fFrag(b, TW.init); }
             else {
@@ -6156,7 +6160,9 @@ var KICK = (function () {
             // place each piece right after the last one, so gaps (ads, a sleeping phone) never show as a frozen picture
             f.v.forEach(function (s) { s.T = at + (s.T - z); s.D = at + (s.D - z); });
             f.a.forEach(function (x) { x.T = at + (x.T - z); });
-            TW.segs.push({ t: at, d: d, v: f.v, a: f.a, I: TW.init }); TW.total = at + d;
+            var seg = { t: at, d: d, v: f.v, a: f.a, I: TW.init };
+            TW.segs.push(seg); TW.total = at + d;
+            if (AU.on) auFeed(seg);
             while (TW.segs.length && TW.segs[0].t + TW.segs[0].d < TW.total - TW_KEEP) TW.segs.shift();
           }).catch(function () {});
         }
@@ -6179,6 +6185,172 @@ var KICK = (function () {
           }).catch(function () { msg.textContent = T("twGetFail", "Couldn't make this clip. Tap again."); })
             .then(function () { busyBtn(b, msg, false); show(msg, true); });
         }
+        /* ---------- Twitch live auto-clip: listens to the saved minutes and keeps a clip at every loud moment ---------- */
+        var AU_MAX = 100, AU = { on: false, n: 0, up: 0, bytes: 0, b0: 0, hist: [], pend: null, last: -1e9, busy: false, wl: null, len: 60, f: 2, dest: "drive" };
+        function auRadio(n, d) { var r = document.querySelector('input[name="' + n + '"]:checked'); return r ? r.value : d; }
+        function auAdts(raw, c) {
+          // raw AAC frame -> ADTS frame so the browser can decode it
+          var asc = c.asc, prof = ((asc[0] >> 3) & 31) - 1, sri = ((asc[0] & 7) << 1) | (asc[1] >> 7), ch = (asc[1] >> 3) & 15, n = raw.length + 7, o = new Uint8Array(n);
+          o[0] = 0xff; o[1] = 0xf1; o[2] = ((prof & 3) << 6) | (sri << 2) | (ch >> 2); o[3] = ((ch & 3) << 6) | (n >> 11);
+          o[4] = (n >> 3) & 0xff; o[5] = ((n & 7) << 5) | 0x1f; o[6] = 0xfc; o.set(raw, 7); return o;
+        }
+        function auFeed(seg) {
+          var c = seg.I && seg.I.a && seg.I.a.acfg; if (!c || !c.asc || !seg.a.length) return;
+          var fr = seg.a.map(function (x) { return auAdts(x.raw, c); }), n = 0, o = 0;
+          fr.forEach(function (x) { n += x.length; }); var all = new Uint8Array(n); fr.forEach(function (x) { all.set(x, o); o += x.length; });
+          decodeAdts(all).then(function (ab) {
+            if (!AU.on) return;
+            var d = ab.getChannelData(0), w = Math.round(ab.sampleRate / 2), t0 = seg.a[0].T;
+            for (var k = 0; k * w + w / 2 < d.length; k++) {
+              var s = 0, e = Math.min(d.length, (k + 1) * w); for (var j = k * w; j < e; j++) s += d[j] * d[j];
+              AU.hist.push({ t: t0 + k * 0.5, r: Math.sqrt(s / Math.max(1, e - k * w)) });
+            }
+            while (AU.hist.length && AU.hist[0].t < TW.total - 600) AU.hist.shift();
+            auCheck();
+          }, function () {});
+        }
+        function auCheck() {
+          if (!AU.on) return;
+          if (AU.pend) { if (TW.total >= AU.pend.end && !AU.busy) auMake(AU.pend); return; }
+          var H = AU.hist; if (H.length < 90 || AU.n >= AU_MAX) return; // about 45 s of sound before the first clip
+          var v = H.map(function (h) { return h.r; }).sort(function (a, b) { return a - b; }), base = v[Math.floor(v.length / 2)] || 1e-6;
+          var tail = H.slice(-4), now = tail.reduce(function (a, h) { return a + h.r; }, 0) / tail.length, t = tail[tail.length - 1].t;
+          if (now < base * AU.f || now < 0.02 || t - AU.last < AU.len) return;
+          AU.last = t;
+          AU.pend = { t: t, from: Math.max(0, t - AU.len * 0.4), end: t + AU.len * 0.6, x: now / base };
+        }
+        function auName(n) {
+          var d = new Date(), z = function (x) { return (x < 10 ? "0" : "") + x; };
+          return "twitch-" + TW.ch.toLowerCase() + "-" + d.getFullYear() + z(d.getMonth() + 1) + z(d.getDate()) + "-" + z(d.getHours()) + z(d.getMinutes()) + z(d.getSeconds()) + "-" + (n < 10 ? "0" : "") + n + ".mp4";
+        }
+        function auMake(p) {
+          AU.pend = null;
+          var I = TW.segs.length ? TW.segs[TW.segs.length - 1].I : null; if (!I) return;
+          var parts = TW.segs.filter(function (s) { return s.I === I && s.t + s.d > p.from && s.t < p.end; });
+          if (!parts.length) return;
+          AU.busy = true;
+          window.CLIP.lib().then(function (MX) {
+            var V = [], A = []; parts.forEach(function (s) { V.push.apply(V, s.v); A.push.apply(A, s.a); });
+            var vi = { w: I.v.w, h: I.v.h, fps: (TW.vars.filter(function (v) { return v.name === TW.name; })[0] || {}).fps || 30 };
+            var r = KICK.muxS(MX, V, A, I.v.desc, I.v.codec, I.a ? I.a.acfg : null, Math.max(p.from, parts[0].t), Math.min(p.end, TW.total), vi);
+            AU.n++;
+            var f = new File([r.buf], auName(AU.n), { type: "video/mp4" });
+            var li = auItem(AU.n, p.x);
+            if (AU.dest === "drive") drQueue(f, li); else { auSave(f); auMark(li, "ok", T("aSaved", "Saved to phone")); AU.up++; }
+            if (AU.n >= AU_MAX) { auStop(false); auMsg(T("aDone", "100 clips made. Auto-clip stopped.")); }
+          }).catch(function () {}).then(function () { AU.busy = false; auStat(); });
+        }
+        function auSave(f) {
+          var u = URL.createObjectURL(f), a = document.createElement("a"); a.href = u; a.download = f.name; document.body.appendChild(a); a.click(); a.remove();
+          setTimeout(function () { URL.revokeObjectURL(u); }, 60000);
+        }
+        function auItem(n, x) {
+          var li = document.createElement("li"), l = document.createElement("span"), r = document.createElement("span");
+          var d = new Date(); l.textContent = "#" + n + " · " + d.toTimeString().slice(0, 5) + " · " + T("aLoud", "{x}× louder", { x: x.toFixed(1) });
+          r.textContent = T("aUpIng", "Uploading…"); li.appendChild(l); li.appendChild(r);
+          var L = $("alist"); L.insertBefore(li, L.firstChild); while (L.children.length > 8) L.removeChild(L.lastChild);
+          return li;
+        }
+        function auMark(li, cls, txt) { var r = li.lastChild; r.className = cls; r.textContent = txt; }
+        function auMsg(t) { var m = $("astat"); m.textContent = t; show(m, true); }
+        function auStat() {
+          if (!AU.on) return;
+          auMsg((AU.n ? T("aStat", "{n} / {max} clips · {up} saved · {mb} MB data", { n: AU.n, max: AU_MAX, up: AU.up, mb: Math.round((AU.bytes - AU.b0) / 1048576) })
+            : T("aListen", "Listening… the first clip takes about a minute.")) + " " + T("aKeep", "Keep this page open and the screen on."));
+        }
+        function auLock() { if (AU.on && navigator.wakeLock && document.visibilityState === "visible") navigator.wakeLock.request("screen").then(function (l) { AU.wl = l; }, function () {}); }
+        function auStart() {
+          if (!TW.on || AU.on) return;
+          AU.dest = auRadio("adest", "drive");
+          if (AU.dest === "drive" && !DR.tok) { auMsg(T("aNeedDrive", "Connect Drive first, or pick This phone.")); return; }
+          AU.on = true; AU.n = 0; AU.up = 0; AU.b0 = AU.bytes; AU.hist = []; AU.pend = null; AU.last = -1e9;
+          AU.len = +auRadio("alen", "60"); AU.f = +auRadio("asens", "2");
+          $("alist").innerHTML = ""; show($("astart"), false); show($("astop"), true);
+          document.querySelectorAll('input[name="alen"], input[name="adest"]').forEach(function (r) { r.disabled = true; });
+          auLock(); auStat();
+        }
+        function auStop(quiet) {
+          if (!AU.on) return;
+          AU.on = false; AU.pend = null; AU.hist = [];
+          if (AU.wl) { try { AU.wl.release(); } catch (e) {} AU.wl = null; }
+          show($("astart"), true); show($("astop"), false);
+          document.querySelectorAll('input[name="alen"], input[name="adest"]').forEach(function (r) { r.disabled = false; });
+          if (!quiet) auMsg(T("aStopped", "Auto-clip stopped. {n} clips made.", { n: AU.n }));
+        }
+        document.addEventListener("visibilitychange", auLock);
+        document.querySelectorAll('input[name="asens"]').forEach(function (r) { r.addEventListener("change", function () { if (r.checked) AU.f = +r.value; }); });
+        document.querySelectorAll('input[name="adest"]').forEach(function (r) { r.addEventListener("change", function () { show($("adrow"), auRadio("adest", "drive") === "drive"); }); });
+        $("astart").addEventListener("click", auStart);
+        $("astop").addEventListener("click", function () { auStop(false); });
+
+        /* ---------- Google Drive: the viewer's own Drive, from the browser. drive.file only sees files Toolsaku makes. ---------- */
+        var DRIVE_CID = "161048658439-26los3o49fahs0uqaerb6ggr1qlhdk8v.apps.googleusercontent.com"; // Google OAuth Web client ID (…apps.googleusercontent.com). Empty = Drive hidden.
+        var DR = { tok: null, exp: 0, tc: null, root: null, folder: null, q: [], busy: false, js: null };
+        var DAPI = "https://www.googleapis.com";
+        function drJs() {
+          if (DR.js) return DR.js;
+          DR.js = new Promise(function (res, rej) { var s = document.createElement("script"); s.src = "https://accounts.google.com/gsi/client"; s.async = true; s.onload = res; s.onerror = function () { DR.js = null; rej(new Error("gsi")); }; document.head.appendChild(s); });
+          return DR.js;
+        }
+        function drUi() {
+          var on = DR.tok && Date.now() < DR.exp, st = $("adst");
+          st.textContent = on ? T("aDrOn", "Drive connected") : T("aDrOff", "Drive not connected"); st.classList.toggle("is-on", !!on);
+          $("adrive").textContent = on ? T("aDrRe", "Reconnect") : T("aDrGo", "Connect");
+        }
+        function drConnect() {
+          if (!DRIVE_CID) { auMsg(T("aDrNo", "Drive isn't set up yet. Clips will save to this phone.")); $("adPhone").checked = true; show($("adrow"), false); return; }
+          drJs().then(function () {
+            if (!DR.tc) DR.tc = google.accounts.oauth2.initTokenClient({
+              client_id: DRIVE_CID, scope: "https://www.googleapis.com/auth/drive.file",
+              callback: function (r) {
+                if (!r || r.error || !r.access_token) { auMsg(T("aDrFail", "Couldn't connect Drive. Tap again.")); return; }
+                DR.tok = r.access_token; DR.exp = Date.now() + ((+r.expires_in || 3600) - 120) * 1000; drUi(); drPump();
+              },
+              error_callback: function () { auMsg(T("aDrFail", "Couldn't connect Drive. Tap again.")); }
+            });
+            DR.tc.requestAccessToken({ prompt: DR.tok ? "" : "consent" });
+          }, function () { auMsg(T("aDrFail", "Couldn't connect Drive. Tap again.")); });
+        }
+        function drFetch(u, o) {
+          o = o || {}; o.headers = o.headers || {}; o.headers.Authorization = "Bearer " + DR.tok;
+          return fetch(u, o).then(function (r) { if (r.status === 401) { DR.tok = null; drUi(); throw new Error("auth"); } if (!r.ok) throw new Error("http " + r.status); return r; });
+        }
+        function drDir(name, parent) {
+          var q = "name='" + name.replace(/'/g, "\\'") + "' and mimeType='application/vnd.google-apps.folder' and trashed=false" + (parent ? " and '" + parent + "' in parents" : "");
+          return drFetch(DAPI + "/drive/v3/files?fields=files(id)&q=" + encodeURIComponent(q)).then(function (r) { return r.json(); }).then(function (j) {
+            if (j.files && j.files.length) return j.files[0].id;
+            return drFetch(DAPI + "/drive/v3/files?fields=id", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ name: name, mimeType: "application/vnd.google-apps.folder", parents: parent ? [parent] : undefined }) })
+              .then(function (r) { return r.json(); }).then(function (j2) { return j2.id; });
+          });
+        }
+        function drTarget() {
+          var d = new Date(), z = function (x) { return (x < 10 ? "0" : "") + x; }, sub = TW.ch + " " + d.getFullYear() + "-" + z(d.getMonth() + 1) + "-" + z(d.getDate());
+          if (DR.folder && DR.folder.name === sub) return Promise.resolve(DR.folder.id);
+          return (DR.root ? Promise.resolve(DR.root) : drDir("Toolsaku Clips").then(function (id) { DR.root = id; return id; }))
+            .then(function (root) { return drDir(sub, root); }).then(function (id) { DR.folder = { name: sub, id: id }; return id; });
+        }
+        function drUpload(f) {
+          return drTarget().then(function (dir) {
+            return drFetch(DAPI + "/upload/drive/v3/files?uploadType=resumable&fields=id", { method: "POST", headers: { "Content-Type": "application/json; charset=UTF-8", "X-Upload-Content-Type": f.type, "X-Upload-Content-Length": String(f.size) }, body: JSON.stringify({ name: f.name, parents: [dir] }) });
+          }).then(function (r) {
+            var loc = r.headers.get("Location"); if (!loc) throw new Error("loc");
+            return fetch(loc, { method: "PUT", headers: { "Content-Type": f.type }, body: f }).then(function (r2) { if (!r2.ok) throw new Error("put " + r2.status); });
+          });
+        }
+        function drQueue(f, li) { DR.q.push({ f: f, li: li, tries: 0 }); drPump(); }
+        function drPump() {
+          if (DR.busy || !DR.q.length) return;
+          if (!DR.tok || Date.now() >= DR.exp) { DR.tok = null; drUi(); auMsg(T("aRe", "Drive sign-in expired. Tap Reconnect to keep saving clips.")); return; }
+          var job = DR.q[0]; DR.busy = true;
+          drUpload(job.f).then(function () { DR.q.shift(); AU.up++; auMark(job.li, "ok", T("aUp", "Saved to Drive")); },
+            function (e) {
+              if (e && e.message === "auth") { auMsg(T("aRe", "Drive sign-in expired. Tap Reconnect to keep saving clips.")); return; }
+              if (++job.tries >= 3) { DR.q.shift(); auSave(job.f); auMark(job.li, "bad", T("aUpFail", "Upload failed") + " · " + T("aSaved", "Saved to phone")); }
+            }).then(function () { DR.busy = false; auStat(); if (DR.tok) setTimeout(drPump, 300); });
+        }
+        $("adrive").addEventListener("click", drConnect);
+        if (!DRIVE_CID) { $("adPhone").checked = true; $("adDrive").disabled = true; show($("adrow"), false); }
+        drUi();
         document.querySelectorAll('input[name="kq"]').forEach(function (r) { r.addEventListener("change", function () { if (TW.on && TW.vars.length && r.checked) twStart(); }); });
         $("kurl").addEventListener("paste", function () { setTimeout(function () { if (twChOf($("kurl").value)) open(); }, 0); });
         window.KICKUI = K;
