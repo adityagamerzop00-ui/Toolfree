@@ -216,7 +216,16 @@
       .lts-tpl[aria-pressed="true"] { border-color: var(--fill-primary); box-shadow: inset 0 0 0 1px var(--fill-primary); }
       .lts-tpl:focus-visible { outline: 2px solid var(--fill-primary); outline-offset: 2px; }
       .lts-stylebox { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 16px; align-items: start; }
-      .lts-stylebox > canvas { position: sticky; top: 16px; display: block; width: 160px; height: auto; border-radius: var(--r-s); background: var(--fill-tertiary); }
+      .lts-stylebox > .lts-pvwrap > canvas { display: block; width: 160px; height: auto; border-radius: var(--r-s); background: var(--fill-tertiary); }
+      .lts-pvwrap { display: flex; flex-direction: column; align-items: stretch; gap: 8px; width: min-content; }
+      .lts-pvwrap--sticky { position: sticky; top: 16px; }
+      .lts-pvplay { width: 100%; min-height: 36px; padding: 6px 8px; font-size: 13px; line-height: 1.25; white-space: normal; }
+      .lts-pvstudio { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 16px; align-items: center; margin-bottom: 16px; }
+      .lts-pvstudio canvas { display: block; width: 140px; height: auto; border-radius: var(--r-s); background: var(--fill-tertiary); }
+      .lts-tut { margin-bottom: 16px; }
+      .lts-tut__t { font-size: 17px; margin: 0 0 8px; }
+      .lts-tut__ol { margin: 0 0 12px; padding-left: 20px; display: grid; gap: 6px; line-height: 1.45; }
+      .lts-tut__open { margin-bottom: 12px; min-height: 36px; padding: 6px 14px; font-size: 13px; }
       .lts-controls { display: grid; gap: 16px; min-width: 0; }
       .lts-colors { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
       .lts-colors label { display: grid; gap: 6px; font: var(--type-caption); color: var(--text-secondary); }
@@ -267,7 +276,7 @@
       .lts-modal__in h2 { font: var(--type-title); }
       .lts-modal__in p { font: var(--type-body); color: var(--text-secondary); }
       .lts-modal__in a { color: var(--text-primary); font-weight: var(--weight-medium); text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; display: inline-flex; align-items: center; min-height: var(--tap); min-width: var(--tap); vertical-align: middle; }
-      @media (max-width: 480px) { .lts-tpls { grid-template-columns: repeat(2, minmax(0, 1fr)); } .lts-stylebox > canvas { width: 110px; } }
+      @media (max-width: 480px) { .lts-tpls { grid-template-columns: repeat(2, minmax(0, 1fr)); } .lts-stylebox > .lts-pvwrap > canvas { width: 110px; } .lts-pvstudio canvas { width: 110px; } }
       @media (max-width: 420px) { .lts-stepper .lts-n { display: none; } }
       
       .lts-kit { grid-column: 1 / -1; display: grid; gap: 14px; padding: 16px; border-radius: var(--r-l); background: var(--fill-tertiary); cursor: default; }

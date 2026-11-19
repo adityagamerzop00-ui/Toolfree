@@ -7,6 +7,7 @@
           title: "लॉन्ग से शॉर्ट्स", tagline: "एक लंबे वीडियो से 30 से 60 सेकंड की छोटी वर्टिकल क्लिप बनाओ, सीधे अपने ब्राउज़र में।",
           b1: "साइनअप नहीं", b2: "कोई वॉटरमार्क नहीं", b3: "100% फ़्री", b4: "आपके डिवाइस पर चलता है",
           presets: "एक टैप वाले प्रीसेट", pGaming: "गेमिंग", pPodcast: "पॉडकास्ट", pMotivation: "मोटिवेशन", pStory: "हिंदी कहानी", pCustom: "कस्टम",
+          tutT: "नए हैं? ऐसे काम करता है", tut1: "लंबा वीडियो अपलोड करें, या Kick या Twitch लिंक डालें।", tut2: "सेटिंग्स: क्लिप की लंबाई चुनें, या AI से सबसे अच्छे पल ढूँढवाएँ।", tut3: "स्टाइल: लेआउट, कैप्शन और क्लिप स्टूडियो चुनें। क्लिप बनाने से पहले अपना एडिट देखने के लिए “प्रीव्यू चलाएँ” दबाएँ।", tut4: "क्लिप्स: सारी क्लिप एक साथ बनाएँ, फिर डाउनलोड या शेयर करें। कुछ भी अपलोड नहीं होता।", tutOk: "समझ गया", tutOpen: "कैसे काम करता है", pvPlay: "प्रीव्यू चलाएँ", pvStop: "रोकें · {t}", pvH: "आपकी पहली क्लिप लेआउट, कैप्शन, हुक और इफ़ेक्ट के साथ चलती है। म्यूज़िक क्लिप बनाते समय जुड़ता है।", pvFail: "प्रीव्यू नहीं चल पाया। फिर से टैप करें।",
           kJump: "समय पता है? स्कैन छोड़ें", kJumpGo: "यहाँ से एडिट करें", kOr2: "या ज़ोरदार पल अपने-आप ढूँढें",
           kOr: "या Kick या Twitch लिंक डालें, डाउनलोड की ज़रूरत नहीं", kLab: "Kick या Twitch लिंक", kGo: "खोलें",
           kHint: "Kick चैनल, लाइव स्ट्रीम या पुराने स्ट्रीम का लिंक डालें, या कोई लाइव Twitch चैनल। क्लिप सीधे स्ट्रीम से कटती हैं, फ़ोन में कुछ बड़ा सेव नहीं होता।",
@@ -2033,6 +2034,7 @@
 
         /* Style step tabs: Layout | Captions | Clip Studio */
         function spShow(id) {
+          pvStop(true);
           document.querySelectorAll("#styleTabs [role=tab]").forEach(function (b) { b.setAttribute("aria-selected", b.dataset.sp === id ? "true" : "false"); });
           ["layout", "caps", "studio"].forEach(function (k) { show($("sp-" + k), k === id); });
           if (id === "layout") drawCropPreview(); else drawStylePreview();
@@ -2321,9 +2323,105 @@
           drawFrame(ctx, stylev, c.width, c.height, so, 1, pel, pel * 3);
           var first = validCaps()[0];
           drawCaptionText(ctx, c.width, c.height, ST, first ? first.text : "Your captions look like this", 0.3);
+          var sc = $("studiocanvas");
+          if (sc && !(PV.on && PV.c === sc)) sc.getContext("2d").drawImage(c, 0, 0, sc.width, sc.height);
         }
         stylev.addEventListener("loadeddata", function () { try { stylev.currentTime = 0.01; } catch (e) {} });
-        stylev.addEventListener("seeked", function () { if (S.step === 3) drawStylePreview(); });
+        stylev.addEventListener("seeked", function () { if (S.step === 3 && !PV.on) drawStylePreview(); });
+        stylev.addEventListener("emptied", function () { pvStop(true); });
+
+        /* Play preview: plays the first clip on the phone with the layout, hook, effects, jump cuts and captions
+           drawn live, so the edit can be checked before any clip is made. Nothing is recorded. */
+        var PV = { on: false, c: null, b: null, raf: 0, seg: null, cuts: [], len: 0, tok: 0 };
+        function pvSeg(o) {
+          if (S.moments && S.moments.length) { var m = S.moments[0]; return { n: 1, start: m.s, end: m.e }; }
+          var sg = segments(o.start, o.end, o.len, 1)[0];
+          return sg || { n: 1, start: o.start || 0, end: Math.min(stylev.duration || 0, (o.start || 0) + (o.len || 30)) };
+        }
+        function pvT(x) { x = Math.max(0, Math.floor(x)); return Math.floor(x / 60) + ":" + pad(x % 60); }
+        function pvLabel(b, t) {
+          if (!b) return;
+          if (t == null) { TSET(b, "pvPlay", "Play preview"); b.classList.remove("lts-btn--primary"); b.setAttribute("aria-pressed", "false"); }
+          else { TSET(b, "pvStop", "Stop · {t}", { t: t }); b.classList.add("lts-btn--primary"); b.setAttribute("aria-pressed", "true"); }
+        }
+        function pvStop(quiet) {
+          if (!PV.on) return;
+          var c = PV.c, b = PV.b;
+          PV.on = false; PV.tok++; cancelAnimationFrame(PV.raf); PV.raf = 0;
+          stylev.pause(); stylev.muted = true;
+          pvLabel(b, null);
+          if (quiet === true) return;
+          if (c && c.id === "cropcanvas") drawCropPreview();
+          try { stylev.currentTime = 0.01; } catch (e) {}
+        }
+        function pvFrame() {
+          PV.raf = 0;
+          if (!PV.on) return;
+          var v = stylev, t = v.currentTime, seg = PV.seg;
+          for (var i = 0; i < PV.cuts.length; i++) {
+            var cu = PV.cuts[i];
+            if (t >= cu.s && t < cu.e - 0.05) { try { v.currentTime = cu.e; } catch (e) {} t = cu.e; break; }
+          }
+          if (v.ended || t >= seg.end - 0.04) { pvStop(); return; }
+          var c = PV.c, ctx = c.getContext("2d"), o = settings();
+          var so = c.id === "cropcanvas" ? o : Object.assign({}, o);
+          if (c.id !== "cropcanvas" && so.format === "original" && !boost().blur) so.format = "vertical";
+          var el = outT(PV.cuts, seg, t);
+          if (!v.seeking && v.readyState >= 2) {
+            drawFrame(ctx, v, c.width, c.height, so, 1, el, PV.len);
+            drawCaptions(ctx, c.width, c.height, ST, validCaps(), t);
+          }
+          pvLabel(PV.b, pvT(el) + " / " + pvT(PV.len));
+          PV.raf = requestAnimationFrame(pvFrame);
+        }
+        function pvStart(c, b) {
+          var o = settings();
+          if (!S.url || o.error) return;
+          var seg = pvSeg(o), cuts = cutsFor(seg), tok = ++PV.tok;
+          PV.on = true; PV.c = c; PV.b = b; PV.seg = seg; PV.cuts = cuts; PV.len = Math.max(0.1, seg.end - seg.start - cutLen(cuts));
+          pvLabel(b, "0:00");
+          stylev.pause();
+          stylev.muted = false; stylev.volume = 1;
+          seekStrict(stylev, seg.start + 0.01, 10000).then(function () {
+            if (tok !== PV.tok) return;
+            var p = stylev.play();
+            return p && p.catch(function () { stylev.muted = true; return stylev.play(); });
+          }).then(function () {
+            if (tok !== PV.tok) return;
+            PV.raf = requestAnimationFrame(pvFrame);
+          }).catch(function () {
+            if (tok !== PV.tok) return;
+            pvStop(true);
+            if (window.L10N) window.L10N.toast(T("pvFail", "The preview couldn't play. Tap again."));
+          });
+        }
+        document.querySelectorAll("[data-pv]").forEach(function (b) {
+          b.addEventListener("click", function () {
+            var c = $(b.dataset.pv), mine = PV.on && PV.b === b;
+            pvStop(true);
+            if (mine) { if (c.id === "cropcanvas") drawCropPreview(); try { stylev.currentTime = 0.01; } catch (e) {} return; }
+            pvStart(c, b);
+          });
+        });
+        document.addEventListener("visibilitychange", function () { if (document.hidden) pvStop(); });
+        // Clip Studio settings redraw its preview.
+        (function () {
+          var sp = $("sp-studio"), q = 0;
+          function redraw() { if (q || PV.on) return; q = requestAnimationFrame(function () { q = 0; if (S.step === 3) drawStylePreview(); }); }
+          sp.addEventListener("input", redraw); sp.addEventListener("change", redraw);
+        })();
+
+        /* First-visit guide: four short steps, closed for good with "Got it", reopened with "How it works". */
+        (function () {
+          var tut = $("tut"), open = $("tutOpen"), seen = false;
+          try { seen = localStorage.getItem("lts-tut-done") === "1"; } catch (e) {}
+          show(tut, !seen); show(open, seen);
+          $("tutOk").addEventListener("click", function () {
+            try { localStorage.setItem("lts-tut-done", "1"); } catch (e) {}
+            show(tut, false); show(open, true); open.focus();
+          });
+          open.addEventListener("click", function () { show(tut, true); show(open, false); $("tutOk").focus(); });
+        })();
 
         /* template cards */
         function renderTpls() {
@@ -2811,6 +2909,7 @@
         function go(n) {
           if (S.busy && n !== 4) return;
           if (n >= 2 && !S.url) return;
+          pvStop(true);
           if (n >= 2 && S.step === 1 && S.file && HY.file !== S.file && !HY.busy) { hypeAnalyse(true); return; }
           if (n >= 3) {
             var o = settings();

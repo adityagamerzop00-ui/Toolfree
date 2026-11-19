@@ -21,6 +21,18 @@
             <p>It is missing video recording (MediaRecorder or canvas capture). Open this page in the latest Chrome or Edge on a desktop computer or an Android phone.</p>
           </div>
 
+          <section class="lts-card lts-tut lts-hidden" id="tut" aria-labelledby="tutT">
+            <h2 class="lts-tut__t" id="tutT" data-li18n="tutT">New here? How it works</h2>
+            <ol class="lts-tut__ol">
+              <li data-li18n="tut1">Upload a long video, or paste a Kick or Twitch link.</li>
+              <li data-li18n="tut2">Settings: pick the clip length, or let AI find the best moments.</li>
+              <li data-li18n="tut3">Style: choose a layout, captions and Clip Studio extras. Tap Play preview to watch your edit before making clips.</li>
+              <li data-li18n="tut4">Clips: make them all at once, then download or share. Nothing is uploaded.</li>
+            </ol>
+            <button class="lts-btn lts-btn--primary" type="button" id="tutOk" data-li18n="tutOk">Got it</button>
+          </section>
+          <button class="lts-btn lts-tut__open lts-hidden" type="button" id="tutOpen" data-li18n="tutOpen">How it works</button>
+
           <nav aria-label="Steps">
             <ol class="lts-stepper">
               <li><button type="button" data-go="1" aria-current="step" data-li18n="sUpload"><span class="lts-n">1</span>Upload</button></li>
@@ -309,7 +321,7 @@
             </div>
 
             <div class="lts-cropbox">
-              <canvas class="lts-preview-canvas" id="cropcanvas" width="180" height="320" aria-label="Live preview of the clip frame" role="img"></canvas>
+              <div class="lts-pvwrap"><canvas class="lts-preview-canvas" id="cropcanvas" width="180" height="320" aria-label="Live preview of the clip frame" role="img"></canvas><button class="lts-btn lts-pvplay" type="button" data-pv="cropcanvas" data-li18n="pvPlay">Play preview</button></div>
               <div class="lts-field lts-hidden" id="splitfield">
                 <label class="lts-label" for="ratio">Split: <span id="ratiot">35% top / 65% bottom</span></label>
                 <input class="lts-range" type="range" id="ratio" min="20" max="50" step="1" value="35" />
@@ -407,7 +419,7 @@
             </fieldset>
 
             <div class="lts-stylebox">
-              <canvas id="stylecanvas" width="360" height="640" role="img" aria-label="Preview of the captions on the first frame"></canvas>
+              <div class="lts-pvwrap lts-pvwrap--sticky"><canvas id="stylecanvas" width="360" height="640" role="img" aria-label="Preview of the captions on the first frame"></canvas><button class="lts-btn lts-pvplay" type="button" data-pv="stylecanvas" data-li18n="pvPlay">Play preview</button></div>
               <div class="lts-controls">
                 <div class="lts-field">
                   <label class="lts-label" for="cfont" data-li18n="font">Font</label>
@@ -442,6 +454,10 @@
 
             </div>
             <div class="lts-spanel lts-hidden" id="sp-studio">
+            <div class="lts-pvstudio">
+              <div class="lts-pvwrap"><canvas id="studiocanvas" width="360" height="640" role="img" aria-label="Preview of your edit"></canvas><button class="lts-btn lts-pvplay" type="button" data-pv="studiocanvas" data-li18n="pvPlay">Play preview</button></div>
+              <p class="lts-hint" data-li18n="pvH">Plays your first clip with the layout, captions, hook and effects. Music is mixed in when the clips are made.</p>
+            </div>
             <details class="lts-boost lts-studio" id="boost" open>
               <summary class="lts-studio__head"><span class="lts-studio__titles"><span class="lts-studio__title" data-li18n="studio">🎬 Clip Studio</span><span class="lts-studio__subt" data-li18n="studioSub">Make every clip catchy: hook, style, music &amp; export</span></span></summary>
               <div class="lts-boost__body lts-studio__body">
