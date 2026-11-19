@@ -163,6 +163,12 @@ def head(title, desc, canonical, root, extra="", robots=None, base_script="", im
     return f"""<!doctype html>
 <html lang="{lang}" data-theme="dark"{html_attrs}>
   <head>
+<script async src="https://www.googletagmanager.com/gtm.js?id=GTM-589GRCVP"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){{dataLayer.push(arguments);}}
+  gtag('js', new Date());
+</script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     {base_script}<title>{e(title)}</title>
