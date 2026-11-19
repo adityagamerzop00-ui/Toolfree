@@ -16,7 +16,7 @@
           kLooking: "Kick से वीडियो खोल रहे हैं…", kMeta: "{ch} · {dur} लंबा", kCost: "स्कैन में लगभग {mb} MB डेटा लगेगा ({h} घंटे)। कम डेटा के लिए छोटा हिस्सा चुनें।",
           kScanning: "आवाज़ पढ़ रहे हैं… {p}% · {done} / {all}", kScanStop: "स्कैन रोक दिया। अब तक मिले पल नीचे हैं।", kFound: "{n} सबसे ज़ोरदार पल मिले। देखें, फिर एडिट करें।",
           kNone: "इस हिस्से में कोई ज़ोरदार पल नहीं मिला।", kPrev: "देखें", kEdit: "एडिट करें", kGet: "क्लिप ला रहे हैं… {p}%", kGetFail: "यह हिस्सा Kick से नहीं आ पाया। फिर से टैप करें।",
- aT: "लाइव के दौरान ऑटो-क्लिप", aHint: "स्ट्रीम चलते समय हर ज़ोरदार पल पर क्लिप सेव करता है, 100 क्लिप तक।", aLen: "क्लिप की लंबाई", aSens: "संवेदनशीलता", aLow: "कम", aMid: "सामान्य", aHigh: "ज़्यादा", aDest: "क्लिप कहाँ सेव करें", aPhone: "यही फ़ोन", aDrOff: "Drive जुड़ा नहीं है", aDrOn: "Drive जुड़ा है", aDrGo: "जोड़ें", aDrRe: "फिर जोड़ें", aDrNo: "Drive अभी सेट नहीं है। क्लिप इसी फ़ोन में सेव होंगी।", aDrFail: "Drive नहीं जुड़ पाया। फिर से टैप करें।", aStart: "ऑटो-क्लिप शुरू करें", aStop: "ऑटो-क्लिप रोकें", aListen: "सुन रहे हैं… पहली क्लिप से पहले लगभग 1 मिनट लगता है।", aStat: "{n} / {max} क्लिप · {up} सेव · {mb} MB डेटा", aKeep: "इस पेज को खुला और स्क्रीन ऑन रखें।", aDone: "100 क्लिप पूरी हो गईं। ऑटो-क्लिप रुक गया।", aStopped: "ऑटो-क्लिप रुक गया। {n} क्लिप बनीं।", aUp: "Drive में सेव", aUpIng: "अपलोड हो रही है…", aUpFail: "अपलोड नहीं हुई", aSaved: "फ़ोन में सेव", aLoud: "आवाज़ {x}×", aNeedDrive: "पहले Drive जोड़ें, या \"यही फ़ोन\" चुनें।", aRe: "Drive का साइन-इन ख़त्म हो गया। क्लिप सेव करने के लिए \"फिर जोड़ें\" पर टैप करें।",
+ aT: "लाइव के दौरान ऑटो-क्लिप", aHint: "स्ट्रीम चलते समय हर ज़ोरदार पल पर क्लिप सेव करता है, 100 क्लिप तक।", aLen: "क्लिप की लंबाई", aSens: "संवेदनशीलता", aLow: "कम", aMid: "सामान्य", aHigh: "ज़्यादा", aDest: "क्लिप कहाँ सेव करें", aPhone: "यही फ़ोन", aDrOff: "Drive जुड़ा नहीं है", aDrOn: "Drive जुड़ा है", aDrGo: "जोड़ें", aDrRe: "फिर जोड़ें", aDrNo: "Drive अभी सेट नहीं है। क्लिप इसी फ़ोन में सेव होंगी।", aDrFail: "Drive नहीं जुड़ पाया। फिर से टैप करें।", aStart: "ऑटो-क्लिप शुरू करें", aStop: "ऑटो-क्लिप रोकें", aListen: "सुन रहे हैं… पहली क्लिप से पहले लगभग 1 मिनट लगता है।", aStat: "{n} / {max} क्लिप · {up} सेव · {mb} MB डेटा", aKeep: "इस पेज को खुला और स्क्रीन ऑन रखें।", wkOn: "स्ट्रीम सेव होते समय स्क्रीन ऑन रहेगी।", wkOff: "यह फ़ोन स्क्रीन ऑन नहीं रख पाया। बैटरी सेवर बंद करें या स्क्रीन टाइमआउट बढ़ाएँ।", aDone: "100 क्लिप पूरी हो गईं। ऑटो-क्लिप रुक गया।", aStopped: "ऑटो-क्लिप रुक गया। {n} क्लिप बनीं।", aUp: "Drive में सेव", aUpIng: "अपलोड हो रही है…", aUpFail: "अपलोड नहीं हुई", aSaved: "फ़ोन में सेव", aLoud: "आवाज़ {x}×", aNeedDrive: "पहले Drive जोड़ें, या \"यही फ़ोन\" चुनें।", aRe: "Drive का साइन-इन ख़त्म हो गया। क्लिप सेव करने के लिए \"फिर जोड़ें\" पर टैप करें।",
           kLoaded: "क्लिप एडिटर में खुल गई। आगे सेटिंग्स और स्टाइल चुनें।", kRange: "समय सही नहीं है। जैसे 1:30:00 लिखें।", kLive: "यह अभी लाइव है। स्ट्रीम ख़त्म होने के बाद उसका VOD लिंक डालें।", kLiveMeta: "{ch} · अब तक {dur}", kLiveTag: "लाइव", kLastT: "आख़िरी हिस्से की क्लिप बनाएँ", kLast1: "1 मिनट", kLast2: "2 मिनट", kLast5: "5 मिनट", kRefresh: "सबसे नए मिनट जोड़ें", kRefreshing: "Kick से नए मिनट ला रहे हैं…", kRefreshed: "अपडेट हो गया। अब तक {dur}।", kPastT: "यह चैनल अभी ऑफ़लाइन है। कोई पुराना स्ट्रीम चुनें", kNoChan: "Kick पर यह चैनल नहीं मिला। नाम दोबारा देखें।", kNoPast: "इस चैनल का कोई पुराना स्ट्रीम नहीं मिला।", kOpen: "खोलें", kFindMore: "10 और पल ढूँढें", kMakeAll: "सारी क्लिप बनाएँ ({n})", kAllMade: "सारी क्लिप बन गईं। और पल ढूँढें।", kLenQ: "हर क्लिप कितनी लंबी हो?", kMakeGo: "क्लिप बनाना शुरू करें", kStop2: "रोकें", kMCost: "{n} क्लिप · लगभग {mb} MB डेटा ({q})", kMGet: "क्लिप {i} / {n} ला रहे हैं… {p}%", kMJoin: "क्लिप जोड़ रहे हैं…", kMStop: "रोक दिया। कोई क्लिप नहीं बनी।", kMFail: "Kick से क्लिप नहीं आ पाईं। फिर से टैप करें।", kNoMore: "इस हिस्से में और ज़ोरदार पल नहीं मिले। बड़ा हिस्सा स्कैन करें।", kAdded: "{n} नए पल जोड़े।", kMDone: "{n} क्लिप स्टाइल में खुल गईं।", kLiveNote: "लाइव से लगभग एक मिनट पीछे।",
           twVod: "Twitch दूसरी साइटों को पुराने स्ट्रीम खोलने नहीं देता। लाइव होने पर चैनल का लिंक डालें और आख़िरी 1, 2 या 5 मिनट की क्लिप बनाएँ।", twLooking: "Twitch से स्ट्रीम खोल रहे हैं…",
           twWait: "{ch} · स्ट्रीम इस फ़ोन पर सेव हो रही है… कुछ सेकंड में क्लिप बन सकेंगी। यह पेज खुला रखें।", twSaving: "{ch} · {dur} इस फ़ोन पर सेव। यह पेज खुला रखें।",
@@ -6062,7 +6062,7 @@ var KICK = (function () {
           document.querySelectorAll("[data-klast]").forEach(function (b) { if (!b.getAttribute("aria-busy")) b.disabled = TW.total < 3; });
         }
         function twOpen(ch) {
-          TW.ch = ch; TW.on = true; TW.note = ""; TW.total = 0; TW.ad = false; var run = ++TW.run;
+          awOn(); TW.ch = ch; TW.on = true; TW.note = ""; TW.total = 0; TW.ad = false; var run = ++TW.run;
           $("kgo").disabled = true; $("ktitle").textContent = T("twLooking", "Opening the stream from Twitch…"); $("kmeta").textContent = ""; show($("kinfo"), true);
           twParts(true); show($("klive"), false); show($("kqual"), false);
           twMaster(ch).then(function (vars) {
@@ -6094,7 +6094,7 @@ var KICK = (function () {
           clearTimeout(TW.timer); TW.run++;
           if (!TW.on) return;
           TW.on = false; TW.segs = []; TW.seen = {}; TW.init = null; TW.vars = [];
-          auStop(true); show($("kauto"), false);
+          auStop(true); awOff(); show($("kauto"), false);
           twParts(false); $("klmsg").textContent = ""; show($("klmsg"), false);
           document.querySelectorAll("[data-klast]").forEach(function (b) { b.disabled = false; });
         }
@@ -6258,7 +6258,37 @@ var KICK = (function () {
           auMsg((AU.n ? T("aStat", "{n} / {max} clips · {up} saved · {mb} MB data", { n: AU.n, max: AU_MAX, up: AU.up, mb: Math.round((AU.bytes - AU.b0) / 1048576) })
             : T("aListen", "Listening… the first clip takes about a minute.")) + " " + T("aKeep", "Keep this page open and the screen on."));
         }
-        function auLock() { if (AU.on && navigator.wakeLock && document.visibilityState === "visible") navigator.wakeLock.request("screen").then(function (l) { AU.wl = l; }, function () {}); }
+        /* keep the screen on the whole time a Twitch live stream is being saved (wake lock, with a tiny muted video as backup) */
+        var AW = { on: false, wl: null, v: null, ok: null };
+        function awUi(ok) {
+          AW.ok = ok; var m = $("kawake"); if (!m) return;
+          m.textContent = ok ? T("wkOn", "The screen stays on while the stream is being saved.") : T("wkOff", "This phone couldn't keep the screen on. Turn off Battery saver or set a longer screen timeout.");
+          m.classList.toggle("is-warn", !ok); show(m, AW.on);
+        }
+        function awVid(on) {
+          if (!on) { if (AW.v) { AW.v.pause(); AW.v.remove(); AW.v = null; } return; }
+          if (AW.v) { AW.v.play().catch(function () {}); return; }
+          try {
+            var c = document.createElement("canvas"); c.width = c.height = 2; var g = c.getContext("2d"), k = 0;
+            var draw = function () { if (!AW.v) return; g.fillStyle = (k++ & 1) ? "#000" : "#010101"; g.fillRect(0, 0, 2, 2); setTimeout(draw, 1000); };
+            var v = document.createElement("video"); v.muted = true; v.playsInline = true; v.setAttribute("playsinline", ""); v.loop = true;
+            v.setAttribute("aria-hidden", "true"); v.style.cssText = "position:fixed;right:0;bottom:0;width:2px;height:2px;opacity:0.01;pointer-events:none;z-index:-1";
+            v.srcObject = c.captureStream(1); document.body.appendChild(v); AW.v = v; draw();
+            v.play().then(function () { if (AW.ok === null) awUi(true); }, function () { awUi(false); });
+          } catch (e) { awUi(false); }
+        }
+        function awGet() {
+          if (!AW.on || document.visibilityState !== "visible") return;
+          if (AW.wl && !AW.wl.released) return;
+          if (!navigator.wakeLock) { awVid(true); return; }
+          navigator.wakeLock.request("screen").then(function (l) {
+            AW.wl = l; awVid(false); awUi(true);
+            l.addEventListener("release", function () { if (AW.wl === l) AW.wl = null; if (AW.on) setTimeout(awGet, 800); });
+          }, function () { awVid(true); });
+        }
+        function awOn() { AW.on = true; AW.ok = null; awGet(); }
+        function awOff() { AW.on = false; if (AW.wl) { try { AW.wl.release(); } catch (e) {} AW.wl = null; } awVid(false); show($("kawake"), false); }
+        function auLock() { awGet(); }
         function auStart() {
           if (!TW.on || AU.on) return;
           AU.dest = auRadio("adest", "drive");
@@ -6272,7 +6302,6 @@ var KICK = (function () {
         function auStop(quiet) {
           if (!AU.on) return;
           AU.on = false; AU.pend = null; AU.hist = [];
-          if (AU.wl) { try { AU.wl.release(); } catch (e) {} AU.wl = null; }
           show($("astart"), true); show($("astop"), false);
           document.querySelectorAll('input[name="alen"], input[name="adest"]').forEach(function (r) { r.disabled = false; });
           if (!quiet) auMsg(T("aStopped", "Auto-clip stopped. {n} clips made.", { n: AU.n }));
