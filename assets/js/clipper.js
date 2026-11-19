@@ -7,7 +7,7 @@
           title: "लॉन्ग से शॉर्ट्स", tagline: "एक लंबे वीडियो से 30 से 60 सेकंड की छोटी वर्टिकल क्लिप बनाओ, सीधे अपने ब्राउज़र में।",
           b1: "साइनअप नहीं", b2: "कोई वॉटरमार्क नहीं", b3: "100% फ़्री", b4: "आपके डिवाइस पर चलता है",
           presets: "एक टैप वाले प्रीसेट", pGaming: "गेमिंग", pPodcast: "पॉडकास्ट", pMotivation: "मोटिवेशन", pStory: "हिंदी कहानी", pCustom: "कस्टम",
-          tutT: "नए हैं? ऐसे काम करता है", tut1: "लंबा वीडियो अपलोड करें, या Kick या Twitch लिंक डालें।", tut2: "सेटिंग्स: क्लिप की लंबाई चुनें, या AI से सबसे अच्छे पल ढूँढवाएँ।", tut3: "स्टाइल: लेआउट, कैप्शन और क्लिप स्टूडियो चुनें। क्लिप बनाने से पहले अपना एडिट देखने के लिए “प्रीव्यू चलाएँ” दबाएँ।", tut4: "क्लिप्स: सारी क्लिप एक साथ बनाएँ, फिर डाउनलोड या शेयर करें। कुछ भी अपलोड नहीं होता।", tutOk: "समझ गया", tutOpen: "कैसे काम करता है", pvPlay: "प्रीव्यू चलाएँ", pvStop: "रोकें · {t}", pvH: "आपकी पहली क्लिप लेआउट, कैप्शन, हुक और इफ़ेक्ट के साथ चलती है। म्यूज़िक क्लिप बनाते समय जुड़ता है।", pvFail: "प्रीव्यू नहीं चल पाया। फिर से टैप करें।",
+          tOk: "ठीक है", tDone: "हो गया", tSkip: "छोड़ें", tN: "{i} / {n}", t1pre: "एक टैप वाले प्रीसेट: गेमिंग, पॉडकास्ट जैसा स्टाइल चुनें, सारी सेटिंग्स अपने-आप सेट हो जाती हैं।", t1up: "यहाँ टैप करके फ़ोन से लंबा वीडियो चुनें। वीडियो कहीं अपलोड नहीं होता।", t1kick: "या यहाँ Kick या Twitch लिंक पेस्ट करें। डाउनलोड की ज़रूरत नहीं।", t1go: "लिंक डालकर “खोलें” दबाएँ।", t1steps: "चार स्टेप: अपलोड, सेटिंग्स, स्टाइल, क्लिप्स। यहाँ से आगे-पीछे जाएँ।", t1lang: "यहाँ English और हिंदी बदलें।", t2mode: "नॉर्मल वीडियो को बराबर हिस्सों में काटता है। AI सिर्फ़ असली हाइलाइट रखता है।", t2len: "हर क्लिप कितनी लंबी हो, यहाँ चुनें।", t2time: "वीडियो का कौन-सा हिस्सा इस्तेमाल हो: शुरू और अंत का समय।", t2max: "ज़्यादा से ज़्यादा कितनी क्लिप बनें।", t2next: "सब सेट हो जाए तो यहाँ टैप करके स्टाइल पर जाएँ।", t3tabs: "तीन टैब: लेआउट, कैप्शन और क्लिप स्टूडियो।", t3fmt: "लेआउट चुनें: फ़ुल फ़्रेम, फ़ेसकैम स्टैक, फ़ेस फ़ॉलो, ट्वीट कार्ड या कस्टम।", t3play: "“प्रीव्यू चलाएँ” दबाकर रेंडर से पहले अपना एडिट देखें।", t3next: "तैयार हों तो यहाँ टैप करके क्लिप्स पर जाएँ।", t4make: "यहाँ टैप करके सारी क्लिप एक साथ बनाएँ। टैब खुला रखें।", t4dl: "क्लिप बन जाएँ तो यहाँ से सब डाउनलोड करें।", t4back: "कुछ बदलना हो तो यहाँ से सेटिंग्स पर वापस जाएँ।", tutOpen: "कैसे काम करता है", pvPlay: "प्रीव्यू चलाएँ", pvStop: "रोकें · {t}", pvH: "आपकी पहली क्लिप लेआउट, कैप्शन, हुक और इफ़ेक्ट के साथ चलती है। म्यूज़िक क्लिप बनाते समय जुड़ता है।", pvFail: "प्रीव्यू नहीं चल पाया। फिर से टैप करें।",
           kJump: "समय पता है? स्कैन छोड़ें", kJumpGo: "यहाँ से एडिट करें", kOr2: "या ज़ोरदार पल अपने-आप ढूँढें",
           kOr: "या Kick या Twitch लिंक डालें, डाउनलोड की ज़रूरत नहीं", kLab: "Kick या Twitch लिंक", kGo: "खोलें",
           kHint: "Kick चैनल, लाइव स्ट्रीम या पुराने स्ट्रीम का लिंक डालें, या कोई लाइव Twitch चैनल। क्लिप सीधे स्ट्रीम से कटती हैं, फ़ोन में कुछ बड़ा सेव नहीं होता।",
@@ -2411,17 +2411,97 @@
           sp.addEventListener("input", redraw); sp.addEventListener("change", redraw);
         })();
 
-        /* First-visit guide: four short steps, closed for good with "Got it", reopened with "How it works". */
-        (function () {
-          var tut = $("tut"), open = $("tutOpen"), seen = false;
-          try { seen = localStorage.getItem("lts-tut-done") === "1"; } catch (e) {}
-          show(tut, !seen); show(open, seen);
-          $("tutOk").addEventListener("click", function () {
-            try { localStorage.setItem("lts-tut-done", "1"); } catch (e) {}
-            show(tut, false); show(open, true); open.focus();
-          });
-          open.addEventListener("click", function () { show(tut, true); show(open, false); $("tutOk").focus(); });
-        })();
+        /* Guided tour: on the first visit to each step a tip points at each working control, one by one.
+           OK goes to the next tip, Skip ends every tour, "How it works" replays the tour of the step on screen. */
+        var TOUR = { on: false, el: null };
+        var TOURS = {
+          1: [["#presets", "t1pre", "One-tap presets: pick a style like Gaming or Podcast and every setting is set for you."],
+              ["#drop", "t1up", "Tap here to choose a long video from your phone. It is never uploaded."],
+              ["#kurl", "t1kick", "Or paste a Kick or Twitch link here. No download needed."],
+              ["#kgo", "t1go", "Paste the link, then tap Open."],
+              [".lts-stepper", "t1steps", "Four steps: Upload, Settings, Style, Clips. Move between them here."],
+              [".lts-lang", "t1lang", "Switch between English and हिंदी here."]],
+          2: [["#hmN", "t2mode", "Normal cuts the video into equal parts. AI keeps only real highlights.", 1],
+              ["#len30", "t2len", "Choose how long each clip is.", 1],
+              ["#tstart", "t2time", "Which part of the video to use: the start and end time.", 2],
+              ["#maxclips", "t2max", "The most clips to make."],
+              ["#toClips", "t2next", "When everything is set, tap here to go to Style."]],
+          3: [["#styleTabs", "t3tabs", "Three tabs: Layout, Captions and Clip Studio."],
+              ["#fmtV", "t3fmt", "Pick a layout: full frame, facecam stack, face follow, tweet card or custom.", 2],
+              ['[data-pv="cropcanvas"]', "t3play", "Tap Play preview to watch your edit before rendering."],
+              ["#toClips2", "t3next", "Ready? Tap here to go to Clips."]],
+          4: [["#makeAll", "t4make", "Tap here to make all clips at once. Keep this tab open."],
+              ["#dlAll", "t4dl", "When the clips are ready, download them all here."],
+              ["#backSettings", "t4back", "Need a change? Go back to settings here."]]
+        };
+        function tourKey(n) { return "lts-tour-" + n; }
+        function tourSeen(n) { try { return localStorage.getItem("lts-tour-off") === "1" || localStorage.getItem(tourKey(n)) === "1"; } catch (e) { return true; } }
+        function tourMark(n, all) { try { localStorage.setItem(all ? "lts-tour-off" : tourKey(n), "1"); } catch (e) {} }
+        function tourTarget(sel, up) {
+          var el = document.querySelector(sel);
+          for (var k = 0; el && k < (up || 0); k++) el = el.parentElement;
+          if (!el) return null;
+          var r = el.getBoundingClientRect();
+          return r.width > 0 && r.height > 0 ? el : null;
+        }
+        function tourBusy() { return !!document.querySelector("dialog[open]") || !$("hov").classList.contains("lts-hidden"); }
+        function tourStop() {
+          if (TOUR.el) TOUR.el.remove();
+          TOUR.on = false; TOUR.el = null;
+          window.removeEventListener("resize", TOUR.place); window.removeEventListener("scroll", TOUR.place, true);
+        }
+        function tourRun(n, force) {
+          if (TOUR.on || !TOURS[n] || (!force && tourSeen(n))) return;
+          var list = TOURS[n].filter(function (x) { return tourTarget(x[0], x[3]); });
+          if (!list.length) return;
+          TOUR.on = true;
+          var wrap = document.createElement("div"); wrap.className = "lts-tour"; wrap.setAttribute("role", "dialog"); wrap.setAttribute("aria-modal", "true");
+          wrap.innerHTML = '<div class="lts-tour__ring"></div><div class="lts-tour__tip" aria-live="polite"><p class="lts-tour__t"></p><div class="lts-tour__row"><span class="lts-tour__n"></span><button type="button" class="lts-tour__skip"></button><button type="button" class="lts-tour__ok"></button></div></div>';
+          document.body.appendChild(wrap); TOUR.el = wrap;
+          var ring = wrap.querySelector(".lts-tour__ring"), tip = wrap.querySelector(".lts-tour__tip"), ok = wrap.querySelector(".lts-tour__ok"), i = 0, cur = null;
+          TSET(wrap.querySelector(".lts-tour__skip"), "tSkip", "Skip");
+          TOUR.place = function () {
+            if (!cur) return;
+            var r = cur.getBoundingClientRect(), vh = window.innerHeight, pad = 6;
+            ring.style.left = (r.left - pad) + "px"; ring.style.top = (r.top - pad) + "px";
+            ring.style.width = (r.width + pad * 2) + "px"; ring.style.height = (r.height + pad * 2) + "px";
+            var th = tip.offsetHeight, below = r.bottom + 14 + th < vh - 8 || r.top < th + 22;
+            tip.classList.toggle("is-below", below); tip.classList.toggle("is-above", !below);
+            tip.style.top = (below ? Math.min(vh - th - 8, r.bottom + pad + 10) : Math.max(8, r.top - pad - 10 - th)) + "px";
+            var tr = tip.getBoundingClientRect(), ax = Math.max(18, Math.min(tr.width - 18, r.left + r.width / 2 - tr.left));
+            tip.style.setProperty("--ax", ax + "px");
+          };
+          function step() {
+            var x = list[i];
+            cur = tourTarget(x[0], x[3]);
+            if (!cur) { next(); return; }
+            TSET(wrap.querySelector(".lts-tour__t"), x[1], x[2]);
+            TSET(wrap.querySelector(".lts-tour__n"), "tN", "{i} / {n}", { i: i + 1, n: list.length });
+            if (i === list.length - 1) TSET(ok, "tDone", "Done"); else TSET(ok, "tOk", "OK");
+            cur.scrollIntoView({ block: "center", behavior: "auto" });
+            requestAnimationFrame(function () { TOUR.place(); ok.focus({ preventScroll: true }); });
+          }
+          function next() { i++; if (i >= list.length) { tourMark(n); tourStop(); return; } step(); }
+          ok.addEventListener("click", next);
+          wrap.querySelector(".lts-tour__skip").addEventListener("click", function () { tourMark(n, true); tourStop(); });
+          wrap.addEventListener("keydown", function (e) { if (e.key === "Escape") { tourMark(n); tourStop(); } });
+          window.addEventListener("resize", TOUR.place); window.addEventListener("scroll", TOUR.place, true);
+          step();
+        }
+        function tourSoon(n, force) {
+          var tries = 0;
+          (function wait() {
+            if (S.step !== n) return;
+            if (tourBusy() || S.busy) { if (++tries < 240) setTimeout(wait, 500); return; }
+            tourRun(n, force);
+          })();
+        }
+        $("tutOpen").addEventListener("click", function () {
+          try { localStorage.removeItem("lts-tour-off"); } catch (e) {}
+          if (S.step !== 1) { tourRun(S.step, true); return; }
+          window.scrollTo({ top: 0 }); tourRun(1, true);
+        });
+        setTimeout(function () { tourSoon(1); }, 1200);
 
         /* template cards */
         function renderTpls() {
@@ -2926,6 +3006,7 @@
           if (n === 2) drawCropPreview();
           if (n === 3) { renderTpls(); drawStylePreview(); drawCropPreview(); }
           updateStepper();
+          tourStop(); setTimeout(function () { tourSoon(n); }, 700);
           window.scrollTo({ top: 0 });
           var h = $("step" + n).querySelector("h2");
           if (h) { h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); }

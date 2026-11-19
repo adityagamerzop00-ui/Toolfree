@@ -222,9 +222,17 @@
       .lts-pvplay { width: 100%; min-height: 36px; padding: 6px 8px; font-size: 13px; line-height: 1.25; white-space: normal; }
       .lts-pvstudio { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 16px; align-items: center; margin-bottom: 16px; }
       .lts-pvstudio canvas { display: block; width: 140px; height: auto; border-radius: var(--r-s); background: var(--fill-tertiary); }
-      .lts-tut { margin-bottom: 16px; }
-      .lts-tut__t { font-size: 17px; margin: 0 0 8px; }
-      .lts-tut__ol { margin: 0 0 12px; padding-left: 20px; display: grid; gap: 6px; line-height: 1.45; }
+      .lts-tour { position: fixed; inset: 0; z-index: 2100; }
+      .lts-tour__ring { position: fixed; border-radius: 14px; box-shadow: 0 0 0 9999px rgb(10 15 30 / 0.62); outline: 2px solid #fff; outline-offset: 2px; transition: all 0.2s ease; pointer-events: none; }
+      .lts-tour__tip { position: fixed; left: 12px; right: 12px; max-width: 360px; margin: 0 auto; display: grid; gap: 10px; padding: 14px 16px; border-radius: 16px; background: #fff; color: #111; box-shadow: 0 10px 40px rgb(0 0 0 / 0.45); font-size: 15px; line-height: 1.45; }
+      .lts-tour__tip::before { content: ""; position: absolute; left: var(--ax, 50%); width: 14px; height: 14px; background: #fff; transform: translateX(-50%) rotate(45deg); }
+      .lts-tour__tip.is-below::before { top: -7px; }
+      .lts-tour__tip.is-above::before { bottom: -7px; }
+      .lts-tour__row { display: flex; align-items: center; gap: 8px; }
+      .lts-tour__n { flex: 1; font-size: 13px; color: #666; }
+      .lts-tour__row button { min-height: 40px; padding: 0 16px; border-radius: 999px; font: inherit; font-weight: 700; cursor: pointer; }
+      .lts-tour__skip { border: 0; background: transparent; color: #555; }
+      .lts-tour__ok { border: 0; background: var(--lts-grad, #2f80ff); color: #fff; }
       .lts-tut__open { margin-bottom: 12px; min-height: 36px; padding: 6px 14px; font-size: 13px; }
       .lts-controls { display: grid; gap: 16px; min-width: 0; }
       .lts-colors { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
