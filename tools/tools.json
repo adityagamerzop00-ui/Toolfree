@@ -525,7 +525,7 @@
   "category": "video",
   "icon": "compress",
   "description": "Make a video file smaller, right in your browser.",
-  "meta_description": "Make a video file smaller with Light, Medium (720p) or Strong (480p) compression and compare the sizes before you download. Processed in your browser.",
+  "meta_description": "Compress MP4, 4K and phone videos online for free. Change video size with Light, Medium (720p) or Strong (480p) and compare sizes before you download. No upload, no sign-up.",
   "steps": [
    "Add one MP4, MOV, WEBM or MKV video, up to 500 MB.",
    "Choose Light, Medium or Strong compression and tap Compress video.",
@@ -578,7 +578,9 @@
     "Your video stays on your device",
     "The video is compressed inside your browser using your device's own encoder. Nothing is uploaded, so it's safe for personal and family videos."
    ]
-  ]
+  ],
+  "seo_title": "Video Compressor Online Free – Compress MP4 & 4K Video",
+  "h1": "Free Online Video Compressor"
  },
  {
   "id": "video-converter",
@@ -943,7 +945,9 @@
    "pdf-to-images"
   ],
   "privacy": "file-cdn",
-  "i18n_key": "pdf-page-organizer"
+  "i18n_key": "pdf-page-organizer",
+  "seo_title": "Free PDF Organizer – Reorder, Rotate & Delete PDF Pages",
+  "h1": "Free PDF Organizer"
  },
  {
   "id": "pdf-to-images",
@@ -1613,7 +1617,9 @@
    "typing-speed-test",
    "word-character-counter"
   ],
-  "privacy": "calc"
+  "privacy": "calc",
+  "seo_title": "Pomodoro Timer Online – Free Focus & Study Timer",
+  "h1": "Pomodoro Timer – Focus & Study"
  },
  {
   "id": "timer-online",

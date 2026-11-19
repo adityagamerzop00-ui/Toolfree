@@ -286,7 +286,8 @@ AI_PRIV = ("text-ai", "link", "clipper")
 def tool_page(t):
     root, c = "../", CATS[t["category"]]
     ai = t["privacy"] in AI_PRIV
-    title = (f'{t["title_name"]} – Free Online | {SITE_NAME}' if ai
+    title = (f'{t["seo_title"]} | {SITE_NAME}' if t.get("seo_title") else
+             f'{t["title_name"]} – Free Online | {SITE_NAME}' if ai
              else f'{t["title_name"]} Online Free – No Upload | {SITE_NAME}')
     canonical = url(t["slug"])
     faq = t["faq"][:6]
@@ -303,7 +304,7 @@ def tool_page(t):
     body = f"""
         <div class="x-page"><div class="x-wrap">
           <ol class="x-crumb"><li><a href="{root}" data-i18n="home">Home</a></li><li><a href="{root}#cat-{t["category"]}" data-i18n="cat.{t["category"]}.name">{e(c["name"])}</a></li><li aria-current="page">{e(t["name"])}</li></ol>
-          <div class="x-thead">{tile(t["category"], t["icon"], 28)}<h1>{e(t["name"])}</h1></div>
+          <div class="x-thead">{tile(t["category"], t["icon"], 28)}<h1>{e(t.get("h1") or t["name"])}</h1></div>
           <p class="x-lead" data-tdesc>{e(t["description"])}</p>
           <p class="x-privacy"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11h14v10H5zM8 11V7a4 4 0 0 1 8 0v4"/></svg>{'<strong>Uses AI (Google Gemini).</strong> ' if t["privacy"] in AI_PRIV else ''}{e(PRIVACY[t["privacy"]])}</p>
           <div id="x-tool">{embed_html(t)}<noscript><p class="x-lead">This tool runs in your browser and needs JavaScript turned on.</p></noscript></div>
@@ -335,7 +336,8 @@ def hi_card(t, root):
 def hi_tool_page(t):
     h, root, c = HI_TOOLS[t["id"]], "../../", CATS[t["category"]]
     name = h["name"]
-    title = (f'{h["title_name"]} – मुफ़्त ऑनलाइन | {SITE_NAME}' if t["privacy"] in AI_PRIV
+    title = (f'{h["seo_title"]} | {SITE_NAME}' if h.get("seo_title") else
+             f'{h["title_name"]} – मुफ़्त ऑनलाइन | {SITE_NAME}' if t["privacy"] in AI_PRIV
              else f'{h["title_name"]} – मुफ़्त ऑनलाइन, बिना अपलोड | {SITE_NAME}')
     canonical, en_url = url("hi/" + t["slug"]), url(t["slug"])
     faq = [tuple(x) for x in h["faq"][:6]]
@@ -354,7 +356,7 @@ def hi_tool_page(t):
     body = f"""
         <div class="x-page"><div class="x-wrap">
           <ol class="x-crumb"><li><a href="{root}" data-i18n="home">होम</a></li><li><a href="{root}#cat-{t["category"]}" data-i18n="cat.{t["category"]}.name">{e(HI_CAT[t["category"]])}</a></li><li aria-current="page">{e(name)}</li></ol>
-          <div class="x-thead">{tile(t["category"], t["icon"], 28)}<h1>{e(name)}</h1></div>
+          <div class="x-thead">{tile(t["category"], t["icon"], 28)}<h1>{e(h.get("h1") or name)}</h1></div>
           <p class="x-lead" data-tdesc>{e(desc)}</p>
           <p class="x-privacy"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11h14v10H5zM8 11V7a4 4 0 0 1 8 0v4"/></svg>{'<strong>AI का इस्तेमाल (Google Gemini)।</strong> ' if t["privacy"] in AI_PRIV else ''}{e(PRIVACY_HI[t["privacy"]])}</p>
           <p class="x-lead" style="font-size:14px"><a href="{root}{t["slug"]}/" hreflang="en" lang="en">Read this page in English</a></p>
