@@ -1571,3 +1571,33 @@ async def twitch_m3u8(req: Request, ch: str = "", vod: str = ""):
     TW_CACHE[key] = (t, m.text)
     if len(TW_CACHE) > 2000: TW_CACHE.clear()
     return PlainTextResponse(m.text, media_type="application/vnd.apple.mpegurl", headers={"Cache-Control": "no-store"})
+
+
+TW_VHITS = {}
+
+
+@app.get("/api/twitch-var")
+async def twitch_var(req: Request, u: str = ""):
+    # Twitch binds quality playlists to the IP that got the token, so the server reads this small text too.
+    try:
+        pu = urllib.parse.urlparse(u)
+    except ValueError:
+        raise HTTPException(400, "bad_url")
+    host = (pu.hostname or "").lower()
+    if pu.scheme != "https" or not (host.endswith(".ttvnw.net") or host.endswith(".twitch.tv")) or not pu.path.endswith(".m3u8"):
+        raise HTTPException(400, "bad_url")
+    ip, t = _client_ip(req), time.time()
+    hits = [x for x in TW_VHITS.get(ip, []) if x > t - 600]
+    if len(hits) >= 400: raise HTTPException(429, "Too many Twitch requests. Wait a few minutes.")
+    TW_VHITS[ip] = hits + [t]
+    if len(TW_VHITS) > 5000:
+        for k in [k for k, v in TW_VHITS.items() if not v or v[-1] < t - 600]: TW_VHITS.pop(k, None)
+    async with http() as c:
+        try:
+            m = await c.get(u)
+        except httpx.HTTPError:
+            raise HTTPException(502, "twitch_unreachable")
+    if m.status_code != 200 or not m.text.startswith("#EXTM3U"): raise HTTPException(502, f"twitch_{m.status_code}")
+    base = u.rsplit("/", 1)[0] + "/"
+    out = "\n".join(l if (l.startswith("#") or not l.strip() or l.startswith("http")) else base + l for l in m.text.splitlines())
+    return PlainTextResponse(out, media_type="application/vnd.apple.mpegurl", headers={"Cache-Control": "no-store"})
