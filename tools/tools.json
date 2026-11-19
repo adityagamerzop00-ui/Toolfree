@@ -470,6 +470,18 @@
    [
     "Can I crop for Instagram or TikTok?",
     "Yes. Use 1:1 or 4:5 for feed posts and 9:16 for Reels, Stories and TikTok."
+   ],
+   [
+    "Is there a watermark on the cropped video?",
+    "No. The video is free to download with no watermark and no sign-up."
+   ],
+   [
+    "Can I crop a video on my phone?",
+    "Yes. It works in Chrome on Android and Safari on iPhone. Drag the box with your finger; very long videos are faster on a computer."
+   ],
+   [
+    "What is the difference between cropping and resizing?",
+    "Cropping cuts away the edges and keeps part of the picture. Resizing keeps the whole picture and changes its pixel size. Use Resize Video when you need a smaller file without cutting anything."
    ]
   ],
   "related": [
@@ -478,7 +490,21 @@
    "video-compressor",
    "image-cropper"
   ],
-  "privacy": "file-cdn"
+  "privacy": "file-cdn",
+  "guide": [
+   [
+    "Crop a video for Instagram Reels and TikTok",
+    "Pick 9:16 and drag the box over the part of a wide video you want to keep, such as the speaker's face. The kept area stays at its original resolution, so a 1080p landscape clip becomes a sharp vertical video without black bars."
+   ],
+   [
+    "Square and 4:5 posts",
+    "Feed posts look biggest on screen at 4:5, and 1:1 suits profile grids and ads. Lock the ratio first, then move the box; the crop size in pixels updates as you drag so you know the exact output."
+   ],
+   [
+    "Remove black bars, watermarks at the edge or unwanted objects",
+    "Choose Free and pull the box edges in until the bars or the unwanted corner are outside it. This is the fastest way to clean up a screen recording or a video shot with the wrong framing."
+   ]
+  ]
  },
  {
   "id": "video-trimmer",
@@ -1124,6 +1150,18 @@
    [
     "Do I need an account?",
     "No. It's free with no sign-up. Template ideas never leave your browser; the AI button sends only the text you type, and nothing is saved."
+   ],
+   [
+    "Are these hashtags in Hindi too?",
+    "Type your keyword in Hindi or Hinglish and you get matching tags. The AI button can write Hinglish captions and tags for Indian audiences."
+   ],
+   [
+    "Should hashtags go in the caption or the first comment?",
+    "Both work on Instagram. Putting them in the caption keeps them attached if you edit the post later."
+   ],
+   [
+    "Does it work for YouTube?",
+    "Yes. Copy three to five tags into your description; YouTube shows the first three above your video title."
    ]
   ],
   "related": [
@@ -1132,7 +1170,21 @@
    "bio-generator",
    "video-description-templates"
   ],
-  "privacy": "text-ai"
+  "privacy": "text-ai",
+  "guide": [
+   [
+    "How to pick hashtags that get reach",
+    "Mix three kinds: a few broad tags with millions of posts, several niche tags that describe exactly what your post is about, and one or two local tags such as your city. Niche tags face less competition, so your post stays visible longer."
+   ],
+   [
+    "Hashtags for Instagram Reels, YouTube Shorts and TikTok",
+    "Instagram allows up to 30 tags, but 5 to 15 relevant ones usually work better. YouTube shows the first three hashtags above the title, so put your most important ones first. On TikTok, three to five tags plus a clear caption is enough."
+   ],
+   [
+    "Avoid banned or spammy tags",
+    "Do not repeat the same block of tags on every post and skip tags that have nothing to do with your content. Change your set for each post using the generator's niche and variant groups."
+   ]
+  ]
  },
  {
   "id": "bio-generator",
@@ -1272,6 +1324,18 @@
    [
     "How do I turn marks into a percentage?",
     "Use 'X is what % of Y' with your marks as X and the total as Y."
+   ],
+   [
+    "How do I calculate percentage without a calculator?",
+    "Divide the part by the total and multiply by 100. For 45 out of 60: 45 ÷ 60 = 0.75, × 100 = 75%."
+   ],
+   [
+    "Is 50% off then 20% off the same as 70% off?",
+    "No. The second discount applies to the reduced price, so it equals 60% off in total."
+   ],
+   [
+    "Can I use it on my phone?",
+    "Yes. It works in any phone browser and updates the answer as you type."
    ]
   ],
   "related": [
@@ -1280,7 +1344,21 @@
    "scientific-calculator",
    "unit-converter"
   ],
-  "privacy": "calc"
+  "privacy": "calc",
+  "guide": [
+   [
+    "Work out marks percentage",
+    "Choose 'X is what % of Y', enter the marks you got as X and the total marks as Y. For example, 432 out of 500 is 86.4%. Add up all subjects first if you need the overall percentage."
+   ],
+   [
+    "Calculate a discount or GST amount",
+    "Use 'X% of Y'. A 20% discount on ₹1,499 is ₹299.80, so you pay ₹1,199.20. The same mode gives tax amounts; for GST with the full breakdown, use the GST Calculator."
+   ],
+   [
+    "Find percentage increase or decrease",
+    "Use '% change' with the old value and the new value. A salary that goes from ₹25,000 to ₹30,000 rose by 20%. A price that falls from ₹800 to ₹600 dropped by 25%."
+   ]
+  ]
  },
  {
   "id": "age-calculator",
