@@ -8,14 +8,19 @@
           b1: "साइनअप नहीं", b2: "कोई वॉटरमार्क नहीं", b3: "100% फ़्री", b4: "आपके डिवाइस पर चलता है",
           presets: "एक टैप वाले प्रीसेट", pGaming: "गेमिंग", pPodcast: "पॉडकास्ट", pMotivation: "मोटिवेशन", pStory: "हिंदी कहानी", pCustom: "कस्टम",
           kJump: "समय पता है? स्कैन छोड़ें", kJumpGo: "यहाँ से एडिट करें", kOr2: "या ज़ोरदार पल अपने-आप ढूँढें",
-          kOr: "या Kick लिंक डालें, डाउनलोड की ज़रूरत नहीं", kLab: "Kick लिंक", kGo: "खोलें",
-          kHint: "Kick चैनल, लाइव स्ट्रीम या पुराने स्ट्रीम का लिंक डालें। क्लिप सीधे Kick से कटती हैं, फ़ोन में कुछ बड़ा सेव नहीं होता।",
+          kOr: "या Kick या Twitch लिंक डालें, डाउनलोड की ज़रूरत नहीं", kLab: "Kick या Twitch लिंक", kGo: "खोलें",
+          kHint: "Kick चैनल, लाइव स्ट्रीम या पुराने स्ट्रीम का लिंक डालें, या कोई लाइव Twitch चैनल। क्लिप सीधे स्ट्रीम से कटती हैं, फ़ोन में कुछ बड़ा सेव नहीं होता।",
           kFrom: "कहाँ से", kTo: "कहाँ तक", kPart: "स्ट्रीम का सिर्फ़ एक हिस्सा स्कैन करें", kLoud: "आवाज़ {x}× ज़्यादा", kMore: "{n} और दिखाएँ", kScan: "सबसे अच्छे पल ढूँढें", kStop: "स्कैन रोकें", kQual: "क्लिप क्वालिटी",
-          kBadLink: "यह Kick लिंक नहीं लगता। kick.com/चैनल वाला लिंक डालें।", kNoVod: "Kick से यह वीडियो नहीं मिला। हो सकता है यह प्राइवेट हो या हटा दिया गया हो।",
+          kBadLink: "यह Kick या Twitch लिंक नहीं लगता। kick.com या twitch.tv वाला चैनल लिंक डालें।", kNoVod: "Kick से यह वीडियो नहीं मिला। हो सकता है यह प्राइवेट हो या हटा दिया गया हो।",
           kLooking: "Kick से वीडियो खोल रहे हैं…", kMeta: "{ch} · {dur} लंबा", kCost: "स्कैन में लगभग {mb} MB डेटा लगेगा ({h} घंटे)। कम डेटा के लिए छोटा हिस्सा चुनें।",
           kScanning: "आवाज़ पढ़ रहे हैं… {p}% · {done} / {all}", kScanStop: "स्कैन रोक दिया। अब तक मिले पल नीचे हैं।", kFound: "{n} सबसे ज़ोरदार पल मिले। देखें, फिर एडिट करें।",
           kNone: "इस हिस्से में कोई ज़ोरदार पल नहीं मिला।", kPrev: "देखें", kEdit: "एडिट करें", kGet: "क्लिप ला रहे हैं… {p}%", kGetFail: "यह हिस्सा Kick से नहीं आ पाया। फिर से टैप करें।",
           kLoaded: "क्लिप एडिटर में खुल गई। आगे सेटिंग्स और स्टाइल चुनें।", kRange: "समय सही नहीं है। जैसे 1:30:00 लिखें।", kLive: "यह अभी लाइव है। स्ट्रीम ख़त्म होने के बाद उसका VOD लिंक डालें।", kLiveMeta: "{ch} · अब तक {dur}", kLiveTag: "लाइव", kLastT: "आख़िरी हिस्से की क्लिप बनाएँ", kLast1: "1 मिनट", kLast2: "2 मिनट", kLast5: "5 मिनट", kRefresh: "सबसे नए मिनट जोड़ें", kRefreshing: "Kick से नए मिनट ला रहे हैं…", kRefreshed: "अपडेट हो गया। अब तक {dur}।", kPastT: "यह चैनल अभी ऑफ़लाइन है। कोई पुराना स्ट्रीम चुनें", kNoChan: "Kick पर यह चैनल नहीं मिला। नाम दोबारा देखें।", kNoPast: "इस चैनल का कोई पुराना स्ट्रीम नहीं मिला।", kOpen: "खोलें", kFindMore: "10 और पल ढूँढें", kMakeAll: "सारी क्लिप बनाएँ ({n})", kAllMade: "सारी क्लिप बन गईं। और पल ढूँढें।", kLenQ: "हर क्लिप कितनी लंबी हो?", kMakeGo: "क्लिप बनाना शुरू करें", kStop2: "रोकें", kMCost: "{n} क्लिप · लगभग {mb} MB डेटा ({q})", kMGet: "क्लिप {i} / {n} ला रहे हैं… {p}%", kMJoin: "क्लिप जोड़ रहे हैं…", kMStop: "रोक दिया। कोई क्लिप नहीं बनी।", kMFail: "Kick से क्लिप नहीं आ पाईं। फिर से टैप करें।", kNoMore: "इस हिस्से में और ज़ोरदार पल नहीं मिले। बड़ा हिस्सा स्कैन करें।", kAdded: "{n} नए पल जोड़े।", kMDone: "{n} क्लिप स्टाइल में खुल गईं।", kLiveNote: "लाइव से लगभग एक मिनट पीछे।",
+          twVod: "Twitch दूसरी साइटों को पुराने स्ट्रीम खोलने नहीं देता। लाइव होने पर चैनल का लिंक डालें और आख़िरी 1, 2 या 5 मिनट की क्लिप बनाएँ।", twLooking: "Twitch से स्ट्रीम खोल रहे हैं…",
+          twWait: "{ch} · स्ट्रीम इस फ़ोन पर सेव हो रही है… कुछ सेकंड में क्लिप बन सकेंगी। यह पेज खुला रखें।", twSaving: "{ch} · {dur} इस फ़ोन पर सेव। यह पेज खुला रखें।",
+          twAd: "Twitch पर ऐड चल रहा है, वो सेकंड छोड़ दिए गए।", twOff: "यह Twitch चैनल अभी लाइव नहीं है, या नाम गलत है। Twitch दूसरी साइटों को सिर्फ़ लाइव स्ट्रीम से क्लिप बनाने देता है, इसलिए लाइव होने पर खोलें।",
+          twLimit: "Twitch से बहुत ज़्यादा रिक्वेस्ट हो गईं। कुछ मिनट रुकें।", twFail: "Twitch से कनेक्शन टूट गया। फिर से खोलें पर टैप करें।",
+          twEnded: "स्ट्रीम ख़त्म हो गई या कनेक्शन टूट गया। जो सेव हुआ उसकी क्लिप अब भी बना सकते हैं।", twShort: "अभी तक सिर्फ़ {dur} सेव हुआ है, इसलिए क्लिप छोटी है।", twGetFail: "यह क्लिप नहीं बन पाई। फिर से टैप करें।",
           sUpload: "अपलोड", sSettings: "सेटिंग्स", sStyle: "स्टाइल", sClips: "क्लिप्स",
           dropT: "लंबा वीडियो यहाँ छोड़ें", choose: "वीडियो चुनें", dropH: "आपके डिवाइस से MP4, MOV या WebM। वीडियो फ़ाइल कभी अपलोड नहीं होती।",
           durL: "अवधि", clipsAbout: "क्लिप्स, लगभग", nextSettings: "आगे: सेटिंग्स", another: "दूसरा वीडियो चुनें",
@@ -5323,6 +5328,10 @@ var KICK = (function () {
       av.samples.forEach(function (s) { s.T = p.t + (s.pts - z) / 90000; s.D = p.t + (s.dts - z) / 90000; V.push(s); });
       au.frames.forEach(function (f) { f.T = p.t + (f.pts - z) / 90000; A.push(f); });
     });
+    return muxS(MX, V, A, desc, codec, acfg, from, to, vinfo);
+  }
+  // Shared MP4 writer. V: [{T, D, key, data(AVCC)}] in decode order, A: [{T, raw}], times in seconds.
+  function muxS(MX, V, A, desc, codec, acfg, from, to, vinfo) {
     if (!desc || !V.length) throw new Error("No video found in this part of the stream.");
     var i0 = 0; for (var i = 0; i < V.length; i++) { if (V[i].key && V[i].T <= from + 0.001) i0 = i; }
     V = V.slice(i0).filter(function (s) { return s.D <= to; });
@@ -5349,7 +5358,104 @@ var KICK = (function () {
     return { buf: target.buffer, start: t0, end: V[V.length - 1].D + fd };
   }
 
-  return { tsDemux: tsDemux, adtsFrames: adtsFrames, avcSamples: avcSamples, parseM3U: parseM3U, toMp4: toMp4 };
+  // Fragmented MP4 (Twitch live): init segment -> track info, media segment -> samples.
+  function u32(b, o) { return ((b[o] << 24) >>> 0) + (b[o + 1] << 16) + (b[o + 2] << 8) + b[o + 3]; }
+  function boxes(b, s, e, cb) {
+    while (s + 8 <= e) {
+      var size = u32(b, s), h = 8, type = String.fromCharCode(b[s + 4], b[s + 5], b[s + 6], b[s + 7]);
+      if (size === 1) { size = u32(b, s + 8) * 4294967296 + u32(b, s + 12); h = 16; } else if (size === 0) size = e - s;
+      if (size < h || s + size > e) return;
+      cb(type, s + h, s + size, s); s += size;
+    }
+  }
+  function esdsAsc(b, s, e) {
+    var p = s + 4;
+    function len() { var n = 0, k = 0, c; do { c = b[p++]; n = (n << 7) | (c & 127); } while ((c & 128) && ++k < 4); return n; }
+    while (p < e) {
+      var tag = b[p++], L = len();
+      if (tag === 3) { var f = b[p + 2]; p += 3; if (f & 128) p += 2; if (f & 64) p += 1 + b[p]; if (f & 32) p += 2; }
+      else if (tag === 4) p += 13;
+      else if (tag === 5) return b.slice(p, p + L);
+      else p += L;
+    }
+    return null;
+  }
+  function fInit(b) {
+    var tr = {}, trex = {};
+    boxes(b, 0, b.length, function (t, s, e) {
+      if (t !== "moov") return;
+      boxes(b, s, e, function (t1, s1, e1) {
+        if (t1 === "mvex") boxes(b, s1, e1, function (t2, s2) { if (t2 === "trex") trex[u32(b, s2 + 4)] = { dd: u32(b, s2 + 12), ds: u32(b, s2 + 16), df: u32(b, s2 + 20) }; });
+        if (t1 !== "trak") return;
+        var k = {};
+        boxes(b, s1, e1, function (t2, s2, e2) {
+          if (t2 === "tkhd") k.id = u32(b, s2 + (b[s2] === 1 ? 20 : 12));
+          if (t2 !== "mdia") return;
+          boxes(b, s2, e2, function (t3, s3, e3) {
+            if (t3 === "mdhd") k.ts = u32(b, s3 + (b[s3] === 1 ? 20 : 12));
+            if (t3 === "hdlr") k.kind = String.fromCharCode(b[s3 + 8], b[s3 + 9], b[s3 + 10], b[s3 + 11]);
+            if (t3 === "minf") boxes(b, s3, e3, function (t4, s4, e4) {
+              if (t4 === "stbl") boxes(b, s4, e4, function (t5, s5, e5) {
+                if (t5 === "stsd") boxes(b, s5 + 8, e5, function (t6, s6, e6) {
+                  if (t6 === "avc1") { k.w = (b[s6 + 24] << 8) | b[s6 + 25]; k.h = (b[s6 + 26] << 8) | b[s6 + 27];
+                    boxes(b, s6 + 78, e6, function (t7, s7, e7) { if (t7 === "avcC") { k.desc = b.slice(s7, e7); k.codec = "avc1." + hex2(k.desc[1]) + hex2(k.desc[2]) + hex2(k.desc[3]); } }); }
+                  if (t6 === "mp4a") boxes(b, s6 + 28, e6, function (t7, s7, e7) {
+                    if (t7 !== "esds") return; var a = esdsAsc(b, s7, e7); if (!a || a.length < 2) return;
+                    var sri = ((a[0] & 7) << 1) | (a[1] >> 7); k.acfg = { sr: SR[sri] || 48000, ch: (a[1] >> 3) & 15 || 2, asc: a };
+                  });
+                });
+              });
+            });
+          });
+        });
+        if (k.id != null) tr[k.id] = k;
+      });
+    });
+    Object.keys(tr).forEach(function (id) { var x = trex[id] || {}; tr[id].dd = x.dd || 0; tr[id].ds = x.ds || 0; tr[id].df = x.df || 0; });
+    var out = { v: null, a: null };
+    Object.keys(tr).forEach(function (id) { var k = tr[id]; if (k.kind === "vide" && k.desc && !out.v) out.v = k; if (k.kind === "soun" && k.acfg && !out.a) out.a = k; });
+    return out;
+  }
+  function fFrag(b, init) {
+    var V = [], A = [], byId = {};
+    if (init.v) byId[init.v.id] = { k: init.v, out: V }; if (init.a) byId[init.a.id] = { k: init.a, out: A };
+    boxes(b, 0, b.length, function (t, s, e, m0) {
+      if (t !== "moof") return;
+      boxes(b, s, e, function (t1, s1, e1) {
+        if (t1 !== "traf") return;
+        var tk = null, base = m0, dd = 0, ds = 0, df = 0, bt = 0;
+        boxes(b, s1, e1, function (t2, s2, e2) {
+          if (t2 === "tfhd") {
+            var fl = (b[s2 + 1] << 16) | (b[s2 + 2] << 8) | b[s2 + 3], p = s2 + 8;
+            tk = byId[u32(b, s2 + 4)] || null; if (!tk) return;
+            dd = tk.k.dd; ds = tk.k.ds; df = tk.k.df;
+            if (fl & 1) { base = u32(b, p) * 4294967296 + u32(b, p + 4); p += 8; }
+            if (fl & 2) p += 4; if (fl & 8) { dd = u32(b, p); p += 4; } if (fl & 16) { ds = u32(b, p); p += 4; } if (fl & 32) { df = u32(b, p); p += 4; }
+          }
+          if (t2 === "tfdt") bt = b[s2] === 1 ? u32(b, s2 + 4) * 4294967296 + u32(b, s2 + 8) : u32(b, s2 + 4);
+          if (t2 === "trun" && tk) {
+            var f = (b[s2 + 1] << 16) | (b[s2 + 2] << 8) | b[s2 + 3], n = u32(b, s2 + 4), q = s2 + 8, off = 0, ff = null;
+            if (f & 1) { off = u32(b, q) | 0; q += 4; } if (f & 4) { ff = u32(b, q); q += 4; }
+            var pos = base + off, ts = tk.k.ts || 90000;
+            for (var i = 0; i < n; i++) {
+              var d = dd, z = ds, fg = df, c = 0;
+              if (f & 0x100) { d = u32(b, q); q += 4; } if (f & 0x200) { z = u32(b, q); q += 4; }
+              if (f & 0x400) { fg = u32(b, q); q += 4; } else if (i === 0 && ff != null) fg = ff;
+              if (f & 0x800) { c = u32(b, q) | 0; q += 4; }
+              if (pos + z > b.length) break;
+              var data = b.subarray(pos, pos + z); pos += z;
+              if (tk.out === V) V.push({ D: bt / ts, T: (bt + c) / ts, key: !(fg & 0x10000), data: data });
+              else A.push({ T: (bt + c) / ts, raw: data });
+              bt += d;
+            }
+          }
+        });
+      });
+    });
+    return { v: V, a: A };
+  }
+
+  return { tsDemux: tsDemux, adtsFrames: adtsFrames, avcSamples: avcSamples, parseM3U: parseM3U, toMp4: toMp4, muxS: muxS, fInit: fInit, fFrag: fFrag };
 })();
 
       (function () {
@@ -5380,8 +5486,10 @@ var KICK = (function () {
         /* ---------- open a link ---------- */
         function open() {
           var u = $("kurl").value.trim(), id = uuidOf(u), slug = id ? null : slugOf(u);
-          err(""); show($("kinfo"), false); show($("kpast"), false);
-          if (!id && !slug && !/\.m3u8(\?|$)/.test(u)) { err(T("kBadLink", "That doesn't look like a Kick link. Paste a kick.com/channel link.")); return; }
+          twStop(); err(""); show($("kinfo"), false); show($("kpast"), false);
+          if (/twitch\.tv\/videos\/\d+/i.test(u)) { err(T("twVod", "Twitch doesn't let other sites load past streams. Paste the channel link while it's live and clip the last 1, 2 or 5 minutes.")); return; }
+          var twc = twChOf(u); if (twc) { twOpen(twc); return; }
+          if (!id && !slug && !/\.m3u8(\?|$)/.test(u)) { err(T("kBadLink", "That doesn't look like a Kick or Twitch link. Paste a kick.com or twitch.tv channel link.")); return; }
           $("kgo").disabled = true; $("kmeta").textContent = ""; $("ktitle").textContent = T("kLooking", "Opening the video from Kick…"); show($("kinfo"), true);
           var job;
           if (id) job = fetch("https://kick.com/api/v1/video/" + id, { headers: { Accept: "application/json" } }).then(function (r) { if (!r.ok) throw new Error("vod"); return r.json(); })
@@ -5455,6 +5563,7 @@ var KICK = (function () {
           });
         }
         function last(sec, b) {
+          if (TW.on) { twLast(sec, b); return; }
           if (!K.vod || window.CLIP.busy()) return;
           var msg = $("klmsg"); msg.textContent = T("kRefreshing", "Getting the newest minutes from Kick…"); busyBtn(b, msg, true);
           refresh().then(function () { busyBtn(b, msg, false); grab(Math.max(0, K.vod.dur - sec), K.vod.dur, b, msg); },
@@ -5732,6 +5841,180 @@ var KICK = (function () {
         $("kscan").addEventListener("click", scan);
         $("kstop").addEventListener("click", function () { K.stop = true; });
         ["kfrom", "kto"].forEach(function (id) { $(id).addEventListener("input", cost); });
+
+        /* ---------- Twitch live: Twitch only lets other sites read live video, so the phone keeps the last few minutes while the page is open ---------- */
+        var TW = { on: false, ch: "", vars: [], name: "", segs: [], seen: {}, init: null, initUrl: "", timer: 0, run: 0, fails: 0, ad: false, total: 0, vu: "" };
+        var TW_KEEP = 310, TW_CID = "kimne78kx3ncx6brgo4mv6wki5h1ko";
+        function twChOf(u) {
+          var m = /(?:^|\/\/|\.)twitch\.tv\/([A-Za-z0-9_]{2,26})(?:[\/?#]|$)/i.exec(u.trim());
+          if (!m || /^(videos|directory|settings|p|search|downloads|jobs|turbo|subscriptions|inventory|wallet|drops|login|signup)$/i.test(m[1])) return null;
+          return m[1].toLowerCase();
+        }
+        function twParts(on) {
+          // Twitch mode shows the title, live status, the last 1/2/5 min buttons and quality. Everything else in the Kick card is hidden.
+          var keep = { ktitle: 1, kmeta: 1, klive: 1, kqual: 1 };
+          Array.prototype.forEach.call($("kinfo").children, function (el) { if (!keep[el.id]) el.style.display = on ? "none" : ""; });
+          $("krefresh").style.display = on ? "none" : "";
+          ["kq480", "kq720", "kq1080"].forEach(function (q) { $(q).disabled = on ? !twVar(q) : $(q).disabled; });
+        }
+        function twVar(q) {
+          var h = q === "kq480" ? 480 : q === "kq720" ? 720 : 1080, best = null;
+          TW.vars.forEach(function (v) { if (v.h === h && (!best || v.fps > best.fps)) best = v; });
+          if (!best && h === 480) TW.vars.forEach(function (v) { if (v.h && v.h < 720 && (!best || v.h > best.h)) best = v; });
+          return best;
+        }
+        function twQ() { var q = document.querySelector('input[name="kq"]:checked'); return (q && twVar(q.id)) || twVar("kq480") || TW.vars[TW.vars.length - 1]; }
+        function twMaster(ch) {
+          return fetch("/api/twitch-m3u8?ch=" + encodeURIComponent(ch)).then(function (r) {
+            if (r.status === 404) throw new Error("off"); if (r.status === 429) throw new Error("limit"); if (!r.ok) throw new Error("net");
+            return r.text();
+          }).then(function (t) {
+            var L = t.split(/\r?\n/), out = [];
+            for (var i = 0; i < L.length; i++) {
+              if (L[i].indexOf("#EXT-X-STREAM-INF:") !== 0) continue;
+              var l = L[i], u = (L[i + 1] || "").trim(), res = /RESOLUTION=(\d+)x(\d+)/.exec(l), fr = /FRAME-RATE=([\d.]+)/.exec(l), nm = /VIDEO="([^"]+)"/.exec(l);
+              if (!u || !res || /audio/i.test(nm ? nm[1] : "")) continue;
+              out.push({ w: +res[1], h: +res[2], fps: fr ? +fr[1] : 30, name: nm ? nm[1] : res[2] + "p", url: u });
+            }
+            if (!out.length) throw new Error("off");
+            return out;
+          });
+        }
+        function twMeta() {
+          $("kmeta").innerHTML = "";
+          var tag = document.createElement("span"); tag.className = "lts-kick__live"; tag.textContent = T("kLiveTag", "LIVE"); $("kmeta").appendChild(tag);
+          var txt = TW.total < 3 ? T("twWait", "{ch} · Saving the stream on this phone… clips are ready in a few seconds. Keep this page open.", { ch: TW.ch })
+            : T("twSaving", "{ch} · {dur} saved on this phone. Keep this page open.", { ch: TW.ch, dur: fmtT(Math.min(TW.total, 300)) });
+          if (TW.ad) txt += " " + T("twAd", "Twitch is showing an ad, so those seconds are skipped.");
+          if (TW.note) txt += " " + TW.note;
+          $("kmeta").appendChild(document.createTextNode(txt));
+        }
+        function twStatus() {
+          if (!TW.on) return;
+          twMeta();
+          document.querySelectorAll("[data-klast]").forEach(function (b) { if (!b.getAttribute("aria-busy")) b.disabled = TW.total < 3; });
+        }
+        function twOpen(ch) {
+          TW.ch = ch; TW.on = true; TW.note = ""; TW.total = 0; TW.ad = false; var run = ++TW.run;
+          $("kgo").disabled = true; $("ktitle").textContent = T("twLooking", "Opening the stream from Twitch…"); $("kmeta").textContent = ""; show($("kinfo"), true);
+          twParts(true); show($("klive"), false); show($("kqual"), false);
+          twMaster(ch).then(function (vars) {
+            if (run !== TW.run) return;
+            TW.vars = vars;
+            $("kq480").checked = true; // the phone keeps up to 5 minutes, 480p keeps that small
+            twParts(true); show($("kqual"), true); show($("klive"), true);
+            $("ktitle").textContent = ch; twMeta(); twStart();
+            fetch("https://gql.twitch.tv/gql", { method: "POST", headers: { "Client-ID": TW_CID }, body: JSON.stringify({ query: '{ user(login:"' + ch + '"){ displayName stream{ title } } }' }) })
+              .then(function (r) { return r.json(); }).then(function (j) {
+                var u = j && j.data && j.data.user; if (!u || run !== TW.run) return;
+                TW.ch = u.displayName || ch; $("ktitle").textContent = (u.stream && u.stream.title) || TW.ch; twMeta();
+              }).catch(function () {});
+          }, function (e) {
+            if (run !== TW.run) return;
+            twStop(); show($("kinfo"), false);
+            var m = e && e.message;
+            err(m === "off" ? T("twOff", "This Twitch channel isn't live right now, or the name is wrong. Twitch only lets other sites clip live streams, so open it while it's live.")
+              : m === "limit" ? T("twLimit", "Too many Twitch requests. Wait a few minutes.") : T("twFail", "Lost the connection to Twitch. Tap Open to try again."));
+          }).then(function () { $("kgo").disabled = false; });
+        }
+        function twStart() {
+          clearTimeout(TW.timer);
+          var v = twQ(); TW.name = v.name; TW.vu = v.url; TW.segs = []; TW.seen = {}; TW.init = null; TW.initUrl = ""; TW.total = 0; TW.fails = 0; TW.ad = false;
+          twStatus(); twPoll(TW.run);
+        }
+        function twStop() {
+          clearTimeout(TW.timer); TW.run++;
+          if (!TW.on) return;
+          TW.on = false; TW.segs = []; TW.seen = {}; TW.init = null; TW.vars = [];
+          twParts(false); $("klmsg").textContent = ""; show($("klmsg"), false);
+          document.querySelectorAll("[data-klast]").forEach(function (b) { b.disabled = false; });
+        }
+        function twPoll(run) {
+          if (run !== TW.run || !TW.on) return;
+          fetch("/api/twitch-var?u=" + encodeURIComponent(TW.vu)).then(function (r) {
+            if (r.status === 429) throw new Error("limit"); if (!r.ok) throw new Error("var"); return r.text();
+          }).then(function (t) {
+            if (run !== TW.run) return;
+            var L = t.split(/\r?\n/), map = "", dur = 0, title = "", jobs = [], ad = false;
+            for (var i = 0; i < L.length; i++) {
+              var l = L[i].trim(), m;
+              if ((m = /^#EXT-X-MAP:URI="([^"]+)"/.exec(l))) map = m[1];
+              else if (l.indexOf("#EXTINF:") === 0) { dur = parseFloat(l.slice(8)); title = l.slice(l.indexOf(",") + 1); }
+              else if (l && l[0] !== "#") {
+                var isAd = title && !/^live/i.test(title);
+                if (isAd) ad = true;
+                if (!isAd && dur && !TW.seen[l]) { TW.seen[l] = 1; jobs.push({ u: l, d: dur, map: map }); }
+                dur = 0; title = "";
+              }
+            }
+            var keep = {}; for (var k2 = 0; k2 < L.length; k2++) { var l2 = L[k2].trim(); if (l2 && l2[0] !== "#" && TW.seen[l2]) keep[l2] = 1; } TW.seen = keep;
+            TW.ad = ad; TW.fails = 0; TW.note = "";
+            var chain = Promise.resolve();
+            jobs.forEach(function (j) { chain = chain.then(function () { return twAdd(j, run); }); });
+            return chain;
+          }).then(function () { twStatus(); TW.timer = setTimeout(function () { twPoll(run); }, 2000); }, function (e) {
+            if (run !== TW.run) return;
+            if (e && e.message === "limit") { TW.note = T("twLimit", "Too many Twitch requests. Wait a few minutes."); twStatus(); return; }
+            TW.fails++;
+            if (TW.fails === 3) {
+              // the playlist link expired: ask for a fresh one, keep what is already saved
+              twMaster(TW.ch).then(function (vars) { if (run !== TW.run) return; TW.vars = vars; var v = twQ(); TW.vu = v.url; TW.timer = setTimeout(function () { twPoll(run); }, 1000); },
+                function () { if (run !== TW.run) return; TW.note = T("twEnded", "The stream ended or the connection dropped. You can still clip what was saved."); twStatus(); });
+              return;
+            }
+            TW.timer = setTimeout(function () { twPoll(run); }, 3000);
+          });
+        }
+        function twAdd(j, run) {
+          var initJob = j.map && j.map !== TW.initUrl
+            ? getBytes(j.map).then(function (b) { if (run !== TW.run) return; var I = KICK.fInit(b); if (!I.v) throw new Error("init"); if (TW.init && TW.init.v.codec !== I.v.codec) { TW.segs = []; TW.total = 0; } TW.init = I; TW.initUrl = j.map; })
+            : Promise.resolve();
+          return initJob.then(function () { return getBytes(j.u); }).then(function (b) {
+            if (run !== TW.run) return;
+            var f;
+            if (j.map) { if (!TW.init) return; f = KICK.fFrag(b, TW.init); }
+            else {
+              // MPEG-TS pieces (most transcoded qualities)
+              var dm = KICK.tsDemux(b, { v: true, a: true }), av = KICK.avcSamples(dm.v), au = KICK.adtsFrames(dm.a);
+              if (!av.desc) return;
+              var cur = TW.segs.length ? TW.segs[TW.segs.length - 1].I : null, vq = twQ();
+              if (!cur || !cur.ts || cur.v.codec !== av.codec || cur.v.desc.length !== av.desc.length) {
+                TW.init = { ts: true, v: { desc: av.desc, codec: av.codec, w: vq.w, h: vq.h }, a: au.cfg ? { acfg: au.cfg } : null };
+                if (cur) { TW.segs = []; TW.total = 0; }
+              } else TW.init = cur;
+              f = { v: av.samples.map(function (x) { return { D: x.dts / 90000, T: x.pts / 90000, key: x.key, data: x.data }; }),
+                    a: au.frames.map(function (x) { return { T: x.pts / 90000, raw: x.raw }; }) };
+            }
+            if (!f.v.length) return;
+            var z = f.v[0].D, at = TW.total, d = Math.max(j.d, f.v[f.v.length - 1].D - z + 1 / 30);
+            // place each piece right after the last one, so gaps (ads, a sleeping phone) never show as a frozen picture
+            f.v.forEach(function (s) { s.T = at + (s.T - z); s.D = at + (s.D - z); });
+            f.a.forEach(function (x) { x.T = at + (x.T - z); });
+            TW.segs.push({ t: at, d: d, v: f.v, a: f.a, I: TW.init }); TW.total = at + d;
+            while (TW.segs.length && TW.segs[0].t + TW.segs[0].d < TW.total - TW_KEEP) TW.segs.shift();
+          }).catch(function () {});
+        }
+        function twLast(sec, b) {
+          if (window.CLIP.busy() || !TW.segs.length) return;
+          var msg = $("klmsg"), end = TW.total, from = Math.max(TW.segs[0].t, end - sec), I = TW.segs[TW.segs.length - 1].I;
+          var parts = TW.segs.filter(function (s) { return s.I === I && s.t + s.d > from; });
+          if (!parts.length) return;
+          msg.textContent = T("kGet", "Getting the clip… {p}%", { p: 50 }); busyBtn(b, msg, true);
+          window.CLIP.lib().then(function (MX) {
+            var V = [], A = [];
+            parts.forEach(function (s) { V.push.apply(V, s.v); A.push.apply(A, s.a); });
+            var vi = { w: I.v.w, h: I.v.h, fps: (TW.vars.filter(function (v) { return v.name === TW.name; })[0] || {}).fps || 30 };
+            var r = KICK.muxS(MX, V, A, I.v.desc, I.v.codec, I.a ? I.a.acfg : null, Math.max(from, parts[0].t), end, vi);
+            var f = new File([r.buf], "twitch-" + TW.ch.toLowerCase() + "-" + new Date().toISOString().slice(0, 16).replace(/[T:]/g, "-") + ".mp4", { type: "video/mp4" });
+            var v = $("kvid"); v.pause(); show(v, false);
+            window.CLIP.load(f);
+            msg.textContent = (end - from < sec - 2 ? T("twShort", "Only {dur} was saved so far, so the clip is shorter.", { dur: fmtT(end - from) }) + " " : "") + T("kLoaded", "Clip opened in the editor. Pick settings and style next.");
+            var top = $("step1"); if (top) top.scrollIntoView({ block: "start", behavior: "smooth" });
+          }).catch(function () { msg.textContent = T("twGetFail", "Couldn't make this clip. Tap again."); })
+            .then(function () { busyBtn(b, msg, false); show(msg, true); });
+        }
+        document.querySelectorAll('input[name="kq"]').forEach(function (r) { r.addEventListener("change", function () { if (TW.on && TW.vars.length && r.checked) twStart(); }); });
+        $("kurl").addEventListener("paste", function () { setTimeout(function () { if (twChOf($("kurl").value)) open(); }, 0); });
         window.KICKUI = K;
       })();
     
