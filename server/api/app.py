@@ -24,7 +24,7 @@ from contextlib import closing
 import httpx
 from cryptography.fernet import Fernet, InvalidToken
 from fastapi import FastAPI, File, Form, HTTPException, Request, UploadFile
-from fastapi.responses import JSONResponse, RedirectResponse
+from fastapi.responses import JSONResponse, PlainTextResponse, RedirectResponse
 
 # ---- Settings (all from the environment) ---------------------------------------------
 ENV = os.environ.get
@@ -1528,3 +1528,46 @@ async def clip_moments(req: Request):
     models = [v["model"] for v in ok]
     return JSONResponse({"verdicts": verdicts, "model": max(set(models), key=models.count), "ms": int((time.time() - t) * 1000)},
                         headers={"Cache-Control": "no-store"})
+
+
+# ---------- Twitch: master playlist only (a few KB of text). Video parts are fetched by the user's browser straight from Twitch's CDN. ----------
+TW_CID = "kimne78kx3ncx6brgo4mv6wki5h1ko"  # Twitch's public web player client id
+TW_RATE = (40, 600)
+TW_HITS = {}
+TW_CACHE = {}
+
+
+@app.get("/api/twitch-m3u8")
+async def twitch_m3u8(req: Request, ch: str = "", vod: str = ""):
+    ch, vod = ch.strip().lower(), vod.strip()
+    if vod and not re.fullmatch(r"\d{5,14}", vod): raise HTTPException(400, "bad_vod")
+    if not vod and not re.fullmatch(r"[a-z0-9_]{2,26}", ch): raise HTTPException(400, "bad_channel")
+    ip, t = _client_ip(req), time.time()
+    hits = [x for x in TW_HITS.get(ip, []) if x > t - TW_RATE[1]]
+    if len(hits) >= TW_RATE[0]: raise HTTPException(429, "Too many Twitch requests. Wait a few minutes.")
+    TW_HITS[ip] = hits + [t]
+    if len(TW_HITS) > 5000:
+        for k in [k for k, v in TW_HITS.items() if not v or v[-1] < t - TW_RATE[1]]: TW_HITS.pop(k, None)
+    key = "v" + vod if vod else "c" + ch
+    hit = TW_CACHE.get(key)
+    if hit and hit[0] > t - 20:
+        return PlainTextResponse(hit[1], media_type="application/vnd.apple.mpegurl", headers={"Cache-Control": "no-store"})
+    params = '{platform:"web",playerBackend:"mediaplayer",playerType:"site"}'
+    q = (f'{{ videoPlaybackAccessToken(id:"{vod}", params:{params}){{ value signature }} }}' if vod else
+         f'{{ streamPlaybackAccessToken(channelName:"{ch}", params:{params}){{ value signature }} }}')
+    async with http() as c:
+        try:
+            r = await c.post("https://gql.twitch.tv/gql", json={"query": q}, headers={"Client-ID": TW_CID})
+            d = (r.json().get("data") or {})
+            tok = d.get("videoPlaybackAccessToken") or d.get("streamPlaybackAccessToken")
+            if not tok: raise HTTPException(404, "offline_or_not_found")
+            u = (f"https://usher.ttvnw.net/vod/{vod}.m3u8" if vod else f"https://usher.ttvnw.net/api/channel/hls/{ch}.m3u8")
+            m = await c.get(u, params={"sig": tok["signature"], "token": tok["value"], "allow_source": "true",
+                                       "allow_audio_only": "true", "p": str(secrets.randbelow(10**7))})
+        except httpx.HTTPError:
+            raise HTTPException(502, "twitch_unreachable")
+    if m.status_code == 404: raise HTTPException(404, "offline_or_not_found")
+    if m.status_code != 200 or not m.text.startswith("#EXTM3U"): raise HTTPException(502, f"twitch_{m.status_code}")
+    TW_CACHE[key] = (t, m.text)
+    if len(TW_CACHE) > 2000: TW_CACHE.clear()
+    return PlainTextResponse(m.text, media_type="application/vnd.apple.mpegurl", headers={"Cache-Control": "no-store"})

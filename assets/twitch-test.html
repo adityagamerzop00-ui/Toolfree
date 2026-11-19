@@ -13,13 +13,9 @@ document.getElementById("go").onclick=function(){
   if(!v){return;} var vod=/^\d+$/.test(v); out.textContent="Testing "+(vod?"VOD ":"channel ")+v+"…";
   var q=vod?'{ videoPlaybackAccessToken(id:"'+v+'", params:{platform:"web",playerBackend:"mediaplayer",playerType:"site"}){ value signature } }'
            :'{ streamPlaybackAccessToken(channelName:"'+v.toLowerCase()+'", params:{platform:"web",playerBackend:"mediaplayer",playerType:"site"}){ value signature } }';
-  gql(q).then(function(j){
-    var d=j.data&&(j.data.videoPlaybackAccessToken||j.data.streamPlaybackAccessToken);
-    if(!d)throw new Error("step 1 token: no token (offline or wrong name)");
-    log("1. Token: OK");
-    var u="https://usher.ttvnw.net/"+(vod?"vod/"+v:"api/channel/hls/"+v.toLowerCase())+".m3u8?"+new URLSearchParams({sig:d.signature,token:d.value,allow_source:"true",p:String(Math.floor(Math.random()*1e6))});
-    return fetch(u).catch(function(){throw new Error("step 2 playlist: blocked by browser (CORS)");});
-  }).then(function(r){
+  log("1. Asking Toolsaku server for the playlist…");
+  fetch("/api/twitch-m3u8?"+(vod?"vod=":"ch=")+encodeURIComponent(v)).then(function(r){ if(r.ok) log("1. Token: OK"); return r; })
+  .then(function(r){
     if(!r.ok)throw new Error("step 2 playlist: HTTP "+r.status);
     return r.text();
   }).then(function(m){
