@@ -238,6 +238,12 @@
       .lts-h--ne { right: -10px; top: -10px; cursor: nesw-resize; }
       .lts-h--sw { left: -10px; bottom: -10px; cursor: nesw-resize; }
       .lts-h--se { right: -10px; bottom: -10px; cursor: nwse-resize; }
+      .lts-h--e2 { width: 26px; height: 12px; border-radius: 6px; }
+      .lts-h--n { left: 50%; top: -7px; margin-left: -13px; cursor: ns-resize; }
+      .lts-h--s { left: 50%; bottom: -7px; margin-left: -13px; cursor: ns-resize; }
+      .lts-h--w, .lts-h--e { width: 12px; height: 26px; top: 50%; margin-top: -13px; cursor: ew-resize; }
+      .lts-h--w { left: -7px; }
+      .lts-h--e { right: -7px; }
       .lts-legend { display: flex; flex-wrap: wrap; gap: 12px; font: var(--type-caption); color: var(--text-secondary); }
       .lts-legend span { display: inline-flex; align-items: center; gap: 6px; }
       .lts-legend i { width: 12px; height: 12px; border-radius: 3px; border: 2px solid var(--lts-c); }

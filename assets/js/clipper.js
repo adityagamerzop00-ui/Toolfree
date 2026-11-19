@@ -21,7 +21,7 @@
           durL: "अवधि", clipsAbout: "क्लिप्स, लगभग", nextSettings: "आगे: सेटिंग्स", another: "दूसरा वीडियो चुनें",
           clipLen: "क्लिप की लंबाई", lenRh: "प्रीसेट रेंज: हर क्लिप दोनों लंबाइयों के बीच रहती है, बराबर बँटी हुई।",
           format: "फ़ॉर्मेट", layoutL: "लेआउट", szL: "साइज़", szV: "9:16 शॉर्ट्स", szO: "ओरिजिनल रखें", fV: "फ़ुल फ़्रेम", fVs: "पूरी क्लिप भरता है", fO: "ओरिजिनल रखें", fC: "कस्टम फ़्रेम", fCs: "हिस्सा चुनें", fS: "फ़ेसकैम स्टैक", fSs: "AI वेबकैम ढूँढता है", fF: "ऑटो फ़ेस फ़ॉलो", fFs: "बोलने वाले के साथ चलता है", fT: "ट्वीट कार्ड", fTs: "पोस्ट के अंदर क्लिप", twName: "नाम", twHandle: "@हैंडल", twText: "पोस्ट का टेक्स्ट", twTextPh: "खाली = आपका हुक टाइटल", twDark: "डार्क कार्ड", camFind: "✨ वेबकैम फिर से ढूँढें", camReset: "बॉक्स रीसेट करें", splitH: "हर बॉक्स अपने हिस्से का सही आकार रखता है, कुछ भी खिंचता नहीं।", spLayout: "🧩 लेआउट", spCaps: "💬 कैप्शन", spStudio: "🎬 स्टूडियो", camLook: "✨ वेबकैम ढूँढ रहे हैं…", camNone: "वेबकैम नहीं मिला। बॉक्स A को उस पर खींचें।", camOk: "✨ वेबकैम मिल गया। ठीक करने के लिए बॉक्स खींचें या छोटा-बड़ा करें।", camFail: "वेबकैम फ़ाइंडर नहीं चल पाया। बॉक्स A को वेबकैम पर खींचें।",
-          pickhint: "बॉक्स खिसकाने के लिए उसे खींचें; साइज़ बदलने के लिए कोना खींचें। टच और माउस दोनों से चलता है।",
+          pickhint: "बॉक्स खिसकाने के लिए उसे खींचें। कोना या किनारा खींचकर उसे जैसे चाहें छोटा-बड़ा करें।",
           cropPos: "क्रॉप की जगह", partOnly: "वीडियो का सिर्फ़ एक हिस्सा क्लिप करें", optional: "(वैकल्पिक)", startT: "शुरू का समय", endT: "खत्म का समय",
           timeh: "hh:mm:ss या mm:ss में लिखें। पूरे वीडियो के लिए खाली छोड़ दें।", maxClips: "ज़्यादा से ज़्यादा क्लिप्स",
           maxClipsH: "एक बार में 1 से 200 क्लिप्स। 100 मिनट का वीडियो 30s पर 200 क्लिप्स बनाता है।",
@@ -1851,8 +1851,8 @@
           } else if (o.format === "split" && o.boxA && o.boxB) {
             var th = Math.round((H * (o.ratio || 35)) / 100);
             var top = o.swap ? o.boxB : o.boxA, bot = o.swap ? o.boxA : o.boxB;
-            drawCover(ctx, v, top, 0, 0, W, th);
-            drawCover(ctx, v, bot, 0, th, W, H - th);
+            drawBoxFit(ctx, v, top, 0, 0, W, th);
+            drawBoxFit(ctx, v, bot, 0, th, W, H - th);
             ctx.fillStyle = "rgba(0,0,0,0.6)";
             ctx.fillRect(0, th - Math.max(1, Math.round(H * 0.002)), W, Math.max(2, Math.round(H * 0.004)));
           } else {
@@ -1971,6 +1971,22 @@
           ctx.beginPath(); if (ctx.roundRect) ctx.roundRect(m, y, vidW, vidH, r); else ctx.rect(m, y, vidW, vidH); ctx.stroke();
         }
         /* Cover-crop a box (0..1 of the source) into a destination rect, keeping aspect. */
+        // Split parts: the whole box is shown. When its shape differs from the part, the gap is a blurred copy.
+        function drawBoxFit(ctx, v, b, dx, dy, dw, dh) {
+          var vw = v.videoWidth, vh = v.videoHeight;
+          var bx = b.x * vw, by = b.y * vh, bw = Math.max(2, b.w * vw), bh = Math.max(2, b.h * vh);
+          var t = dw / dh, r = bw / bh;
+          if (Math.abs(r / t - 1) < 0.04) { ctx.drawImage(v, bx, by, bw, bh, dx, dy, dw, dh); return; }
+          ctx.save();
+          ctx.beginPath(); ctx.rect(dx, dy, dw, dh); ctx.clip();
+          ctx.filter = "blur(" + Math.max(4, Math.round(dw / 40)) + "px)";
+          drawCover(ctx, v, b, dx, dy, dw, dh);
+          ctx.filter = "none";
+          ctx.fillStyle = "rgba(0,0,0,0.35)"; ctx.fillRect(dx, dy, dw, dh);
+          var k = Math.min(dw / bw, dh / bh), w = bw * k, h = bh * k;
+          ctx.drawImage(v, bx, by, bw, bh, dx + (dw - w) / 2, dy + (dh - h) / 2, w, h);
+          ctx.restore();
+        }
         function drawCover(ctx, v, b, dx, dy, dw, dh) {
           var vw = v.videoWidth, vh = v.videoHeight;
           var bx = b.x * vw, by = b.y * vh, bw = Math.max(2, b.w * vw), bh = Math.max(2, b.h * vh);
@@ -1987,7 +2003,7 @@
           c.classList.toggle("is-wide", !tall);
           show($("twfield"), o.format === "tweet");
           show($("camrow"), o.format === "split");
-          if (o.format === "split") { fitAB(); if (!S.camSet && !CAM.busy && CAM.file !== S.file) camFind(); }
+          if (o.format === "split") { if (!S.camSet && !CAM.busy && CAM.file !== S.file) camFind(); }
           if (o.format === "custom") fixC();
           c.classList.toggle("is-big", picking || o.format === "tweet");
           if (o.format !== "face") show($("ffmsg"), false); else show($("ffmsg"), !!$("ffmsg").textContent);
@@ -2066,6 +2082,7 @@
               if (!best || g.length > best.length) best = g;
             });
             CAM.busy = false;
+            if (S.camSet) { camMsg(""); return; }
             if (!best || best.length < 2) { camMsg(T("camNone", "No webcam found. Drag box A over it.")); return; }
             var avg = function (k) { return best.reduce(function (s, h) { return s + h[k]; }, 0) / best.length; };
             var fx = avg("x"), fy = avg("y"), fw = avg("w");
@@ -2088,9 +2105,7 @@
         $("camreset").addEventListener("click", function () { resetBoxes(); fitAB(); camMsg(""); drawCropPreview(); });
         ["twname", "twhandle", "twtext", "twdark"].forEach(function (id) { $(id).addEventListener("input", function () { drawCropPreview(); }); $(id).addEventListener("change", function () { updateSettings(); }); });
         document.querySelectorAll('input[name="osz"]').forEach(function (r) { r.addEventListener("change", function () { updateSettings(); drawCropPreview(); }); });
-        $("ratio").addEventListener("input", function () { fitAB(); });
-        $("swap").addEventListener("change", function () { fitAB(); });
-        function fixC() {
+                        function fixC() {
           // Keep box C at exactly 9:16 in source pixels.
           var b = BOX.C, ar = S.vw && S.vh ? S.vh / S.vw : 9 / 16, T = boxT("C");
           var wFromH = b.h * T * ar;
@@ -2148,7 +2163,7 @@
             if (drag.h.indexOf("e") > -1) R = Math.min(1, Math.max(L + MIN, R + dx));
             if (drag.h.indexOf("n") > -1) T = Math.max(0, Math.min(B - MIN, T + dy));
             if (drag.h.indexOf("s") > -1) B = Math.min(1, Math.max(T + MIN, B + dy));
-            {
+            if (drag.key === "C") {
               // Aspect-locked: height follows the drag, width follows the part's shape, anchored at the opposite corner.
               var bt = boxT(drag.key), ar = S.vh / S.vw, hh = B - T, ww = hh * bt * ar;
               if (ww > 1) { ww = 1; hh = 1 / (bt * ar); }
