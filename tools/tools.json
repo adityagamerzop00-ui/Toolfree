@@ -773,6 +773,57 @@
   ]
  },
  {
+  "id": "movie-story-narrator",
+  "slug": "movie-story-narrator",
+  "name": "Movie Story Narrator",
+  "title_name": "Movie Story Narrator: AI Hindi Story Voiceover for Shorts",
+  "category": "video",
+  "icon": "play",
+  "privacy": "narrator",
+  "description": "Turn a movie or series clip into a Short with an AI story voiceover in Hindi, captions and a hook title.",
+  "meta_description": "Make movie recap Shorts: AI watches your clip, writes a first-person story with a strong hook and cliffhangers, reads it in a Hindi AI voice and adds captions, a hook title and a dark teal look. Free with your own Gemini key.",
+  "steps": [
+   "Save your free Gemini key from Google AI Studio (one time).",
+   "Pick a movie or series clip, the start time and the Short length.",
+   "Tap Write story with AI, then edit the hook and lines if you like.",
+   "Tap Make voice to hear the Hindi AI voice.",
+   "Tap Make Short, keep the tab open, then download and post with the ready title and hashtags."
+  ],
+  "about": "Movie Story Narrator makes the kind of movie recap Shorts that hook viewers in the first second. Gemini listens to your clip and looks at a few snapshots, then writes a story in your own words, not a copy of the dialogue: a strange, specific first line, a cliffhanger every 10 to 15 seconds and a twist at the end. A Gemini AI voice reads it in Hindi, Hinglish or English, the movie sound is turned down under the voice, and the tool adds big word-by-word captions, a hook title for the first 3 seconds and a Dark Teal, Teal and Orange or Horror look. The 9:16 Short is made on your phone or computer, with no watermark.",
+  "faq": [
+   [
+    "Is my video uploaded?",
+    "No. The Short is made on your device. Only a small low-quality copy of the clip's sound and a few snapshots go straight to Google's Gemini with your own free key to write the story, and then only the story text for the voice."
+   ],
+   [
+    "Why do I need a Gemini key?",
+    "The AI runs on your own free key from Google AI Studio, so there is no sign-up and no daily limit set by Toolsaku. Free keys have their own daily limits from Google. The key stays in your browser."
+   ],
+   [
+    "Does it dub the movie's dialogue?",
+    "No. It writes a fresh story recap that a narrator reads over the clip, the style top recap channels use. A recap in your own words is also safer for monetization than the original dialogue."
+   ],
+   [
+    "Which languages can the voice speak?",
+    "Hindi in Devanagari, Hinglish and English. You can edit every line before the voice is made."
+   ],
+   [
+    "Will I get copyright claims?",
+    "You might. Movie clips belong to their owners and can get Content ID claims. Keep clips short, tell the story in your own words, credit the movie and follow YouTube's and Instagram's rules."
+   ],
+   [
+    "Which browsers work?",
+    "The latest Chrome or Edge on Android or a computer works best. Keep the tab open while the Short is being made; it takes about as long as the Short itself."
+   ]
+  ],
+  "related": [
+   "long-to-shorts",
+   "video-trimmer",
+   "youtube-title-generator",
+   "hashtag-suggestions"
+  ]
+ },
+ {
   "id": "merge-pdf",
   "slug": "merge-pdf",
   "name": "Merge PDF",

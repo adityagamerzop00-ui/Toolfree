@@ -15,6 +15,7 @@ window.SUGOI_SLUGS = {
  "video-converter": "convert-video",
  "youtube-thumbnail-downloader": "youtube-thumbnail-downloader",
  "stream-moment-finder": "stream-moment-finder",
+ "movie-story-narrator": "movie-story-narrator",
  "merge-pdf": "merge-pdf",
  "split-pdf": "split-pdf",
  "compress-pdf": "compress-pdf",

@@ -68,6 +68,7 @@ PRIVACY_HI = {
     "clipper": "आपकी वीडियो फ़ाइल आपके डिवाइस पर ही कटती और बनती है, कभी अपलोड नहीं होती। नॉर्मल मोड पूरी तरह डिवाइस पर चलता है। AI मोड हर तेज़ आवाज़ वाले पल के कुछ छोटे स्नैपशॉट और बोले गए शब्द आपकी अपनी मुफ़्त key से सीधे Google Gemini को भेजता है, Toolsaku के सर्वर को कभी नहीं। AI पोस्ट किट और AI कैप्शन जनरेटर सिर्फ़ टेक्स्ट भेजते हैं।",
     "link": "सिर्फ़ आपका पेस्ट किया YouTube लिंक Toolsaku के सर्वर पर जाता है, जो स्ट्रीम का पब्लिक चैट रीप्ले, कैप्शन और Most replayed डेटा पढ़ता है। कोई फ़ाइल अपलोड नहीं होती और वीडियो कभी डाउनलोड नहीं होता।",
     "yt": "थंबनेल सीधे YouTube के पब्लिक इमेज सर्वर (img.youtube.com) से लोड होते हैं। Toolsaku कुछ भी सेव नहीं करता।",
+    "narrator": "आपका वीडियो कभी Toolsaku पर अपलोड नहीं होता। कहानी लिखने के लिए क्लिप की आवाज़ की एक छोटी कम-क्वालिटी कॉपी और कुछ स्नैपशॉट आपकी अपनी मुफ़्त key से सीधे Google Gemini को जाते हैं, और आवाज़ के लिए सिर्फ़ कहानी का टेक्स्ट जाता है। Short आपके डिवाइस पर ही बनता है।",
 }
 CATS, ICONS, EN = SITE["cats"], SITE["icons"], SITE["en"]
 e = lambda s: html.escape(str(s), quote=True)
@@ -85,6 +86,7 @@ def _tool_scripts(t):
     i, c = t["id"], t["category"]
     if t.get("embed") == "clipper": return ["clipper.js"]
     if i == "stream-moment-finder": return ["stream-moments.js"]
+    if i == "movie-story-narrator": return ["story-narrator.js"]
     if c == "image": return ["image-tools.js"]
     if c == "pdf": return ["pdf-tools.js"]
     if c == "video": return ["video-tools.js"]
@@ -104,6 +106,7 @@ PRIVACY = {
     "clipper": "Your video file is cut and rendered on your device and never uploaded. Normal mode is fully on-device. AI mode sends only a few small snapshots and the spoken words from each loud moment straight to Google's Gemini with your own free key, never to Toolsaku's server. The AI post kit and AI Caption Generator send only text.",
     "link": "Only the YouTube link you paste is sent to Toolsaku's server, which reads the stream's public chat replay, captions and Most replayed data. No files are uploaded and the video is never downloaded.",
     "yt": "Thumbnails load straight from YouTube's public image server (img.youtube.com). Toolsaku stores nothing.",
+    "narrator": "Your video is never uploaded to Toolsaku. To write the story, a small low-quality copy of the clip's sound and a few snapshots go straight to Google's Gemini with your own free key, and only the story text goes back to Gemini for the voice. The Short is made on your device.",
 }
 
 
@@ -280,7 +283,7 @@ def guide_html(t):
     return f'<section class="x-box x-wide x-guide" aria-labelledby="x-h-guide"><h2 id="x-h-guide">{tile(t["category"], "info", 18)}{e(t["name"])} guide</h2>{inner}</section>\n            '
 
 
-AI_PRIV = ("text-ai", "link", "clipper")
+AI_PRIV = ("text-ai", "link", "clipper", "narrator")
 
 # ---- Tool pages -----------------------------------------------------------------------
 def tool_page(t):
