@@ -48,6 +48,16 @@
     fail: ["The AI couldn't do this right now. Try again in a minute.", "AI अभी यह नहीं कर पाया। एक मिनट बाद फिर कोशिश करें।"],
     noRec: ["This browser can't record video. Use the latest Chrome or Edge.", "यह ब्राउज़र वीडियो रिकॉर्ड नहीं कर सकता। नया Chrome या Edge इस्तेमाल करें।"],
     playErr: ["This browser couldn't play the clip. Try an MP4 file.", "यह ब्राउज़र क्लिप नहीं चला पाया। MP4 फ़ाइल आज़माएँ।"],
+    mode: ["Mode", "मोड"], m1: ["One clip", "एक क्लिप"], m2: ["Full movie in parts", "पूरी मूवी, भागों में"],
+    fileM: ["Movie or long video (MP4, MOV, WEBM)", "मूवी या लंबा वीडियो (MP4, MOV, WEBM)"], lenM: ["Part length", "हर भाग की लंबाई"],
+    partOf: ["Part {i} of {n}", "भाग {i} / {n}"], partAt: ["{a} to {b}", "{a} से {b}"], goPart: ["Go to part", "भाग पर जाएँ"],
+    narr: ["Narrate part {i}", "भाग {i} नैरेट करें"], nextP: ["Next part", "अगला भाग"],
+    lastP: ["That was the last part. The whole movie is narrated.", "यह आख़िरी भाग था। पूरी मूवी नैरेट हो गई।"],
+    sofar: ["Story so far is carried into this part.", "पिछले भागों की कहानी इस भाग में आगे बढ़ेगी।"],
+    mHint: ["Pick a part length. The movie is split into parts on this device, then each part is narrated one by one and the story carries on from part to part.",
+      "हर भाग की लंबाई चुनें। मूवी इसी डिवाइस पर भागों में बँटती है, फिर हर भाग एक-एक करके नैरेट होता है और कहानी अगले भाग में आगे चलती है।"],
+    listen: ["Listening to this part… {p}%", "इस भाग की आवाज़ सुन रहे हैं… {p}%"],
+    doneP: ["Part {i} is ready. Download it, then tap Next part.", "भाग {i} तैयार है। इसे डाउनलोड करें, फिर अगला भाग टैप करें।"],
     note: ["Tip: tell the story in your own words and credit the movie. Raw movie clips can get copyright claims.",
       "टिप: कहानी अपने शब्दों में बताएँ और मूवी का नाम दें। सिर्फ़ मूवी क्लिप पर कॉपीराइट क्लेम आ सकता है।"],
   };
@@ -60,6 +70,7 @@
   const LOOKS = [["teal", "Dark Teal", "डार्क टील"], ["orange", "Teal and Orange", "टील और ऑरेंज"], ["horror", "Horror", "हॉरर"], ["none", "Original", "ओरिजिनल"]];
   const FITS = [["fill", "Fill screen (crop sides)", "पूरी स्क्रीन (किनारे कटेंगे)"], ["blur", "Full frame on blurred background", "पूरा फ़्रेम, धुंधला बैकग्राउंड"]];
   const LENS = [["45", "45 s", "45 सेकंड"], ["60", "60 s", "60 सेकंड"], ["90", "90 s", "90 सेकंड"], ["120", "2 min", "2 मिनट"], ["170", "3 min", "3 मिनट"]];
+  const fmt = (x) => { x = Math.max(0, Math.round(x)); const h = Math.floor(x / 3600), m = Math.floor((x % 3600) / 60), sec = String(x % 60).padStart(2, "0"); return h ? h + ":" + String(m).padStart(2, "0") + ":" + sec : m + ":" + sec; };
   const MOVS = [["0.2", "Low (20%)", "कम (20%)"], ["0.35", "Medium (35%)", "मध्यम (35%)"], ["0", "Off", "बंद"]];
 
   /* ---------- Gemini with the viewer's key (shared with Long Video to Shorts) ---------- */
@@ -125,6 +136,36 @@
       return b64(wavBytes(out.getChannelData(0), rate));
     } catch (e) { return null; } finally { try { ac.close(); } catch (e) {} }
   }
+  // Full movie mode: never read the whole file. Play just this part (muted to the speakers, 2x speed) and
+  // record its sound through Web Audio, then shrink it to 16 kHz mono.
+  async function liveAudio(url, start, len, onProg) {
+    const AC = window.AudioContext || window.webkitAudioContext; if (!AC || !window.OfflineAudioContext) return null;
+    const v = document.createElement("video"); v.playsInline = true; v.preload = "auto"; v.src = url;
+    const ac = new AC(), SPEED = 2; let sp = null;
+    try {
+      await new Promise((res, rej) => { v.onloadeddata = res; v.onerror = () => rej(new Error("x")); setTimeout(res, 8000); });
+      await seek(v, start);
+      const src = ac.createMediaElementSource(v), sink = ac.createGain(); sink.gain.value = 0;
+      sp = ac.createScriptProcessor(4096, 2, 1); const bits = []; let on = false, got = 0;
+      sp.onaudioprocess = (e) => { if (!on) return; const ib = e.inputBuffer, n = ib.length, m = new Float32Array(n), ch = ib.numberOfChannels;
+        for (let c = 0; c < ch; c++) { const d = ib.getChannelData(c); for (let i = 0; i < n; i++) m[i] += d[i] / ch; } bits.push(m); got += n; };
+      src.connect(sp); sp.connect(sink); sink.connect(ac.destination);
+      await ac.resume(); v.playbackRate = SPEED; await v.play(); on = true;
+      const end = start + len, limit = Date.now() + (len / SPEED) * 1000 + 30000;
+      while (!v.ended && v.currentTime < end && Date.now() < limit) {
+        if (CANCEL) throw new Error("cancel");
+        if (onProg) onProg(Math.min(99, Math.round(((v.currentTime - start) / len) * 100))); await sleep(250);
+      }
+      on = false; v.pause();
+      if (got < ac.sampleRate) return null;
+      const all = new Float32Array(got); let o = 0; bits.forEach((b) => { all.set(b, o); o += b.length; });
+      let e = 0; for (let i = 0; i < all.length; i += 16) e += all[i] * all[i]; if (e / (all.length / 16) < 1e-7) return null; // silent: the browser gave no sound
+      const rate = 16000, off = new OfflineAudioContext(1, Math.ceil((got / ac.sampleRate) * rate), rate), b = off.createBuffer(1, got, ac.sampleRate);
+      b.copyToChannel(all, 0); const s = off.createBufferSource(); s.buffer = b; s.connect(off.destination); s.start();
+      return b64(wavBytes((await off.startRendering()).getChannelData(0), rate));
+    } catch (e) { if (e && e.message === "cancel") throw e; return null; }
+    finally { try { v.pause(); } catch (e) {} if (sp) sp.onaudioprocess = null; v.removeAttribute("src"); v.load(); try { ac.close(); } catch (e) {} }
+  }
   function seek(v, s) { return new Promise((res) => { const d = () => { v.removeEventListener("seeked", d); res(); }; v.addEventListener("seeked", d); v.currentTime = Math.max(0, s); setTimeout(d, 4000); }); }
   async function snapshots(url, start, len, n) {
     const v = document.createElement("video"); v.muted = true; v.playsInline = true; v.preload = "auto"; v.src = url;
@@ -142,6 +183,17 @@
   /* ---------- the story script ---------- */
   const SCHEMA = { type: "OBJECT", properties: { hook_title: { type: "STRING" }, lines: { type: "ARRAY", items: { type: "STRING" } },
     post_title: { type: "STRING" }, hashtags: { type: "ARRAY", items: { type: "STRING" } } }, required: ["hook_title", "lines", "post_title", "hashtags"] };
+  const SCHEMA_M = JSON.parse(JSON.stringify(SCHEMA)); SCHEMA_M.properties.story_so_far = { type: "STRING" }; SCHEMA_M.required.push("story_so_far");
+  function partPrompt(q) {
+    const P = q.part; if (!P) return "";
+    return "\nFULL MOVIE MODE: this clip is part " + P.i + " of " + P.n + " of one movie, from " + fmt(P.a) + " to " + fmt(P.b) + " of the movie." +
+      (q.sped ? " The clip sound is played at 2x speed, so voices sound fast." : "") + "\n" +
+      (P.sofar ? "Story so far, from the earlier parts (keep the same narrator, characters and names, and do not retell it):\n" + P.sofar + "\n" +
+        "Continue the story from there. Line 1 is still a hook, but it pulls viewers into this part (it may refer back in a few words).\n"
+        : (P.i === 1 ? "This is the first part: introduce the main characters clearly.\n" : "")) +
+      (P.i >= P.n ? "This is the LAST part: end with the ending of the story, not a tease for more.\n" : "End on a cliffhanger that makes people want part " + (P.i + 1) + ".\n") +
+      "Also return story_so_far: 2 to 4 short English sentences summing up the whole story up to the end of this part (earlier parts plus this one), naming or describing the main characters, so the next part can continue it.\n";
+  }
   function storyPrompt(q) {
     const L = q.lang === "hi" ? "Hindi in Devanagari script, simple everyday spoken Hindi (the way Indian story narrators speak, common English words allowed)"
       : q.lang === "hinglish" ? "Hinglish: Hindi written in Roman letters mixed with simple English, never Devanagari" : "simple spoken English";
@@ -159,18 +211,18 @@
       "6. No hashtags, emojis, stage directions, brackets or speaker names inside lines. Don't invent real actor names.\n" +
       "7. Write all lines, the hook title and the post title in " + L + ".\n\n" +
       "Return JSON:\n- hook_title: on-screen hook for the first 3 seconds, at most 45 characters.\n- lines: the narration lines in order.\n" +
-      "- post_title: a catchy Shorts title, at most 70 characters.\n- hashtags: 5 to 8 hashtags without the # sign.\n";
+      "- post_title: a catchy Shorts title, at most 70 characters.\n- hashtags: 5 to 8 hashtags without the # sign.\n" + partPrompt(q);
   }
   async function writeStory(q, audio, frames, onWait) {
     const parts = [{ text: storyPrompt(Object.assign({}, q, { frames: frames.length })) }];
     if (audio) parts.push({ text: "Clip sound:" }, { inline_data: { mime_type: "audio/wav", data: audio } });
     frames.forEach((f) => parts.push({ text: "Snapshot at " + f.at.toFixed(1) + " s:" }, { inline_data: { mime_type: "image/jpeg", data: f.data } }));
-    const body = JSON.stringify({ contents: [{ role: "user", parts }], generationConfig: { responseMimeType: "application/json", responseSchema: SCHEMA, temperature: 0.9, maxOutputTokens: 4096 } });
+    const body = JSON.stringify({ contents: [{ role: "user", parts }], generationConfig: { responseMimeType: "application/json", responseSchema: q.part ? SCHEMA_M : SCHEMA, temperature: 0.9, maxOutputTokens: 4096 } });
     const j = await gemini(GK.text, body, onWait, 150000);
     try {
       const o = JSON.parse(j.candidates[0].content.parts.map((p) => p.text || "").join(""));
       return { hook: String(o.hook_title || "").trim(), lines: (o.lines || []).map((s) => String(s).replace(/[#*_\[\]()]/g, "").trim()).filter(Boolean),
-        title: String(o.post_title || "").trim(), tags: (o.hashtags || []).map((h) => "#" + String(h).replace(/^#+/, "").replace(/\s+/g, "")).filter((h) => h.length > 1) };
+        title: String(o.post_title || "").trim(), sum: String(o.story_so_far || "").trim(), tags: (o.hashtags || []).map((h) => "#" + String(h).replace(/^#+/, "").replace(/\s+/g, "")).filter((h) => h.length > 1) };
     } catch (e) { throw new Error(t("fail")); }
   }
 
@@ -325,12 +377,18 @@
   css.textContent = `.x-sn [hidden]{display:none!important}.x-sn h2{font-size:18px;margin:18px 0 10px;color:var(--navy)}.x-sn h2:first-child{margin-top:0}
 .x-sn .x-sng{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
 .x-sn input[type=text],.x-sn input[type=number],.x-sn input[type=password],.x-sn textarea,.x-sn select{width:100%;min-height:46px;padding:10px 12px;border-radius:12px;border:1.5px solid var(--line);font:inherit;box-sizing:border-box;background:var(--card,#fff);color:inherit}
-.x-sn textarea{min-height:200px;resize:vertical;line-height:1.5}.x-sn label{display:grid;gap:6px;font-size:14px;font-weight:600;min-width:0}
+.x-sn textarea{min-height:200px;resize:vertical;line-height:1.5}.x-sn input[type=file]{width:100%;min-width:0;max-width:100%;box-sizing:border-box}.x-sn label{display:grid;grid-template-columns:minmax(0,1fr);gap:6px;font-size:14px;font-weight:600;min-width:0}
 .x-sn .x-snrow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:12px}.x-sn .x-snkey{padding:14px;border-radius:16px;background:var(--soft);margin-bottom:6px}
 .x-sn .x-snkey p{margin:0 0 10px;font-size:14px}.x-sn video,.x-sn audio{width:100%;max-height:360px;border-radius:14px;background:#000;margin-top:10px}
 .x-sn .x-snout video{max-height:520px;aspect-ratio:9/16;object-fit:contain}
 .x-sn .x-snprog{display:flex;align-items:center;gap:10px;font-size:14px;margin:12px 0 0}.x-sn .x-snprog i{width:18px;height:18px;border-radius:50%;border:2px solid var(--line);border-top-color:var(--blue,#2563ff);animation:xsnspin 1s linear infinite;flex:none}
 @keyframes xsnspin{to{transform:rotate(360deg)}}@media (prefers-reduced-motion:reduce){.x-sn .x-snprog i{animation:none}}
+.x-sn .x-snmode{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:4px;border-radius:14px;background:var(--soft);margin-bottom:12px}
+.x-sn .x-snmode button{min-height:42px;border:0;border-radius:11px;background:transparent;font:inherit;font-weight:600;font-size:14px;color:inherit;cursor:pointer;padding:6px 8px;line-height:1.25}
+.x-sn .x-snmode button[aria-checked=true]{background:var(--cta,#2563ff);color:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2)}.x-sn .x-snmode button:disabled{opacity:.6;cursor:default}
+.x-sn .x-snparts{margin-top:12px;padding:14px;border-radius:16px;border:1.5px solid var(--line)}.x-sn .x-snparts b{font-size:17px;color:var(--navy)}
+.x-sn .x-snparts .x-snat{font-size:14px;color:var(--muted);margin-left:8px;white-space:nowrap}.x-sn .x-snparts p{margin:8px 0 0;font-size:13px;color:var(--muted)}
+.x-sn .x-snparts label{margin-top:10px}
 .x-sn .x-btn{min-height:46px}.x-sn .x-snnote{font-size:13px;color:var(--muted);margin-top:14px}`;
   document.head.appendChild(css);
 
@@ -341,11 +399,12 @@
         <a class="x-btn" href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">${esc(t("keyGet"))}</a></div></div>
       <div class="x-snrow" data-k="yes" hidden><span>${esc(t("keyOk"))}</span><button type="button" class="x-btn" data-k="chg">${esc(t("keyChange"))}</button></div></div>
     <h2>${esc(t("f1"))}</h2>
-    <label>${esc(t("file"))}<input type="file" data-k="file" accept="video/mp4,video/quicktime,video/webm,video/x-matroska,.mp4,.mov,.webm,.mkv"></label>
+    <div class="x-snmode" role="radiogroup" aria-label="${esc(t("mode"))}"><button type="button" role="radio" aria-checked="true" data-k="m1">${esc(t("m1"))}</button><button type="button" role="radio" aria-checked="false" data-k="m2">${esc(t("m2"))}</button></div>
+    <label><span data-k="fileL">${esc(t("file"))}</span><input type="file" data-k="file" accept="video/mp4,video/quicktime,video/webm,video/x-matroska,.mp4,.mov,.webm,.mkv"></label>
     <video data-k="prev" controls playsinline hidden></video>
     <div class="x-sng" style="margin-top:12px">
-      <label>${esc(t("start"))}<input type="number" data-k="start" min="0" step="1" value="0" inputmode="numeric"></label>
-      <label>${esc(t("len"))}<select data-k="len">${opt(LENS, "60")}</select></label>
+      <label data-k="startL">${esc(t("start"))}<input type="number" data-k="start" min="0" step="1" value="0" inputmode="numeric"></label>
+      <label><span data-k="lenL">${esc(t("len"))}</span><select data-k="len">${opt(LENS, "60")}</select></label>
       <label>${esc(t("lang"))}<select data-k="lang">${opt(LANGS, "hi")}</select></label>
       <label>${esc(t("voice"))}<select data-k="voice">${opt(VOICES, "Charon")}</select></label>
       <label>${esc(t("look"))}<select data-k="look">${opt(LOOKS, "teal")}</select></label>
@@ -353,6 +412,10 @@
       <label>${esc(t("mov"))}<select data-k="movie">${opt(MOVS, "0.2")}</select></label>
     </div>
     <label style="margin-top:12px">${esc(t("name"))}<input type="text" data-k="title" maxlength="80" placeholder="${esc(t("namePh"))}"></label>
+    <div class="x-snparts" data-k="parts" hidden><div><b data-k="pof"></b><span class="x-snat" data-k="pat"></span></div>
+      <p data-k="phint">${esc(t("mHint"))}</p>
+      <label>${esc(t("goPart"))}<select data-k="pick"></select></label>
+      <div class="x-snrow"><button type="button" class="x-btn x-primary" data-k="narr"></button></div></div>
     <h2>${esc(t("f2"))}</h2>
     <div class="x-snrow"><button type="button" class="x-btn x-primary" data-k="write">${ic("edit", 20)} ${esc(t("write"))}</button></div>
     <label style="margin-top:12px">${esc(t("hook"))}<input type="text" data-k="hook" maxlength="60"></label>
@@ -367,12 +430,13 @@
     <p class="x-snprog" aria-live="polite" hidden><i aria-hidden="true"></i><span></span></p>
     <p class="x-err" role="alert" hidden></p>
     <div class="x-snout" hidden><video data-k="out" controls playsinline></video>
-      <div class="x-snrow"><a class="x-btn x-primary" data-k="dl" download>${ic("download", 20)} ${esc(t("dl"))}</a></div></div>
+      <div class="x-snrow"><a class="x-btn x-primary" data-k="dl" download>${ic("download", 20)} ${esc(t("dl"))}</a>
+      <button type="button" class="x-btn x-primary" data-k="next" hidden>${esc(t("nextP"))}</button></div></div>
     <p class="x-snnote">${esc(t("note"))}</p></div>`;
 
   const $ = (k) => mount.querySelector(`[data-k="${k}"]`);
   const prog = mount.querySelector(".x-snprog"), ptxt = prog.querySelector("span"), err = mount.querySelector(".x-err"), outBox = mount.querySelector(".x-snout");
-  const st = { file: null, url: "", dur: 0, voice: null, outUrl: "", audUrl: "", busy: false };
+  const st = { file: null, url: "", dur: 0, voice: null, outUrl: "", audUrl: "", busy: false, movie: false, pi: 0, sums: [] };
   const say = (m) => { prog.hidden = !m; ptxt.textContent = m || ""; };
   const oops = (m) => { err.hidden = !m; err.textContent = m || ""; };
   function keyUI() { const k = !!keyGet(); $("no").hidden = k; $("yes").hidden = !k; }
@@ -383,35 +447,79 @@
     const f = $("file").files[0]; if (!f) return;
     if (st.url) URL.revokeObjectURL(st.url);
     st.file = f; st.url = URL.createObjectURL(f); st.voice = null; $("aud").hidden = true; outBox.hidden = true;
-    const p = $("prev"); p.src = st.url; p.hidden = false; p.onloadedmetadata = () => { st.dur = p.duration || 0; $("start").max = Math.max(0, Math.floor(st.dur - 5)); };
+    const p = $("prev"); p.src = st.url; p.hidden = false; p.onloadedmetadata = () => { st.dur = isFinite(p.duration) ? p.duration : 0; $("start").max = Math.max(0, Math.floor(st.dur - 5)); partsUI(); };
+    st.pi = 0; st.sums = []; $("hook").value = ""; $("lines").value = ""; $("post").value = ""; partsUI();
     oops("");
   };
-  $("prev").addEventListener("pause", () => { const p = $("prev"); if (p.currentTime > 0 && !st.busy) $("start").value = Math.floor(p.currentTime); });
+  $("prev").addEventListener("pause", () => { const p = $("prev"); if (!st.movie && p.currentTime > 0 && !st.busy) $("start").value = Math.floor(p.currentTime); });
+  /* ---------- Full movie mode: the movie is split into parts by time; each part is seeked to, never cut out of the file ---------- */
+  function partList() {
+    const L = +$("len").value, d = st.dur; if (!d) return [];
+    let n = Math.max(1, Math.ceil(d / L)); if (n > 1 && d - (n - 1) * L < 15) n--; // a tiny tail joins the last part
+    const out = []; for (let i = 0; i < n; i++) out.push({ a: i * L, b: i === n - 1 ? d : (i + 1) * L }); return out;
+  }
+  function partsUI() {
+    const P = partList(), on = st.movie; $("parts").hidden = !on || !P.length; $("startL").hidden = on;
+    $("fileL").textContent = t(on ? "fileM" : "file"); $("lenL").textContent = t(on ? "lenM" : "len");
+    $("m1").setAttribute("aria-checked", String(!on)); $("m2").setAttribute("aria-checked", String(on));
+    $("next").hidden = !on || st.pi >= P.length - 1 || outBox.hidden;
+    if (!on || !P.length) return;
+    st.pi = Math.min(st.pi, P.length - 1); const p = P[st.pi]; st.pa = p.a;
+    $("pof").textContent = t("partOf", { i: st.pi + 1, n: P.length }); $("pat").textContent = t("partAt", { a: fmt(p.a), b: fmt(p.b) });
+    $("narr").innerHTML = ic("edit", 20) + " " + esc(t("narr", { i: st.pi + 1 }));
+    const sel = $("pick"); if (sel.options.length !== P.length || sel.dataset.len !== $("len").value) {
+      sel.dataset.len = $("len").value;
+      sel.innerHTML = P.map((x, i) => `<option value="${i}">${esc(t("partOf", { i: i + 1, n: P.length }) + " (" + fmt(x.a) + ")")}</option>`).join("");
+    }
+    sel.value = String(st.pi);
+    $("phint").textContent = sofar(p.a) ? t("sofar") : t("mHint");
+  }
+  function sofar(at) { // the newest story summary from a part that ends at or before this one starts
+    const s = st.sums.filter((x) => x.b <= at + 1).sort((x, y) => y.b - x.b)[0]; return s ? s.text.slice(0, 900) : "";
+  }
+  function setMode(on) { if (st.busy) return; st.movie = on; partsUI(); }
+  $("m1").onclick = () => setMode(false); $("m2").onclick = () => setMode(true);
+  function goPart(i) {
+    st.pi = i; st.voice = null; $("aud").hidden = true; outBox.hidden = true;
+    $("hook").value = ""; $("lines").value = ""; $("post").value = ""; oops(""); say("");
+    const p = partList()[i]; if (p) { $("prev").pause(); $("prev").currentTime = p.a; }
+    partsUI();
+  }
+  $("pick").onchange = () => goPart(+$("pick").value);
+  $("len").addEventListener("change", () => { if (!st.movie) return; st.voice = null; const at = st.pa || 0; st.pi = Math.max(0, Math.floor(at / +$("len").value)); partsUI(); });
   ["lines", "voice"].forEach((k) => $(k).addEventListener("input", () => { st.voice = null; }));
   $("voice").addEventListener("change", () => { st.voice = null; });
   function range() {
+    if (st.movie) { const P = partList(), p = P[st.pi]; if (p) return { start: p.a, len: Math.max(5, p.b - p.a), part: { i: st.pi + 1, n: P.length, a: p.a, b: p.b } }; }
     const len = +$("len").value, s = Math.max(0, +$("start").value || 0), d = st.dur || len;
     const start = Math.min(s, Math.max(0, d - 5)); return { start, len: Math.max(5, Math.min(len, d - start)) };
   }
   const lines = () => $("lines").value.split(/\n+/).map((s) => s.trim()).filter(Boolean);
-  function busy(on) { st.busy = on; ["write", "tts", "make"].forEach((k) => ($(k).disabled = on)); $("stop").hidden = !on; if (!on) CANCEL = false; }
+  function busy(on) { st.busy = on; ["write", "tts", "make", "narr", "next", "pick"].concat(st.movie ? ["len", "file", "m1", "m2"] : []).forEach((k) => ($(k).disabled = on)); $("stop").hidden = !on; if (!on) CANCEL = false; }
   $("stop").onclick = () => { CANCEL = true; };
   const waitMsg = (s) => say(t("busy", { s }));
   const fail = (e) => { say(""); if (e && e.message !== "cancel") oops(e.message || t("fail")); };
 
+  async function doWrite() {
+    const r = range(), P = r.part;
+    let audio;
+    if (P) { say(t("listen", { p: 0 })); audio = await liveAudio(st.url, r.start, r.len, (p) => say(t("listen", { p }))); }
+    else { say(t("readA")); audio = await clipAudio(st.file, r.start, r.len); }
+    say(t("readF")); const frames = await snapshots(st.url, r.start, r.len, audio ? 8 : 12);
+    if (!audio) oops(t("noAudio"));
+    say(t("aiW"));
+    const q = { title: $("title").value.trim(), lang: $("lang").value, len: r.len };
+    if (P) { q.part = Object.assign({ sofar: sofar(P.a) }, P); q.sped = !!audio; }
+    const s = await writeStory(q, audio, frames, waitMsg);
+    let title = s.title; if (P && P.n > 1) title = title.replace(/\s*[|:-]?\s*(part|पार्ट|भाग)\s*\d+\s*$/i, "") + " | " + ($("lang").value === "hi" ? "पार्ट " : "Part ") + P.i;
+    $("hook").value = s.hook; $("lines").value = s.lines.join("\n"); $("post").value = (title + "\n\n" + s.tags.join(" ")).trim();
+    if (P) { st.sums = st.sums.filter((x) => x.a !== P.a); st.sums.push({ a: P.a, b: P.b, text: s.sum || s.lines.join(" ").slice(0, 600) }); }
+    st.voice = null; say("");
+  }
   $("write").onclick = async () => {
     oops(""); if (!keyGet()) return oops(t("noKey")); if (!st.file) return oops(t("noFile"));
     busy(true);
-    try {
-      const r = range(); say(t("readA"));
-      const audio = await clipAudio(st.file, r.start, r.len);
-      say(t("readF")); const frames = await snapshots(st.url, r.start, r.len, audio ? 8 : 12);
-      if (!audio) oops(t("noAudio"));
-      say(t("aiW"));
-      const s = await writeStory({ title: $("title").value.trim(), lang: $("lang").value, len: r.len }, audio, frames, waitMsg);
-      $("hook").value = s.hook; $("lines").value = s.lines.join("\n"); $("post").value = (s.title + "\n\n" + s.tags.join(" ")).trim();
-      st.voice = null; say("");
-    } catch (e) { fail(e); } finally { busy(false); }
+    try { await doWrite(); } catch (e) { fail(e); } finally { busy(false); }
   };
   $("copy").onclick = () => {
     const b = $("copy"), v = $("post").value; const done = () => { b.textContent = t("copied"); setTimeout(() => (b.textContent = t("copy")), 1500); };
@@ -430,10 +538,7 @@
     oops(""); busy(true);
     try { const v = await ensureVoice(); say(t("voiceOk", { s: v.buf.duration.toFixed(1) })); } catch (e) { fail(e); } finally { busy(false); }
   };
-  $("make").onclick = async () => {
-    oops(""); if (!st.file) return oops(t("noFile"));
-    busy(true);
-    try {
+  async function doMake() {
       const voice = await ensureVoice(), r = range();
       $("aud").pause(); $("prev").pause();
       say(t("rend", { p: 0 }));
@@ -442,9 +547,21 @@
       if (!blob) throw new Error(t("fail"));
       if (st.outUrl) URL.revokeObjectURL(st.outUrl); st.outUrl = URL.createObjectURL(blob);
       $("out").src = st.outUrl; const ext = /mp4/.test(blob.type) ? "mp4" : "webm";
-      $("dl").href = st.outUrl; $("dl").download = "story-short-" + Date.now() + "." + ext;
-      outBox.hidden = false; say(t("done"));
+      $("dl").href = st.outUrl; $("dl").download = "story-short-" + (r.part ? "part-" + String(r.part.i).padStart(2, "0") + "-" : "") + Date.now() + "." + ext;
+      outBox.hidden = false;
+      if (r.part) { say(r.part.i >= r.part.n ? t("lastP") : t("doneP", { i: r.part.i })); partsUI(); } else say(t("done"));
       outBox.scrollIntoView({ behavior: "smooth", block: "start" });
-    } catch (e) { fail(e); } finally { busy(false); }
+  }
+  $("make").onclick = async () => {
+    oops(""); if (!st.file) return oops(t("noFile"));
+    busy(true);
+    try { await doMake(); } catch (e) { fail(e); } finally { busy(false); }
   };
+  async function narrate() { // one tap: write the story, make the voice, make the Short
+    oops(""); if (!keyGet()) return oops(t("noKey")); if (!st.file) return oops(t("noFile"));
+    busy(true);
+    try { await doWrite(); await doMake(); } catch (e) { fail(e); } finally { busy(false); partsUI(); }
+  }
+  $("narr").onclick = narrate;
+  $("next").onclick = () => { const P = partList(); if (st.busy || st.pi >= P.length - 1) return; goPart(st.pi + 1); $("parts").scrollIntoView({ behavior: "smooth", block: "start" }); narrate(); };
 })();
